@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import Logo from "../../src/assets/cordis-logo-1.png";
+import Logo from "../assets/cordis-logo-1.png";
 import Text from "./shared/Text";
 import CustomInput2 from "./shared/CustomInput2";
 import Button from "./shared/Button";
