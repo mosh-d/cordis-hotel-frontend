@@ -6,21 +6,26 @@ import BlogPage from './pages/Blog';
 import RootLayout from './pages/Root';
 import ErrorPage from './pages/Error';
 
-const router = createBrowserRouter ([
+const router = createBrowserRouter (
+  [
+    {
+      path: '/',
+      element: <RootLayout />,
+      errorElement: <ErrorPage />,
+      children: [
+        {path: '/', element: <HomePage />},
+        {path: '/about', element: <AboutPage />},
+        {path: '/contact', element: <ContactPage />},
+        {path: '/blog', element: <BlogPage />},
+        // {path: '/blog/:id', element: <BlogPostPage />},
+        // {path: '/blog/:id/edit', element: <BlogPostEditPage />},
+      ]
+    }
+  ],
   {
-    path: '/',
-    element: <RootLayout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {path: '/', element: <HomePage />},
-      {path: '/about', element: <AboutPage />},
-      {path: '/contact', element: <ContactPage />},
-      {path: '/blog', element: <BlogPage />},
-      // {path: '/blog/:id', element: <BlogPostPage />},
-      // {path: '/blog/:id/edit', element: <BlogPostEditPage />},
-    ]
+    basename: '/cordis-hotel-frontend'
   }
-]);
+);
 
 function App() {
   return (
