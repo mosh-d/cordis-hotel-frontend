@@ -8,7 +8,6 @@ import OtherAmenitiesSection from "../components/home-components/OtherAmenitiesS
 import HotelExterior from "../components/home-components/HotelExterior";
 import AtCordisSection from "../components/home-components/AtCordisSection";
 import LocateUsSection from "../components/home-components/LocateUsSection";
-import Footer from "../components/Footer";
 
 function HomePage() {
   // const navigate = useNavigate(); // useNavigate is a hook that allows you to navigate to a different page (programmatically .ie. afer a timeout or something)
@@ -26,7 +25,6 @@ function HomePage() {
       <HotelExterior />
       <AtCordisSection />
       <LocateUsSection />
-      <Footer />
     </>
   );
 }

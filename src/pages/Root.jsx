@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import MainNavBar from '../components/MainNavBar';
+import Footer from '../components/Footer';
 
 function RootLayout() {
   const location = useLocation();
@@ -8,6 +9,7 @@ function RootLayout() {
     <>
       {!isHome && <MainNavBar />}
       <Outlet />
+      <Footer />
     </>
   );
 }

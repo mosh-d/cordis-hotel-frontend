@@ -3,24 +3,47 @@ import styled from "styled-components";
 
 const StyledLink = styled.a`
   border-bottom: 1px solid var(--cordis-accent);
-  opacity: .7;
+  opacity: 0.7;
 
   &:hover {
     cursor: pointer;
   }
 `;
 
-export default function Link({ children, ...props }) {
+const StyledLink2 = styled.a`
+  opacity: 0.7;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export default function Link({ $type, children, ...props }) {
   return (
-    <StyledLink {...props}>
-      <Text
-        $color="var(--cordis-accent)"
-        $weight="light"
-        $size="small"
-        style={{ lineHeight: ".7" }}
-      >
-        {children}
-      </Text>
-    </StyledLink>
+    <>
+      {$type === "secondary" ? (
+        <StyledLink2 {...props}>
+          <Text
+            $color="var(--cordis-accent)"
+            $weight="light"
+            $size="small"
+            style={{ lineHeight: ".7" }}
+          >
+            {children}
+          </Text>
+        </StyledLink2>
+      ) : (
+        <StyledLink {...props}>
+          <Text
+            $color="var(--cordis-accent)"
+            $weight="light"
+            $size="small"
+            style={{ lineHeight: ".7" }}
+          >
+            {children}
+          </Text>
+        </StyledLink>
+      )}
+    </>
   );
 }
