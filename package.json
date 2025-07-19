@@ -1,0 +1,49 @@
+{
+  "name": "the-cordis-hotel",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "watch:sass": "node-sass sass/main.scss src/index.css -w",
+    "compile:sass": "sass sass/main.scss src/css/style.comp.css",
+    "concat:css": "concat -o src/css/style.concat.css src/css/style.comp.css",
+    "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' src/css/style.concat.css -o src/css/style.prefix.css",
+    "compress:css": "sass src/css/style.prefix.css src/index.css --style=compressed",
+    "build:css": "npm-run-all compile:sass concat:css prefix:css compress:css"
+  },
+  "dependencies": {
+    "@react-google-maps/api": "^2.20.7",
+    "framer-motion": "^12.23.0",
+    "lucide-react": "^0.525.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.6.3",
+    "styled-components": "^6.1.19"
+  },
+  "author": "sope",
+  "license": "ISC",
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.21",
+    "concat": "^1.0.3",
+    "eslint": "^8.44.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.1",
+    "gh-pages": "^6.3.0",
+    "npm-run-all2": "8.0.4",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.0",
+    "sass": "^1.89.2",
+    "tailwindcss": "^3.4.17",
+    "vite": "^5.2.0"
+  }
+}
