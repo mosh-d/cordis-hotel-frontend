@@ -15,6 +15,7 @@ const StyledFooter = styled.footer`
   padding: 6rem 12rem;
   gap: 6rem;
   width: 100%;
+  margin-bottom: 6rem;
 `;
 
 const StyledMainFooter = styled.div`

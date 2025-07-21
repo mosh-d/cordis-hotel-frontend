@@ -5,6 +5,7 @@ import MainNavBar from "../MainNavBar";
 import CustomInput from "../shared/CustomInput";
 import Button from "../shared/Button";
 import Text from "../shared/Text";
+import { forwardRef } from "react";
 
 const StyledHeroSection = styled.section`
   display: flex;
@@ -67,10 +68,9 @@ const QuickCheckIn = styled.div`
   background-color: var(--cordis-text-color);
 `;
 
-export default function HeroSection() {
+const HeroSection = forwardRef((props, ref) => {
   return (
-    <>
-    <StyledHeroSection>
+    <StyledHeroSection ref={ref}>
       <NavContainer>
         <Logo $type="filled" />
         <StyledNavBar>
@@ -79,12 +79,27 @@ export default function HeroSection() {
       </NavContainer>
 
       <QuickCheckIn>
-        <CustomInput label="When do you check in?" $for="check-in" $type="date" />
-        <CustomInput label="When do you check out?" $for="check-out" $type="date" />
+        <CustomInput
+          label="When do you check in?"
+          $for="check-in"
+          $type="date"
+        />
+        <CustomInput
+          label="When do you check out?"
+          $for="check-out"
+          $type="date"
+        />
         <CustomInput label="How many guests?" $for="guests" $type="number" />
-        <Button $type="emphasis"><Text $weight="bold" $size="small">Check Availability</Text></Button>
+        <Button $type="emphasis">
+          <Text $weight="bold" $size="small">
+            Check Availability
+          </Text>
+        </Button>
       </QuickCheckIn>
     </StyledHeroSection>
-    </>
   );
-}
+});
+
+HeroSection.displayName = "HeroSection";
+
+export default HeroSection;

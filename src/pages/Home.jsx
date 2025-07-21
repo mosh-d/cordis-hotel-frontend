@@ -1,4 +1,4 @@
-// import { Link, useNavigate } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import HeroSection from "../components/home-components/HeroSection";
 import IntroSection from "../components/home-components/IntroSection";
 import DiningDrinksSection from "../components/home-components/DiningDrinksSection";
@@ -8,13 +8,40 @@ import OtherAmenitiesSection from "../components/home-components/OtherAmenitiesS
 import HotelExterior from "../components/home-components/HotelExterior";
 import AtCordisSection from "../components/home-components/AtCordisSection";
 import LocateUsSection from "../components/home-components/LocateUsSection";
+import { useEffect, useRef } from "react";
 
 function HomePage() {
-  // const navigate = useNavigate(); // useNavigate is a hook that allows you to navigate to a different page (programmatically .ie. afer a timeout or something)
+  const { setShowFixedReserve } = useOutletContext();
+  const heroSectionRef = useRef(null);
+
+  useEffect(() => {
+    const heroSection = heroSectionRef.current;
+    if (!heroSection) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        setShowFixedReserve(!entry.isIntersecting);
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      }
+    );
+
+    observer.observe(heroSection);
+
+    return () => {
+      if (heroSection) {
+        observer.unobserve(heroSection);
+      }
+    };
+  }, [setShowFixedReserve]);
 
   return (
     <>
-      <HeroSection />
+      <HeroSection ref={heroSectionRef} />
       {/* <button onClick={() => navigate('/about')}>View Products</button> */}{" "}
       {/* This is a way to navigate to a different page (programmatically .ie. afer a timeout or something) */}
       <IntroSection />

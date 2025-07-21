@@ -15,6 +15,8 @@ const StyledButton = styled.button`
       ? "var(--cordis-emphasis)"
       : $type === "emphasis2"
       ? "var(--cordis-emphasis)"
+      : $type === "emphasis-ghost"
+      ? "none"
       : $type === "white"
       ? "var(--cordis-white)"
       : $type === "accent"
@@ -32,8 +34,10 @@ const StyledButton = styled.button`
 
   padding: .8rem 2rem;
   outline: ${({ $type }) =>
-    $type === "accent-ghost"
+    $type === "accent-ghost" 
     ? "2px solid var(--cordis-accent)"
+    : $type === "emphasis-ghost"
+    ? "1px solid var(--cordis-black)"
     : "none"};
   border-bottom: ${({ $type }) =>
     $type === "underlined"
@@ -46,6 +50,8 @@ const StyledButton = styled.button`
     background-color: ${({ $type }) =>
       $type === "accent-ghost"
       ? "var(--cordis-accent)"
+      : $type === "emphasis-ghost"
+      ? "var(--cordis-emphasis)"
       : $type === "underlined"
       ? "var(--cordis-emphasis)"
       : $type === "emphasis"

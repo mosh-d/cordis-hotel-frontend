@@ -34,7 +34,7 @@ export default function RoomSection() {
             Our Rooms
           </Text>
           <Text $type="p" $size="large" $weight="light">
-            Hover the images for availability details
+            Click the images for availability details
           </Text>
         </RoomText>
 

@@ -1,9 +1,9 @@
-function BlogPage() {
+import BlogSection from "../components/blog-components/BlogSection";
+
+export default function BlogPage() {
   return (
     <>
-      <h1>Blog</h1>
+      <BlogSection />
     </>
   );
 }
-
-export default BlogPage;
