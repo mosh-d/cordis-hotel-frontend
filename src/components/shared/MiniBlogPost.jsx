@@ -9,35 +9,47 @@ const StyledMiniBlogPost = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
+  width: 40%;
+  flex-shrink: 0;
 `;
 
 const StyledImageContainer = styled.div`
+  width: 100%;
+  ${({$image}) => $image && `background-image: url(${$image});`}
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 20rem;
 `;
 
 const StyledTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 2.4rem;
+  gap: 1.8rem;
 `;
 
-export default function MiniBlogPost() {
+export default function MiniBlogPost({ id, image, title, caption }) {
   return(
     <StyledMiniBlogPost>
-      <StyledImageContainer></StyledImageContainer>
+      <StyledImageContainer $image={image}></StyledImageContainer>
       <StyledTextWrapper>
         <Text
-          $type="h1"
+          $type="h2"
           $weight="bold"
-          $size="extra-large"
+          $size="medium"
           $color="var(--cordis-black)"
         >
-          Elevate Your Stay: How to Make the Most of Cordis Dining        
+          {title}      
         </Text>
         <Text
-            $typeFace="secondary"
-            $spacing=".01em"
-            $weight="bold"
-            $size="large"
-          >
-            Have any questions or need assistance? 
-          </Text>
+          $typeFace="secondary"
+          $spacing=".01em"
+          $weight="bold"
+          $size="large"
+        >
+          {caption}
+        </Text>
       </StyledTextWrapper>
     </StyledMiniBlogPost>
   )

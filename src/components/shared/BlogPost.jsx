@@ -28,7 +28,7 @@ const StyledButton = styled.button`
 
 const StyledImageContainer = styled.div`
   width: 100%;
-  background-image: url(${Blog1});
+  ${({$image}) => $image && `background-image: url(${$image});`}
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -54,7 +54,7 @@ const StyledParagraphContainer = styled.div`
   }
 `;
 
-export default function BlogPost() {
+export default function BlogPost({ image, title, content }) {
   //state management
   const [textOpen, setTextOpen] = useState(false);
 
@@ -66,7 +66,7 @@ export default function BlogPost() {
 
   return (
     <StyledBlog>
-      <StyledImageContainer></StyledImageContainer>
+      <StyledImageContainer $image={image}></StyledImageContainer>
       <StyledTextWrapper>
         <Text
           $type="h1"
@@ -74,7 +74,7 @@ export default function BlogPost() {
           $size="extra-large"
           $color="var(--cordis-black)"
         >
-          Discover Lagos Like a Local: Five Hidden Gems Around Cordis
+          {title}
         </Text>
         <StyledParagraphContainer $isOpen={textOpen}>
           <Text
@@ -83,21 +83,7 @@ export default function BlogPost() {
             $weight="bold"
             $size="large"
           >
-            When you stay at Cordis, you’re right in the heart of Lagos’s most
-            vibrant neighborhoods—yet beyond the well-trodden paths lie so
-            many local delights. Start your morning with freshly roasted beans
-            at Bean & Brew on Awolowo Road, where the barista knows your name
-            by day two. Pop into Artisan Alley for handcrafted souvenirs from
-            young Nigerian makers—think hand-woven baskets or bespoke leather
-            notebooks. For an alfresco lunch, wander to Green Market Square,
-            where street-side jollof rice and pepper-soy-grilled tilapia taste
-            even better under a canopy of bougainvillea. In the afternoon,
-            catch a sunset cocktail at Skyline Vista, a rooftop bar just a
-            10-minute walk from Cordis, with panoramic views of the lagoon.
-            Finally, cap your evening at The Drum House, where live Afrobeat
-            performances keep the energy high. These spots are where Lagos’s
-            true soul shines—explore them, and you’ll leave knowing the city
-            in a way most visitors never do.
+           {content}
           </Text>
         </StyledParagraphContainer>
       </StyledTextWrapper>
