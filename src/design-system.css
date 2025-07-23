@@ -22,7 +22,7 @@ html {
    RESPONSIVE DESIGN
    =================================== */
 
-/* Media Queries */
+/* Media Queries for font size */
 @media only screen and (max-width: 75em) {
   html {
     font-size: 56.25%;
@@ -101,10 +101,25 @@ body {
   --radius-full: 9999px;
   
   /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-sm: 0 1px 2px  rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px  rgb(0 0 0 / 0.1), 0 2px 4px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px  rgb(0 0 0 / 0.1), 0 4px 6px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px rgb(0 0 0 / 0.1), 0 8px 10px rgb(0 0 0 / 0.1);
+  
+  --shadow-dark-sm: 0 1px 2px rgb(0 0 0 / 0.05);
+  --shadow-dark-md: 0 4px 6px rgb(0 0 0 / 0.2), 0 2px 4px rgb(0 0 0 / 0.2);
+  --shadow-dark-lg: 0 10px 15px rgb(0 0 0 / 0.2), 0 4px 6px rgb(0 0 0 / 0.2);
+  --shadow-dark-xl: 0 20px 25px rgb(0 0 0 / 0.2), 0 8px 10px rgb(0 0 0 / 0.2);
+
+  --popup-sm: 0 0 2px rgb(0 0 0 / 0.05);
+  --popup-md: 0 0 6px rgb(0 0 0 / 0.1), 0 0 4px rgb(0 0 0 / 0.1);
+  --popup-lg: 0 0 15px rgb(0 0 0 / 0.1), 0 0 6px rgb(0 0 0 / 0.1);
+  --popup-xl: 0 0 60px rgb(0 0 0 / 0.1), 0 0 20px rgb(0 0 0 / 0.1);
+
+  --popup-dark-sm: 0 0 2px rgb(0 0 0 / 0.05);
+  --popup-dark-md: 0 0 6px rgb(0 0 0 / 0.2), 0 0 4px rgb(0 0 0 / 0.2);
+  --popup-dark-lg: 0 0 15px rgb(0 0 0 / 0.2), 0 0 6px rgb(0 0 0 / 0.2);
+  --popup-dark-xl: 0 0 60px rgb(0 0 0 / 0.2), 0 0 20px rgb(0 0 0 / 0.1);
   
   /* Transitions */
   --transition-fast: 150ms ease-in-out;

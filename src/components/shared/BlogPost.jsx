@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 import Text from "./Text";
-import Button from "./Button";
-
-//blog image
-import Blog1 from "../../assets/cordis-blog/CORDIS-BLOG-1.png";
 
 const StyledBlog = styled.div`
   display: flex;
@@ -32,7 +28,7 @@ const StyledImageContainer = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 50rem;
+  height: 45rem;
 `;
 
 const StyledTextWrapper = styled.div`

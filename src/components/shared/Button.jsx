@@ -29,6 +29,8 @@ const StyledButton = styled.button`
       ? "var(--cordis-accent)"
       : $type === "underlined"
       ? "var(--cordis-black)"
+      : $type === "white-ghost"
+      ? "var(--cordis-white)"
       : "var(--cordis-black)"};
   }
 
@@ -36,6 +38,8 @@ const StyledButton = styled.button`
   outline: ${({ $type }) =>
     $type === "accent-ghost" 
     ? "2px solid var(--cordis-accent)"
+    : $type === "white-ghost" 
+    ? "2px solid var(--cordis-white)"
     : $type === "emphasis-ghost"
     ? "1px solid var(--cordis-black)"
     : "none"};
@@ -52,6 +56,8 @@ const StyledButton = styled.button`
       ? "var(--cordis-accent)"
       : $type === "emphasis-ghost"
       ? "var(--cordis-emphasis)"
+      : $type === "white-ghost"
+      ? "var(--cordis-white)"
       : $type === "underlined"
       ? "var(--cordis-emphasis)"
       : $type === "emphasis"
@@ -97,6 +103,10 @@ const StyledButton = styled.button`
       $type === "accent-ghost"
       ? "var(--cordis-accent)"
       : $type === "underlined"
+      ? "var(--cordis-emphasis)"
+      : $type === "white-ghost"
+      ? "var(--cordis-white)"
+      : $type === "emphasis-ghost"
       ? "var(--cordis-emphasis)"
       : $type === "emphasis"
       ? "rgba(255, 255, 255, 0)"

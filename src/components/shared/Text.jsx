@@ -33,7 +33,7 @@ const StyledP = styled.p`
   text-decoration: ${({ $decoration }) => $decoration || "none"};
   text-transform: ${({ $transform }) => $transform || "none"};
   text-overflow: ${({ $overflow }) => $overflow || "clip"};
-  text-wrap: ${({ $wrap }) => $wrap || "auto"};
+  white-space: ${({ $wrap }) => $wrap || "normal"};
   opacity: ${({ $opacity }) => $opacity || 1};
 `;
 
@@ -69,7 +69,7 @@ const StyledH1 = styled.h1`
   text-decoration: ${({ $decoration }) => $decoration || "none"};
   text-transform: ${({ $transform }) => $transform || "none"};
   text-overflow: ${({ $overflow }) => $overflow || "clip"};
-  text-wrap: ${({ $wrap }) => $wrap || "auto"};
+  white-space: ${({ $wrap }) => $wrap || "normal"};
   opacity: ${({ $opacity }) => $opacity || 1};
 `;
 
@@ -105,7 +105,7 @@ const StyledH2 = styled.h2`
   text-decoration: ${({ $decoration }) => $decoration || "none"};
   text-transform: ${({ $transform }) => $transform || "none"};
   text-overflow: ${({ $overflow }) => $overflow || "clip"};
-  text-wrap: ${({ $wrap }) => $wrap || "auto"};
+  white-space: ${({ $wrap }) => $wrap || "normal"};
   opacity: ${({ $opacity }) => $opacity || 1};
 `;
 
@@ -141,7 +141,7 @@ const StyledH3 = styled.h3`
   text-decoration: ${({ $decoration }) => $decoration || "none"};
   text-transform: ${({ $transform }) => $transform || "none"};
   text-overflow: ${({ $overflow }) => $overflow || "clip"};
-  text-wrap: ${({ $wrap }) => $wrap || "auto"};
+  white-space: ${({ $wrap }) => $wrap || "normal"};
   opacity: ${({ $opacity }) => $opacity || 1};
 `;
 

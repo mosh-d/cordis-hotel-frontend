@@ -1,25 +1,53 @@
 import { styled } from "styled-components";
 import Text from "../shared/Text";
 
-//blog image
-import Blog1 from "../../assets/cordis-blog/CORDIS-BLOG-1.png";
-import Blog2 from "../../assets/cordis-blog/CORDIS-BLOG-2.png";
-
 const StyledMiniBlogPost = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
   width: 40%;
   flex-shrink: 0;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--cordis-text-color);
+
+    h2,
+    p {
+      color: var(--cordis-white);
+    }
+  }
+
+  &:active {
+    background-color: var(--cordis-black);
+  }
 `;
 
 const StyledImageContainer = styled.div`
   width: 100%;
-  ${({$image}) => $image && `background-image: url(${$image});`}
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 20rem;
+  height: 10rem;
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    ${({ $image }) => $image && `background-image: url(${$image});`}
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+  }
+
+  ${StyledMiniBlogPost}:hover &::before {
+    transform: scale(1.1);
+  }
 `;
 
 const StyledTextWrapper = styled.div`
@@ -29,18 +57,39 @@ const StyledTextWrapper = styled.div`
   gap: 1.8rem;
 `;
 
-export default function MiniBlogPost({ id, image, title, caption }) {
-  return(
-    <StyledMiniBlogPost>
+export default function MiniBlogPost({
+  onSelect,
+  href,
+  image,
+  title,
+  caption,
+}) {
+  const handleClick = (e) => {
+    if (onSelect) {
+      onSelect();
+    }
+    if (href) {
+      // Smooth scroll to the target element
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    }
+  };
+
+  return (
+    <StyledMiniBlogPost onClick={handleClick}>
       <StyledImageContainer $image={image}></StyledImageContainer>
       <StyledTextWrapper>
         <Text
           $type="h2"
           $weight="bold"
-          $size="medium"
+          $size="small"
           $color="var(--cordis-black)"
         >
-          {title}      
+          {title}
         </Text>
         <Text
           $typeFace="secondary"
@@ -52,5 +101,5 @@ export default function MiniBlogPost({ id, image, title, caption }) {
         </Text>
       </StyledTextWrapper>
     </StyledMiniBlogPost>
-  )
+  );
 }
