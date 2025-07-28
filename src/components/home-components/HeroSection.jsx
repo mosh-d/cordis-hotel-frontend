@@ -89,7 +89,7 @@ const HeroSection = forwardRef((props, ref) => {
           $for="check-out"
           $type="date"
         />
-        <CustomInput label="How many guests?" $for="guests" $type="number" />
+        <CustomInput label="How many rooms?" $for="guests" $type="number" />
         <Button $type="emphasis">
           <Text $weight="bold" $size="small">
             Check Availability
