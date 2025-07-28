@@ -156,7 +156,7 @@ export default function ExerciseRelaxationSection() {
             $weight="bold"
             $color="var(--cordis-accent)"
           >
-            Cordis Gym
+            Cordis Spa
           </Text>
           <Text
             $typeFace="secondary"
