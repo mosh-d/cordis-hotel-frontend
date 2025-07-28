@@ -198,7 +198,7 @@ export default function DiningDrinksSection() {
         </BarSpecialsContainer>
         <Button $type="emphasis2">
           <Text $weight="bold" $size="medium">
-            Check Availability
+            Reserve
           </Text>
         </Button>
       </StyledBarSpecials>

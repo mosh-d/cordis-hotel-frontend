@@ -189,8 +189,7 @@ export default function LocateUsSection() {
           <StyledButton>
             <Button $type="emphasis2">
               <Text $weight="regular" $size="medium">
-                Check Availability
-              </Text>
+                Reserve              </Text>
             </Button>
           </StyledButton>
         </StyledNearbyLocationsWrapper>

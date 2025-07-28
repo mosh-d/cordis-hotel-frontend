@@ -23,7 +23,7 @@ function RootLayout() {
       {!isHome && <MainNavBar />}
       <Outlet context={{ setShowFixedReserve }} />
       <Footer />
-      {showFixedReserve && <FixedReserve />}
+      {showFixedReserve && !isHome && <FixedReserve />}
     </>
   );
 }

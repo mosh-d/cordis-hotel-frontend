@@ -221,7 +221,7 @@ export default function OtherAmenitiesSection() {
         </StyledTextAmenityWrapper>
         <Button $type="emphasis2">
           <Text $weight="bold" $size="medium">
-            Check Availability
+            Reserve
           </Text>
         </Button>
       </StyledAmenityWrapper>

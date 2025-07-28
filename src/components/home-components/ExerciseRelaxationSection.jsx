@@ -138,7 +138,7 @@ export default function ExerciseRelaxationSection() {
 
         <Button $type="emphasis2">
           <Text $weight="bold" $size="medium">
-            Book Now
+            Book Gym/Spa
           </Text>
         </Button>
       </StyledGymWrapper>

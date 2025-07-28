@@ -173,7 +173,7 @@ export default function HotelExterior() {
           <StyledHotelExteriorButtonWrapper>
             <Button $type="emphasis2">
               <Text $weight="regular" $size="medium">
-                Check Availability
+                Reserve
               </Text>
             </Button>
           </StyledHotelExteriorButtonWrapper>
