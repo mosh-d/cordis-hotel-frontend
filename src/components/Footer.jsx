@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { styled } from "styled-components";
 import Logo from "../assets/cordis-logo-1.png";
 import Text from "./shared/Text";
@@ -245,10 +246,10 @@ export default function Footer() {
             <StyledLine />
           </StyledNavigationHeaderWrapper>
           <StyledNavigationLinkWrapper>
-            <Link $type="secondary">Home</Link>
-            <Link $type="secondary">About</Link>
-            <Link $type="secondary">Contact</Link>
-            <Link $type="secondary">Blog</Link>
+            <NavLink to="/"><Link $type="secondary">Home</Link></NavLink>
+            <NavLink to="/about"><Link $type="secondary">About</Link></NavLink>
+            <NavLink to="/contact"><Link $type="secondary">Contact</Link></NavLink>
+            <NavLink to="/blog"><Link $type="secondary">Blog</Link></NavLink>
           </StyledNavigationLinkWrapper>
         </StyledNavigation>
         <StyledHotels>

@@ -68,16 +68,22 @@ export default function Carousel({ ImageUrls, Description = [], onIndexChange })
   
   function showPrevImage() {
     setDirection(-1);
-    const newIndex = imageIndex === 0 ? ImageUrls.length - 1 : imageIndex - 1;
-    setImageIndex(newIndex);
-    if (onIndexChange) onIndexChange(newIndex);
+    // Delay the index change until next render cycle
+    setTimeout(() => {
+      const newIndex = imageIndex === 0 ? ImageUrls.length - 1 : imageIndex - 1;
+      setImageIndex(newIndex);
+      if (onIndexChange) onIndexChange(newIndex);
+    }, 0);
   }
 
   function showNextImage() {
     setDirection(1);
-    const newIndex = imageIndex === ImageUrls.length - 1 ? 0 : imageIndex + 1;
-    setImageIndex(newIndex);
-    if (onIndexChange) onIndexChange(newIndex);
+    // Delay the index change until next render cycle
+    setTimeout(() => {
+      const newIndex = imageIndex === ImageUrls.length - 1 ? 0 : imageIndex + 1;
+      setImageIndex(newIndex);
+      if (onIndexChange) onIndexChange(newIndex);
+    }, 0);
   }
 
   return (
