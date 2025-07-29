@@ -1,7 +1,11 @@
+import GetInTouchSection from "../components/contact-components/GetInTouchSection";
+import ContactSection from "../components/contact-components/ContactSection";
+
 function ContactPage() {
   return (
     <>
-      <h1>Contact</h1>
+      <GetInTouchSection />
+      <ContactSection />
     </>
   );
 }

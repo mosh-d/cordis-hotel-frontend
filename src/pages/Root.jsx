@@ -22,7 +22,7 @@ function RootLayout() {
       <ScrollToTop />
       {!isHome && <MainNavBar />}
       <Outlet context={{ setShowFixedReserve }} />
-      <Footer />
+      {!isHome && <Footer />}
       {showFixedReserve && !isHome && <FixedReserve />}
     </>
   );

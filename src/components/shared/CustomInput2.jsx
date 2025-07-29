@@ -9,7 +9,6 @@ const StyledCustomInput2 = styled.div`
   width: 100%;
   gap: 1rem;
   flex: 1;
-  border-bottom: 1px solid var(--cordis-accent);
   padding-bottom: .3rem;
 `;
 
@@ -21,7 +20,6 @@ const StyledCustomInput2Black = styled.div`
   min-width: 27rem;
   gap: 1rem;
   flex: 1;
-  border-bottom: 1px solid var(--cordis-black);
   padding-bottom: .3rem;
 `
 
@@ -35,10 +33,11 @@ const StyledInput = styled.input`
   color: var(--cordis-accent);
   font-size: var(--text-sm);
   letter-spacing: 0.2rem;
+  border-bottom: 1px solid var(--cordis-accent);
 
    &:focus-visible {
     outline: none;
-    border: none;
+    border-color: var(--cordis-emphasis);
   }
 
   &::placeholder {
@@ -59,10 +58,11 @@ const StyledInputBlack = styled.input`
   color: var(--cordis-black);
   font-size: var(--text-sm);
   letter-spacing: 0.2rem;
+  border-bottom: 1px solid var(--cordis-black);
 
   &:focus-visible {
     outline: none;
-    border: none;
+    border-color: var(--cordis-emphasis);
   }
 
   &::placeholder {

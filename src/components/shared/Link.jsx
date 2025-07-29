@@ -1,8 +1,8 @@
 import Text from "./Text";
 import styled from "styled-components";
 
-const StyledLink = styled.a`
-  border-bottom: 1px solid var(--cordis-accent);
+const StyledLink = styled.span`
+  border-bottom: ${({ $type }) => $type === "default" ? '1px solid var(--cordis-black)' : '1px solid var(--cordis-accent)'};
   opacity: 0.7;
 
   &:hover {
@@ -10,7 +10,8 @@ const StyledLink = styled.a`
   }
 `;
 
-const StyledLink2 = styled.a`
+const StyledLink2 = styled.span`
+  border-bottom: 1px solid var(--cordis-black);
   opacity: 0.7;
 
   &:hover {
@@ -21,10 +22,10 @@ const StyledLink2 = styled.a`
 export default function Link({ $type, children, ...props }) {
   return (
     <>
-      {$type === "secondary" ? (
+      {$type === "default" ? (
         <StyledLink2 {...props}>
           <Text
-            $color="var(--cordis-accent)"
+            $color="var(--cordis-black)"
             $weight="light"
             $size="small"
             style={{ lineHeight: ".7" }}

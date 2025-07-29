@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link as RouterLink } from "react-router-dom";
 import { styled } from "styled-components";
 import Logo from "../assets/cordis-logo-1.png";
 import Text from "./shared/Text";
@@ -16,7 +16,7 @@ const StyledFooter = styled.footer`
   padding: 6rem 12rem;
   gap: 6rem;
   width: 100%;
-  margin-bottom: 6rem;
+  margin-bottom: ${({ $type }) => $type === 'default' ? '0' : '9rem'};
 `;
 
 const StyledMainFooter = styled.div`
@@ -177,9 +177,9 @@ const StyledHeader = styled.div`
   justify-content: center;
 `;
 
-export default function Footer() {
+export default function Footer({ $type }) {
   return (
-    <StyledFooter>
+    <StyledFooter $type={$type}>
       <StyledMainFooter>
         <StyledOffersContact>
           <StyledLogoContainer>

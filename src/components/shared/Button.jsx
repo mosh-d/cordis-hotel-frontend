@@ -34,10 +34,12 @@ const StyledButton = styled.button`
       : "var(--cordis-black)"};
   }
 
-  padding: .8rem 2rem;
+  padding: 1rem 2rem;
   outline: ${({ $type }) =>
     $type === "accent-ghost" 
     ? "2px solid var(--cordis-accent)"
+    : $type === "ghost"
+    ? "1px solid var(--cordis-black)"
     : $type === "white-ghost" 
     ? "2px solid var(--cordis-white)"
     : $type === "emphasis-ghost"
@@ -56,6 +58,8 @@ const StyledButton = styled.button`
       ? "var(--cordis-accent)"
       : $type === "emphasis-ghost"
       ? "var(--cordis-emphasis)"
+      : $type === "ghost"
+      ? "var(--cordis-black)"
       : $type === "white-ghost"
       ? "var(--cordis-white)"
       : $type === "underlined"
@@ -68,6 +72,8 @@ const StyledButton = styled.button`
       color: ${({ $type }) =>
         $type === "accent-ghost"
         ? "var(--cordis-black)"
+        : $type === "ghost"
+        ? "var(--cordis-white)"
         : $type === "underlined"
         ? "var(--cordis-black)"
         : $type === "emphasis"
@@ -85,6 +91,8 @@ const StyledButton = styled.button`
       $type === "emphasis"
       ? "2px solid var(--cordis-emphasis)"
       : $type === "emphasis2"
+      ? "2px solid var(--cordis-black)"
+      : $type === "ghost"
       ? "2px solid var(--cordis-black)"
       : $type === "white"
       ? "2px solid var(--cordis-white)"
@@ -106,6 +114,8 @@ const StyledButton = styled.button`
       ? "var(--cordis-emphasis)"
       : $type === "white-ghost"
       ? "var(--cordis-white)"
+      : $type === "ghost"
+      ? "var(--cordis-black)"
       : $type === "emphasis-ghost"
       ? "var(--cordis-emphasis)"
       : $type === "emphasis"
@@ -118,6 +128,8 @@ const StyledButton = styled.button`
         ? "var(--cordis-black)"
         : $type === "underlined"
         ? "var(--cordis-black)"
+        : $type === "ghost"
+        ? "var(--cordis-white)"
         : $type === "emphasis"
         ? "var(--cordis-emphasis)"
         : $type === "accent"
@@ -131,6 +143,8 @@ const StyledButton = styled.button`
       $type === "emphasis"
       ? "2px solid var(--cordis-emphasis)"
       : $type === "emphasis2"
+      ? "2px solid var(--cordis-black)"
+      : $type === "ghost"
       ? "2px solid var(--cordis-black)"
       : $type === "white"
       ? "2px solid var(--cordis-white)"

@@ -4,8 +4,8 @@ import ghostLogo from "../../assets/cordis-logo-1.png";
 import filledLogo from "../../assets/cordis-logo-2.png";
 
 const StyledLogo = styled.div`
-  width: 13rem;
-  height: 13rem;
+  width: 18rem;
+  height: 18rem;
 
   & img {
     width: 100%;

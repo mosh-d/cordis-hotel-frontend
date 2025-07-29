@@ -9,6 +9,7 @@ import HotelExterior from "../components/home-components/HotelExterior";
 import AtCordisSection from "../components/home-components/AtCordisSection";
 import LocateUsSection from "../components/home-components/LocateUsSection";
 import { useEffect, useRef } from "react";
+import Footer from "../components/Footer";
 
 function HomePage() {
   const { setShowFixedReserve } = useOutletContext();
@@ -52,6 +53,7 @@ function HomePage() {
       <HotelExterior />
       <AtCordisSection />
       <LocateUsSection />
+      <Footer $type="default" />
     </>
   );
 }
