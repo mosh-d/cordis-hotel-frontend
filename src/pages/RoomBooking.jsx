@@ -82,7 +82,7 @@ const StyledTextarea = styled.textarea`
   }
 `;
 
-const StyledBookingConfirmation = styled.div`
+const StyledBookingSummary = styled.div`
   background-image: url(${Booking1});
   background-repeat: no-repeat;
   background-size: cover;
@@ -110,6 +110,12 @@ const StyledConfirmationTextWrapper = styled.div`
   gap: 2.4rem;
 `;
 
+const StyledMessagerow = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+`;
+
 const StyledConfirmationTotalWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -118,16 +124,151 @@ const StyledConfirmationTotalWrapper = styled.div`
   gap: 1.2rem;
 `;
 
+const StyledPhoneInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  gap: 1rem;
+  flex: 1;
+  padding-bottom: .3rem;
+`;
+
+const StyledPhoneInputContainer = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 0.5rem;
+`;
+
+const StyledCountrySelect = styled.select`
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  color: var(--cordis-black);
+  font-size: var(--text-sm);
+  letter-spacing: 0.2rem;
+  border-bottom: 1px solid var(--cordis-black);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding: 0.5rem;
+  width: 10rem;
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--cordis-emphasis);
+  }
+`;
+
+const StyledPhoneInput = styled.input`
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+  color: var(--cordis-black);
+  font-size: var(--text-sm);
+  letter-spacing: 0.2rem;
+  border-bottom: 1px solid var(--cordis-black);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding: 0.5rem 0;
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--cordis-emphasis);
+  }
+
+  &::placeholder {
+    color: var(--cordis-black);
+    font-size: var(--text-sm);
+    opacity: 0.5;
+    letter-spacing: 0.2rem;
+  }
+`;
+
 export default function RoomBookingPage() {
   //State Declarations
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [countryCode, setCountryCode] = useState("+234");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [roomCategory, setRoomCategory] = useState("");
   const [noOfRooms, setNoOfRooms] = useState(0);
+
+  //Room price calculation
+  const ROOM_PRICES = {
+    budget: 150000,
+    diplomatic: 200000
+  };
+
+  const ROOM_NAMES = {
+    budget: "Budget Room",
+    diplomatic: "Diplomatic Room"
+  };
+
+  const roomPrice = ROOM_PRICES[roomCategory] || 0;
+  const roomName = ROOM_NAMES[roomCategory] || "Select a room";
+  
+  // Calculate nights
+  const calculateNights = () => {
+    if (!checkIn || !checkOut) return 0;
+    const start = new Date(checkIn);
+    const end = new Date(checkOut);
+    const diffTime = Math.abs(end - start);
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  };
+
+  const nights = calculateNights();
+  const nightText = nights > 1 ? "nights" : "night";
+  const subtotal = roomPrice * nights * (parseInt(noOfRooms) || 0);
+  const vat = subtotal * 0.075; // 7.5%
+  const stateTax = subtotal * 0.05; // 5%
+  const serviceCharge = subtotal * 0.10; // 10%
+  const total = subtotal + vat + stateTax + serviceCharge;
+
+  // Phone number formatting function
+  const formatPhoneNumber = (value) => {
+    // Remove all non-digits
+    const phoneNumber = value.replace(/\D/g, '');
+    
+    // Format based on length
+    if (phoneNumber.length <= 3) {
+      return phoneNumber;
+    } else if (phoneNumber.length <= 6) {
+      return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3)}`;
+    } else if (phoneNumber.length <= 10) {
+      return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3, 6)} ${phoneNumber.slice(6)}`;
+    } else {
+      return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3, 6)} ${phoneNumber.slice(6, 10)}`;
+    }
+  };
+
+  const handlePhoneChange = (e) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    setPhoneNumber(formatted);
+  };
+
+  // Country codes data
+  const countryCodes = [
+    { code: "+234", country: "NG", name: "Nigeria" },
+    { code: "+1", country: "US", name: "United States" },
+    { code: "+44", country: "GB", name: "United Kingdom" },
+    { code: "+33", country: "FR", name: "France" },
+    { code: "+49", country: "DE", name: "Germany" },
+    { code: "+86", country: "CN", name: "China" },
+    { code: "+91", country: "IN", name: "India" },
+    { code: "+81", country: "JP", name: "Japan" },
+    { code: "+27", country: "ZA", name: "South Africa" },
+    { code: "+254", country: "KE", name: "Kenya" },
+    { code: "+233", country: "GH", name: "Ghana" },
+  ];
 
   return (
     <>
@@ -149,28 +290,46 @@ export default function RoomBookingPage() {
                 header="First Name"
                 $placeholder="eg. John"
                 type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
               />
-              <CustomInput2 header="Check-In" type="date" />
+              <CustomInput2
+                header="Check-In"
+                type="date"
+                value={checkIn}
+                onChange={(e) => setCheckIn(e.target.value)}
+              />
             </StyledInputRow>
             <StyledInputRow>
               <CustomInput2
                 header="Last Name"
                 $placeholder="eg. Doe"
                 type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
-              <CustomInput2 header="Check-Out" type="date" />
+              <CustomInput2
+                header="Check-Out"
+                type="date"
+                value={checkOut}
+                onChange={(e) => setCheckOut(e.target.value)}
+              />
             </StyledInputRow>
             <StyledInputRow>
               <CustomInput2
                 header="Email"
                 $placeholder="example@email.com"
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <CustomInput2
                 header="Room Category"
                 $type="select"
                 $placeholder="Diplomatic Room"
                 name="room-category"
+                value={roomCategory}
+                onChange={(e) => setRoomCategory(e.target.value)}
               >
                 <option value="">Choose a room type</option>
                 <option value="budget">Budget Room</option>
@@ -178,21 +337,45 @@ export default function RoomBookingPage() {
               </CustomInput2>
             </StyledInputRow>
             <StyledInputRow>
-              <CustomInput2
-                header="Phone Number"
-                $placeholder="eg. 08999999999"
-                type="tel"
-              />
+              <StyledPhoneInputWrapper>
+                <Text $type="p" $color="var(--cordis-black)" $weight="light" $typeFace="primary">
+                  Phone Number
+                </Text>
+                <StyledPhoneInputContainer>
+                  <StyledCountrySelect
+                    value={countryCode}
+                    onChange={(e) => setCountryCode(e.target.value)}
+                  >
+                    {countryCodes.map((country) => (
+                      <option key={country.code} value={country.code}>
+                        {country.country} {country.code}
+                      </option>
+                    ))}
+                  </StyledCountrySelect>
+                  <StyledPhoneInput
+                    type="tel"
+                    placeholder="803 123 4567"
+                    value={phoneNumber}
+                    onChange={handlePhoneChange}
+                    maxLength="13"
+                  />
+                </StyledPhoneInputContainer>
+              </StyledPhoneInputWrapper>
               <CustomInput2
                 header="Number of Rooms"
                 $placeholder="eg. 2"
                 type="number"
+                value={noOfRooms}
+                onChange={(e) => setNoOfRooms(e.target.value)}
               />
             </StyledInputRow>
           </StyledInputs>
-          <StyledTextarea placeholder="Write a message here" />
+          <StyledMessagerow>
+            <Text $type="p" $color="var(--cordis-black)" $weight="light" $typeFace="primary">Additional Message</Text>
+            <StyledTextarea placeholder="Write a message here" />
+          </StyledMessagerow>
         </StyledRoomBooking>
-        <StyledBookingConfirmation>
+        <StyledBookingSummary>
           <StyledConfirmationHeaderWrapper>
             <Text $type="h2" $color="var(--cordis-white)" $weight="bold">
               Booking Summary
@@ -204,17 +387,17 @@ export default function RoomBookingPage() {
                 $typeFace="secondary"
                 $size="extra-large"
                 $spacing=".05em"
-                $weight="regular"
+                $weight="bold"
                 $color="var(--cordis-white)"
               >
                 Check-In
               </Text>
               <Text
-                $size="extra-small"
+                $size="small"
                 $weight="light"
                 $color="var(--cordis-light-gray)"
               >
-                Wed, 11 Jun
+                {checkIn}
               </Text>
             </StyledTextWrapper>
             <StyledTextWrapper>
@@ -222,17 +405,17 @@ export default function RoomBookingPage() {
                 $typeFace="secondary"
                 $size="extra-large"
                 $spacing=".05em"
-                $weight="regular"
+                $weight="bold"
                 $color="var(--cordis-white)"
               >
                 Check-Out
               </Text>
               <Text
-                $size="extra-small"
+                $size="small"
                 $weight="light"
                 $color="var(--cordis-light-gray)"
               >
-                Wed, 13 Jun
+                {checkOut}
               </Text>
             </StyledTextWrapper>
             <StyledTextWrapper>
@@ -240,17 +423,17 @@ export default function RoomBookingPage() {
                 $typeFace="secondary"
                 $size="extra-large"
                 $spacing=".05em"
-                $weight="regular"
+                $weight="bold"
                 $color="var(--cordis-white)"
               >
-                Diplomatic Room
+                {roomName}
               </Text>
               <Text
-                $size="extra-small"
+                $size="small"
                 $weight="light"
                 $color="var(--cordis-light-gray)"
               >
-                #150,000
+                ₦{roomPrice.toLocaleString()} per night ({nights} {nightText})
               </Text>
             </StyledTextWrapper>
             <StyledTextWrapper>
@@ -258,17 +441,17 @@ export default function RoomBookingPage() {
                 $typeFace="secondary"
                 $size="extra-large"
                 $spacing=".05em"
-                $weight="regular"
+                $weight="bold"
                 $color="var(--cordis-white)"
               >
                 Number of Rooms
               </Text>
               <Text
-                $size="extra-small"
+                $size="small"
                 $weight="light"
                 $color="var(--cordis-light-gray)"
               >
-                2
+                {noOfRooms}
               </Text>
             </StyledTextWrapper>
             <StyledTextWrapper>
@@ -276,17 +459,17 @@ export default function RoomBookingPage() {
                 $typeFace="secondary"
                 $size="extra-large"
                 $spacing=".05em"
-                $weight="regular"
+                $weight="bold"
                 $color="var(--cordis-white)"
               >
-                VAT
+                VAT (7.5%)
               </Text>
               <Text
-                $size="extra-small"
+                $size="small"
                 $weight="light"
                 $color="var(--cordis-light-gray)"
               >
-                #11,000
+                ₦{vat.toLocaleString()}
               </Text>
             </StyledTextWrapper>
             <StyledTextWrapper>
@@ -294,17 +477,17 @@ export default function RoomBookingPage() {
                 $typeFace="secondary"
                 $size="extra-large"
                 $spacing=".05em"
-                $weight="regular"
+                $weight="bold"
                 $color="var(--cordis-white)"
               >
-                Lagos State Tax
+                Lagos State Tax (5%)
               </Text>
               <Text
-                $size="extra-small"
+                $size="small"
                 $weight="light"
                 $color="var(--cordis-light-gray)"
               >
-                #13,400
+                ₦{stateTax.toLocaleString()}
               </Text>
             </StyledTextWrapper>
             <StyledTextWrapper>
@@ -312,17 +495,17 @@ export default function RoomBookingPage() {
                 $typeFace="secondary"
                 $size="extra-large"
                 $spacing=".05em"
-                $weight="regular"
+                $weight="bold"
                 $color="var(--cordis-white)"
               >
-                Service Charge
+                Service Charge (10%)
               </Text>
               <Text
-                $size="extra-small"
+                $size="small"
                 $weight="light"
                 $color="var(--cordis-light-gray)"
               >
-                #19,700
+                ₦{serviceCharge.toLocaleString()}
               </Text>
             </StyledTextWrapper>
           </StyledConfirmationTextWrapper>
@@ -331,7 +514,7 @@ export default function RoomBookingPage() {
               Total
             </Text>
             <Text $color="var(--cordis-white)" $size="extra-large">
-              #350,000
+              ₦{total.toLocaleString()}
             </Text>
             <RouterLink to="/booking-confirmation">
               <Button $type="emphasis">
@@ -339,7 +522,7 @@ export default function RoomBookingPage() {
               </Button>
             </RouterLink>
           </StyledConfirmationTotalWrapper>
-        </StyledBookingConfirmation>
+        </StyledBookingSummary>
       </StyledRoomBookingPage>
     </>
   );
