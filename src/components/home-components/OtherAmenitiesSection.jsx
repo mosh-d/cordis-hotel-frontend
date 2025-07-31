@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Text from "../shared/Text";
 import Carousel from "../shared/Carousel";
 import Button from "../shared/Button";
+import { Link as RouterLink } from "react-router-dom";
 
 //images
 import Laundry1 from "../../assets/cordis-laundry/CORDIS-LAUNDRY-1.png";
@@ -219,11 +220,13 @@ export default function OtherAmenitiesSection() {
             )}
           </StyledAmenity>
         </StyledTextAmenityWrapper>
-        <Button $type="emphasis2">
-          <Text $weight="bold" $size="medium">
-            Reserve
-          </Text>
-        </Button>
+        <RouterLink to="/room-booking">
+          <Button $type="emphasis2">
+            <Text $weight="bold" $size="medium">
+              Reserve
+            </Text>
+          </Button>
+        </RouterLink>
       </StyledAmenityWrapper>
       <BackDrop></BackDrop>
     </StyledOtherAmenitiesSection>

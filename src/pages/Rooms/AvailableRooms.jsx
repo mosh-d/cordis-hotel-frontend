@@ -1,7 +1,6 @@
 import RoomAvailabilityCard from "../../components/shared/RoomAvailabilityCard";
 import { styled } from "styled-components";
 import Text from "../../components/shared/Text";
-import { Link as RouterLink } from "react-router-dom";
 
 const StyledAvailableRoomsPage = styled.div`
   display: flex;

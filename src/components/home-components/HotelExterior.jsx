@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import Text from "../shared/Text";
 import Button from "../shared/Button";
+import { Link as RouterLink } from "react-router-dom";
 
 //images
 import Exterior1 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-1.png";
@@ -171,11 +172,13 @@ export default function HotelExterior() {
           }}
         >
           <StyledHotelExteriorButtonWrapper>
-            <Button $type="emphasis2">
-              <Text $weight="regular" $size="medium">
-                Reserve
-              </Text>
-            </Button>
+            <RouterLink to="/room-booking">
+              <Button $type="emphasis2">
+                <Text $weight="regular" $size="medium">
+                  Reserve
+                </Text>
+              </Button>
+            </RouterLink>
           </StyledHotelExteriorButtonWrapper>
           <CustomScrollbarContainer
             onClick={(e) => {

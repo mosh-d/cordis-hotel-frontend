@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Text from "../shared/Text";
 import Button from "../shared/Button";
+import { Link as RouterLink } from "react-router-dom";
 
 const StyledLocateUsSection = styled.section`
   display: flex;
@@ -57,7 +58,7 @@ const StyledLocation = styled.div`
 `;
 
 const StyledLocationText1 = styled.div`
-  width: 70%
+  width: 70%;
 `;
 
 const StyledLocationText2 = styled.div`
@@ -81,19 +82,23 @@ export default function LocateUsSection() {
       </StyledLocateUsTextWrapper>
       <StyledMapLocationWrapper>
         <StyledMap>
-        <iframe
-          title="Cordis Hotel Ikeja Map"
-          width="100%"
-          height="100%"
-          frameBorder="0"
-          style={{ border: 0 }}
-          src="https://www.google.com/maps?q=The+Cordis+Hotel,+Ikeja&output=embed"
-          allowFullScreen
-        ></iframe>
+          <iframe
+            title="Cordis Hotel Ikeja Map"
+            width="100%"
+            height="100%"
+            frameBorder="0"
+            style={{ border: 0 }}
+            src="https://www.google.com/maps?q=The+Cordis+Hotel,+Ikeja&output=embed"
+            allowFullScreen
+          ></iframe>
         </StyledMap>
         <StyledNearbyLocationsWrapper>
           <StyledNearbyLocationsTextWrapper>
-            <Text $color="var(--cordis-black)" $weight="bold" $size="extra-large">
+            <Text
+              $color="var(--cordis-black)"
+              $weight="bold"
+              $size="extra-large"
+            >
               Nearby Locations
             </Text>
             <Text $color="var(--cordis-black)">
@@ -102,26 +107,18 @@ export default function LocateUsSection() {
             <StyledLocations>
               <StyledLocation>
                 <StyledLocationText1>
-                  <Text $color="var(--cordis-black)">
-                    Lufasi Nature Park
-                  </Text>
+                  <Text $color="var(--cordis-black)">Lufasi Nature Park</Text>
                 </StyledLocationText1>
                 <StyledLocationText2>
-                  <Text $color="var(--cordis-black)">
-                    14km away
-                  </Text>
+                  <Text $color="var(--cordis-black)">14km away</Text>
                 </StyledLocationText2>
               </StyledLocation>
               <StyledLocation>
                 <StyledLocationText1>
-                  <Text $color="var(--cordis-black)">
-                    Omu Resort
-                  </Text>
+                  <Text $color="var(--cordis-black)">Omu Resort</Text>
                 </StyledLocationText1>
                 <StyledLocationText2>
-                  <Text $color="var(--cordis-black)">
-                    31km away
-                  </Text>
+                  <Text $color="var(--cordis-black)">31km away</Text>
                 </StyledLocationText2>
               </StyledLocation>
               <StyledLocation>
@@ -131,21 +128,15 @@ export default function LocateUsSection() {
                   </Text>
                 </StyledLocationText1>
                 <StyledLocationText2>
-                  <Text $color="var(--cordis-black)">
-                    37km away
-                  </Text>
+                  <Text $color="var(--cordis-black)">37km away</Text>
                 </StyledLocationText2>
               </StyledLocation>
               <StyledLocation>
                 <StyledLocationText1>
-                  <Text $color="var(--cordis-black)">
-                    Bics Boat Club
-                  </Text>
+                  <Text $color="var(--cordis-black)">Bics Boat Club</Text>
                 </StyledLocationText1>
                 <StyledLocationText2>
-                  <Text $color="var(--cordis-black)">
-                    39km away
-                  </Text>
+                  <Text $color="var(--cordis-black)">39km away</Text>
                 </StyledLocationText2>
               </StyledLocation>
               <StyledLocation>
@@ -155,21 +146,15 @@ export default function LocateUsSection() {
                   </Text>
                 </StyledLocationText1>
                 <StyledLocationText2>
-                  <Text $color="var(--cordis-black)">
-                    28km away
-                  </Text>
+                  <Text $color="var(--cordis-black)">28km away</Text>
                 </StyledLocationText2>
               </StyledLocation>
               <StyledLocation>
                 <StyledLocationText1>
-                  <Text $color="var(--cordis-black)">
-                    Novare Mall
-                  </Text>
+                  <Text $color="var(--cordis-black)">Novare Mall</Text>
                 </StyledLocationText1>
                 <StyledLocationText2>
-                  <Text $color="var(--cordis-black)">
-                    18km away
-                  </Text>
+                  <Text $color="var(--cordis-black)">18km away</Text>
                 </StyledLocationText2>
               </StyledLocation>
               <StyledLocation>
@@ -179,18 +164,19 @@ export default function LocateUsSection() {
                   </Text>
                 </StyledLocationText1>
                 <StyledLocationText2>
-                  <Text $color="var(--cordis-black)">
-                    10km away
-                  </Text>
+                  <Text $color="var(--cordis-black)">10km away</Text>
                 </StyledLocationText2>
               </StyledLocation>
             </StyledLocations>
           </StyledNearbyLocationsTextWrapper>
           <StyledButton>
-            <Button $type="emphasis2">
-              <Text $weight="regular" $size="medium">
-                Reserve              </Text>
-            </Button>
+            <RouterLink to="/room-booking">
+              <Button $type="emphasis2">
+                <Text $weight="regular" $size="medium">
+                  Reserve
+                </Text>
+              </Button>
+            </RouterLink>
           </StyledButton>
         </StyledNearbyLocationsWrapper>
       </StyledMapLocationWrapper>

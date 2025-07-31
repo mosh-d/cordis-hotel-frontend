@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Carousel from "../shared/Carousel";
 import Text from "../shared/Text";
 import Button from "../shared/Button";
+import { Link as RouterLink } from "react-router-dom";
 
 //gym images
 import Gym1 from "../../assets/cordis-gym/CORDIS-GYM-1.png";
@@ -136,11 +137,13 @@ export default function ExerciseRelaxationSection() {
           </GymTextWrapper>
         </StyledGymContainer>
 
-        <Button $type="emphasis2">
-          <Text $weight="bold" $size="medium">
-            Book Gym/Spa
-          </Text>
-        </Button>
+        <RouterLink to="/amenity-booking">
+          <Button $type="emphasis2">
+            <Text $weight="bold" $size="medium">
+              Book Gym/Spa
+            </Text>
+          </Button>
+        </RouterLink>
       </StyledGymWrapper>
 
       <StyledSpaWrapper>

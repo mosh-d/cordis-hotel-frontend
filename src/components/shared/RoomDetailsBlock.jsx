@@ -32,7 +32,7 @@ export default function RoomDetailsBlock({ $type }) {
       <Text
         $type="h2"
         $typeFace="primary"
-        $weight="regular"
+        $weight="bold"
         $spacing=".2em"
         $color="var(--cordis-white)"
       >
@@ -49,9 +49,7 @@ export default function RoomDetailsBlock({ $type }) {
           {$type === "budget" ? "Price per room" : "Price per room"}
         </Text>
         <Text
-          $typeFace="secondary"
-          $size="medium"
-          $spacing=".05em"
+          $size="extra-small"
           $weight="light"
           $color="var(--cordis-light-gray)"
         >
@@ -69,9 +67,7 @@ export default function RoomDetailsBlock({ $type }) {
           {$type === "budget" ? "Size" : "Size"}
         </Text>
         <Text
-          $typeFace="secondary"
-          $size="medium"
-          $spacing=".05em"
+          $size="extra-small"
           $weight="light"
           $color="var(--cordis-light-gray)"
         >
@@ -89,9 +85,7 @@ export default function RoomDetailsBlock({ $type }) {
           {$type === "budget" ? "Bed" : "Bed"}
         </Text>
         <Text
-          $typeFace="secondary"
-          $size="medium"
-          $spacing=".05em"
+          $size="extra-small"
           $weight="light"
           $color="var(--cordis-light-gray)"
         >
@@ -109,9 +103,7 @@ export default function RoomDetailsBlock({ $type }) {
           {$type === "budget" ? "Capacity" : "Capacity"}
         </Text>
         <Text
-          $typeFace="secondary"
-          $size="medium"
-          $spacing=".05em"
+          $size="extra-small"
           $weight="light"
           $color="var(--cordis-light-gray)"
         >
@@ -129,9 +121,7 @@ export default function RoomDetailsBlock({ $type }) {
           {$type === "budget" ? "View" : "View"}
         </Text>
         <Text
-          $typeFace="secondary"
-          $size="medium"
-          $spacing=".05em"
+          $size="extra-small"
           $weight="light"
           $color="var(--cordis-light-gray)"
         >

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Carousel from "../shared/Carousel";
 import Text from "../shared/Text";
+import { Link as RouterLink } from "react-router-dom";
 
 //restaurantimages
 import Restaurant1 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-1.png";
@@ -196,11 +197,13 @@ export default function DiningDrinksSection() {
             </Text>
           </SpecialsWrapper>
         </BarSpecialsContainer>
-        <Button $type="emphasis2">
-          <Text $weight="bold" $size="medium">
-            Reserve
-          </Text>
-        </Button>
+        <RouterLink to="/room-booking">
+          <Button $type="emphasis2">
+            <Text $weight="bold" $size="medium">
+              Reserve
+            </Text>
+          </Button>
+        </RouterLink>
       </StyledBarSpecials>
       <BackDrop></BackDrop>
     </StyledDiningDrinksSection>

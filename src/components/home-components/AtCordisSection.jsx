@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Text from "../shared/Text";
 import Button from "../shared/Button";
+import { Link as RouterLink } from "react-router-dom";
 
 //image
 import AtCordisBackground from "../../assets/at-cordis/AT-CORDIS.png";
@@ -55,11 +56,13 @@ export default function AtCordisSection() {
           Cordis welcomes you with warmth, elegance, and the kind of hospitality
           that turns every visit into a story worth sharing.
         </Text>
-        <Button $type="accent">
-          <Text $weight="light" $size="medium">
-            Read More
-          </Text>
-        </Button>
+        <RouterLink to="/about">
+          <Button $type="accent">
+            <Text $weight="light" $size="medium">
+              Read More
+            </Text>
+          </Button>
+        </RouterLink>
       </StyledTextButtonWrapper>
     </StyledAtCordisSection>
   );

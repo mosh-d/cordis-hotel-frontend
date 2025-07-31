@@ -2,6 +2,7 @@ import Text from "./Text";
 import styled from "styled-components";
 import Carousel from "./Carousel";
 import Button from "./Button";
+import { Link as RouteLink } from "react-router-dom";
 
 //budget room images
 import BudgetRoom1 from "../../assets/budget-rooms/BUDGET-ROOM-1.png";
@@ -17,8 +18,20 @@ import DiplomaticRoom3 from "../../assets/diplomatic-rooms/DIPLOMATIC-ROOM-3.png
 import DiplomaticRoom4 from "../../assets/diplomatic-rooms/DIPLOMATIC-ROOM-4.png";
 import DiplomaticRoom5 from "../../assets/diplomatic-rooms/DIPLOMATIC-ROOM-5.png";
 
-const BudgetRoomImages = [BudgetRoom1, BudgetRoom2, BudgetRoom3, BudgetRoom4, BudgetRoom5];
-const DiplomaticRoomImages = [DiplomaticRoom1, DiplomaticRoom2, DiplomaticRoom3, DiplomaticRoom4, DiplomaticRoom5];
+const BudgetRoomImages = [
+  BudgetRoom1,
+  BudgetRoom2,
+  BudgetRoom3,
+  BudgetRoom4,
+  BudgetRoom5,
+];
+const DiplomaticRoomImages = [
+  DiplomaticRoom1,
+  DiplomaticRoom2,
+  DiplomaticRoom3,
+  DiplomaticRoom4,
+  DiplomaticRoom5,
+];
 
 const StyledRoom = styled.div`
   width: 100%;
@@ -27,7 +40,7 @@ const StyledRoom = styled.div`
   align-items: left;
   justify-content: flex-start;
   gap: 1.5rem;
-`;  
+`;
 
 const StyledRoomCardWrapper = styled.div`
   width: 100%;
@@ -37,24 +50,45 @@ const StyledRoomCardWrapper = styled.div`
 const StyledRoomCarousel = styled.div`
   width: 100%;
   height: 55rem;
-  background-color: ${({ bgColor }) => bgColor || 'transparent'};
+  background-color: ${({ bgColor }) => bgColor || "transparent"};
 `;
 
-export default function Room({ imageType, headerText, buttonText, children, bgColor }) {
-  const images = imageType === "budget" ? BudgetRoomImages : DiplomaticRoomImages;
+export default function Room({
+  imageType,
+  headerText,
+  buttonText,
+  children,
+  bgColor,
+}) {
+  const images =
+    imageType === "budget" ? BudgetRoomImages : DiplomaticRoomImages;
 
   return (
     <StyledRoom>
-      <Text $type="h3" $spacing=".2em" $typeFace="primary" $size="medium" $weight="regular">{headerText}</Text>
+      <Text
+        $type="h3"
+        $spacing=".2em"
+        $typeFace="primary"
+        $size="medium"
+        $weight="regular"
+      >
+        {headerText}
+      </Text>
 
       <StyledRoomCardWrapper>
         <StyledRoomCarousel bgColor={bgColor}>
-          <Carousel ImageUrls={images} /> 
+          <Carousel ImageUrls={images} />
         </StyledRoomCarousel>
         {children}
       </StyledRoomCardWrapper>
 
-      <Button $type="underlined"><Text $type="p" $size="medium" $weight="regular">{buttonText}</Text></Button>
+      <RouteLink to="/room-booking">
+        <Button $type="underlined">
+          <Text $type="p" $size="medium" $weight="regular">
+            {buttonText}
+          </Text>
+        </Button>
+      </RouteLink>
     </StyledRoom>
-  )
+  );
 }

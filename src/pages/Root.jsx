@@ -11,7 +11,9 @@ function RootLayout() {
   const isAbout = location.pathname === "/about";
   const isContact = location.pathname === "/contact";
   const isBlog = location.pathname === "/blog";
-  const isBookingConfirmation = location.pathname === "booking-confirmation";
+  const isBookingConfirmation = location.pathname === "/booking-confirmation";
+  const isRoomBookingPage = location.pathname === "/room-booking";
+  const isAmenityBookingPage = location.pathname === "/amenity-booking";
   const [showFixedReserve, setShowFixedReserve] = useState(!isHome);
   
   // Update FixedReserve visibility when route changes
@@ -24,7 +26,7 @@ function RootLayout() {
   return (
     <>
       <ScrollToTop />
-      {!isHome && !isBookingConfirmation && <MainNavBar />}
+      {!isHome && !isBookingConfirmation && !isRoomBookingPage && !isAmenityBookingPage && <MainNavBar />}
       <Outlet context={{ setShowFixedReserve }} />
       {isAbout || isContact || isBlog ? <Footer /> : undefined}
       {showFixedReserve && isAbout || isContact || isBlog ? <FixedReserve /> : undefined}

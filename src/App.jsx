@@ -10,7 +10,7 @@ import AvailableRoomsPage from "./pages/Rooms/AvailableRooms";
 import RoomDetailsPage from "./pages/Rooms/RoomDetails";
 import RoomBookingPage from "./pages/RoomBooking";
 import AmenityBookingPage from "./pages/AmenityBooking";
-import BookingConfirmationPage from "./pages/BookingConfitmation";
+import BookingConfirmationPage from "./pages/BookingConfirmation";
 
 const router = createBrowserRouter(
   [

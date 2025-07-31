@@ -47,6 +47,56 @@ const StyledInput = styled.input`
     letter-spacing: 0.2rem;
   }
 `;
+const StyledSelect = styled.select`
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+  color: var(--cordis-accent);
+  font-size: var(--text-sm);
+  letter-spacing: 0.2rem;
+  border-bottom: 1px solid var(--cordis-accent);
+
+   &:focus-visible {
+    outline: none;
+    border-color: var(--cordis-emphasis);
+  }
+
+  &::placeholder {
+    color: var(--cordis-accent);
+    font-size: var(--text-sm);
+    opacity: 0.5;
+    letter-spacing: 0.2rem;
+  }
+`;
+
+const StyledSelectBlack = styled.select`
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+  color: var(--cordis-black);
+  font-size: var(--text-sm);
+  letter-spacing: 0.2rem;
+  cursor: pointer;
+  border-bottom: 1px solid var(--cordis-black);
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--cordis-emphasis);
+  }
+
+  &::placeholder {
+    color: var(--cordis-black);
+    font-size: var(--text-sm);
+    opacity: 0.5;
+    letter-spacing: 0.2rem;
+  }
+`;
 
 const StyledInputBlack = styled.input`
   display: flex;
@@ -73,19 +123,27 @@ const StyledInputBlack = styled.input`
   }
 `;
 
-export default function CustomInput2({ $style, header, $placeholder, ...props }) {
+export default function CustomInput2({ $type, $style, header, $placeholder, children, ...props }) {
   return(
     <>
     {
       $style === "accent" ? (
       <StyledCustomInput2>
         <Text $type="p" $color="var(--cordis-accent)" $weight="light" $typeFace="primary">{header}</Text>
-        <StyledInput placeholder={$placeholder} {...props} />
+        {$type === "select" ? (
+          <StyledSelect placeholder={$placeholder} {...props}>{children}</StyledSelect>
+        ) : (
+          <StyledInput placeholder={$placeholder} {...props} />
+        )}
       </StyledCustomInput2>
       ) : (
         <StyledCustomInput2Black>
           <Text $type="p" $color="var(--cordis-black)" $weight="light" $typeFace="primary">{header}</Text>
-          <StyledInputBlack placeholder={$placeholder} {...props} />
+          {$type === "select" ? (
+            <StyledSelectBlack placeholder={$placeholder} {...props}>{children}</StyledSelectBlack>
+          ) : (
+            <StyledInputBlack placeholder={$placeholder} {...props} />
+          )}
         </StyledCustomInput2Black>
       )
     }
