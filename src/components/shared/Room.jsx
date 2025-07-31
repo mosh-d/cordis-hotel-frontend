@@ -29,21 +29,30 @@ const StyledRoom = styled.div`
   gap: 1.5rem;
 `;  
 
+const StyledRoomCardWrapper = styled.div`
+  width: 100%;
+  display: flex;
+`;
+
 const StyledRoomCarousel = styled.div`
   width: 100%;
   height: 55rem;
+  background-color: ${({ bgColor }) => bgColor || 'transparent'};
 `;
 
-export default function Room({ imageType, headerText, buttonText }) {
+export default function Room({ imageType, headerText, buttonText, children, bgColor }) {
   const images = imageType === "budget" ? BudgetRoomImages : DiplomaticRoomImages;
 
   return (
     <StyledRoom>
       <Text $type="h3" $spacing=".2em" $typeFace="primary" $size="medium" $weight="regular">{headerText}</Text>
 
-      <StyledRoomCarousel>
-        <Carousel ImageUrls={images} /> 
-      </StyledRoomCarousel>
+      <StyledRoomCardWrapper>
+        <StyledRoomCarousel bgColor={bgColor}>
+          <Carousel ImageUrls={images} /> 
+        </StyledRoomCarousel>
+        {children}
+      </StyledRoomCardWrapper>
 
       <Button $type="underlined"><Text $type="p" $size="medium" $weight="regular">{buttonText}</Text></Button>
     </StyledRoom>

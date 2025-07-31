@@ -19,7 +19,7 @@ const StyledP = styled.p`
       : $weight === "regular"
       ? "600"
       : $weight === "bold"
-      ? "700"
+      ? "1000"
       : "500"};
   font-family: ${({ $typeFace }) =>
     $typeFace === "secondary"

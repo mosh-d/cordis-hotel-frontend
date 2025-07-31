@@ -8,6 +8,10 @@ import { useState, useEffect } from "react";
 function RootLayout() {
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const isAbout = location.pathname === "/about";
+  const isContact = location.pathname === "/contact";
+  const isBlog = location.pathname === "/blog";
+  const isBookingConfirmation = location.pathname === "booking-confirmation";
   const [showFixedReserve, setShowFixedReserve] = useState(!isHome);
   
   // Update FixedReserve visibility when route changes
@@ -20,10 +24,10 @@ function RootLayout() {
   return (
     <>
       <ScrollToTop />
-      {!isHome && <MainNavBar />}
+      {!isHome && !isBookingConfirmation && <MainNavBar />}
       <Outlet context={{ setShowFixedReserve }} />
-      {!isHome && <Footer />}
-      {showFixedReserve && !isHome && <FixedReserve />}
+      {isAbout || isContact || isBlog ? <Footer /> : undefined}
+      {showFixedReserve && isAbout || isContact || isBlog ? <FixedReserve /> : undefined}
     </>
   );
 }

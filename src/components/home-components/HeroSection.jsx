@@ -1,3 +1,4 @@
+import { Link as RouterLink } from "react-router-dom";
 import { styled } from "styled-components";
 import HeroImage from "../../assets/HERO.png";
 import Logo from "../shared/Logo";
@@ -90,11 +91,13 @@ const HeroSection = forwardRef((props, ref) => {
           $type="date"
         />
         <CustomInput label="How many rooms?" $for="guests" $type="number" />
-        <Button $type="emphasis">
-          <Text $weight="bold" $size="small">
-            Check Availability
-          </Text>
-        </Button>
+        <RouterLink to="/rooms">
+          <Button $type="emphasis">
+            <Text $weight="bold" $size="small">
+              Check Availability
+            </Text>
+          </Button>
+        </RouterLink>
       </QuickCheckIn>
     </StyledHeroSection>
   );
