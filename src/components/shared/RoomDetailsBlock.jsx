@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import Text from "../shared/Text";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
+import { ROOMS } from '../../util/room-data.js';
 
 const StyledRoomDetailsBlock = styled.div`
   display: flex;
@@ -46,14 +47,14 @@ export default function RoomDetailsBlock({ $type }) {
           $weight="regular"
           $color="var(--cordis-white)"
         >
-          {$type === "budget" ? "Price per room" : "Price per room"}
+          Price per room
         </Text>
         <Text
           $size="extra-small"
           $weight="light"
           $color="var(--cordis-light-gray)"
         >
-          {$type === "budget" ? "#150,000" : "#250,000"}
+          {$type === "budget" ? ROOMS[0].price : ROOMS[1].price}
         </Text>
       </StyledTextWrapper>
       <StyledTextWrapper>
@@ -64,14 +65,14 @@ export default function RoomDetailsBlock({ $type }) {
           $weight="regular"
           $color="var(--cordis-white)"
         >
-          {$type === "budget" ? "Size" : "Size"}
+          Size
         </Text>
         <Text
           $size="extra-small"
           $weight="light"
           $color="var(--cordis-light-gray)"
         >
-          {$type === "budget" ? "150 M2" : "250 M2"}
+          {$type === "budget" ? ROOMS[0].size : ROOMS[1].size}
         </Text>
       </StyledTextWrapper>
       <StyledTextWrapper>
@@ -82,14 +83,14 @@ export default function RoomDetailsBlock({ $type }) {
           $weight="regular"
           $color="var(--cordis-white)"
         >
-          {$type === "budget" ? "Bed" : "Bed"}
+          Bed
         </Text>
         <Text
           $size="extra-small"
           $weight="light"
           $color="var(--cordis-light-gray)"
         >
-          {$type === "budget" ? "1 King size bed" : "2 King size beds"}
+          {$type === "budget" ? ROOMS[0].bed : ROOMS[1].bed}
         </Text>
       </StyledTextWrapper>
       <StyledTextWrapper>
@@ -100,14 +101,14 @@ export default function RoomDetailsBlock({ $type }) {
           $weight="regular"
           $color="var(--cordis-white)"
         >
-          {$type === "budget" ? "Capacity" : "Capacity"}
+          Capacity
         </Text>
         <Text
           $size="extra-small"
           $weight="light"
           $color="var(--cordis-light-gray)"
         >
-          {$type === "budget" ? "2 Adults & 1 Child" : "3 Adults & 2 Children"}
+          {$type === "budget" ? ROOMS[0].capacity : ROOMS[1].capacity}
         </Text>
       </StyledTextWrapper>
       <StyledTextWrapper>
@@ -118,14 +119,14 @@ export default function RoomDetailsBlock({ $type }) {
           $weight="regular"
           $color="var(--cordis-white)"
         >
-          {$type === "budget" ? "View" : "View"}
+          View
         </Text>
         <Text
           $size="extra-small"
           $weight="light"
           $color="var(--cordis-light-gray)"
         >
-          {$type === "budget" ? "City or Lagoon View" : "Exotic City View"}
+          {$type === "budget" ? ROOMS[0].view : ROOMS[1].view}
         </Text>
       </StyledTextWrapper>
 

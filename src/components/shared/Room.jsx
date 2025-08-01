@@ -50,7 +50,7 @@ const StyledRoomCardWrapper = styled.div`
 const StyledRoomCarousel = styled.div`
   width: 100%;
   height: 55rem;
-  background-color: ${({ bgColor }) => bgColor || "transparent"};
+  background-color: ${({ $bgColor }) => $bgColor || "transparent"};
 `;
 
 export default function Room({
@@ -58,7 +58,7 @@ export default function Room({
   headerText,
   buttonText,
   children,
-  bgColor,
+  $bgColor,
 }) {
   const images =
     imageType === "budget" ? BudgetRoomImages : DiplomaticRoomImages;
@@ -76,7 +76,7 @@ export default function Room({
       </Text>
 
       <StyledRoomCardWrapper>
-        <StyledRoomCarousel bgColor={bgColor}>
+        <StyledRoomCarousel $bgColor={$bgColor}>
           <Carousel ImageUrls={images} />
         </StyledRoomCarousel>
         {children}

@@ -91,6 +91,7 @@ const StyledBookingSummary = styled.div`
   background-position-x: center;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 45%;
   padding: 4.8rem;
   gap: 4.8rem;
@@ -281,7 +282,7 @@ export default function RoomBookingPage() {
               </StyledBackArrow>
             </RouterLink>
             <Text $type="h2" $weight="bold" $color="var(--cordis-black)">
-              Room Details
+              Room Reservation
             </Text>
           </StyledHeaderWrapper>
           <StyledInputs>
@@ -378,7 +379,7 @@ export default function RoomBookingPage() {
         <StyledBookingSummary>
           <StyledConfirmationHeaderWrapper>
             <Text $type="h2" $color="var(--cordis-white)" $weight="bold">
-              Booking Summary
+              Reservation Summary
             </Text>
           </StyledConfirmationHeaderWrapper>
           <StyledConfirmationTextWrapper>

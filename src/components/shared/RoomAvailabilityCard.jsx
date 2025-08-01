@@ -7,7 +7,7 @@ export default function RoomAvailabilityCard({ $type }) {
       imageType={$type === "budget" ? "budget" : undefined}
       headerText={$type === "budget" ? "Budget" : "Diplomatic"}
       buttonText="Reserve"
-      bgColor="var(--cordis-text-color)"
+      $bgColor="var(--cordis-text-color)"
     >
       <RoomDetailsBlock $type={$type === "budget" ? "budget" : undefined} />
     </Room>
