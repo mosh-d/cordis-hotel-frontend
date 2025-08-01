@@ -130,7 +130,7 @@ export default function RoomDetailsBlock({ $type }) {
       </StyledTextWrapper>
 
       <StyledButtonContainer>
-        <RouterLink to="/rooms/details">
+        <RouterLink to="details">
           <Button $type="white">
             <Text>More Details</Text>
           </Button>

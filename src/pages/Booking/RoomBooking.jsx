@@ -1,10 +1,10 @@
 import { styled } from "styled-components";
-import Booking1 from "../assets/cordis-booking/CORDIS-BOOKING-1.png";
+import Booking1 from "../../assets/cordis-booking/CORDIS-BOOKING-1.png";
 import { RiArrowLeftLine } from "react-icons/ri";
-import Text from "../components/shared/Text";
+import Text from "../../components/shared/Text";
 import { Link as RouterLink } from "react-router-dom";
-import CustomInput2 from "../components/shared/CustomInput2";
-import Button from "../components/shared/Button";
+import CustomInput2 from "../../components/shared/CustomInput2";
+import Button from "../../components/shared/Button";
 
 //State Imports
 import { useState } from "react";

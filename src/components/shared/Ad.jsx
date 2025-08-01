@@ -49,6 +49,7 @@ const StyledAdText = styled.div`
   flex-direction: column;
   gap: 2.4rem;
   height: 40%;
+  min-height: 30rem;
   position: relative;
 
   &::after {
@@ -67,16 +68,23 @@ const StyledAdText = styled.div`
 `;
 
 const StyledParagraphContainer = styled.div`
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  /* height: 100%; */
+  flex: 1;
+  height: 50rem;
   overflow: auto;
   padding: 0 2rem;
-  
+  min-height: 0;
+  max-height: 50vh;   
+
   /* Firefox */
   scrollbar-width: thin;
   scrollbar-color: var(--cordis-black) var(--cordis-light-gray);
 
   &::-webkit-scrollbar {
-    width: .2rem;
+    width: 0.2rem;
   }
 
   &::-webkit-scrollbar-track {
@@ -85,11 +93,11 @@ const StyledParagraphContainer = styled.div`
 
   &::-webkit-scrollbar-thumb {
     background-color: var(--cordis-black);
-    
+
     &:hover {
       background-color: var(--cordis-text-color);
     }
-    
+
     &:active {
       background-color: var(--cordis-emphasis);
     }
@@ -127,44 +135,91 @@ export default function Ad() {
         </StyledMainAdText>
       </StyledMainAd>
       <StyledAdText>
-        <Text $type="h2" $color="var(--cordis-black)" $weight="bold">
+        <Text $type="h2" $size="medium" $color="var(--cordis-black)" $weight="bold">
           Sun, Swim, Repeat: The Ultimate Cordis Poolside Guide
         </Text>
         <StyledParagraphContainer>
-          <Text $typeFace="secondary" $weight="regular" $size="large" $spacing=".05em">
+          <Text
+            $typeFace="secondary"
+            $weight="bold"
+            $size="extra-large"
+            $spacing=".05em"
+          >
             Whether you’re here to work or play, Cordis Splash has everything
             you need for the perfect day by the water:
-            <StyledUl>
-              <li>
+          </Text>
+          <StyledUl>
+            <li>
+              <Text
+                $typeFace="secondary"
+                $weight="regular"
+                $size="large"
+                $spacing=".05em"
+              >
                 Sunrise Swim: Beat the heat and the crowds with a tranquil
                 morning laps session in our Infinity Pool.
-              </li>
-              <li>
+              </Text>
+            </li>
+            <li>
+              <Text
+                $typeFace="secondary"
+                $weight="regular"
+                $size="large"
+                $spacing=".05em"
+              >
                 Aqua Fitness Flow: Join our certified instructor for a
                 low-impact water aerobics class—strengthen core muscles while
                 splashing to upbeat tunes.
-              </li>
-              <li>
+              </Text>
+            </li>
+            <li>
+              <Text
+                $typeFace="secondary"
+                $weight="regular"
+                $size="large"
+                $spacing=".05em"
+              >
                 Poolside Brunch: Order from the Splash menu—think avocado toast
                 topped with dukkah or chilled ginger-lime mocktails—delivered
                 right to your cabana.
-              </li>
-              <li>
+              </Text>
+            </li>
+            <li>
+              <Text
+                $typeFace="secondary"
+                $weight="regular"
+                $size="large"
+                $spacing=".05em"
+              >
                 Sunset Lounging: Recline on our teak loungers as the sky turns
                 orange and the city skyline sparkles.
-              </li>
-              <li>
+              </Text>
+            </li>
+            <li>
+              <Text
+                $typeFace="secondary"
+                $weight="regular"
+                $size="large"
+                $spacing=".05em"
+              >
                 Starlit Night Dip: Cap your evening with our signature Night
                 Swim, where soft under-water lights create a dreamy glow.
-              </li>
-              <li>
+              </Text>
+            </li>
+            <li>
+              <Text
+                $typeFace="secondary"
+                $weight="regular"
+                $size="large"
+                $spacing=".05em"
+              >
                 Tip: reserve a Splash Cabana in advance for extra shade,
                 privacy, and dedicated server service. With these rituals in
                 hand, your days at Cordis Splash will become the highlight of
                 any Lagos itinerary.
-              </li>
-            </StyledUl>
-          </Text>
+              </Text>
+            </li>
+          </StyledUl>
         </StyledParagraphContainer>
       </StyledAdText>
     </StyledAd>
