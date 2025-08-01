@@ -52,7 +52,7 @@ const router = createBrowserRouter(
           element: <RoomsRootLayout />,
           children: [
             { index: true, element: <AvailableRoomsPage /> },
-            { path: "details", element: <RoomDetailsPage /> },
+            { path: "details/:roomIndex", element: <RoomDetailsPage /> },
           ],
         },
         { path: "room-booking", element: <RoomBookingPage /> },

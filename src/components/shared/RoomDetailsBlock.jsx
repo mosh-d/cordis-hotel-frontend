@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import Text from "../shared/Text";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
-import { ROOMS } from '../../util/room-data.js';
+import { ROOMS } from "../../util/room-data.js";
 
 const StyledRoomDetailsBlock = styled.div`
   display: flex;
@@ -28,6 +28,8 @@ const StyledTextWrapper = styled.div`
 `;
 
 export default function RoomDetailsBlock({ $type }) {
+  const roomIndex = $type === "budget" ? 0 : 1;
+
   return (
     <StyledRoomDetailsBlock>
       <Text
@@ -131,7 +133,7 @@ export default function RoomDetailsBlock({ $type }) {
       </StyledTextWrapper>
 
       <StyledButtonContainer>
-        <RouterLink to="details">
+        <RouterLink to={`details/${roomIndex}`}>
           <Button $type="white">
             <Text>More Details</Text>
           </Button>
