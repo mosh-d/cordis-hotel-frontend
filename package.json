@@ -2,13 +2,13 @@
   "name": "the-cordis-hotel",
   "private": true,
   "version": "1.0.0",
-  "homepage": "https://mosh-d.github.io/cordis-hotel-frontend/",
+
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "vercel-build": "npm run build",
-    "build:gh": "vite build --config vite.config.gh.js",
+
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "watch:sass": "node-sass sass/main.scss src/index.css -w",
@@ -16,9 +16,7 @@
     "concat:css": "concat -o src/css/style.concat.css src/css/style.comp.css",
     "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' src/css/style.concat.css -o src/css/style.prefix.css",
     "compress:css": "sass src/css/style.prefix.css src/index.css --style=compressed",
-    "build:css": "npm-run-all compile:sass concat:css prefix:css compress:css",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "build:css": "npm-run-all compile:sass concat:css prefix:css compress:css"
   },
   "dependencies": {
     "@react-google-maps/api": "^2.20.7",
