@@ -64,7 +64,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: "/cordis-hotel-frontend",
+    basename: import.meta.env.BASE_URL,
   }
 );
 
