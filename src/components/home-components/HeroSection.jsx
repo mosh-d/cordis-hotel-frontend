@@ -24,7 +24,7 @@ const StyledHeroSection = styled.section`
     left: 0;
     width: 100%;
     height: 100%;
-    background: url(${HeroImage}) center/cover no-repeat;
+    /* background: url(${HeroImage}) center/cover no-repeat; */
     z-index: -2;
   }
 
@@ -45,16 +45,34 @@ const StyledHeroSection = styled.section`
   width: 100%;
 `;
 
+const StyledLogoWrapper = styled.div`
+  /* border-radius: 1000px;
+  margin-top: 1rem;
+  background: hsla(180, 2%, 22%, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  height: 14rem;
+  width: 14rem;
+  display: flex;
+  align-items: center; */
+  /* margin-top: -1rem; */
+`;
+
 const StyledNavBar = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 5rem;
+  height: 4rem;
   padding: 1rem 0;
   background: hsla(180, 2%, 22%, 0.2);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  transition: all .3s ease-in-out;
+
+  &:hover {
+    background-color: var(--cordis-text-color);
+  }
 
   & li .main-nav-item-active p {
     color: var(--cordis-emphasis);
@@ -79,7 +97,7 @@ const NavContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  gap: 1rem;
+  /* gap: .1rem; */
 `;
 
 const QuickCheckIn = styled.div`
@@ -89,12 +107,19 @@ const QuickCheckIn = styled.div`
   gap: 2.5rem;
   width: 100%;
   padding: 2rem 0;
-  background-color: var(--cordis-text-color);
+  background: hsla(180, 2%, 22%, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all .3s ease-in-out;
+
+  &:hover {
+    background-color: var(--cordis-text-color);
+  }
 `;
 
 const StyledVideoControls = styled.div`
   position: absolute;
-  top: 60%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
@@ -104,20 +129,20 @@ const StyledPlayButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 8rem;
-  height: 8rem;
+  width: 6rem;
+  height: 6rem;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: hsla(180, 2%, 22%, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.15s ease;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.1);
     border-color: hsla(45, 100%, 55.7%, 0.5);
-    transform: scale(1.1);
+    transform: scale(1.07);
   }
 
   &:active {
@@ -149,15 +174,17 @@ const HeroSection = forwardRef((props, ref) => {
       <StyledVideoControls>
         <StyledPlayButton onClick={togglePlayPause}>
           {isPlaying ? (
-            <RiPauseFill color="white" size="3rem" />
+            <RiPauseFill color="rgba(255, 255, 255, 0.5)" size="2rem" />
           ) : (
-            <RiPlayFill color="white" size="3rem" />
+            <RiPlayFill color="rgba(255, 255, 255, 0.5)" size="2rem" />
           )}
         </StyledPlayButton>
       </StyledVideoControls>
 
       <NavContainer>
-        <Logo $type="filled" />
+        <StyledLogoWrapper>
+          <Logo />
+        </StyledLogoWrapper>
         <StyledNavBar>
           <MainNavBar showLogo={false} />
         </StyledNavBar>

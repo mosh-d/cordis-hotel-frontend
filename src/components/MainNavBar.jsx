@@ -6,8 +6,9 @@ import Text from './shared/Text';
 const StyledMainNavBar = styled.nav`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  /* gap: .5rem; */
   align-items: center;
+  
 
   & ul {
     display: flex;
