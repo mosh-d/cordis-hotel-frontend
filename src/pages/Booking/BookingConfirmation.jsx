@@ -50,6 +50,10 @@ const StyledTextIconWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 2.4rem;
+
+  & * {
+    text-align: center;
+  }
 `;
 
 export default function BookingConfirmationPage() {
@@ -68,7 +72,7 @@ export default function BookingConfirmationPage() {
             </Text>
             <RiCheckboxCircleLine color="var(--cordis-white)" size="10rem" />
           </StyledTextIconWrapper>
-          <Text $type="h3" $color="var(--cordis-white)">
+          <Text style={{"textAlign": "center"}} $type="h3" $color="var(--cordis-white)">
             Check your email for a confirmation message. Can’t wait to have you
             around!
           </Text>
