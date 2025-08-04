@@ -42,22 +42,32 @@ const StyledHeroSection = styled.section`
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
-  min-height: 50vw;
+  /* min-height: 50vw; */
   width: 100%;
 `;
 
 const StyledLogoWrapper = styled.div`
-  /* border-radius: 1000px;
-  margin-top: 1rem;
-  background: hsla(180, 2%, 22%, 0.2);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  height: 14rem;
-  width: 14rem;
-  display: flex;
-  align-items: center; */
-  /* margin-top: -1rem; */
+
+${media.mobile} {
+    display: none;
+  }
 `;
+
+const StyledNavBar1 = styled.div`
+
+${media.mobile} {
+  display: none;
+}
+`;
+
+const StyledNavBar2 = styled.div`
+  display: none;
+
+  ${media.mobile} {
+    display: block;
+  }
+`;
+
 
 const StyledNavBar = styled.div`
   display: flex;
@@ -89,6 +99,10 @@ const StyledNavBar = styled.div`
     &:hover {
       color: var(--cordis-white);
     }
+  }
+
+  ${media.mobile} {
+    display: none;
   }
 `;
 
@@ -208,8 +222,13 @@ const HeroSection = forwardRef((props, ref) => {
           <Logo />
         </StyledLogoWrapper>
         <StyledNavBar>
-          <MainNavBar showLogo={false} />
+          <StyledNavBar1>
+            <MainNavBar showLogo={false} />
+          </StyledNavBar1>
         </StyledNavBar>
+        <StyledNavBar2>
+          <MainNavBar $type="mobile" /> 
+        </StyledNavBar2>
       </NavContainer>
 
       <QuickCheckIn>

@@ -86,6 +86,23 @@ const AmenityTextWrapper = styled.div`
   justify-content: center;
   width: 100%;
   gap: 2rem;
+  
+  ${media.tablet} {
+    display: none;
+  }
+`;
+
+const AmenityTextWrapper1 = styled.div`
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  gap: 2rem;
+
+  ${media.tablet} {
+    display: flex;
+  }
 `;
 
 const StyledPool = styled.div`
@@ -195,6 +212,14 @@ export default function OtherAmenitiesSection() {
 
   return (
     <StyledOtherAmenitiesSection>
+      <AmenityTextWrapper1>
+        <Text $type="h1" $color="var(--cordis-black)" $weight="bold">
+          Other Amenities
+        </Text>
+        <Text $color="var(--cordis-black)">
+          Discover a range of thoughtful amenities designed to make your stay comfortable and convenient, from our modern laundry facilities to versatile conference spaces and more.
+        </Text>
+      </AmenityTextWrapper1>
       <StyledPoolWrapper>
         <StyledPool>
           <Carousel ImageUrls={PoolImages} />
