@@ -6,6 +6,7 @@ import CustomInput2 from "./shared/CustomInput2";
 import Button from "./shared/Button";
 import { RiTiktokLine, RiFacebookLine, RiInstagramLine, RiTwitterXLine, RiPhoneLine, RiWhatsappLine, RiMailLine } from "react-icons/ri";
 import Link from "./shared/Link";
+import { media } from "../util/breakpoints";
 
 const StyledFooter = styled.footer`
   display: flex;
@@ -74,6 +75,11 @@ const StyledOffersContactWrapper = styled.div`
   justify-content: center;
   gap: 10vw;
   width: 100%;
+
+  ${media.tablet} {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const StyledExclusiveOffers = styled.div`
@@ -82,6 +88,14 @@ const StyledExclusiveOffers = styled.div`
   align-items: flex-start;
   justify-content: center;
   gap: 3rem;
+
+  ${media.tablet} {
+    align-items: center;
+
+    & * {
+      text-align: center;
+    }
+  }
 `;
 
 const StyledIcons = styled.div`
@@ -97,6 +111,15 @@ const StyledContactInfo = styled.div`
   align-items: flex-start;
   justify-content: center;
   gap: 2.4rem;
+
+  ${media.tablet} {
+    align-items: center;
+    text-align: center;
+
+    & * {
+      text-align: center;
+    }
+  }
 `;
 
 const StyledContactWrapper = styled.div`
@@ -118,6 +141,11 @@ const StyledFooterBottom = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
+  ${media.tablet} {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
 `;
 
 const StyledNavigationHeaderWrapper = styled.div`
@@ -133,6 +161,22 @@ const StyledLine = styled.div`
   height: 1px;
   background-color: var(--cordis-accent);
   opacity: .3;
+  
+  ${media.tablet} {
+    display: none;
+  }
+`;
+
+const StyledLine1 = styled.div`
+  width: 100%;
+  height: 1px;
+  background-color: var(--cordis-accent);
+  opacity: .3;
+  display: none;
+
+  ${media.tablet} {
+    display: block;
+  }
 `;
 
 const StyledNavigationLinkWrapper = styled.div`
@@ -140,6 +184,11 @@ const StyledNavigationLinkWrapper = styled.div`
   align-items: center;
   justify-content: center;
   gap: 8rem;
+
+  ${media.tablet} {
+    flex-direction: column;
+    gap: 2.4rem;
+  }
 `;
 
 const StyledHotelsHeaderwrapper = styled.div`
@@ -155,6 +204,12 @@ const StyledHotelsLinkWrapper = styled.div`
   align-items: flex-start;
   justify-content: center;
   gap: 8rem;
+
+  ${media.tablet} {
+    flex-direction: column;
+    gap: 4rem;
+    align-items: center;
+  }
 `;
 
 const StyledHotelLinkWrapper = styled.div`
@@ -162,13 +217,22 @@ const StyledHotelLinkWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 1.6rem;
+
+  ${media.tablet} {
+    align-items: center;
+  }
 `;
+
 const StyledHotelLinks = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   gap: 2.4rem;
+
+  ${media.tablet} {
+    align-items: center;
+  }
 `;
 
 const StyledHeader = styled.div`
@@ -237,6 +301,7 @@ export default function Footer({ $type }) {
             </StyledContactInfo>
           </StyledOffersContactWrapper>
         </StyledOffersContact>
+        <StyledLine1 />
         <StyledNavigation>
           <StyledNavigationHeaderWrapper>
             <StyledLine />
@@ -252,6 +317,7 @@ export default function Footer({ $type }) {
             <NavLink to="/blog"><Link $type="secondary">Blog</Link></NavLink>
           </StyledNavigationLinkWrapper>
         </StyledNavigation>
+        <StyledLine1 />
         <StyledHotels>
           <StyledHotelsHeaderwrapper>
             <StyledLine />

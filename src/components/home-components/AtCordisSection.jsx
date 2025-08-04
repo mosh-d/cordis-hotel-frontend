@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Text from "../shared/Text";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
+import { media } from "../../util/breakpoints";
 
 //image
 import AtCordisBackground from "../../assets/at-cordis/AT-CORDIS.png";
@@ -16,6 +17,10 @@ const StyledAtCordisSection = styled.section`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
+  ${media.tablet} {
+    padding: 12rem 2rem;
+  }
 `;
 
 const StyledTextButtonWrapper = styled.div`

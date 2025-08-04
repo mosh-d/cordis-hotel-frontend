@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Banner from "../../assets/BANNER.png";
 import Text from "../shared/Text";
+import { media } from "../../util/breakpoints";
 
 const StyledIntroSection = styled.section`
   display: flex;
@@ -16,12 +17,24 @@ const IntroText = styled.div`
   justify-content: center;
   gap: 2rem;
 
-  margin: 15rem 15rem;
+  padding: 15rem;
+
+  ${media.tablet} {
+    padding: 15rem 12rem;
+  }
 
   & p,
   & h1 {
     text-align: center;
   }
+`;
+
+const StyledBanner = styled.div`
+  height: 30rem;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url(${Banner});
 `;
 
 export default function IntroSection() {
@@ -36,7 +49,8 @@ export default function IntroSection() {
           of comfort and discovery.
         </Text>
       </IntroText>
-      <img src={Banner} alt="Banner" />
+      <StyledBanner></StyledBanner>
+      {/* <img src={Banner} alt="Banner" /> */}
     </StyledIntroSection>
   );
 }

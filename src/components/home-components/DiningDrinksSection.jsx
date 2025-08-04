@@ -18,6 +18,7 @@ import Specials1 from "../../assets/cordis-specials/CORDIS-SPECIALS-1.png";
 import Specials2 from "../../assets/cordis-specials/CORDIS-SPECIALS-2.png";
 import Specials3 from "../../assets/cordis-specials/CORDIS-SPECIALS-3.png";
 import Button from "../shared/Button";
+import { media } from "../../util/breakpoints";
 
 const RestaurantImages = [Restaurant1, Restaurant2, Restaurant3];
 const BarImages = [Bar1, Bar2, Bar3];
@@ -30,6 +31,20 @@ const StyledDiningDrinksSection = styled.section`
   align-items: center;
   gap: 6rem;
   padding: 15rem 15rem;
+
+  @media (max-width: 1400px) {
+    padding: 15rem 4rem;
+  }
+
+  ${media.desktop} {
+    padding: 15rem 4rem;
+  }
+
+  ${media.tablet} {
+    flex-direction: column;
+    height: 200rem;
+    /* align-items: flex-start; */
+  }
 `;
 
 const RestaurantWrapper = styled.div`
@@ -38,6 +53,12 @@ const RestaurantWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  ${media.tablet} {
+    height: 200rem;
+    flex: 1;
+    width: 100%;
+  }
 `;
 
 const BarWrapper = styled.div`
@@ -77,6 +98,18 @@ const DiningDrinksText = styled.div`
   flex-direction: column;
   gap: 2rem;
   align-items: flex-start;
+
+  ${media.tablet} {
+    display: none;
+  }
+`;
+
+const DiningDrinksText2 = styled.div`
+  display: none;
+
+  ${media.tablet} {
+    display: block;
+  }
 `;
 
 const BarSpecialsContainer = styled.div`
@@ -95,6 +128,32 @@ const StyledBarSpecials = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   gap: 8rem;
+
+  ${media.tablet} {
+    align-items: center;
+  }
+`;
+
+const RestaurantTitle = styled(Text)`
+   font-weight: 1000;
+   font-size: var(--text-xl);
+
+  ${media.tablet} {
+    color: var(--cordis-white) !important;
+    font-weight: 1000;
+    font-size: var(--text-xl);
+  }
+`;
+const RestaurantTitle2 = styled(Text)`
+  font-family: var(--font-family-secondary);
+  font-size: var(--text-lg);
+  font-weight: 1000;
+
+  ${media.tablet} {
+    color: var(--cordis-gray) !important;
+    font-family: var(--font-family-secondary);
+    font-size: var(--text-lg);
+  }
 `;
 
 const BackDrop = styled.div`
@@ -105,16 +164,40 @@ const BackDrop = styled.div`
   width: 70vw;
   height: 84.5rem;
   z-index: -1;
+
+  ${media.desktop} {
+    right: 1.5rem;
+  }
+
+  @media (max-width: 1400px) {
+    right: 1.5rem;
+  }
+
+  ${media.tablet} {
+    width: 100%;
+    right: 0;
+    height: 180rem;
+  }
 `;
 
 export default function DiningDrinksSection() {
   return (
     <StyledDiningDrinksSection>
+      <DiningDrinksText2>
+          <Text $type="h1" $color="var(--cordis-white)" $weight="bold">
+            Dining & Drinks
+          </Text>
+          <Text $color="var(--cordis-gray)">
+            Indulge in flame‑grilled specialties, authentic Nigerian tastes, and
+            chef‑crafted tasting menus—where every dish blends local ingredients
+            with global flair.
+          </Text>
+      </DiningDrinksText2>
       <RestaurantWrapper>
         <StyledRestaurant>
           <Carousel ImageUrls={RestaurantImages} />
         </StyledRestaurant>
-        <Text
+        <RestaurantTitle
           $type="h3"
           $size="extra-small"
           $typeFace="primary"
@@ -123,8 +206,8 @@ export default function DiningDrinksSection() {
           $color="var(--cordis-text-color)"
         >
           Cordis Restaurant
-        </Text>
-        <Text
+        </RestaurantTitle>
+        <RestaurantTitle2
           $color="var(--cordis-black)"
           $typeFace="secondary"
           $size="large"
@@ -132,7 +215,7 @@ export default function DiningDrinksSection() {
           $weight="regular"
         >
           A vibrant celebration of authentic Nigerian culinary artistry.
-        </Text>
+        </RestaurantTitle2>
       </RestaurantWrapper>
 
       <StyledBarSpecials>

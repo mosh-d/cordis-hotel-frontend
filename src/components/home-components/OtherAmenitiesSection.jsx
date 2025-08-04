@@ -4,6 +4,7 @@ import Text from "../shared/Text";
 import Carousel from "../shared/Carousel";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
+import { media } from "../../util/breakpoints";
 
 //images
 import Laundry1 from "../../assets/cordis-laundry/CORDIS-LAUNDRY-1.png";
@@ -27,6 +28,15 @@ const StyledOtherAmenitiesSection = styled.section`
   width: 100%;
   padding: 15rem 30rem;
   gap: 6rem;
+
+  @media (max-width: 1400px) {
+    padding: 15rem 4rem;
+  }
+
+  ${media.tablet} {
+    flex-direction: column;
+    height: 220rem;
+  }
 `;
 
 const StyledAmenityText = styled.div`
@@ -46,6 +56,10 @@ const StyledAmenityWrapper = styled.div`
   height: 100%;
   width: 100%;
   gap: 4.8rem;
+
+  ${media.tablet} {
+    align-items: center;
+  }
 `;
 
 const StyledTextAmenityWrapper = styled.div`
@@ -109,6 +123,12 @@ const BackDrop = styled.div`
   width: 55vw;
   height: 105rem;
   z-index: -1;
+
+  ${media.tablet} {
+    right: 0;
+    width: 100%;
+    height: 200rem;
+  }
 `;
 
 const LaundryText = (

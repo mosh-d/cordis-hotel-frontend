@@ -46,7 +46,7 @@ const StyledMiniBlogWrapper = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: var(--cordis-black);
+    background-color: var(--cordis-text-color);
     height: .5rem;
   }
 

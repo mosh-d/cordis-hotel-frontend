@@ -1,7 +1,7 @@
-import BudgetRoom from "../shared/Room";
 import Room from "../shared/Room";
 import styled from "styled-components";
 import Text from "../shared/Text";
+import { media } from "../../util/breakpoints";
 
 const RoomText = styled.div`
   display: flex;
@@ -16,13 +16,54 @@ const StyledRoomSection = styled.div`
   gap: 5rem;
 
   padding: 15rem 12rem;
+
+  ${media.desktop} {
+    padding: 15rem 4rem;
+  }
+
+  ${media.tablet} {
+    padding: 15rem 4rem;
+  }
 `;
 
 const StyledRooms = styled.div`
   width: 100%;
+  overflow-x: auto;
+  padding-bottom: 4rem;
+  
+  & > * {
+    min-width: calc(50% - 0.5rem);
+
+    ${media.tablet} {
+      min-width: 90%;
+    }
+  }
   display: flex;
   flex-direction: row;
   gap: 1rem;
+
+  &::-webkit-scrollbar {
+      width: .1rem;
+      height: .5rem;
+    }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--cordis-light-gray);
+    height: .5rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--cordis-text-color);
+    height: .5rem;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+`;
+
+const StyledRoomContainer = styled.div`
+
 `;
 
 export default function RoomSection() {
@@ -39,8 +80,15 @@ export default function RoomSection() {
         </RoomText>
 
         <StyledRooms>
-          <Room imageType="budget" headerText="Budget" buttonText="Reserve" />
-          <Room imageType="diplomatic" headerText="Diplomatic" buttonText="Reserve" />
+          <StyledRoomContainer>
+            <Room imageType="budget" headerText="Budget" buttonText="Reserve" />
+          </StyledRoomContainer>
+          <StyledRoomContainer>
+            <Room imageType="diplomatic" headerText="Diplomatic" buttonText="Reserve" />
+          </StyledRoomContainer>
+          <StyledRoomContainer>
+            <Room imageType="diplomatic" headerText="Diplomatic" buttonText="Reserve" />
+          </StyledRoomContainer>
         </StyledRooms>
       </StyledRoomSection>
     </>

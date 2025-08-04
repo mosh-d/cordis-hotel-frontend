@@ -9,6 +9,7 @@ import Button from "../shared/Button";
 import Text from "../shared/Text";
 import { forwardRef, useState, useRef } from "react";
 import { RiPlayFill, RiPauseFill } from "react-icons/ri";
+import { media } from "../../util/breakpoints";
 
 const StyledHeroSection = styled.section`
   display: flex;
@@ -41,7 +42,7 @@ const StyledHeroSection = styled.section`
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
-  min-height: 50rem;
+  min-height: 50vw;
   width: 100%;
 `;
 
@@ -68,7 +69,7 @@ const StyledNavBar = styled.div`
   background: hsla(180, 2%, 22%, 0.2);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 
   &:hover {
     background-color: var(--cordis-text-color);
@@ -110,7 +111,24 @@ const QuickCheckIn = styled.div`
   background: hsla(180, 2%, 22%, 0.2);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+
+  ${media.tablet} {
+    flex-direction: column;
+    align-items: center;
+    justify-content: stretch;
+
+    & input {
+      width: 40vw;
+    }
+  }
+
+  ${media.mobile} {
+
+    & input {
+      width: 60vw;
+    }
+  }
 
   &:hover {
     background-color: var(--cordis-text-color);
@@ -123,6 +141,10 @@ const StyledVideoControls = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
+
+  ${media.tablet} {
+    top: 45%;
+  }
 `;
 
 const StyledPlayButton = styled.button`

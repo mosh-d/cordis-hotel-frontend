@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Text from "../shared/Text";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
+import { media } from "../../util/breakpoints";
 
 //images
 import Exterior1 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-1.png";
@@ -44,8 +45,13 @@ const StyledHotelExteriorImageWrapper = styled.div`
 const StyledHotelExteriorImage = styled.img`
   width: 27%;
   flex-shrink: 0;
-  height: 60rem;
+  height: 30vw;
   object-fit: cover;
+
+  ${media.tablet} {
+    min-height: 30rem;
+    width: 35%;
+  }
 `;
 
 const StyledHotelExteriorButtonWrapper = styled.div`

@@ -3,6 +3,7 @@ import Carousel from "../shared/Carousel";
 import Text from "../shared/Text";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
+import { media } from "../../util/breakpoints";
 
 //gym images
 import Gym1 from "../../assets/cordis-gym/CORDIS-GYM-1.png";
@@ -24,7 +25,15 @@ const StyledExerciseRelaxationSection = styled.section`
   align-items: center;
   padding: 15rem 30rem;
   gap: 6rem;
-  height: 120rem;
+  height: 220rem;
+
+  @media (max-width: 1400px) {
+    padding: 15rem 4rem;
+  }
+
+  ${media.tablet} {
+    flex-direction: column;
+  }
 `;
 
 const StyledGymWrapper = styled.div`
@@ -76,6 +85,21 @@ const SpaTextWrapper = styled.div`
   gap: 2rem;
 `;
 
+const StyledButtonContainer = styled.div`
+  
+  ${media.tablet} {
+    display: none;
+  }
+`;
+
+const StyledButtonContainer2 = styled.div`
+  display: none;
+
+  ${media.tablet} {
+    display: block;
+  }
+`;
+
 const StyledGymContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -94,6 +118,12 @@ const BackDrop = styled.div`
   width: 60vw;
   height: 60rem;
   z-index: -1;
+
+  ${media.tablet} {
+    right: 0;
+    width: 100%;
+    height: 200rem;
+  }
 `;
 
 export default function ExerciseRelaxationSection() {
@@ -138,11 +168,13 @@ export default function ExerciseRelaxationSection() {
         </StyledGymContainer>
 
         <RouterLink to="/amenity-booking">
-          <Button $type="emphasis2">
-            <Text $weight="bold" $size="medium">
-              Book Gym/Spa
-            </Text>
-          </Button>
+          <StyledButtonContainer>
+            <Button $type="emphasis2">
+              <Text $weight="bold" $size="medium">
+                Book Gym/Spa
+              </Text>
+            </Button>
+          </StyledButtonContainer>
         </RouterLink>
       </StyledGymWrapper>
 
@@ -172,6 +204,15 @@ export default function ExerciseRelaxationSection() {
           </Text>
         </SpaTextWrapper>
       </StyledSpaWrapper>
+      <RouterLink to="/amenity-booking">
+        <StyledButtonContainer2>
+          <Button $type="emphasis2">
+            <Text $weight="bold" $size="medium">
+              Book Gym/Spa
+            </Text>
+          </Button>
+        </StyledButtonContainer2>
+      </RouterLink>
       <BackDrop></BackDrop>
     </StyledExerciseRelaxationSection>
   );

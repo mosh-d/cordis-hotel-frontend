@@ -42,19 +42,35 @@ const StyledMainNavBar = styled.nav`
   }
 `;
 
-function MainNavBar({ showLogo = true }) {
+function MainNavBar({ $type, showLogo = true }) {
   return (
-    <StyledMainNavBar>
-      {showLogo && <Logo $type="filled" />}
-      <nav>
-        <ul>
-          <li><NavLink to="/" className={({isActive}) => isActive ? 'main-nav-item-active' : ''} end><Text $type="p" $size="small" $weight="regular" $typeFace="primary">HOME</Text></NavLink></li>
-          <li><NavLink to="/about" className={({isActive}) => isActive ? 'main-nav-item-active' : ''}><Text $type="p" $size="small" $weight="regular" $typeFace="primary">ABOUT</Text></NavLink></li>
-          <li><NavLink to="/contact" className={({isActive}) => isActive ? 'main-nav-item-active' : ''}><Text $type="p" $size="small" $weight="regular" $typeFace="primary">CONTACT</Text></NavLink></li>
-          <li><NavLink to="/blog" className={({isActive}) => isActive ? 'main-nav-item-active' : ''}><Text $type="p" $size="small" $weight="regular" $typeFace="primary">BLOG</Text></NavLink></li>
-        </ul>
-      </nav>
-    </StyledMainNavBar>
+    <>
+      {$type === "mobile" ? (
+        <StyledMainNavBar>
+          {showLogo && <Logo $type="filled" />}
+          <nav>
+            <ul>
+              <li><NavLink to="/" className={({isActive}) => isActive ? 'main-nav-item-active' : ''} end><Text $type="p" $size="small" $weight="regular" $typeFace="primary">HOME</Text></NavLink></li>
+              <li><NavLink to="/about" className={({isActive}) => isActive ? 'main-nav-item-active' : ''}><Text $type="p" $size="small" $weight="regular" $typeFace="primary">ABOUT</Text></NavLink></li>
+              <li><NavLink to="/contact" className={({isActive}) => isActive ? 'main-nav-item-active' : ''}><Text $type="p" $size="small" $weight="regular" $typeFace="primary">CONTACT</Text></NavLink></li>
+              <li><NavLink to="/blog" className={({isActive}) => isActive ? 'main-nav-item-active' : ''}><Text $type="p" $size="small" $weight="regular" $typeFace="primary">BLOG</Text></NavLink></li>
+            </ul>
+          </nav>
+        </StyledMainNavBar>
+      ) : (
+      <StyledMainNavBar>
+        {showLogo && <Logo $type="filled" />}
+        <nav>
+          <ul>
+            <li><NavLink to="/" className={({isActive}) => isActive ? 'main-nav-item-active' : ''} end><Text $type="p" $size="small" $weight="regular" $typeFace="primary">HOME</Text></NavLink></li>
+            <li><NavLink to="/about" className={({isActive}) => isActive ? 'main-nav-item-active' : ''}><Text $type="p" $size="small" $weight="regular" $typeFace="primary">ABOUT</Text></NavLink></li>
+            <li><NavLink to="/contact" className={({isActive}) => isActive ? 'main-nav-item-active' : ''}><Text $type="p" $size="small" $weight="regular" $typeFace="primary">CONTACT</Text></NavLink></li>
+            <li><NavLink to="/blog" className={({isActive}) => isActive ? 'main-nav-item-active' : ''}><Text $type="p" $size="small" $weight="regular" $typeFace="primary">BLOG</Text></NavLink></li>
+          </ul>
+        </nav>
+      </StyledMainNavBar>
+      )}
+    </>
   );
 }
 

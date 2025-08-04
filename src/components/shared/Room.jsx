@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Carousel from "./Carousel";
 import Button from "./Button";
 import { Link as RouteLink } from "react-router-dom";
+import { media } from "../../util/breakpoints";
 
 //budget room images
 import BudgetRoom1 from "../../assets/budget-rooms/BUDGET-ROOM-1.png";
@@ -36,10 +37,15 @@ const DiplomaticRoomImages = [
 const StyledRoom = styled.div`
   width: 100%;
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
   align-items: left;
   justify-content: flex-start;
   gap: 1.5rem;
+
+  ${media.tablet} {
+    width: 100%;
+  }
 `;
 
 const StyledRoomCardWrapper = styled.div`
@@ -51,6 +57,10 @@ const StyledRoomCarousel = styled.div`
   width: 100%;
   height: 55rem;
   background-color: ${({ $bgColor }) => $bgColor || "transparent"};
+  
+  ${media.mobile} {
+    height: 35rem;
+  }
 `;
 
 export default function Room({

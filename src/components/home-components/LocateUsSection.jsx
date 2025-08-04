@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Text from "../shared/Text";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
+import { media } from "../../util/breakpoints";
 
 const StyledLocateUsSection = styled.section`
   display: flex;
@@ -21,11 +22,20 @@ const StyledMapLocationWrapper = styled.div`
   gap: 6rem;
   height: 100%;
   align-items: stretch;
+
+  ${media.tablet} {
+    flex-direction: column;
+  }
 `;
 
 const StyledMap = styled.div`
   width: 35%;
   background-color: var(--cordis-gray);
+
+  ${media.tablet} {
+    width: 100%;
+    height: 30rem;
+  }
 `;
 
 const StyledNearbyLocationsWrapper = styled.div`
@@ -34,6 +44,10 @@ const StyledNearbyLocationsWrapper = styled.div`
   gap: 4.8rem;
   height: fit-content;
   width: 65%;
+
+  ${media.tablet} {
+    width: 100%;
+  }
 `;
 
 const StyledNearbyLocationsTextWrapper = styled.div`
@@ -69,6 +83,10 @@ const StyledButton = styled.div`
   display: flex;
   width: 100%;
   justify-content: flex-end;
+
+  ${media.tablet} {
+    justify-content: center;
+  }
 `;
 
 export default function LocateUsSection() {
