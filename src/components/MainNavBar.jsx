@@ -71,7 +71,7 @@ const StyledLogoMenu = styled.div`
     justify-content: center;
     height: 5rem;
     right: 0;
-    background: hsla(180, 2%, 22%, 0.2);
+    background: hsla(180, 2%, 0%, 0.3);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     /* box-shadow: var(--shadow-lg); */
@@ -115,7 +115,7 @@ const StyledMenuIcon = styled.div`
   top: 0;
   right: 0;
   /* margin: 2rem; */
-  background: hsla(180, 2%, 22%, 0.2);
+  background: hsla(180, 2%, 0%, 0.3);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   padding: 1.5rem;
