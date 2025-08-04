@@ -5,8 +5,10 @@ const StyledLink = styled.span`
   border-bottom: ${({ $type }) => $type === "default" ? '1px solid var(--cordis-black)' : '1px solid var(--cordis-accent)'};
   opacity: 0.7;
 
-  &:hover {
-    cursor: pointer;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 
@@ -14,8 +16,10 @@ const StyledLink2 = styled.span`
   border-bottom: 1px solid var(--cordis-black);
   opacity: 0.7;
 
-  &:hover {
-    cursor: pointer;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 

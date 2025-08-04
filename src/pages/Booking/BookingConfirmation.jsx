@@ -24,10 +24,12 @@ const StyledBackArrow = styled.div`
   transition: all 0.1s ease-in-out;
   /* background-color: yellowgreen; */
 
-  &:hover {
-    cursor: pointer;
-    transform: translateX(-0.4rem) scale(1.1);
-    opacity: 0.7;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      cursor: pointer;
+      transform: translateX(-0.4rem) scale(1.1);
+      opacity: 0.7;
+    }
   }
 
   &:active {
@@ -72,7 +74,11 @@ export default function BookingConfirmationPage() {
             </Text>
             <RiCheckboxCircleLine color="var(--cordis-white)" size="10rem" />
           </StyledTextIconWrapper>
-          <Text style={{"textAlign": "center"}} $type="h3" $color="var(--cordis-white)">
+          <Text
+            style={{ textAlign: "center" }}
+            $type="h3"
+            $color="var(--cordis-white)"
+          >
             Check your email for a confirmation message. Can’t wait to have you
             around!
           </Text>

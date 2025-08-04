@@ -10,9 +10,11 @@ const StyledButton = styled.button`
   padding: 1rem;
   margin: 2rem;
   opacity: 70%;
-  
-  &:hover {
-    opacity: 100%;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      opacity: 100%;
+    }
   }
 
   &:active {
@@ -30,7 +32,7 @@ const StyledButtonContainer = styled.div`
   bottom: 0;
   right: 0;
   display: block;
-`
+`;
 
 const StyledCarousel = styled.div`
   width: 100%;
@@ -57,15 +59,19 @@ const StyledText = styled.div`
   height: 100%;
 `;
 
-export default function Carousel({ ImageUrls, Description = [], onIndexChange }) {
+export default function Carousel({
+  ImageUrls,
+  Description = [],
+  onIndexChange,
+}) {
   const [imageIndex, setImageIndex] = useState(0);
   const [direction, setDirection] = useState(0);
-  
+
   // Call onIndexChange on mount to set initial index
   useEffect(() => {
     if (onIndexChange) onIndexChange(imageIndex);
   }, []);
-  
+
   function showPrevImage() {
     setDirection(-1);
     // Delay the index change until next render cycle
@@ -88,15 +94,15 @@ export default function Carousel({ ImageUrls, Description = [], onIndexChange })
 
   return (
     <StyledCarousel>
-       <AnimatePresence initial={false} mode="wait">
+      <AnimatePresence initial={false} mode="wait">
         <StyledImage
           key={ImageUrls[imageIndex]}
           src={ImageUrls[imageIndex]}
           alt="Carousel"
-          initial={{ opacity: .2, x: direction === 1 ? 80 : -80 }}
+          initial={{ opacity: 0.2, x: direction === 1 ? 80 : -80 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: .2, x: direction === 1 ? -100 : 100 }}
-          transition={{ duration: .4, ease: [0,.34,1,.34] }}
+          exit={{ opacity: 0.2, x: direction === 1 ? -100 : 100 }}
+          transition={{ duration: 0.4, ease: [0, 0.34, 1, 0.34] }}
         />
       </AnimatePresence>
 

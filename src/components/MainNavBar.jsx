@@ -35,10 +35,11 @@ const StyledMainNavBar = styled.div`
       line-height: 1;
     }
 
-    & p:hover {
-      color: var(--cordis-black);
-      border-bottom: 1px solid var(--cordis-emphasis);
-      // text-decoration: underline;
+    @media (hover: hover) and (pointer: fine) {
+      & p:hover {
+        color: var(--cordis-black);
+        border-bottom: 1px solid var(--cordis-emphasis);
+      }
     }
   }
 `;
@@ -76,11 +77,13 @@ const StyledLogoMenu = styled.div`
     /* box-shadow: var(--shadow-lg); */
     height: fit-content;
     padding: 2rem;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
     gap: 3rem;
 
-    &:hover {
-      background-color: var(--cordis-text-color);
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        background-color: var(--cordis-text-color);
+      }
     }
 
     & li {
@@ -100,10 +103,10 @@ const StyledLogoMenu = styled.div`
       line-height: 1;
     }
 
-    & p:hover {
-      /* color: var(--cordis-white); */
-      border-bottom: 1px solid var(--cordis-emphasis);
-      // text-decoration: underline;
+    @media (hover: hover) and (pointer: fine) {
+      & p:hover {
+        border-bottom: 1px solid var(--cordis-emphasis);
+      }
     }
   }
 `;
@@ -119,9 +122,11 @@ const StyledMenuIcon = styled.div`
   border-radius: 10rem;
   z-index: 100;
 
-  /* &:hover {
-    background-color: var(--cordis-text-color);
-  } */
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: var(--cordis-text-color);
+    }
+  }
 `;
 
 function MainNavBar({ $type, showLogo = true }) {

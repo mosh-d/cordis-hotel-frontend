@@ -48,10 +48,12 @@ const StyledBackArrow = styled.div`
   height: 6rem;
   transition: all 0.1s ease-in-out;
 
-  &:hover {
-    cursor: pointer;
-    transform: translateX(-0.4rem) scale(1.1);
-    opacity: 0.7;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      cursor: pointer;
+      transform: translateX(-0.4rem) scale(1.1);
+      opacity: 0.7;
+    }
   }
 
   &:active {
@@ -133,7 +135,7 @@ const StyledPhoneInputWrapper = styled.div`
   width: 100%;
   gap: 1rem;
   flex: 1;
-  padding-bottom: .3rem;
+  padding-bottom: 0.3rem;
 `;
 
 const StyledPhoneInputContainer = styled.div`
@@ -206,12 +208,12 @@ export default function AmenityBookingPage() {
   //Amenity price
   const AMENITY_PRICES = {
     spa: 10000,
-    gym: 5000
+    gym: 5000,
   };
 
   const AMENITY_NAMES = {
     spa: "Spa",
-    gym: "Gym"
+    gym: "Gym",
   };
 
   const durationText = () => {
@@ -220,7 +222,7 @@ export default function AmenityBookingPage() {
     } else {
       return duration + " hours";
     }
-  }
+  };
 
   const amenityPrice = AMENITY_PRICES[amenity] || 0;
   const amenityName = AMENITY_NAMES[amenity] || "Select an Amenity";
@@ -228,23 +230,29 @@ export default function AmenityBookingPage() {
   const subtotal = amenityPrice * duration;
   const vat = subtotal * 0.075; // 7.5%
   const stateTax = subtotal * 0.05; // 5%
-  const serviceCharge = subtotal * 0.10; // 10%
+  const serviceCharge = subtotal * 0.1; // 10%
   const total = subtotal + vat + stateTax + serviceCharge;
 
   // Phone number formatting function
   const formatPhoneNumber = (value) => {
     // Remove all non-digits
-    const phoneNumber = value.replace(/\D/g, '');
-    
+    const phoneNumber = value.replace(/\D/g, "");
+
     // Format based on length
     if (phoneNumber.length <= 3) {
       return phoneNumber;
     } else if (phoneNumber.length <= 6) {
       return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3)}`;
     } else if (phoneNumber.length <= 10) {
-      return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3, 6)} ${phoneNumber.slice(6)}`;
+      return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(
+        3,
+        6
+      )} ${phoneNumber.slice(6)}`;
     } else {
-      return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3, 6)} ${phoneNumber.slice(6, 10)}`;
+      return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(
+        3,
+        6
+      )} ${phoneNumber.slice(6, 10)}`;
     }
   };
 
@@ -291,7 +299,7 @@ export default function AmenityBookingPage() {
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
-                <CustomInput2
+              <CustomInput2
                 header="Amenity"
                 $type="select"
                 $placeholder="Diplomatic Room"
@@ -327,7 +335,7 @@ export default function AmenityBookingPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-                <CustomInput2
+              <CustomInput2
                 header="Session Start"
                 type="time"
                 value={sessionStart}
@@ -336,7 +344,12 @@ export default function AmenityBookingPage() {
             </StyledInputRow>
             <StyledInputRow>
               <StyledPhoneInputWrapper>
-                <Text $type="p" $color="var(--cordis-black)" $weight="light" $typeFace="primary">
+                <Text
+                  $type="p"
+                  $color="var(--cordis-black)"
+                  $weight="light"
+                  $typeFace="primary"
+                >
                   Phone Number
                 </Text>
                 <StyledPhoneInputContainer>
@@ -359,7 +372,7 @@ export default function AmenityBookingPage() {
                   />
                 </StyledPhoneInputContainer>
               </StyledPhoneInputWrapper>
-                <CustomInput2
+              <CustomInput2
                 header="Duration"
                 type="number"
                 value={duration}
@@ -368,7 +381,14 @@ export default function AmenityBookingPage() {
             </StyledInputRow>
           </StyledInputs>
           <StyledMessagerow>
-            <Text $type="p" $color="var(--cordis-black)" $weight="light" $typeFace="primary">Additional Message</Text>
+            <Text
+              $type="p"
+              $color="var(--cordis-black)"
+              $weight="light"
+              $typeFace="primary"
+            >
+              Additional Message
+            </Text>
             <StyledTextarea placeholder="Write a message here" />
           </StyledMessagerow>
         </StyledRoomBooking>

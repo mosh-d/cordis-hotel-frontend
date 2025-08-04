@@ -48,10 +48,12 @@ const StyledBackArrow = styled.div`
   height: 6rem;
   transition: all 0.1s ease-in-out;
 
-  &:hover {
-    cursor: pointer;
-    transform: translateX(-0.4rem) scale(1.1);
-    opacity: 0.7;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      cursor: pointer;
+      transform: translateX(-0.4rem) scale(1.1);
+      opacity: 0.7;
+    }
   }
 
   &:active {
@@ -133,7 +135,7 @@ const StyledPhoneInputWrapper = styled.div`
   width: 100%;
   gap: 1rem;
   flex: 1;
-  padding-bottom: .3rem;
+  padding-bottom: 0.3rem;
 `;
 
 const StyledPhoneInputContainer = styled.div`
@@ -206,17 +208,17 @@ export default function RoomBookingPage() {
   //Room price calculation
   const ROOM_PRICES = {
     budget: 150000,
-    diplomatic: 200000
+    diplomatic: 200000,
   };
 
   const ROOM_NAMES = {
     budget: "Budget Room",
-    diplomatic: "Diplomatic Room"
+    diplomatic: "Diplomatic Room",
   };
 
   const roomPrice = ROOM_PRICES[roomCategory] || 0;
   const roomName = ROOM_NAMES[roomCategory] || "Select a room";
-  
+
   // Calculate nights
   const calculateNights = () => {
     if (!checkIn || !checkOut) return 0;
@@ -231,23 +233,29 @@ export default function RoomBookingPage() {
   const subtotal = roomPrice * nights * (parseInt(noOfRooms) || 0);
   const vat = subtotal * 0.075; // 7.5%
   const stateTax = subtotal * 0.05; // 5%
-  const serviceCharge = subtotal * 0.10; // 10%
+  const serviceCharge = subtotal * 0.1; // 10%
   const total = subtotal + vat + stateTax + serviceCharge;
 
   // Phone number formatting function
   const formatPhoneNumber = (value) => {
     // Remove all non-digits
-    const phoneNumber = value.replace(/\D/g, '');
-    
+    const phoneNumber = value.replace(/\D/g, "");
+
     // Format based on length
     if (phoneNumber.length <= 3) {
       return phoneNumber;
     } else if (phoneNumber.length <= 6) {
       return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3)}`;
     } else if (phoneNumber.length <= 10) {
-      return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3, 6)} ${phoneNumber.slice(6)}`;
+      return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(
+        3,
+        6
+      )} ${phoneNumber.slice(6)}`;
     } else {
-      return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3, 6)} ${phoneNumber.slice(6, 10)}`;
+      return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(
+        3,
+        6
+      )} ${phoneNumber.slice(6, 10)}`;
     }
   };
 
@@ -339,7 +347,12 @@ export default function RoomBookingPage() {
             </StyledInputRow>
             <StyledInputRow>
               <StyledPhoneInputWrapper>
-                <Text $type="p" $color="var(--cordis-black)" $weight="light" $typeFace="primary">
+                <Text
+                  $type="p"
+                  $color="var(--cordis-black)"
+                  $weight="light"
+                  $typeFace="primary"
+                >
                   Phone Number
                 </Text>
                 <StyledPhoneInputContainer>
@@ -372,7 +385,14 @@ export default function RoomBookingPage() {
             </StyledInputRow>
           </StyledInputs>
           <StyledMessagerow>
-            <Text $type="p" $color="var(--cordis-black)" $weight="light" $typeFace="primary">Additional Message</Text>
+            <Text
+              $type="p"
+              $color="var(--cordis-black)"
+              $weight="light"
+              $typeFace="primary"
+            >
+              Additional Message
+            </Text>
             <StyledTextarea placeholder="Write a message here" />
           </StyledMessagerow>
         </StyledRoomBooking>

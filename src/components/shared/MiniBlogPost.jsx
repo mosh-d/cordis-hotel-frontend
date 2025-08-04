@@ -10,13 +10,15 @@ const StyledMiniBlogPost = styled.div`
   position: relative;
   transition: all 0.3s ease-in-out;
 
-  &:hover {
-    cursor: pointer;
-    background-color: var(--cordis-text-color);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      cursor: pointer;
+      background-color: var(--cordis-text-color);
 
-    h2,
-    p {
-      color: var(--cordis-white);
+      h2,
+      p {
+        color: var(--cordis-white);
+      }
     }
   }
 
@@ -45,8 +47,10 @@ const StyledImageContainer = styled.div`
     transition: transform 0.3s ease;
   }
 
-  ${StyledMiniBlogPost}:hover &::before {
-    transform: scale(1.1);
+  @media (hover: hover) and (pointer: fine) {
+    ${StyledMiniBlogPost}:hover &::before {
+      transform: scale(1.1);
+    }
   }
 `;
 

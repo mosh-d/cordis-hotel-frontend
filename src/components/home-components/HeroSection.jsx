@@ -47,19 +47,17 @@ const StyledHeroSection = styled.section`
 `;
 
 const StyledLogoWrapper = styled.div`
-
   ${media.mobile} {
     position: absolute;
     left: 0;
     top: 0;
-  } 
+  }
 `;
 
 const StyledNavBar1 = styled.div`
-
-${media.mobile} {
-  display: none;
-}
+  ${media.mobile} {
+    display: none;
+  }
 `;
 
 const StyledNavBar2 = styled.div`
@@ -69,7 +67,6 @@ const StyledNavBar2 = styled.div`
     display: block;
   }
 `;
-
 
 const StyledNavBar = styled.div`
   display: flex;
@@ -83,23 +80,29 @@ const StyledNavBar = styled.div`
   -webkit-backdrop-filter: blur(12px);
   transition: all 0.3s ease-in-out;
 
-  &:hover {
-    background-color: var(--cordis-text-color);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: var(--cordis-text-color);
+    }
   }
 
   & li .main-nav-item-active p {
     color: var(--cordis-emphasis);
 
-    &:hover {
-      color: var(--cordis-emphasis);
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: var(--cordis-emphasis);
+      }
     }
   }
 
   & ul li p {
     color: var(--cordis-white);
 
-    &:hover {
-      color: var(--cordis-white);
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: var(--cordis-white);
+      }
     }
   }
 
@@ -140,14 +143,15 @@ const QuickCheckIn = styled.div`
   }
 
   ${media.mobile} {
-
     & input {
       width: 60vw;
     }
   }
 
-  &:hover {
-    background-color: var(--cordis-text-color);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: var(--cordis-text-color);
+    }
   }
 `;
 
@@ -177,10 +181,12 @@ const StyledPlayButton = styled.button`
   cursor: pointer;
   transition: all 0.15s ease;
 
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: hsla(45, 100%, 55.7%, 0.5);
-    transform: scale(1.07);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: hsla(45, 100%, 55.7%, 0.5);
+      transform: scale(1.07);
+    }
   }
 
   &:active {
@@ -229,7 +235,7 @@ const HeroSection = forwardRef((props, ref) => {
           </StyledNavBar1>
         </StyledNavBar>
         <StyledNavBar2>
-          <MainNavBar showLogo={false} $type="mobile" /> 
+          <MainNavBar showLogo={false} $type="mobile" />
         </StyledNavBar2>
       </NavContainer>
 

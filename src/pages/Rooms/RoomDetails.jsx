@@ -35,10 +35,12 @@ const StyledBackArrow = styled.div`
   height: 6rem;
   transition: all 0.1s ease-in-out;
 
-  &:hover {
-    cursor: pointer;
-    transform: translateX(-0.4rem) scale(1.1);
-    opacity: 0.7;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      cursor: pointer;
+      transform: translateX(-0.4rem) scale(1.1);
+      opacity: 0.7;
+    }
   }
 
   &:active {
@@ -165,7 +167,9 @@ export default function RoomDetailsPage() {
                   <Text $color="var(--cordis-black)">Price per room</Text>
                 </StyledDetailText1>
                 <StyledDetailText2>
-                  <Text $color="var(--cordis-black)">{ROOMS[params.roomIndex].price}</Text>
+                  <Text $color="var(--cordis-black)">
+                    {ROOMS[params.roomIndex].price}
+                  </Text>
                 </StyledDetailText2>
               </StyledDetail>
               <StyledDetail>
@@ -173,7 +177,9 @@ export default function RoomDetailsPage() {
                   <Text $color="var(--cordis-black)">Size</Text>
                 </StyledDetailText1>
                 <StyledDetailText2>
-                  <Text $color="var(--cordis-black)">{ROOMS[params.roomIndex].size}</Text>
+                  <Text $color="var(--cordis-black)">
+                    {ROOMS[params.roomIndex].size}
+                  </Text>
                 </StyledDetailText2>
               </StyledDetail>
               <StyledDetail>
@@ -181,7 +187,9 @@ export default function RoomDetailsPage() {
                   <Text $color="var(--cordis-black)">Bed</Text>
                 </StyledDetailText1>
                 <StyledDetailText2>
-                  <Text $color="var(--cordis-black)">{ROOMS[params.roomIndex].bed}</Text>
+                  <Text $color="var(--cordis-black)">
+                    {ROOMS[params.roomIndex].bed}
+                  </Text>
                 </StyledDetailText2>
               </StyledDetail>
               <StyledDetail>
@@ -189,7 +197,9 @@ export default function RoomDetailsPage() {
                   <Text $color="var(--cordis-black)">Capacity</Text>
                 </StyledDetailText1>
                 <StyledDetailText2>
-                  <Text $color="var(--cordis-black)">{ROOMS[params.roomIndex].capacity}</Text>
+                  <Text $color="var(--cordis-black)">
+                    {ROOMS[params.roomIndex].capacity}
+                  </Text>
                 </StyledDetailText2>
               </StyledDetail>
               <StyledDetail>
@@ -197,7 +207,9 @@ export default function RoomDetailsPage() {
                   <Text $color="var(--cordis-black)">View</Text>
                 </StyledDetailText1>
                 <StyledDetailText2>
-                  <Text $color="var(--cordis-black)">{ROOMS[params.roomIndex].view}</Text>
+                  <Text $color="var(--cordis-black)">
+                    {ROOMS[params.roomIndex].view}
+                  </Text>
                 </StyledDetailText2>
               </StyledDetail>
             </StyledDetailsBox>

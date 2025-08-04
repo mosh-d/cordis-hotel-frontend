@@ -77,7 +77,7 @@ const StyledParagraphContainer = styled.div`
   overflow: auto;
   padding: 0 2rem;
   min-height: 0;
-  max-height: 50vh;   
+  max-height: 50vh;
 
   /* Firefox */
   scrollbar-width: thin;
@@ -94,8 +94,10 @@ const StyledParagraphContainer = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: var(--cordis-black);
 
-    &:hover {
-      background-color: var(--cordis-text-color);
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        background-color: var(--cordis-text-color);
+      }
     }
 
     &:active {
@@ -135,7 +137,12 @@ export default function Ad() {
         </StyledMainAdText>
       </StyledMainAd>
       <StyledAdText>
-        <Text $type="h2" $size="medium" $color="var(--cordis-black)" $weight="bold">
+        <Text
+          $type="h2"
+          $size="medium"
+          $color="var(--cordis-black)"
+          $weight="bold"
+        >
           Sun, Swim, Repeat: The Ultimate Cordis Poolside Guide
         </Text>
         <StyledParagraphContainer>

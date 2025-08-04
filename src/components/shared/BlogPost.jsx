@@ -13,8 +13,10 @@ const StyledButton = styled.button`
   margin: 2.4rem;
   transition: transform 0.1s ease-in;
 
-  &:hover {
-    transform: scale(1.05);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 
   &:active {
@@ -24,7 +26,7 @@ const StyledButton = styled.button`
 
 const StyledImageContainer = styled.div`
   width: 100%;
-  ${({$image}) => $image && `background-image: url(${$image});`}
+  ${({ $image }) => $image && `background-image: url(${$image});`}
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -40,7 +42,7 @@ const StyledTextWrapper = styled.div`
 
 const StyledParagraphContainer = styled.div`
   display: -webkit-box;
-  -webkit-line-clamp: ${({$isOpen}) => $isOpen ? 'none' : '2'};
+  -webkit-line-clamp: ${({ $isOpen }) => ($isOpen ? "none" : "2")};
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -79,7 +81,7 @@ export default function BlogPost({ image, title, content }) {
             $weight="bold"
             $size="large"
           >
-           {content}
+            {content}
           </Text>
         </StyledParagraphContainer>
       </StyledTextWrapper>
