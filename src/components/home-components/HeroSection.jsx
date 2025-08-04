@@ -48,9 +48,11 @@ const StyledHeroSection = styled.section`
 
 const StyledLogoWrapper = styled.div`
 
-${media.mobile} {
-    display: none;
-  }
+  ${media.mobile} {
+    position: absolute;
+    left: 0;
+    top: 0;
+  } 
 `;
 
 const StyledNavBar1 = styled.div`
@@ -227,7 +229,7 @@ const HeroSection = forwardRef((props, ref) => {
           </StyledNavBar1>
         </StyledNavBar>
         <StyledNavBar2>
-          <MainNavBar $type="mobile" /> 
+          <MainNavBar showLogo={false} $type="mobile" /> 
         </StyledNavBar2>
       </NavContainer>
 

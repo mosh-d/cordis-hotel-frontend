@@ -70,12 +70,18 @@ const StyledLogoMenu = styled.div`
     justify-content: center;
     height: 5rem;
     right: 0;
-    background-color: var(--cordis-white);
-    box-shadow: var(--shadow-lg);
+    background: hsla(180, 2%, 22%, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    /* box-shadow: var(--shadow-lg); */
     height: fit-content;
     padding: 2rem;
     border-radius: .5rem;
     gap: 3rem;
+
+    &:hover {
+      background-color: var(--cordis-text-color);
+    }
 
     & li {
       display: inline-block;
@@ -95,7 +101,7 @@ const StyledLogoMenu = styled.div`
     }
 
     & p:hover {
-      color: var(--cordis-black);
+      /* color: var(--cordis-white); */
       border-bottom: 1px solid var(--cordis-emphasis);
       // text-decoration: underline;
     }
@@ -106,11 +112,16 @@ const StyledMenuIcon = styled.div`
   top: 0;
   right: 0;
   /* margin: 2rem; */
-  background-color: var(--cordis-white);
-  /* box-shadow: var(--shadow-lg); */
+  background: hsla(180, 2%, 22%, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 1.5rem;
   border-radius: 10rem;
   z-index: 100;
+
+  /* &:hover {
+    background-color: var(--cordis-text-color);
+  } */
 `;
 
 function MainNavBar({ $type, showLogo = true }) {
@@ -128,7 +139,7 @@ function MainNavBar({ $type, showLogo = true }) {
           {showLogo && <Logo $type="filled" />}
           <StyledLogoMenu onClick={handleClick}>
             <StyledMenuIcon>
-              <RiMenuLine size="3rem" />
+              <RiMenuLine color="var(--cordis-white)" size="3rem" />
             </StyledMenuIcon>
             {isNavBarClicked && (
               <nav>
@@ -146,6 +157,7 @@ function MainNavBar({ $type, showLogo = true }) {
                         $size="small"
                         $weight="regular"
                         $typeFace="primary"
+                        $color="var(--cordis-white)"
                       >
                         HOME
                       </Text>
@@ -163,6 +175,7 @@ function MainNavBar({ $type, showLogo = true }) {
                         $size="small"
                         $weight="regular"
                         $typeFace="primary"
+                        $color="var(--cordis-white)"
                       >
                         ABOUT
                       </Text>
@@ -180,6 +193,7 @@ function MainNavBar({ $type, showLogo = true }) {
                         $size="small"
                         $weight="regular"
                         $typeFace="primary"
+                        $color="var(--cordis-white)"
                       >
                         CONTACT
                       </Text>
@@ -197,6 +211,7 @@ function MainNavBar({ $type, showLogo = true }) {
                         $size="small"
                         $weight="regular"
                         $typeFace="primary"
+                        $color="var(--cordis-white)"
                       >
                         BLOG
                       </Text>
