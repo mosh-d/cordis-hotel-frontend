@@ -22,10 +22,12 @@ const SpaImages = [Spa1, Spa2, Spa3];
 const StyledExerciseRelaxationSection = styled.section`
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: stretch;
+  justify-content: space-between;
   padding: 15rem 30rem;
   gap: 6rem;
-  height: 220rem;
+  height: 120rem;
+  width: 100%;
 
   @media (max-width: 1400px) {
     padding: 15rem 4rem;
@@ -33,11 +35,13 @@ const StyledExerciseRelaxationSection = styled.section`
 
   ${media.tablet} {
     flex-direction: column;
+    height: 240rem;
   }
 
   ${media.mobile} {
     padding: 12rem 0;
     gap: 1rem;
+    height: 200rem;
   }
 `;
 
@@ -58,16 +62,21 @@ const StyledSpaWrapper = styled.div`
   align-items: flex-start;
   justify-content: space-between;
   width: 100%;
-  height: 90%;
+  height: 100%;
   background-color: var(--cordis-text-color);
   padding: 2rem 1rem;
 `;
 
 const StyledSpaWrapperContainer = styled.div`
-  height: 100%;
+  height: 110%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rem;
 
   ${media.mobile} {
     padding: 0 2rem;
+    height: 100%;
   }
 `;
 
@@ -139,7 +148,11 @@ const BackDrop = styled.div`
   ${media.tablet} {
     right: 0;
     width: 100%;
-    height: 200rem;
+    height: 220rem;
+  }
+
+  ${media.mobile} {
+    height: 182rem;
   }
 `;
 
@@ -222,7 +235,6 @@ export default function ExerciseRelaxationSection() {
             </Text>
           </SpaTextWrapper>
         </StyledSpaWrapper>
-      </StyledSpaWrapperContainer>
       <RouterLink to="/amenity-booking">
         <StyledButtonContainer2>
           <Button $type="emphasis2">
@@ -232,6 +244,7 @@ export default function ExerciseRelaxationSection() {
           </Button>
         </StyledButtonContainer2>
       </RouterLink>
+      </StyledSpaWrapperContainer>
       <BackDrop></BackDrop>
     </StyledExerciseRelaxationSection>
   );
