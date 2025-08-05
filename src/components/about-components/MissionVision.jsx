@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import Text from "../shared/Text";
+import { media } from "../../util/breakpoints";
 
 //image
 import MissionVisionBachground from "../../assets/mission-vision/MISSION-VISION-1.png";
@@ -14,6 +15,10 @@ const StyledMissionVision = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
+  ${media.mobile} {
+    padding: 12rem 2rem;
+  }
 `;
 
 const StyledTextWrapper = styled.div`
@@ -26,10 +31,18 @@ const StyledTextWrapper = styled.div`
   padding: 6rem 2.4rem;
   gap: 2.4rem;
   text-align: center;
+  
+  ${media.tablet} {
+    flex-direction: column;
+  }
 `;
 
 const StyledTextContainer = styled.div`
   width: 50%;
+
+  ${media.tablet} {
+    width: 100%;
+  }
 
   p,
   h2 {

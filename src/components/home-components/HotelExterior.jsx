@@ -17,6 +17,10 @@ const StyledHotelExteriorSection = styled.div`
   align-items: flex-start;
   gap: 6rem;
   padding: 15rem 6rem;
+
+  ${media.mobile} {
+    padding: 12rem 2rem;
+  }
 `;
 
 const StyledHotelExteriorTextWrapper = styled.div`

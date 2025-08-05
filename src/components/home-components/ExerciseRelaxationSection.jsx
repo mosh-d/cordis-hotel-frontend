@@ -34,6 +34,11 @@ const StyledExerciseRelaxationSection = styled.section`
   ${media.tablet} {
     flex-direction: column;
   }
+
+  ${media.mobile} {
+    padding: 12rem 0;
+    gap: 1rem;
+  }
 `;
 
 const StyledGymWrapper = styled.div`
@@ -58,6 +63,14 @@ const StyledSpaWrapper = styled.div`
   padding: 2rem 1rem;
 `;
 
+const StyledSpaWrapperContainer = styled.div`
+  height: 100%;
+
+  ${media.mobile} {
+    padding: 0 2rem;
+  }
+`;
+
 const StyledGym = styled.div`
   width: 100%;
   height: 100%;
@@ -75,6 +88,10 @@ const GymTextWrapper = styled.div`
   align-items: flex-start;
   justify-content: space-around;
   gap: 2rem;
+
+  ${media.mobile} {
+    padding: 0 2rem;
+  }
 `;
 
 const SpaTextWrapper = styled.div`
@@ -178,32 +195,34 @@ export default function ExerciseRelaxationSection() {
         </RouterLink>
       </StyledGymWrapper>
 
-      <StyledSpaWrapper>
-        <StyledSpa>
-          <Carousel ImageUrls={SpaImages} />
-        </StyledSpa>
-        <SpaTextWrapper>
-          <Text
-            $type="h3"
-            $size="extra-small"
-            $typeFace="primary"
-            $spacing=".2em"
-            $weight="bold"
-            $color="var(--cordis-accent)"
-          >
-            Cordis Spa
-          </Text>
-          <Text
-            $typeFace="secondary"
-            $color="var(--cordis-accent)"
-            $size="large"
-            $spacing=".05em"
-            $weight="regular"
-          >
-            Cordis Spa is your serene retreat for relaxing treatments, soothing massages, and expert care to leave you refreshed and restored.
-          </Text>
-        </SpaTextWrapper>
-      </StyledSpaWrapper>
+      <StyledSpaWrapperContainer>
+        <StyledSpaWrapper>
+          <StyledSpa>
+            <Carousel ImageUrls={SpaImages} />
+          </StyledSpa>
+          <SpaTextWrapper>
+            <Text
+              $type="h3"
+              $size="extra-small"
+              $typeFace="primary"
+              $spacing=".2em"
+              $weight="bold"
+              $color="var(--cordis-accent)"
+            >
+              Cordis Spa
+            </Text>
+            <Text
+              $typeFace="secondary"
+              $color="var(--cordis-accent)"
+              $size="large"
+              $spacing=".05em"
+              $weight="regular"
+            >
+              Cordis Spa is your serene retreat for relaxing treatments, soothing massages, and expert care to leave you refreshed and restored.
+            </Text>
+          </SpaTextWrapper>
+        </StyledSpaWrapper>
+      </StyledSpaWrapperContainer>
       <RouterLink to="/amenity-booking">
         <StyledButtonContainer2>
           <Button $type="emphasis2">

@@ -37,6 +37,10 @@ const StyledOtherAmenitiesSection = styled.section`
     flex-direction: column;
     height: 220rem;
   }
+
+  ${media.tablet} {
+    padding: 12rem 0;
+  }
 `;
 
 const StyledAmenityText = styled.div`
@@ -77,6 +81,10 @@ const StyledAmenity = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+
+  ${media.mobile} {
+    padding: 0 2rem;
+  }
 `;
 
 const AmenityTextWrapper = styled.div`
@@ -102,6 +110,10 @@ const AmenityTextWrapper1 = styled.div`
 
   ${media.tablet} {
     display: flex;
+  }
+
+  ${media.mobile} {
+    padding: 0 2rem;
   }
 `;
 
@@ -130,6 +142,10 @@ const StyledPoolTextWrapper = styled.div`
   justify-content: center;
   width: 100%;
   gap: 2rem;
+
+  ${media.mobile} {
+    padding: 0 2rem;
+  }
 `;  
 
 const BackDrop = styled.div`

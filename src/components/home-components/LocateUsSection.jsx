@@ -10,6 +10,10 @@ const StyledLocateUsSection = styled.section`
   padding: 15rem 6rem;
   height: fit-content;
   gap: 4.8rem;
+
+  ${media.mobile} {
+    padding: 12rem 2rem;
+  }
 `;
 
 const StyledLocateUsTextWrapper = styled.div`
@@ -63,12 +67,16 @@ const StyledLocations = styled.div`
   height: fit-content;
   border: 1px solid var(--cordis-black);
   padding: 2.4rem;
+
+  ${media.mobile} {
+    padding: 1rem .5rem;
+  }
 `;
 
 const StyledLocation = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 4rem;
+  gap: 8rem;
 `;
 
 const StyledLocationText1 = styled.div`

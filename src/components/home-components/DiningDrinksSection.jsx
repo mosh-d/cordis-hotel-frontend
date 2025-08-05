@@ -45,6 +45,11 @@ const StyledDiningDrinksSection = styled.section`
     height: 200rem;
     /* align-items: flex-start; */
   }
+
+  ${media.mobile} {
+    padding: 12rem 0;
+    height: 260rem;
+  }
 `;
 
 const RestaurantWrapper = styled.div`
@@ -58,6 +63,11 @@ const RestaurantWrapper = styled.div`
     height: 200rem;
     flex: 1;
     width: 100%;
+  }
+
+  ${media.mobile} {
+    /* height: 50%; */
+    flex: .65;
   }
 `;
 
@@ -110,6 +120,10 @@ const DiningDrinksText2 = styled.div`
   ${media.tablet} {
     display: block;
   }
+
+  ${media.mobile} {
+    padding: 0 2rem;
+  }
 `;
 
 const BarSpecialsContainer = styled.div`
@@ -117,6 +131,14 @@ const BarSpecialsContainer = styled.div`
   gap: 2.4rem;
   height: 100%;
   flex: 1;
+
+  ${media.mobile} {
+    flex-direction: column;
+  }
+
+  ${media.mobile} {
+    padding: 0 2rem;
+  }
 `;
 
 const StyledBarSpecials = styled.div`
@@ -143,6 +165,10 @@ const RestaurantTitle = styled(Text)`
     font-weight: 1000;
     font-size: var(--text-xl);
   }
+
+  ${media.mobile} {
+    padding: 0 2rem;
+  }
 `;
 const RestaurantTitle2 = styled(Text)`
   font-family: var(--font-family-secondary);
@@ -153,6 +179,10 @@ const RestaurantTitle2 = styled(Text)`
     color: var(--cordis-gray) !important;
     font-family: var(--font-family-secondary);
     font-size: var(--text-lg);
+  }
+
+  ${media.mobile} {
+    padding: 0 2rem;
   }
 `;
 
@@ -177,6 +207,10 @@ const BackDrop = styled.div`
     width: 100%;
     right: 0;
     height: 180rem;
+  }
+
+  ${media.mobile} {
+    height: 245rem;
   }
 `;
 

@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import Text from "../shared/Text";
+import { media } from "../../util/breakpoints";
 
 //images
 import About1_1 from "../../assets/cordis-about-1/CORDIS-ABOUT-1-1.png";
@@ -9,10 +10,31 @@ import About1_3 from "../../assets/cordis-about-1/CORDIS-ABOUT-1-3.png";
 const StyledAboutSection1 = styled.section`
   position: relative;
   width: 100%;
+  height: 100rem;
   display: flex;
-  padding: 12rem;
-  gap: 10rem;
+  padding: 12rem 9rem;
+  gap: 15rem;
   align-items: center;
+
+  ${media.large} {
+    height: 130rem;
+  }
+
+  @media (min-width: 1700px) {
+    height: 160rem;
+  }
+
+  ${media.tablet} {
+    height: 120rem;
+    gap: 8rem;
+    padding: 12rem 4rem;
+    flex-direction: column;
+  }
+
+  ${media.mobile} {
+    padding: 12rem 1.2rem;
+    height: 125rem;
+  }
 `;
 
 const StyledImageWrapper = styled.div`
@@ -23,11 +45,31 @@ const StyledImageWrapper = styled.div`
   &::before {
     content: "";
     height: 117%;
-    width: 70%;
+    width: 80%;
     position: absolute;
     top: -5vw;
     left: 17vw;
     background-color: var(--cordis-light-gray);
+
+    @media (min-width: 1700px) {
+      top: -4vw;
+      width: 70%;
+    }
+
+    ${media.tablet} {
+      width: 57%;
+      left: 22vw;
+    }
+  }
+
+  @media (min-width: 1700px) {
+    top: 1vw;
+  }
+
+  ${media.tablet} {
+    top: 0vw;
+    height: 53rem;
+    width: 100%;
   }
 `;
 
@@ -41,6 +83,19 @@ const StyledImageContainer1 = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   z-index: 10;
+
+  ${media.tablet} {
+    width: 27rem;
+    height: 38rem;
+    top: 13rem;
+    left: 13vw;
+  }
+
+  ${media.mobile} {
+    width: 20rem;
+    height: 30rem;
+    left: 5vw;
+  }
 `;
 
 const StyledImageContainer2 = styled.div`
@@ -52,6 +107,18 @@ const StyledImageContainer2 = styled.div`
   width: 21vw;
   background-repeat: no-repeat;
   background-size: cover;
+
+  ${media.tablet} {
+    width: 20rem;
+    height: 25rem;
+    top: 0;
+    left: 40vw;
+  }
+
+  ${media.mobile} {
+    width: 17rem;
+    height: 25rem;
+  }
 `;
 
 const StyledImageContainer3 = styled.div`
@@ -63,6 +130,18 @@ const StyledImageContainer3 = styled.div`
   width: 16vw;
   background-repeat: no-repeat;
   background-size: cover;
+
+  ${media.tablet} {
+    width: 15rem;
+    height: 20rem;
+    top: 35rem;
+    left: 48vw;
+  }
+
+  ${media.mobile} {
+    width: 15rem;
+    height: 19rem;
+  }
 `;
 
 const StyledTextWrapper = styled.div`
@@ -70,6 +149,11 @@ const StyledTextWrapper = styled.div`
   flex-direction: column;
   width: 40%;
   gap: 1.8rem;
+  position: relative;
+
+  ${media.tablet} {
+    width: 100%;
+  }
 `;
 
 export default function AboutSection1() {

@@ -24,6 +24,10 @@ const StyledRoomSection = styled.div`
   ${media.tablet} {
     padding: 15rem 4rem;
   }
+
+  ${media.mobile} {
+    padding: 12rem 1rem;
+  }
 `;
 
 const StyledRooms = styled.div`

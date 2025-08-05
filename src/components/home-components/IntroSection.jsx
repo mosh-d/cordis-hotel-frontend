@@ -23,6 +23,10 @@ const IntroText = styled.div`
     padding: 15rem 12rem;
   }
 
+  ${media.mobile} {
+    padding: 12rem 2rem;
+  }
+
   & p,
   & h1 {
     text-align: center;
