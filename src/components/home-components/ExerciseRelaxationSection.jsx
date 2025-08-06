@@ -41,7 +41,8 @@ const StyledExerciseRelaxationSection = styled.section`
   ${media.mobile} {
     padding: 12rem 0;
     gap: 1rem;
-    height: 200rem;
+    height: auto;
+    min-height: 200rem;
   }
 `;
 
@@ -53,6 +54,11 @@ const StyledGymWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 100%;
+
+  ${media.mobile} {
+    height: auto;
+    flex: none;
+  }
 `;
 
 const StyledSpaWrapper = styled.div`
@@ -76,7 +82,8 @@ const StyledSpaWrapperContainer = styled.div`
 
   ${media.mobile} {
     padding: 0 2rem;
-    height: 100%;
+    height: auto;
+    flex: none;
   }
 `;
 
@@ -84,11 +91,21 @@ const StyledGym = styled.div`
   width: 100%;
   height: 100%;
   background-color: var(--cordis-accent);
+
+  ${media.mobile} {
+    height: 35rem;
+    min-height: 30rem;
+  }
 `;
 
 const StyledSpa = styled.div`
   width: 100%;
   height: 100%;
+
+  ${media.mobile} {
+    height: 60rem;
+    min-height: 55rem;
+  }
 `;
 
 const GymTextWrapper = styled.div`
@@ -134,6 +151,11 @@ const StyledGymContainer = styled.div`
   height: 100%;
   width: 100%;
   gap: 1rem;
+
+  ${media.mobile} {
+    height: auto;
+    justify-content: flex-start;
+  }
 `;
 
 const BackDrop = styled.div`
@@ -152,7 +174,8 @@ const BackDrop = styled.div`
   }
 
   ${media.mobile} {
-    height: 182rem;
+    height: auto;
+    min-height: 182rem;
   }
 `;
 

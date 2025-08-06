@@ -48,7 +48,8 @@ const StyledDiningDrinksSection = styled.section`
 
   ${media.mobile} {
     padding: 12rem 0;
-    height: 230rem;
+    height: auto;
+    min-height: 230rem;
   }
 `;
 
@@ -66,8 +67,8 @@ const RestaurantWrapper = styled.div`
   }
 
   ${media.mobile} {
-    height: 75rem;
-    min-height: 50rem;
+    height: auto;
+    min-height: 75rem;
     flex: none;
   }
 `;
@@ -80,8 +81,9 @@ const BarWrapper = styled.div`
   gap: 1rem;
 
   ${media.mobile} {
-    height: 55rem;
-    min-height: 45rem;
+    height: auto;
+    min-height: 35rem;
+    flex: none;
   }
 `;
 
@@ -93,8 +95,9 @@ const SpecialsWrapper = styled.div`
   gap: 1rem;
 
   ${media.mobile} {
-    height: 55rem;
-    min-height: 45rem;
+    height: auto;
+    min-height: 35rem;
+    flex: none;
   }
 `;
 
@@ -102,16 +105,31 @@ const StyledRestaurant = styled.div`
   width: 100%;
   height: 100%;
   background-color: var(--cordis-text-color);
+
+  ${media.mobile} {
+    height: 70rem;
+    min-height: 60rem;
+  }
 `;
 
 const StyledBar = styled.div`
   height: 100%;
   width: 100%;
+
+  ${media.mobile} {
+    height: 35rem;
+    min-height: 30rem;
+  }
 `;
 
 const StyledSpecials = styled.div`
   height: 100%;
   width: 100%;
+
+  ${media.mobile} {
+    height: 35rem;
+    min-height: 30rem;
+  }
 `;
 
 const DiningDrinksText = styled.div`
@@ -173,8 +191,8 @@ const StyledBarSpecials = styled.div`
 `;
 
 const RestaurantTitle = styled(Text)`
-   font-weight: 1000;
-   font-size: var(--text-xl);
+  font-weight: 1000;
+  font-size: var(--text-xl);
 
   ${media.tablet} {
     color: var(--cordis-white) !important;
@@ -226,7 +244,8 @@ const BackDrop = styled.div`
   }
 
   ${media.mobile} {
-    height: 217rem;
+    height: auto;
+    min-height: 217rem;
   }
 `;
 
@@ -234,14 +253,14 @@ export default function DiningDrinksSection() {
   return (
     <StyledDiningDrinksSection>
       <DiningDrinksText2>
-          <Text $type="h1" $color="var(--cordis-white)" $weight="bold">
-            Dining & Drinks
-          </Text>
-          <Text $color="var(--cordis-gray)">
-            Indulge in flame‑grilled specialties, authentic Nigerian tastes, and
-            chef‑crafted tasting menus—where every dish blends local ingredients
-            with global flair.
-          </Text>
+        <Text $type="h1" $color="var(--cordis-white)" $weight="bold">
+          Dining & Drinks
+        </Text>
+        <Text $color="var(--cordis-gray)">
+          Indulge in flame‑grilled specialties, authentic Nigerian tastes, and
+          chef‑crafted tasting menus—where every dish blends local ingredients
+          with global flair.
+        </Text>
       </DiningDrinksText2>
       <RestaurantWrapper>
         <StyledRestaurant>
