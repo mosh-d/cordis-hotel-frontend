@@ -85,13 +85,13 @@ export default function RoomSection() {
 
         <StyledRooms>
           <StyledRoomContainer>
-            <Room imageType="budget" headerText="Budget" buttonText="Reserve" />
+            <Room imageType="budget" headerText="Budget" buttonText="Reserve" flippable={true} />
           </StyledRoomContainer>
           <StyledRoomContainer>
-            <Room imageType="diplomatic" headerText="Diplomatic" buttonText="Reserve" />
+            <Room imageType="diplomatic" headerText="Diplomatic" buttonText="Reserve" flippable={true} />
           </StyledRoomContainer>
           <StyledRoomContainer>
-            <Room imageType="diplomatic" headerText="Diplomatic" buttonText="Reserve" />
+            <Room imageType="diplomatic" headerText="Diplomatic" buttonText="Reserve" flippable={true} />
           </StyledRoomContainer>
         </StyledRooms>
       </StyledRoomSection>

@@ -1,9 +1,11 @@
 import Text from "./Text";
 import styled from "styled-components";
 import Carousel from "./Carousel";
+import FlippableCarousel from "./FlippableCarousel";
 import Button from "./Button";
 import { Link as RouteLink } from "react-router-dom";
 import { media } from "../../util/breakpoints";
+import { ROOMS } from "../../util/room-data";
 
 //budget room images
 import BudgetRoom1 from "../../assets/budget-rooms/BUDGET-ROOM-1.png";
@@ -72,15 +74,87 @@ const StyledRoomCarousel = styled.div`
 
 `;
 
+const RoomDetailsContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  text-align: center;
+`;
+
+const DetailItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+`;
+
+const AmenitiesList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  
+  li {
+    padding: 0.25rem 0;
+    color: var(--cordis-white);
+  }
+`;
+
 export default function Room({
   imageType,
   headerText,
   buttonText,
   children,
   $bgColor,
+  flippable = false,
 }) {
   const images =
     imageType === "budget" ? BudgetRoomImages : DiplomaticRoomImages;
+
+  const backContent = (
+    <RoomDetailsContent>
+      <Text $type="h2" $color="var(--cordis-white)" $weight="bold">
+        {headerText} Room Details
+      </Text>
+      
+      <DetailItem>
+        <Text $color="var(--cordis-white)">Price:</Text>
+        <Text $color="var(--cordis-emphasis)" $weight="bold">{imageType === "budget" ? ROOMS[0].price : ROOMS[1].price}</Text>
+      </DetailItem>
+      
+      <DetailItem>
+        <Text $color="var(--cordis-white)">Size:</Text>
+        <Text $color="var(--cordis-white)">{imageType === "budget" ? ROOMS[0].size : ROOMS[1].size}</Text>
+      </DetailItem>
+      
+      <DetailItem>
+        <Text $color="var(--cordis-white)">Capacity:</Text>
+        <Text $color="var(--cordis-white)">{imageType === "budget" ? ROOMS[0].capacity : ROOMS[1].capacity}</Text>
+      </DetailItem>
+      
+      <div>
+        <Text $color="var(--cordis-white)" $weight="bold">Amenities:</Text>
+        <AmenitiesList>
+          {imageType === "budget" ? ROOMS[0].amenities.map((amenity, index) => (
+            <li key={index}>
+              <Text $color="var(--cordis-white)" $size="small">• {amenity}</Text>
+            </li>
+          )) : ROOMS[1].amenities.map((amenity, index) => (
+            <li key={index}>
+              <Text $color="var(--cordis-white)" $size="small">• {amenity}</Text>
+            </li>
+          ))}
+        </AmenitiesList>
+      </div>
+      
+      <Text $color="var(--cordis-gray)" $size="small" style={{ marginTop: "1rem" }}>
+        Click anywhere to flip back
+      </Text>
+    </RoomDetailsContent>
+  );
 
   return (
     <StyledRoom>
@@ -96,7 +170,14 @@ export default function Room({
 
       <StyledRoomCardWrapper>
         <StyledRoomCarousel $bgColor={$bgColor}>
-          <Carousel ImageUrls={images} />
+          {flippable ? (
+            <FlippableCarousel 
+              ImageUrls={images} 
+              backContent={backContent}
+            />
+          ) : (
+            <Carousel ImageUrls={images} />
+          )}
         </StyledRoomCarousel>
         {children}
       </StyledRoomCardWrapper>

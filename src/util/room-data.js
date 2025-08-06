@@ -5,7 +5,8 @@ const ROOMS = [
     size : "150 M2",
     bed : "1 King size bed",
     capacity : "2 Adults & 1 Child",
-    view : "City or Lagoon View"
+    view : "City or Lagoon View",
+    amenities: ["Free WiFi", "Air Conditioning", "Smart TV", "Mini Bar", "Work Desk"]
   },
   {
     name : "Diplomatic",
@@ -13,7 +14,8 @@ const ROOMS = [
     size : "250 M2",
     bed : "2 King size bed",
     capacity : "3 Adults & 2 Children",
-    view : "Exotic City View"
+    view : "Exotic City View",
+    amenities: ["Free WiFi", "Air Conditioning", "Smart TV", "Mini Bar", "Work Desk"]
   }
 ]
 
