@@ -48,7 +48,7 @@ const StyledDiningDrinksSection = styled.section`
 
   ${media.mobile} {
     padding: 12rem 0;
-    height: 260rem;
+    height: 230rem;
   }
 `;
 
@@ -66,8 +66,9 @@ const RestaurantWrapper = styled.div`
   }
 
   ${media.mobile} {
-    /* height: 50%; */
-    flex: .65;
+    height: 75rem;
+    min-height: 50rem;
+    flex: none;
   }
 `;
 
@@ -77,6 +78,11 @@ const BarWrapper = styled.div`
   flex-direction: column;
   height: 100%;
   gap: 1rem;
+
+  ${media.mobile} {
+    height: 55rem;
+    min-height: 45rem;
+  }
 `;
 
 const SpecialsWrapper = styled.div`
@@ -85,6 +91,11 @@ const SpecialsWrapper = styled.div`
   height: 100%;
   flex: 1;
   gap: 1rem;
+
+  ${media.mobile} {
+    height: 55rem;
+    min-height: 45rem;
+  }
 `;
 
 const StyledRestaurant = styled.div`
@@ -134,10 +145,9 @@ const BarSpecialsContainer = styled.div`
 
   ${media.mobile} {
     flex-direction: column;
-  }
-
-  ${media.mobile} {
     padding: 0 2rem;
+    height: auto;
+    min-height: 50rem;
   }
 `;
 
@@ -153,6 +163,12 @@ const StyledBarSpecials = styled.div`
 
   ${media.tablet} {
     align-items: center;
+  }
+
+  ${media.mobile} {
+    flex: none;
+    height: auto;
+    gap: 4rem;
   }
 `;
 
@@ -210,7 +226,7 @@ const BackDrop = styled.div`
   }
 
   ${media.mobile} {
-    height: 245rem;
+    height: 217rem;
   }
 `;
 
