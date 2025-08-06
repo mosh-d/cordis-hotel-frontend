@@ -64,10 +64,12 @@ const StyledAmenityWrapper = styled.div`
 
   ${media.tablet} {
     align-items: center;
+    padding: 0 4rem;
   }
 
   ${media.mobile} {
     height: 60rem;
+    padding: 0 2rem;
   }
 `;
 
@@ -121,6 +123,7 @@ const AmenityTextWrapper1 = styled.div`
 
   ${media.tablet} {
     display: flex;
+    padding: 0 4rem;
   }
 
   ${media.mobile} {
@@ -150,8 +153,13 @@ const StyledPoolWrapper = styled.div`
   width: 100%;
   height: 100%;
 
+  ${media.tablet} {
+    padding: 0 4rem;
+  }
+
   ${media.mobile} {
     height: 75rem;
+    padding: 0;
   }
 `;
 
@@ -162,6 +170,10 @@ const StyledPoolTextWrapper = styled.div`
   justify-content: center;
   width: 100%;
   gap: 2rem;
+
+  /* ${media.tablet} {
+    padding: 0 4rem;
+  } */
 
   ${media.mobile} {
     padding: 0 2rem;
@@ -184,7 +196,8 @@ const BackDrop = styled.div`
   }
 
   ${media.mobile} {
-    height: 170rem;
+    height: 178rem;
+    top: 1rem;
   }
 `;
 

@@ -147,7 +147,9 @@ const DiningDrinksText2 = styled.div`
   display: none;
 
   ${media.tablet} {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   ${media.mobile} {
@@ -245,7 +247,7 @@ const BackDrop = styled.div`
 
   ${media.mobile} {
     height: auto;
-    min-height: 217rem;
+    min-height: 223rem;
   }
 `;
 

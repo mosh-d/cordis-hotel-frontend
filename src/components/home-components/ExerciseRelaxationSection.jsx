@@ -175,7 +175,7 @@ const BackDrop = styled.div`
 
   ${media.mobile} {
     height: auto;
-    min-height: 182rem;
+    min-height: 186rem;
   }
 `;
 
