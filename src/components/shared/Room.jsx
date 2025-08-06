@@ -65,11 +65,10 @@ const StyledRoomCarousel = styled.div`
   background-color: ${({ $bgColor }) => $bgColor || "transparent"};
   
   ${media.tablet} {
-    height: 44rem;
+    height: 50rem;
   }
   
   ${media.mobile} {
-    height: 35rem;
   }
 
 `;
@@ -82,6 +81,14 @@ const RoomDetailsContent = styled.div`
   gap: 2rem;
   padding: 2rem;
   text-align: center;
+
+  ${media.tablet} {
+    gap: 1rem;
+  }
+
+  ${media.mobile} {
+    padding: 2rem 0;
+  }
 `;
 
 const DetailItem = styled.div`
@@ -90,6 +97,10 @@ const DetailItem = styled.div`
   width: 100%;
   padding: 0.5rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+  & * {
+    text-align: end;
+  }
 `;
 
 const AmenitiesList = styled.ul`
