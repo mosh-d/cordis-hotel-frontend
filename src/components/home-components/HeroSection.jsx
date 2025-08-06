@@ -7,7 +7,7 @@ import MainNavBar from "../MainNavBar";
 import CustomInput from "../shared/CustomInput";
 import Button from "../shared/Button";
 import Text from "../shared/Text";
-import { forwardRef, useState, useRef } from "react";
+import { forwardRef, useState, useRef, useEffect } from "react";
 import { RiPlayFill, RiPauseFill } from "react-icons/ri";
 import { media } from "../../util/breakpoints";
 
@@ -37,6 +37,23 @@ const StyledHeroSection = styled.section`
     height: 100%;
     object-fit: cover;
     z-index: -1;
+    
+    /* Hide video controls completely */
+    &::-webkit-media-controls {
+      display: none !important;
+    }
+    
+    &::-webkit-media-controls-panel {
+      display: none !important;
+    }
+    
+    &::-webkit-media-controls-play-button {
+      display: none !important;
+    }
+    
+    &::-webkit-media-controls-start-playback-button {
+      display: none !important;
+    }
   }
   background-size: cover;
   background-position: center;
@@ -198,6 +215,20 @@ const HeroSection = forwardRef((props, ref) => {
   const [isPlaying, setIsPlaying] = useState(true);
   const videoRef = useRef(null);
 
+  // Handle autoplay failure on iOS
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay failed, user interaction required
+          setIsPlaying(false);
+        });
+      }
+    }
+  }, []);
+
   const togglePlayPause = () => {
     if (videoRef.current) {
       if (isPlaying) {
@@ -211,7 +242,17 @@ const HeroSection = forwardRef((props, ref) => {
 
   return (
     <StyledHeroSection ref={ref}>
-      <video ref={videoRef} autoPlay muted loop>
+      <video 
+        ref={videoRef} 
+        autoPlay 
+        muted 
+        loop 
+        playsInline
+        webkit-playsinline="true"
+        controls={false}
+        disablePictureInPicture
+        preload="metadata"
+      >
         <source src={HeroVideo} type="video/mp4" />
       </video>
 
