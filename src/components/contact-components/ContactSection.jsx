@@ -12,6 +12,7 @@ import {
 } from "react-icons/ri";
 import Link from "../shared/Link";
 import Button from "../shared/Button";
+import { media } from "../../util/breakpoints";
 
 const StyledContactSection = styled.div`
   display: flex;
@@ -19,6 +20,15 @@ const StyledContactSection = styled.div`
   width: 100%;
   padding: 6rem 12rem;
   gap: 12rem;
+
+  ${media.tablet} {
+    flex-direction: column;
+    padding: 6rem;
+  }
+
+  ${media.mobile} {
+    padding: 6rem 2rem;
+  }
 `;
 
 const StyledContctInfo = styled.div`
@@ -26,6 +36,10 @@ const StyledContctInfo = styled.div`
   flex-direction: column;
   width: 35%;
   gap: 1.8rem;
+
+  ${media.tablet} {
+    width: 100%;
+  }
 `;
 
 const StyledLinkWrapper = styled.div`
@@ -39,11 +53,20 @@ const StyledUserInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
+
+  ${media.tablet} {
+    width: 100%;
+  }
 `;
 
 const StyledUserInfoRow1 = styled.div`
   display: flex;
+  width: 100%;
   gap: 8rem;
+
+  ${media.desktop} {
+    gap: 4rem;
+  }
 `;
 
 const StyledUserInfoRow2 = styled.div`
@@ -56,6 +79,10 @@ const StyledUserInfoRow3 = styled.div`
 
 const StyledUserInfoRow4 = styled.div`
   
+  ${media.tablet} {
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 const StyledTextarea = styled.textarea`

@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import Text from "../shared/Text";
+import { media } from "../../util/breakpoints";
 
 const StyledGetInTouch = styled.div`
   display: flex;
@@ -7,6 +8,14 @@ const StyledGetInTouch = styled.div`
   padding: 12rem;
   gap: 1.8rem;
   background-color: var(--cordis-light-gray);
+
+  ${media.tablet} {
+    padding: 12rem 6rem;
+  }
+
+  ${media.mobile} {
+    padding: 6rem 2rem;
+  }
 `;
 
 export default function GetInTouchSection() {

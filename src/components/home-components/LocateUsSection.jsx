@@ -69,7 +69,7 @@ const StyledLocations = styled.div`
   padding: 2.4rem;
 
   ${media.mobile} {
-    padding: 1rem .5rem;
+    padding: 1rem 0.5rem;
   }
 `;
 
@@ -85,6 +85,10 @@ const StyledLocationText1 = styled.div`
 
 const StyledLocationText2 = styled.div`
   width: fit-content;
+
+  & * {
+    text-align: right !important;
+  }
 `;
 
 const StyledButton = styled.div`

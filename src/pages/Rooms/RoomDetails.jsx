@@ -15,6 +15,7 @@ import { BiCloset } from "react-icons/bi";
 import Button from "../../components/shared/Button";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { ROOMS } from "../../util/room-data";
+import { media } from "../../util/breakpoints";
 
 const StyledRoomDetails = styled.div`
   display: flex;
@@ -22,6 +23,14 @@ const StyledRoomDetails = styled.div`
   gap: 4.8rem;
   padding: 15rem 12rem;
   width: 100%;
+
+  ${media.tablet} {
+    padding: 15rem 6rem;
+  }
+
+  ${media.mobile} {
+    padding: 12rem 2rem;
+  }
 `;
 
 const StyledHeaderWrapper = styled.div`
@@ -75,6 +84,10 @@ const StyledDetailsBox = styled.div`
   height: fit-content;
   border: 1px solid var(--cordis-black);
   padding: 2.4rem;
+
+  ${media.mobile} {
+    padding: 2.4rem 1rem;
+  }
 `;
 
 const StyledDetail = styled.div`
@@ -85,10 +98,22 @@ const StyledDetail = styled.div`
 
 const StyledDetailText1 = styled.div`
   width: 70%;
+
+  ${media.mobile} {
+    width: 60%;
+  }
 `;
 
 const StyledDetailText2 = styled.div`
   width: fit-content;
+  text-align: right;
+  min-width: 0;
+  word-wrap: break-word;
+  
+  & * {
+    text-align: right !important;
+    word-wrap: break-word;
+  }
 `;
 
 const StyledFeatures = styled.div`

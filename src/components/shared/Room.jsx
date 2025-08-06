@@ -51,6 +51,10 @@ const StyledRoom = styled.div`
 const StyledRoomCardWrapper = styled.div`
   width: 100%;
   display: flex;
+
+  ${media.tablet} {
+    flex-direction: column;
+  }
 `;
 
 const StyledRoomCarousel = styled.div`
@@ -58,9 +62,14 @@ const StyledRoomCarousel = styled.div`
   height: 55rem;
   background-color: ${({ $bgColor }) => $bgColor || "transparent"};
   
+  ${media.tablet} {
+    height: 44rem;
+  }
+  
   ${media.mobile} {
     height: 35rem;
   }
+
 `;
 
 export default function Room({

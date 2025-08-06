@@ -59,11 +59,13 @@ const StyledAdText = styled.div`
     position: absolute;
     top: 0;
     left: 0;
+    /* display: none; */
     background: linear-gradient(
       to bottom,
       transparent 70%,
       var(--cordis-emphasis) 100%
     );
+    pointer-events: none;
   }
 `;
 

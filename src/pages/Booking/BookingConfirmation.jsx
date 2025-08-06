@@ -3,6 +3,7 @@ import { RiArrowLeftLine, RiCheckboxCircleLine } from "react-icons/ri";
 import Text from "../../components/shared/Text";
 import { Link as RouterLink } from "react-router-dom";
 import { styled } from "styled-components";
+import { media } from "../../util/breakpoints";
 
 const StyledBookingConfirmation = styled.div`
   width: 100vw;
@@ -15,6 +16,11 @@ const StyledBookingConfirmation = styled.div`
   background-position-x: center;
   padding: 15rem;
   display: flex;
+
+  ${media.tablet} {
+    padding: 15rem 4rem;
+    flex-direction: column;
+  }
 `;
 
 const StyledBackArrow = styled.div`
@@ -22,7 +28,6 @@ const StyledBackArrow = styled.div`
   width: 13rem;
   height: 13rem;
   transition: all 0.1s ease-in-out;
-  /* background-color: yellowgreen; */
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
@@ -45,7 +50,15 @@ const StyledTextWrapper = styled.div`
   height: 100%;
   align-items: center;
   justify-content: center;
-  gap: 2.4rem;
+  gap: 4.8rem;
+
+  & * {
+    text-align: center;
+
+    ${media.tablet} {
+      text-align: left;
+    }
+  }
 `;
 
 const StyledTextIconWrapper = styled.div`
@@ -53,8 +66,8 @@ const StyledTextIconWrapper = styled.div`
   align-items: center;
   gap: 2.4rem;
 
-  & * {
-    text-align: center;
+  ${media.tablet} {
+    justify-content: center;
   }
 `;
 

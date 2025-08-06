@@ -1,10 +1,10 @@
 import { styled } from "styled-components";
 import { useState } from "react";
-import Text from "../shared/Text";
 import BlogPost from "../shared/BlogPost";
 import MiniBlogPost from "../shared/MiniBlogPost";
 import BLOGS from "../../util/blog-data";
 import Ad from "../shared/Ad";
+import { media } from "../../util/breakpoints";
 
 const StyledBlogSection = styled.div`
   display: flex;
@@ -13,6 +13,21 @@ const StyledBlogSection = styled.div`
   width: 100%;
   align-items: center;
   background-color: var(--cordis-emphasis);
+
+  ${media.desktop} {
+    gap: 2rem;
+    padding: 12rem 6rem;
+  }
+
+  ${media.tablet} {
+    flex-direction: column;
+    padding: 12rem 4rem;
+    gap: 12rem;
+  }
+
+  ${media.mobile} {
+    padding: 12rem 2rem;
+  }
 `;
 
 const StyledBlogContainer = styled.div`
@@ -24,6 +39,10 @@ const StyledBlogContainer = styled.div`
   gap: 4.8rem;
   box-shadow: var(--popup-xl);
   padding-bottom: 1.8rem;
+
+  ${media.tablet} {
+    width: 100%;
+  }
 `;
 
 const StyledMainBlogContainer = styled.div``;
@@ -60,6 +79,14 @@ const StyledAdContainer = styled.div`
   flex-direction: column;
   height: 120rem;
   width: 30%;
+
+  ${media.tablet} {
+    width: 70%;
+  }
+
+  ${media.mobile} {
+    width: 90%;
+  }
 `;
 
 export default function BlogSection() {

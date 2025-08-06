@@ -5,6 +5,7 @@ import Text from "../../components/shared/Text";
 import { Link as RouterLink } from "react-router-dom";
 import CustomInput2 from "../../components/shared/CustomInput2";
 import Button from "../../components/shared/Button";
+import { media } from "../../util/breakpoints";
 
 //State Imports
 import { useState } from "react";
@@ -15,6 +16,10 @@ const StyledRoomBookingPage = styled.div`
   min-height: 100vh;
   display: flex;
   align-items: stretch;
+
+  ${media.tablet} {
+    flex-direction: column;
+  }
 `;
 
 const StyledRoomBooking = styled.div`
@@ -23,11 +28,25 @@ const StyledRoomBooking = styled.div`
   gap: 6rem;
   width: 55%;
   padding: 6rem;
+
+  ${media.tablet} {
+    width: 100%;
+  }
+
+  ${media.mobile} {
+    padding: 6rem 2rem;
+  }
 `;
 
 const StyledHeaderWrapper = styled.div`
   display: flex;
   gap: 4rem;
+
+  ${media.mobile} {
+    flex-direction: column;
+    gap: 0;
+    padding: 0 2rem;
+  }
 `;
 
 const StyledInputs = styled.div`
@@ -40,6 +59,15 @@ const StyledInputs = styled.div`
 const StyledInputRow = styled.div`
   display: flex;
   gap: 8rem;
+
+  ${media.desktop} {
+    gap: 2rem;
+  }
+
+  ${media.mobile} {
+    flex-direction: column;
+    padding: 0 2rem;
+  }
 `;
 
 const StyledBackArrow = styled.div`
@@ -97,6 +125,11 @@ const StyledBookingSummary = styled.div`
   width: 45%;
   padding: 4.8rem;
   gap: 4.8rem;
+
+  ${media.tablet} {
+    width: 100%;
+    padding: 4.8rem 6rem;
+  }
 `;
 
 const StyledConfirmationHeaderWrapper = styled.div`
@@ -155,8 +188,12 @@ const StyledCountrySelect = styled.select`
   border-top: none;
   border-left: none;
   border-right: none;
-  padding: 0.5rem;
-  width: 10rem;
+  padding: 0.5rem 0;
+  width: 9rem;
+
+  ${media.mobile} {
+    padding: 0;
+  }
 
   &:focus-visible {
     outline: none;

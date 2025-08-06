@@ -3,6 +3,7 @@ import Text from "../shared/Text";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
 import { ROOMS } from "../../util/room-data.js";
+import { media } from "../../util/breakpoints";
 
 const StyledRoomDetailsBlock = styled.div`
   display: flex;
@@ -14,6 +15,14 @@ const StyledRoomDetailsBlock = styled.div`
   height: 55rem;
   width: 70%;
   background-color: var(--cordis-text-color);
+
+  ${media.tablet} {
+    width: 100%;
+  }
+
+  ${media.mobile} {
+    padding: 0 4rem;
+  }
 `;
 
 const StyledButtonContainer = styled.div`

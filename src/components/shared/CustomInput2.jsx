@@ -10,6 +10,7 @@ const StyledCustomInput2 = styled.div`
   gap: 1rem;
   flex: 1;
   padding-bottom: .3rem;
+  width: 100%;
 `;
 
 const StyledCustomInput2Black = styled.div`
@@ -17,10 +18,11 @@ const StyledCustomInput2Black = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  min-width: 27rem;
+  /* min-width: 20rem; */
   gap: 1rem;
   flex: 1;
   padding-bottom: .3rem;
+  width: 100%;
 `
 
 const StyledInput = styled.input`

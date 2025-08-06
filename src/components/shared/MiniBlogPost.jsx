@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import Text from "../shared/Text";
+import { media } from "../../util/breakpoints";
 
 const StyledMiniBlogPost = styled.div`
   display: flex;
@@ -59,6 +60,14 @@ const StyledTextWrapper = styled.div`
   flex-direction: column;
   padding: 0 2.4rem;
   gap: 1.8rem;
+
+  ${media.tablet} {
+    padding: 0 1.2rem;
+  }
+
+  ${media.mobile} {
+    padding: 0;
+  }
 `;
 
 export default function MiniBlogPost({

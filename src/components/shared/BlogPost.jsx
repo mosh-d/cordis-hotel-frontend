@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 import Text from "./Text";
+import { media } from "../../util/breakpoints";
 
 const StyledBlog = styled.div`
   display: flex;
@@ -38,6 +39,10 @@ const StyledTextWrapper = styled.div`
   flex-direction: column;
   padding: 0 2.4rem;
   gap: 2.4rem;
+
+  ${media.mobile} {
+    padding: 0 1.2rem;
+  }
 `;
 
 const StyledParagraphContainer = styled.div`
