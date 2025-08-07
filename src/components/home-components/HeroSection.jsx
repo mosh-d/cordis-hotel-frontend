@@ -210,13 +210,27 @@ const StyledVideoOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 2;
   pointer-events: none;
   background: transparent;
   
   /* Hide this overlay once video starts playing */
   opacity: ${props => props.$isPlaying ? 0 : 1};
   transition: opacity 0.3s ease;
+`;
+
+const StyledVideoControlBlocker = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  background: transparent;
+  
+  /* Always visible to block any native controls */
+  opacity: 1;
 `;
 
 const StyledVideoControls = styled.div`
@@ -267,6 +281,10 @@ const HeroSection = forwardRef((props, ref) => {
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
+      // Force remove controls attribute completely
+      video.removeAttribute('controls');
+      video.controls = false;
+      
       // Add event listeners
       const handleLoadedData = () => {
         setVideoLoaded(true);
@@ -280,9 +298,16 @@ const HeroSection = forwardRef((props, ref) => {
         setIsPlaying(false);
       };
       
+      const handleLoadStart = () => {
+        // Ensure controls are off during load
+        video.removeAttribute('controls');
+        video.controls = false;
+      };
+      
       video.addEventListener('loadeddata', handleLoadedData);
       video.addEventListener('play', handlePlay);
       video.addEventListener('pause', handlePause);
+      video.addEventListener('loadstart', handleLoadStart);
       
       // Try to play
       const playPromise = video.play();
@@ -300,6 +325,7 @@ const HeroSection = forwardRef((props, ref) => {
         video.removeEventListener('loadeddata', handleLoadedData);
         video.removeEventListener('play', handlePlay);
         video.removeEventListener('pause', handlePause);
+        video.removeEventListener('loadstart', handleLoadStart);
       };
     }
   }, []);
@@ -326,7 +352,6 @@ const HeroSection = forwardRef((props, ref) => {
         playsInline
         webkit-playsinline="true"
         x-webkit-airplay="deny"
-        controls={false}
         controlsList="nodownload nofullscreen noremoteplayback"
         disablePictureInPicture
         disableRemotePlayback
@@ -343,6 +368,9 @@ const HeroSection = forwardRef((props, ref) => {
         <source src={HeroVideo} type="video/mp4" />
       </video>
 
+      {/* Permanent blocker for native controls */}
+      <StyledVideoControlBlocker />
+      
       {/* Overlay to hide native controls during initial load */}
       <StyledVideoOverlay $isPlaying={isPlaying && videoLoaded} />
 
