@@ -33,7 +33,9 @@ const StyledRoomSection = styled.div`
 const StyledRooms = styled.div`
   width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
   padding-bottom: 4rem;
+  -webkit-overflow-scrolling: touch;
   
   & > * {
     min-width: calc(50% - 0.5rem);
@@ -46,23 +48,68 @@ const StyledRooms = styled.div`
   flex-direction: row;
   gap: 1rem;
 
+  /* Standard scrollbar styling */
   &::-webkit-scrollbar {
-      width: .1rem;
-      height: .5rem;
-    }
+    width: .1rem;
+    height: .5rem;
+  }
 
   &::-webkit-scrollbar-track {
     background-color: var(--cordis-light-gray);
     height: .5rem;
+    /* border-radius: .4rem; */
   }
 
   &::-webkit-scrollbar-thumb {
     background-color: var(--cordis-text-color);
     height: .5rem;
+    /* border-radius: .4rem; */
+    
+    &:hover {
+      background-color: var(--cordis-black);
+      cursor: grab;
+    }
   }
 
   &::-webkit-scrollbar-button {
     display: none;
+  }
+
+  /* iOS Safari specific fixes */
+  ${media.mobile} {
+    /* Force scrollbar to be visible on iOS */
+    &::-webkit-scrollbar {
+      height: 1rem;
+      -webkit-appearance: none;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background-color: rgba(0, 0, 0, 0.1);
+      height: 1rem;
+      border-radius: .5rem;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--cordis-text-color);
+      height: 1rem;
+      border-radius: .5rem;
+      border: 2px solid transparent;
+      background-clip: content-box;
+    }
+    
+    /* Alternative: Add scroll indicators */
+    position: relative;
+    
+    &::after {
+      content: "← Scroll for more →";
+      position: absolute;
+      bottom: 0;
+      right: 1rem;
+      font-size: 1.2rem;
+      color: var(--cordis-gray);
+      pointer-events: none;
+      opacity: 0.7;
+    }
   }
 `;
 

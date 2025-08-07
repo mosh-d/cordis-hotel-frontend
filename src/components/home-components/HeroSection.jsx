@@ -38,9 +38,10 @@ const StyledHeroSection = styled.section`
     object-fit: cover;
     z-index: -1;
     
-    /* Hide video controls completely */
+    /* Hide ALL video controls completely - iOS Safari specific */
     &::-webkit-media-controls {
       display: none !important;
+      -webkit-appearance: none;
     }
     
     &::-webkit-media-controls-panel {
@@ -52,6 +53,40 @@ const StyledHeroSection = styled.section`
     }
     
     &::-webkit-media-controls-start-playback-button {
+      display: none !important;
+    }
+    
+    &::-webkit-media-controls-enclosure {
+      display: none !important;
+    }
+    
+    &::-webkit-media-controls-overlay-play-button {
+      display: none !important;
+      -webkit-appearance: none;
+    }
+    
+    /* Additional iOS Safari fixes */
+    &::-webkit-media-controls-fullscreen-button {
+      display: none !important;
+    }
+    
+    &::-webkit-media-controls-timeline {
+      display: none !important;
+    }
+    
+    &::-webkit-media-controls-current-time-display {
+      display: none !important;
+    }
+    
+    &::-webkit-media-controls-time-remaining-display {
+      display: none !important;
+    }
+    
+    &::-webkit-media-controls-mute-button {
+      display: none !important;
+    }
+    
+    &::-webkit-media-controls-volume-slider {
       display: none !important;
     }
   }
@@ -251,7 +286,9 @@ const HeroSection = forwardRef((props, ref) => {
         webkit-playsinline="true"
         controls={false}
         disablePictureInPicture
-        preload="metadata"
+        preload="auto"
+        poster=""
+        style={{ pointerEvents: 'none' }}
       >
         <source src={HeroVideo} type="video/mp4" />
       </video>
