@@ -40,7 +40,7 @@ const StyledHeroSection = styled.section`
     object-fit: cover;
     z-index: -1;
     
-    /* Aggressive iOS Safari control hiding */
+    /* Complete control hiding for all browsers */
     &::-webkit-media-controls,
     &::-webkit-media-controls-panel,
     &::-webkit-media-controls-play-button,
@@ -52,7 +52,12 @@ const StyledHeroSection = styled.section`
     &::-webkit-media-controls-current-time-display,
     &::-webkit-media-controls-time-remaining-display,
     &::-webkit-media-controls-mute-button,
-    &::-webkit-media-controls-volume-slider {
+    &::-webkit-media-controls-volume-slider,
+    &::-webkit-media-controls-seek-back-button,
+    &::-webkit-media-controls-seek-forward-button,
+    &::-webkit-media-controls-rewind-button,
+    &::-webkit-media-controls-return-to-realtime-button,
+    &::-webkit-media-controls-toggle-closed-captions-button {
       display: none !important;
       -webkit-appearance: none !important;
       opacity: 0 !important;
@@ -60,17 +65,26 @@ const StyledHeroSection = styled.section`
       width: 0 !important;
       height: 0 !important;
       overflow: hidden !important;
+      pointer-events: none !important;
     }
     
-    /* Additional iOS specific fixes */
+    /* Force no controls */
     &[controls] {
       -webkit-appearance: none !important;
+      appearance: none !important;
     }
     
-    /* Force remove any possible overlay */
+    /* Additional iOS Safari specific properties */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    
+    /* Force remove any possible overlay or pseudo elements */
     &::before,
     &::after {
       display: none !important;
+      content: none !important;
     }
   }
   background-size: cover;
@@ -305,18 +319,25 @@ const HeroSection = forwardRef((props, ref) => {
     <StyledHeroSection ref={ref} $videoLoaded={videoLoaded}>
       <video 
         ref={videoRef} 
+        className="video-no-controls"
         autoPlay 
         muted 
         loop 
         playsInline
         webkit-playsinline="true"
+        x-webkit-airplay="deny"
         controls={false}
+        controlsList="nodownload nofullscreen noremoteplayback"
         disablePictureInPicture
+        disableRemotePlayback
         preload="auto"
         poster=""
+        tabIndex="-1"
         style={{ 
           pointerEvents: 'none',
-          visibility: videoLoaded ? 'visible' : 'hidden'
+          visibility: videoLoaded ? 'visible' : 'hidden',
+          outline: 'none',
+          border: 'none'
         }}
       >
         <source src={HeroVideo} type="video/mp4" />
