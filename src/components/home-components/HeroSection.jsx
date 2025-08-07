@@ -25,9 +25,9 @@ const StyledHeroSection = styled.section`
     left: 0;
     width: 100%;
     height: 100%;
-    /* background: url(${HeroImage}) center/cover no-repeat; */
+    background: url(${HeroImage}) center/cover no-repeat;
     z-index: -2;
-    opacity: ${props => props.$videoLoaded ? 0 : 1};
+    opacity: ${(props) => (props.$videoLoaded ? 0 : 1)};
     transition: opacity 0.5s ease;
   }
 
@@ -39,8 +39,8 @@ const StyledHeroSection = styled.section`
     height: 100%;
     object-fit: cover;
     z-index: -1;
-    
-    /* Complete control hiding for all browsers */
+
+    /* Aggressive iOS Safari control hiding */
     &::-webkit-media-controls,
     &::-webkit-media-controls-panel,
     &::-webkit-media-controls-play-button,
@@ -52,12 +52,7 @@ const StyledHeroSection = styled.section`
     &::-webkit-media-controls-current-time-display,
     &::-webkit-media-controls-time-remaining-display,
     &::-webkit-media-controls-mute-button,
-    &::-webkit-media-controls-volume-slider,
-    &::-webkit-media-controls-seek-back-button,
-    &::-webkit-media-controls-seek-forward-button,
-    &::-webkit-media-controls-rewind-button,
-    &::-webkit-media-controls-return-to-realtime-button,
-    &::-webkit-media-controls-toggle-closed-captions-button {
+    &::-webkit-media-controls-volume-slider {
       display: none !important;
       -webkit-appearance: none !important;
       opacity: 0 !important;
@@ -65,26 +60,17 @@ const StyledHeroSection = styled.section`
       width: 0 !important;
       height: 0 !important;
       overflow: hidden !important;
-      pointer-events: none !important;
     }
-    
-    /* Force no controls */
+
+    /* Additional iOS specific fixes */
     &[controls] {
-      -webkit-appearance: none !important;
-      appearance: none !important;
+      /* -webkit-appearance: none !important; */
     }
-    
-    /* Additional iOS Safari specific properties */
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
-    pointer-events: none;
-    
-    /* Force remove any possible overlay or pseudo elements */
+
+    /* Force remove any possible overlay */
     &::before,
     &::after {
       display: none !important;
-      content: none !important;
     }
   }
   background-size: cover;
@@ -210,27 +196,13 @@ const StyledVideoOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2;
+  z-index: 0;
   pointer-events: none;
   background: transparent;
-  
-  /* Hide this overlay once video starts playing */
-  opacity: ${props => props.$isPlaying ? 0 : 1};
-  transition: opacity 0.3s ease;
-`;
 
-const StyledVideoControlBlocker = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
-  background: transparent;
-  
-  /* Always visible to block any native controls */
-  opacity: 1;
+  /* Hide this overlay once video starts playing */
+  opacity: ${(props) => (props.$isPlaying ? 0 : 1)};
+  transition: opacity 0.3s ease;
 `;
 
 const StyledVideoControls = styled.div`
@@ -273,6 +245,14 @@ const StyledPlayButton = styled.button`
 `;
 
 const HeroSection = forwardRef((props, ref) => {
+  const {
+    checkIn,
+    setCheckIn,
+    checkOut,
+    setCheckOut,
+    noOfRooms,
+    setNoOfRooms,
+  } = props;
   const [isPlaying, setIsPlaying] = useState(false); // Start as false
   const [videoLoaded, setVideoLoaded] = useState(false);
   const videoRef = useRef(null);
@@ -281,51 +261,55 @@ const HeroSection = forwardRef((props, ref) => {
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      // Force remove controls attribute completely
-      video.removeAttribute('controls');
-      video.controls = false;
-      
       // Add event listeners
       const handleLoadedData = () => {
         setVideoLoaded(true);
+        // Try to play after video is loaded
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              setIsPlaying(true);
+            })
+            .catch(() => {
+              // Autoplay failed, user interaction required
+              setIsPlaying(false);
+            });
+        }
       };
-      
+
+      const handleCanPlay = () => {
+        setVideoLoaded(true);
+      };
+
       const handlePlay = () => {
         setIsPlaying(true);
       };
-      
+
       const handlePause = () => {
         setIsPlaying(false);
       };
-      
+
       const handleLoadStart = () => {
-        // Ensure controls are off during load
-        video.removeAttribute('controls');
-        video.controls = false;
+        setVideoLoaded(false);
       };
-      
-      video.addEventListener('loadeddata', handleLoadedData);
-      video.addEventListener('play', handlePlay);
-      video.addEventListener('pause', handlePause);
-      video.addEventListener('loadstart', handleLoadStart);
-      
-      // Try to play
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          setIsPlaying(true);
-        }).catch(() => {
-          // Autoplay failed, user interaction required
-          setIsPlaying(false);
-        });
-      }
-      
+
+      video.addEventListener("loadeddata", handleLoadedData);
+      video.addEventListener("canplay", handleCanPlay);
+      video.addEventListener("play", handlePlay);
+      video.addEventListener("pause", handlePause);
+      video.addEventListener("loadstart", handleLoadStart);
+
+      // Force load the video
+      video.load();
+
       // Cleanup
       return () => {
-        video.removeEventListener('loadeddata', handleLoadedData);
-        video.removeEventListener('play', handlePlay);
-        video.removeEventListener('pause', handlePause);
-        video.removeEventListener('loadstart', handleLoadStart);
+        video.removeEventListener("loadeddata", handleLoadedData);
+        video.removeEventListener("canplay", handleCanPlay);
+        video.removeEventListener("play", handlePlay);
+        video.removeEventListener("pause", handlePause);
+        video.removeEventListener("loadstart", handleLoadStart);
       };
     }
   }, []);
@@ -343,34 +327,27 @@ const HeroSection = forwardRef((props, ref) => {
 
   return (
     <StyledHeroSection ref={ref} $videoLoaded={videoLoaded}>
-      <video 
-        ref={videoRef} 
-        className="video-no-controls"
-        autoPlay 
-        muted 
-        loop 
+      <video
+        key="hero-video"
+        ref={videoRef}
+        autoPlay
+        muted
+        loop
         playsInline
         webkit-playsinline="true"
-        x-webkit-airplay="deny"
-        controlsList="nodownload nofullscreen noremoteplayback"
+        controls={false}
         disablePictureInPicture
-        disableRemotePlayback
-        preload="auto"
+        preload="metadata"
         poster=""
-        tabIndex="-1"
-        style={{ 
-          pointerEvents: 'none',
-          visibility: videoLoaded ? 'visible' : 'hidden',
-          outline: 'none',
-          border: 'none'
+        style={{
+          pointerEvents: "none",
+          opacity: videoLoaded ? 1 : 0,
+          transition: "opacity 0.5s ease",
         }}
       >
         <source src={HeroVideo} type="video/mp4" />
       </video>
 
-      {/* Permanent blocker for native controls */}
-      <StyledVideoControlBlocker />
-      
       {/* Overlay to hide native controls during initial load */}
       <StyledVideoOverlay $isPlaying={isPlaying && videoLoaded} />
 
@@ -403,13 +380,23 @@ const HeroSection = forwardRef((props, ref) => {
           label="When do you check in?"
           $for="check-in"
           $type="date"
+          value={checkIn}
+          onChange={(e) => setCheckIn(e.target.value)}
         />
         <CustomInput
           label="When do you check out?"
           $for="check-out"
           $type="date"
+          value={checkOut}
+          onChange={(e) => setCheckOut(e.target.value)}
         />
-        <CustomInput label="How many rooms?" $for="guests" $type="number" />
+        <CustomInput
+          label="How many rooms?"
+          $for="guests"
+          $type="number"
+          value={noOfRooms}
+          onChange={(e) => setNoOfRooms(e.target.value)}
+        />
         <RouterLink to="/rooms">
           <Button $type="emphasis">
             <Text $weight="bold" $size="small">

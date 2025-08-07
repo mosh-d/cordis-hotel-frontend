@@ -1,3 +1,4 @@
+import { useOutletContext } from "react-router-dom";
 import { styled } from "styled-components";
 import Booking1 from "../../assets/cordis-booking/CORDIS-BOOKING-1.png";
 import { RiArrowLeftLine } from "react-icons/ri";
@@ -6,9 +7,6 @@ import { Link as RouterLink } from "react-router-dom";
 import CustomInput2 from "../../components/shared/CustomInput2";
 import Button from "../../components/shared/Button";
 import { media } from "../../util/breakpoints";
-
-//State Imports
-import { useState } from "react";
 
 //Styles
 const StyledRoomBookingPage = styled.div`
@@ -231,16 +229,28 @@ const StyledPhoneInput = styled.input`
 `;
 
 export default function RoomBookingPage() {
-  //State Declarations
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [countryCode, setCountryCode] = useState("+234");
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
-  const [roomCategory, setRoomCategory] = useState("");
-  const [noOfRooms, setNoOfRooms] = useState(0);
+  // //State Declarations
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [phoneNumber, setPhoneNumber] = useState("");
+  // const [countryCode, setCountryCode] = useState("+234");
+  // const [checkIn, setCheckIn] = useState("");
+  // const [checkOut, setCheckOut] = useState("");
+  // const [roomCategory, setRoomCategory] = useState("");
+  // const [noOfRooms, setNoOfRooms] = useState();
+
+  const {
+    firstName, setFirstName,
+    lastName, setLastName,
+    email, setEmail,
+    phoneNumber, setPhoneNumber,
+    countryCode, setCountryCode,
+    checkIn, setCheckIn,
+    checkOut, setCheckOut,
+    roomCategory, setRoomCategory,
+    noOfRooms, setNoOfRooms
+  } = useOutletContext();
 
   //Room price calculation
   const ROOM_PRICES = {

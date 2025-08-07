@@ -40,9 +40,29 @@ function HomePage() {
     };
   }, [setShowFixedReserve]);
 
+  const {
+    firstName, setFirstName,
+    lastName, setLastName,
+    email, setEmail,
+    phoneNumber, setPhoneNumber,
+    countryCode, setCountryCode,
+    checkIn, setCheckIn,
+    checkOut, setCheckOut,
+    roomCategory, setRoomCategory,
+    noOfRooms, setNoOfRooms,
+  } = useOutletContext();
+
   return (
     <>
-      <HeroSection ref={heroSectionRef} />
+      <HeroSection
+        ref={heroSectionRef}
+        checkIn={checkIn}
+        setCheckIn={setCheckIn}
+        checkOut={checkOut}
+        setCheckOut={setCheckOut}
+        noOfRooms={noOfRooms}
+        setNoOfRooms={setNoOfRooms}
+      />
       {/* <button onClick={() => navigate('/about')}>View Products</button> */}{" "}
       {/* This is a way to navigate to a different page (programmatically .ie. afer a timeout or something) */}
       <IntroSection />
