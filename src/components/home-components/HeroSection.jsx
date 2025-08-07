@@ -27,6 +27,8 @@ const StyledHeroSection = styled.section`
     height: 100%;
     /* background: url(${HeroImage}) center/cover no-repeat; */
     z-index: -2;
+    opacity: ${props => props.$videoLoaded ? 0 : 1};
+    transition: opacity 0.5s ease;
   }
 
   & video {
@@ -38,55 +40,36 @@ const StyledHeroSection = styled.section`
     object-fit: cover;
     z-index: -1;
     
-    /* Hide ALL video controls completely - iOS Safari specific */
-    &::-webkit-media-controls {
-      display: none !important;
-      -webkit-appearance: none;
-    }
-    
-    &::-webkit-media-controls-panel {
-      display: none !important;
-    }
-    
-    &::-webkit-media-controls-play-button {
-      display: none !important;
-    }
-    
-    &::-webkit-media-controls-start-playback-button {
-      display: none !important;
-    }
-    
-    &::-webkit-media-controls-enclosure {
-      display: none !important;
-    }
-    
-    &::-webkit-media-controls-overlay-play-button {
-      display: none !important;
-      -webkit-appearance: none;
-    }
-    
-    /* Additional iOS Safari fixes */
-    &::-webkit-media-controls-fullscreen-button {
-      display: none !important;
-    }
-    
-    &::-webkit-media-controls-timeline {
-      display: none !important;
-    }
-    
-    &::-webkit-media-controls-current-time-display {
-      display: none !important;
-    }
-    
-    &::-webkit-media-controls-time-remaining-display {
-      display: none !important;
-    }
-    
-    &::-webkit-media-controls-mute-button {
-      display: none !important;
-    }
-    
+    /* Aggressive iOS Safari control hiding */
+    &::-webkit-media-controls,
+    &::-webkit-media-controls-panel,
+    &::-webkit-media-controls-play-button,
+    &::-webkit-media-controls-start-playback-button,
+    &::-webkit-media-controls-enclosure,
+    &::-webkit-media-controls-overlay-play-button,
+    &::-webkit-media-controls-fullscreen-button,
+    &::-webkit-media-controls-timeline,
+    &::-webkit-media-controls-current-time-display,
+    &::-webkit-media-controls-time-remaining-display,
+    &::-webkit-media-controls-mute-button,
     &::-webkit-media-controls-volume-slider {
+      display: none !important;
+      -webkit-appearance: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      width: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
+    }
+    
+    /* Additional iOS specific fixes */
+    &[controls] {
+      -webkit-appearance: none !important;
+    }
+    
+    /* Force remove any possible overlay */
+    &::before,
+    &::after {
       display: none !important;
     }
   }
@@ -207,6 +190,21 @@ const QuickCheckIn = styled.div`
   }
 `;
 
+const StyledVideoOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background: transparent;
+  
+  /* Hide this overlay once video starts playing */
+  opacity: ${props => props.$isPlaying ? 0 : 1};
+  transition: opacity 0.3s ease;
+`;
+
 const StyledVideoControls = styled.div`
   position: absolute;
   top: 55%;
@@ -247,20 +245,48 @@ const StyledPlayButton = styled.button`
 `;
 
 const HeroSection = forwardRef((props, ref) => {
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false); // Start as false
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const videoRef = useRef(null);
 
-  // Handle autoplay failure on iOS
+  // Handle autoplay and video events
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
+      // Add event listeners
+      const handleLoadedData = () => {
+        setVideoLoaded(true);
+      };
+      
+      const handlePlay = () => {
+        setIsPlaying(true);
+      };
+      
+      const handlePause = () => {
+        setIsPlaying(false);
+      };
+      
+      video.addEventListener('loadeddata', handleLoadedData);
+      video.addEventListener('play', handlePlay);
+      video.addEventListener('pause', handlePause);
+      
+      // Try to play
       const playPromise = video.play();
       if (playPromise !== undefined) {
-        playPromise.catch(() => {
+        playPromise.then(() => {
+          setIsPlaying(true);
+        }).catch(() => {
           // Autoplay failed, user interaction required
           setIsPlaying(false);
         });
       }
+      
+      // Cleanup
+      return () => {
+        video.removeEventListener('loadeddata', handleLoadedData);
+        video.removeEventListener('play', handlePlay);
+        video.removeEventListener('pause', handlePause);
+      };
     }
   }, []);
 
@@ -276,7 +302,7 @@ const HeroSection = forwardRef((props, ref) => {
   };
 
   return (
-    <StyledHeroSection ref={ref}>
+    <StyledHeroSection ref={ref} $videoLoaded={videoLoaded}>
       <video 
         ref={videoRef} 
         autoPlay 
@@ -288,10 +314,16 @@ const HeroSection = forwardRef((props, ref) => {
         disablePictureInPicture
         preload="auto"
         poster=""
-        style={{ pointerEvents: 'none' }}
+        style={{ 
+          pointerEvents: 'none',
+          visibility: videoLoaded ? 'visible' : 'hidden'
+        }}
       >
         <source src={HeroVideo} type="video/mp4" />
       </video>
+
+      {/* Overlay to hide native controls during initial load */}
+      <StyledVideoOverlay $isPlaying={isPlaying && videoLoaded} />
 
       <StyledVideoControls>
         <StyledPlayButton onClick={togglePlayPause}>
