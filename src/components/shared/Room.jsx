@@ -114,6 +114,10 @@ const AmenitiesList = styled.ul`
   }
 `;
 
+const StyledButtonContainer = styled.div`
+  
+`
+
 export default function Room({
   imageType,
   headerText,
@@ -193,13 +197,15 @@ export default function Room({
         {children}
       </StyledRoomCardWrapper>
 
-      <RouteLink to="/room-booking">
-        <Button $type="underlined">
-          <Text $type="p" $size="medium" $weight="regular">
-            {buttonText}
-          </Text>
-        </Button>
-      </RouteLink>
+      <StyledButtonContainer>
+        <RouteLink to="/room-booking">
+          <Button $type="underlined">
+            <Text $type="p" $size="medium" $weight="regular">
+              {buttonText}
+            </Text>
+          </Button>
+        </RouteLink>
+      </StyledButtonContainer>
     </StyledRoom>
   );
 }

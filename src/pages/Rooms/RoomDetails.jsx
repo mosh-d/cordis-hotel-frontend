@@ -241,7 +241,7 @@ export default function RoomDetailsPage() {
           </StyledDetails>
           <StyledFeatures>
             <Text $type="h3" $weight="bold" $size="small">
-              Features
+              Amenities
             </Text>
             <StyledFeatureWrapper>
               <StyledFeature>
