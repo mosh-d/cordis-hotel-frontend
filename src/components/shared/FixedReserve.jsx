@@ -19,12 +19,10 @@ const StyledFixedReserve = styled.div`
 export default function FixedReserve() {
   const location = useLocation();
 
-  // Determine the booking path based on current location
+  // Navigate to room-booking with return path parameter
   const getBookingPath = () => {
-    if (location.pathname === "/about") return "/about/room-booking";
-    if (location.pathname === "/contact") return "/contact/room-booking";
-    if (location.pathname === "/blog") return "/blog/room-booking";
-    return "/room-booking"; // fallback
+    const returnPath = encodeURIComponent(location.pathname);
+    return `/room-booking?returnTo=${returnPath}`;
   }
 
   return (

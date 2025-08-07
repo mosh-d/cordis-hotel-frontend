@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import Booking1 from "../../assets/cordis-booking/CORDIS-BOOKING-1.png";
 import { RiArrowLeftLine } from "react-icons/ri";
 import Text from "../../components/shared/Text";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useSearchParams } from "react-router-dom";
 import CustomInput2 from "../../components/shared/CustomInput2";
 import Button from "../../components/shared/Button";
 import { media } from "../../util/breakpoints";
@@ -229,16 +229,8 @@ const StyledPhoneInput = styled.input`
 `;
 
 export default function RoomBookingPage() {
-  // //State Declarations
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [phoneNumber, setPhoneNumber] = useState("");
-  // const [countryCode, setCountryCode] = useState("+234");
-  // const [checkIn, setCheckIn] = useState("");
-  // const [checkOut, setCheckOut] = useState("");
-  // const [roomCategory, setRoomCategory] = useState("");
-  // const [noOfRooms, setNoOfRooms] = useState();
+  const [searchParams] = useSearchParams();
+  const returnTo = searchParams.get('returnTo') || '/';
 
   const {
     firstName, setFirstName,
@@ -331,7 +323,7 @@ export default function RoomBookingPage() {
       <StyledRoomBookingPage>
         <StyledRoomBooking>
           <StyledHeaderWrapper>
-            <RouterLink to="..">
+            <RouterLink to={returnTo}>
               <StyledBackArrow>
                 <RiArrowLeftLine color="var(--cordis-black)" size="3rem" />
               </StyledBackArrow>
