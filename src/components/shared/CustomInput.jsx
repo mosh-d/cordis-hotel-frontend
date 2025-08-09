@@ -4,17 +4,17 @@ import { styled } from "styled-components";
 const StyledCustomInput = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.1rem;
 
   & label {
     color: var(--cordis-white);
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     font-family: var(--font-family-primary);
     letter-spacing: 0.1em;
   }
 
   & input {
-    font-size: var(--text-base);
+    font-size: var(--text-xl);
     font-weight: 600;
     border: none;
     background-color: var(--cordis-white);

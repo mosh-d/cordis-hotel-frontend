@@ -1,3 +1,4 @@
+import { useOutletContext } from "react-router-dom";
 import Text from "./Text";
 import styled from "styled-components";
 import Carousel from "./Carousel";
@@ -63,14 +64,13 @@ const StyledRoomCarousel = styled.div`
   width: 100%;
   height: 55rem;
   background-color: ${({ $bgColor }) => $bgColor || "transparent"};
-  
+
   ${media.tablet} {
     height: 50rem;
   }
-  
+
   ${media.mobile} {
   }
-
 `;
 
 const RoomDetailsContent = styled.div`
@@ -107,16 +107,14 @@ const AmenitiesList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 1rem 0;
-  
+
   li {
     padding: 0.25rem 0;
     color: var(--cordis-white);
   }
 `;
 
-const StyledButtonContainer = styled.div`
-  
-`
+const StyledButtonContainer = styled.div``;
 
 export default function Room({
   imageType,
@@ -126,6 +124,8 @@ export default function Room({
   $bgColor,
   flippable = false,
 }) {
+  const { roomCategory, setRoomCategory } = useOutletContext();
+
   const images =
     imageType === "budget" ? BudgetRoomImages : DiplomaticRoomImages;
 
@@ -134,38 +134,56 @@ export default function Room({
       <Text $type="h2" $color="var(--cordis-white)" $weight="bold">
         {headerText} Room Details
       </Text>
-      
+
       <DetailItem>
         <Text $color="var(--cordis-white)">Price:</Text>
-        <Text $color="var(--cordis-emphasis)" $weight="bold">{imageType === "budget" ? ROOMS[0].price : ROOMS[1].price}</Text>
+        <Text $color="var(--cordis-emphasis)" $weight="bold">
+          {imageType === "budget" ? ROOMS[0].price : ROOMS[1].price}
+        </Text>
       </DetailItem>
-      
+
       <DetailItem>
         <Text $color="var(--cordis-white)">Size:</Text>
-        <Text $color="var(--cordis-white)">{imageType === "budget" ? ROOMS[0].size : ROOMS[1].size}</Text>
+        <Text $color="var(--cordis-white)">
+          {imageType === "budget" ? ROOMS[0].size : ROOMS[1].size}
+        </Text>
       </DetailItem>
-      
+
       <DetailItem>
         <Text $color="var(--cordis-white)">Capacity:</Text>
-        <Text $color="var(--cordis-white)">{imageType === "budget" ? ROOMS[0].capacity : ROOMS[1].capacity}</Text>
+        <Text $color="var(--cordis-white)">
+          {imageType === "budget" ? ROOMS[0].capacity : ROOMS[1].capacity}
+        </Text>
       </DetailItem>
-      
+
       <div>
-        <Text $color="var(--cordis-white)" $weight="bold">Amenities:</Text>
+        <Text $color="var(--cordis-white)" $weight="bold">
+          Amenities:
+        </Text>
         <AmenitiesList>
-          {imageType === "budget" ? ROOMS[0].amenities.map((amenity, index) => (
-            <li key={index}>
-              <Text $color="var(--cordis-white)" $size="small">• {amenity}</Text>
-            </li>
-          )) : ROOMS[1].amenities.map((amenity, index) => (
-            <li key={index}>
-              <Text $color="var(--cordis-white)" $size="small">• {amenity}</Text>
-            </li>
-          ))}
+          {imageType === "budget"
+            ? ROOMS[0].amenities.map((amenity, index) => (
+                <li key={index}>
+                  <Text $color="var(--cordis-white)" $size="small">
+                    • {amenity}
+                  </Text>
+                </li>
+              ))
+            : ROOMS[1].amenities.map((amenity, index) => (
+                <li key={index}>
+                  <Text $color="var(--cordis-white)" $size="small">
+                    • {amenity}
+                  </Text>
+                </li>
+              ))}
         </AmenitiesList>
       </div>
-      
-      <Text $color="var(--cordis-gray)" $size="small" style={{ marginTop: "1rem" }}>
+
+      <Text
+        $color="var(--cordis-gray)"
+        $size="small"
+        style={{ marginTop: "1rem" }}
+      >
         Click anywhere to flip back
       </Text>
     </RoomDetailsContent>
@@ -186,10 +204,7 @@ export default function Room({
       <StyledRoomCardWrapper>
         <StyledRoomCarousel $bgColor={$bgColor}>
           {flippable ? (
-            <FlippableCarousel 
-              ImageUrls={images} 
-              backContent={backContent}
-            />
+            <FlippableCarousel ImageUrls={images} backContent={backContent} />
           ) : (
             <Carousel ImageUrls={images} />
           )}
@@ -199,7 +214,8 @@ export default function Room({
 
       <StyledButtonContainer>
         <RouteLink to="/room-booking">
-          <Button $type="underlined">
+          <Button onClick={() => setRoomCategory(imageType)} $type="underlined">
+            {console.log(roomCategory)}
             <Text $type="p" $size="medium" $weight="regular">
               {buttonText}
             </Text>

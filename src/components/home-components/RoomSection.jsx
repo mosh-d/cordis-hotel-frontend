@@ -28,6 +28,38 @@ const StyledRoomSection = styled.div`
   ${media.mobile} {
     padding: 12rem 1rem;
   }
+
+   /* Alternative: Add scroll indicators */
+    position: relative;
+    
+    &::after {
+      content: "← Scroll for more →";
+      position: absolute;
+      font-size: 1.2rem;
+      color: var(--cordis-gray);
+      pointer-events: none;
+      opacity: 0.7;
+      
+      ${media.large} {
+        bottom: 16rem;
+        left: 12rem;
+      }
+
+      ${media.desktop} {
+        bottom: 16rem;
+        left: 4rem;
+      }
+
+      ${media.tablet} {
+        bottom: 16rem;
+        left: 4rem;
+      }
+
+      ${media.mobile} {
+        bottom: 13.5rem;
+        left: 1rem;
+      }
+    }
 `;
 
 const StyledRooms = styled.div`
@@ -76,8 +108,7 @@ const StyledRooms = styled.div`
   }
 
   /* iOS Safari specific fixes */
-  ${media.mobile} {
-    /* Force scrollbar to be visible on iOS */
+  /* ${media.mobile} {
     &::-webkit-scrollbar {
       height: 1rem;
       -webkit-appearance: none;
@@ -96,21 +127,7 @@ const StyledRooms = styled.div`
       border: 2px solid transparent;
       background-clip: content-box;
     }
-    
-    /* Alternative: Add scroll indicators */
-    position: relative;
-    
-    &::after {
-      content: "← Scroll for more →";
-      position: absolute;
-      bottom: 0;
-      right: 1rem;
-      font-size: 1.2rem;
-      color: var(--cordis-gray);
-      pointer-events: none;
-      opacity: 0.7;
-    }
-  }
+  } */
 `;
 
 const StyledRoomContainer = styled.div`

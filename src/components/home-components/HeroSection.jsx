@@ -190,6 +190,11 @@ const QuickCheckIn = styled.div`
   }
 `;
 
+const StyledCustomInput = styled(CustomInput)`
+  text-align: center;
+  height: 4rem;
+`;
+
 const StyledVideoOverlay = styled.div`
   position: absolute;
   top: 0;
@@ -352,18 +357,21 @@ const HeroSection = forwardRef((props, ref) => {
       <StyledVideoOverlay $isPlaying={isPlaying && videoLoaded} />
 
       <StyledVideoControls>
-        <StyledPlayButton onClick={togglePlayPause}>
-          {isPlaying ? (
-            <RiPauseFill color="rgba(255, 255, 255, 0.5)" size="2rem" />
-          ) : (
-            <RiPlayFill color="rgba(255, 255, 255, 0.5)" size="2rem" />
-          )}
-        </StyledPlayButton>
+        {videoLoaded && (
+          <StyledPlayButton onClick={togglePlayPause}>
+            {isPlaying ? (
+              <RiPauseFill color="rgba(255, 255, 255, 0.5)" size="2rem" />
+            ) : (
+              <RiPlayFill color="rgba(255, 255, 255, 0.5)" size="2rem" />
+            )}
+          </StyledPlayButton>
+        )}
       </StyledVideoControls>
 
       <NavContainer>
         <StyledLogoWrapper>
           <Logo />
+          {/* <Logo $type="filled" /> */}
         </StyledLogoWrapper>
         <StyledNavBar>
           <StyledNavBar1>
@@ -390,7 +398,7 @@ const HeroSection = forwardRef((props, ref) => {
           value={checkOut}
           onChange={(e) => setCheckOut(e.target.value)}
         />
-        <CustomInput
+        <StyledCustomInput
           label="How many rooms?"
           $for="guests"
           $type="number"
