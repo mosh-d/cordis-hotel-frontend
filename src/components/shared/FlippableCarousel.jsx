@@ -31,6 +31,8 @@ const StyledButtonContainer = styled.div`
   position: absolute;
   bottom: 0;
   right: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 `;
 
 const StyledCarouselContainer = styled.div`
@@ -59,6 +61,7 @@ const StyledCardFace = styled.div`
 
 const StyledCardFront = styled(StyledCardFace)`
   /* Front face - shows carousel */
+  z-index: 2;
 `;
 
 const StyledCardBack = styled(StyledCardFace)`
@@ -70,6 +73,7 @@ const StyledCardBack = styled(StyledCardFace)`
   justify-content: center;
   align-items: center;
   color: var(--cordis-white);
+  z-index: 1;
 `;
 
 const StyledImage = styled(motion.img)`
@@ -155,7 +159,7 @@ export default function FlippableCarousel({
             )}
           </AnimatePresence>
 
-          <StyledButtonContainer>
+          <StyledButtonContainer style={{ opacity: isFlipped ? 0 : 1, pointerEvents: isFlipped ? 'none' : 'auto' }}>
             <StyledButton onClick={showPrevImage}>
               <MoveLeft color="white" />
             </StyledButton>
