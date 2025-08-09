@@ -1,3 +1,4 @@
+import { useOutletContext } from "react-router-dom";
 import RoomAvailabilityCard from "../../components/shared/RoomAvailabilityCard";
 import { styled } from "styled-components";
 import Text from "../../components/shared/Text";
@@ -31,11 +32,42 @@ const StyledTextWrapper = styled.div`
 `;
 
 export default function AvailableRoomsPage() {
+  const context = useOutletContext();
+  
+  // Handle case where context is undefined
+  if (!context) {
+    console.error("AvailableRoomsPage: No outlet context found. Make sure this route is nested under RootLayout.");
+    return (
+      <div>
+        <Text $type="h1" $color="var(--cordis-black)">
+          Error: Page not properly configured
+        </Text>
+      </div>
+    );
+  }
+
+  const {
+    firstName, setFirstName,
+    lastName, setLastName,
+    email, setEmail,
+    phoneNumber, setPhoneNumber,
+    countryCode, setCountryCode,
+    checkIn, setCheckIn,
+    checkOut, setCheckOut,
+    roomCategory, setRoomCategory,
+    noOfRooms, setNoOfRooms
+  } = context;
+
   return (
     <>
       <StyledAvailableRoomsPage>
         <StyledTextWrapper>
-          <Text $type="h1" $size="extra-large" $weight="bold" $color="var(--cordis-black)">21 Rooms available from June 12 to June 13</Text>
+          <Text $type="h1" $size="extra-large" $weight="bold" $color="var(--cordis-black)">
+            {checkIn && checkOut 
+              ? `21 Rooms available from ${new Date(checkIn).toLocaleDateString()} to ${new Date(checkOut).toLocaleDateString()}`
+              : "21 Rooms available"
+            }
+          </Text>
           <Text>Check available rooms</Text>
         </StyledTextWrapper>
         <StyledCardWrapper>

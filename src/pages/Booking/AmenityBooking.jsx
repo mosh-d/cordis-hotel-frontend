@@ -1,3 +1,4 @@
+import { useOutletContext } from "react-router-dom";
 import { styled } from "styled-components";
 import Booking1 from "../../assets/cordis-booking/CORDIS-BOOKING-1.png";
 import { RiArrowLeftLine } from "react-icons/ri";
@@ -230,13 +231,17 @@ const StyledPhoneInput = styled.input`
 `;
 
 export default function AmenityBookingPage() {
-  //State Declarations
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [countryCode, setCountryCode] = useState("+234");
-  const [checkIn, setCheckIn] = useState("");
+  // Get shared state from outlet context
+  const {
+    firstName, setFirstName,
+    lastName, setLastName,
+    email, setEmail,
+    phoneNumber, setPhoneNumber,
+    countryCode, setCountryCode,
+    checkIn, setCheckIn,
+  } = useOutletContext();
+
+  // Local state for amenity-specific fields
   const [sessionStart, setSessionStart] = useState("");
   const [amenity, setAmenity] = useState("");
   const [duration, setDuration] = useState(0);
