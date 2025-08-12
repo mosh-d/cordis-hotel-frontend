@@ -1,8 +1,7 @@
 import { styled } from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BlogPost from "../shared/BlogPost";
 import MiniBlogPost from "../shared/MiniBlogPost";
-import BLOGS from "../../util/blog-data";
 import Ad from "../shared/Ad";
 import { media } from "../../util/breakpoints";
 
@@ -55,9 +54,9 @@ const StyledMiniBlogWrapper = styled.div`
   padding-bottom: 4.8rem;
 
   &::-webkit-scrollbar {
-      width: .1rem;
-      height: .5rem;
-    }
+    width: .1rem;
+    height: .5rem;
+  }
 
   &::-webkit-scrollbar-track {
     background-color: var(--cordis-light-gray);
@@ -91,39 +90,80 @@ const StyledAdContainer = styled.div`
 
 export default function BlogSection() {
   const [activeBlog, setActiveBlog] = useState(0);
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchHashnodeBlogs() {
+      const query = `
+        query {
+          publication(host: "test007.hashnode.dev") {
+            posts(first: 10) {
+              edges {
+                node {
+                  title
+                  brief
+                  slug
+                  coverImage {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      `;
+
+      try {
+        const res = await fetch("https://gql.hashnode.com", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query }),
+        });
+
+        const json = await res.json();
+        const fetchedBlogs = json.data.publication.posts.edges.map(({ node }) => ({
+          title: node.title,
+          caption: node.brief,
+          image: node.coverImage?.url,
+          slug: node.slug,
+        }));
+
+        setBlogs(fetchedBlogs);
+      } catch (error) {
+        console.error("Error fetching Hashnode blogs:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchHashnodeBlogs();
+  }, []);
+
+  if (loading) return <p style={{ padding: "2rem" }}>Loading blogs...</p>;
+  if (blogs.length === 0) return <p style={{ padding: "2rem" }}>No blogs found.</p>;
 
   return (
     <StyledBlogSection>
       <StyledBlogContainer>
         <StyledMainBlogContainer id="main">
           <BlogPost
-            image={BLOGS[activeBlog].image}
-            title={BLOGS[activeBlog].title}
-            content={BLOGS[activeBlog].content}
+            image={blogs[activeBlog].image}
+            title={blogs[activeBlog].title}
+            content={blogs[activeBlog].caption}
           />
         </StyledMainBlogContainer>
         <StyledMiniBlogWrapper>
-          <MiniBlogPost
-            onSelect={() => setActiveBlog(0)}
-            href="#main"
-            image={BLOGS[0].image}
-            title={BLOGS[0].title}
-            caption={BLOGS[0].caption}
-          />
-          <MiniBlogPost
-            onSelect={() => setActiveBlog(1)}
-            href="#main"
-            image={BLOGS[1].image}
-            title={BLOGS[1].title}
-            caption={BLOGS[1].caption}
-          />
-          <MiniBlogPost
-            onSelect={() => setActiveBlog(2)}
-            href="#main"
-            image={BLOGS[2].image}
-            title={BLOGS[2].title}
-            caption={BLOGS[2].caption}
-          />
+          {blogs.map((blog, index) => (
+            <MiniBlogPost
+              key={index}
+              onSelect={() => setActiveBlog(index)}
+              href="#main"
+              image={blog.image}
+              title={blog.title}
+              caption={blog.caption}
+            />
+          ))}
         </StyledMiniBlogWrapper>
       </StyledBlogContainer>
       <StyledAdContainer>
