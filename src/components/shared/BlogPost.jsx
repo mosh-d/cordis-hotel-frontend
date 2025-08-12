@@ -2,6 +2,7 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import Text from "./Text";
 import { media } from "../../util/breakpoints";
+import { BsChevronDoubleRight } from "react-icons/bs";
 
 const StyledBlog = styled.div`
   display: flex;
@@ -11,8 +12,15 @@ const StyledBlog = styled.div`
 `;
 
 const StyledButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: .5rem;
   margin: 2.4rem;
   transition: transform 0.1s ease-in;
+
+  ${media.mobile} {
+    margin: 1rem;
+  }
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
@@ -57,6 +65,16 @@ const StyledParagraphContainer = styled.div`
   }
 `;
 
+const StyledButtonWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
+  ${media.mobile} {
+    flex-direction: column;
+  }
+`;
+
 export default function BlogPost({ image, title, content }) {
   //state management
   const [textOpen, setTextOpen] = useState(false);
@@ -90,11 +108,19 @@ export default function BlogPost({ image, title, content }) {
           </Text>
         </StyledParagraphContainer>
       </StyledTextWrapper>
-      <StyledButton onClick={handleClick} $type="emphasis-ghost">
-        <Text $size="medium" $weight="regular">
-          {textOpen ? "Read less" : "Read more"}
-        </Text>
-      </StyledButton>
+      <StyledButtonWrapper>
+        <StyledButton onClick={handleClick} $type="emphasis-ghost">
+          <Text $size="medium" $weight="regular">
+            {textOpen ? "Read less" : "Read more"}
+          </Text>
+        </StyledButton>
+        <StyledButton>
+          <Text $size="medium" $weight="regular">
+            View Full Blog
+          </Text>
+          <BsChevronDoubleRight size="2rem" style={{"paddingBottom": ".5rem"}} />
+        </StyledButton>
+      </StyledButtonWrapper>
     </StyledBlog>
   );
 }

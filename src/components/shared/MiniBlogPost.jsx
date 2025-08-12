@@ -30,7 +30,7 @@ const StyledMiniBlogPost = styled.div`
 
 const StyledImageContainer = styled.div`
   width: 100%;
-  height: 10rem;
+  height: 15rem;
   overflow: hidden;
   position: relative;
 
@@ -70,6 +70,30 @@ const StyledTextWrapper = styled.div`
   }
 `;
 
+const StyledContentText = styled.div`
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* & > * {
+    text-align: justify;
+  } */
+`;
+
+const StyledTitleText = styled.div`
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* & > * {
+    text-align: justify;
+  } */
+`;
+ 
 export default function MiniBlogPost({
   onSelect,
   href,
@@ -96,22 +120,26 @@ export default function MiniBlogPost({
     <StyledMiniBlogPost onClick={handleClick}>
       <StyledImageContainer $image={image}></StyledImageContainer>
       <StyledTextWrapper>
-        <Text
-          $type="h2"
-          $weight="bold"
-          $size="small"
-          $color="var(--cordis-black)"
-        >
-          {title}
-        </Text>
-        <Text
-          $typeFace="secondary"
-          $spacing=".01em"
-          $weight="bold"
-          $size="large"
-        >
-          {caption}
-        </Text>
+        <StyledTitleText>
+          <Text
+            $type="h2"
+            $weight="bold"
+            $size="small"
+            $color="var(--cordis-black)"
+          >
+            {title}
+          </Text>
+        </StyledTitleText>
+        <StyledContentText>
+          <Text
+            $typeFace="secondary"
+            $spacing=".01em"
+            $weight="bold"
+            $size="large"
+          >
+            {caption}
+          </Text>
+        </StyledContentText>
       </StyledTextWrapper>
     </StyledMiniBlogPost>
   );
