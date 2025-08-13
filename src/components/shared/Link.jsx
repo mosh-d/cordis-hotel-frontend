@@ -2,7 +2,7 @@ import Text from "./Text";
 import styled from "styled-components";
 
 const StyledLink = styled.span`
-  border-bottom: ${({ $type }) => $type === "default" ? '1px solid var(--cordis-black)' : '1px solid var(--cordis-accent)'};
+  border-bottom: ${({ $type }) => $type === "default" ? '1px solid var(--cordis-black)' : $type === "white" ? '1px solid var(--cordis-white)' : '1px solid var(--cordis-accent)'};
   opacity: 0.7;
 
   @media (hover: hover) and (pointer: fine) {

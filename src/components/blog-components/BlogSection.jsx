@@ -4,6 +4,7 @@ import BlogPost from "../shared/BlogPost";
 import MiniBlogPost from "../shared/MiniBlogPost";
 import Ad from "../shared/Ad";
 import { media } from "../../util/breakpoints";
+import { Link as RouterLink, useLocation} from "react-router-dom";
 
 const StyledBlogSection = styled.div`
   display: flex;

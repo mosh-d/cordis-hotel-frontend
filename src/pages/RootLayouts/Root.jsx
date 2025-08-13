@@ -30,6 +30,7 @@ function RootLayout() {
   const isBookingConfirmation = location.pathname === "/booking-confirmation";
   const isRoomBookingPage = location.pathname.endsWith("/room-booking");
   const isAmenityBookingPage = location.pathname === "/amenity-booking";
+  const isAdminPage = location.pathname.startsWith("/admin");
   const [showFixedReserve, setShowFixedReserve] = useState(!isHome);
 
   // Update FixedReserve visibility when route changes
@@ -56,7 +57,8 @@ function RootLayout() {
       {!isHome &&
         !isBookingConfirmation &&
         !isRoomBookingPage &&
-        !isAmenityBookingPage && (
+        !isAmenityBookingPage && 
+        !isAdminPage && (
           <>
             <StyledNavBar1>
               <MainNavBar />

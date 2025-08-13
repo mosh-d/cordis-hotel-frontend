@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import Text from "./Text";
 import { media } from "../../util/breakpoints";
 import { BsChevronDoubleRight } from "react-icons/bs";
+import { Link as RouterLink, useLocation} from "react-router-dom";
 
 const StyledBlog = styled.div`
   display: flex;
@@ -115,9 +116,11 @@ export default function BlogPost({ image, title, content }) {
           </Text>
         </StyledButton>
         <StyledButton>
-          <Text $size="medium" $weight="regular">
-            View Full Blog
-          </Text>
+          <RouterLink to="/blog/full-blog">
+            <Text $size="medium" $weight="regular">
+              View Full Blog
+            </Text>
+          </RouterLink>
           <BsChevronDoubleRight size="2rem" style={{"paddingBottom": ".5rem"}} />
         </StyledButton>
       </StyledButtonWrapper>

@@ -14,6 +14,14 @@ import BookingConfirmationPage from "./pages/Booking/BookingConfirmation";
 import AboutRootLayout from "./pages/RootLayouts/AboutRoot";
 import ContactRootLayout from "./pages/RootLayouts/ContactRoot";
 import BlogRootLayout from "./pages/RootLayouts/BlogRoot";
+import FullBlogPage from "./components/blog-components/FullBlogPage";
+import OverviewPage from "./pages/Admin/OverviewPage";
+import AdminRootLayout from "./pages/RootLayouts/AdminRoot";
+import AdminBookingsPage from "./pages/Admin/AdminBookingsPage";
+import AdminRoomFeaturesPage from "./pages/Admin/AdminRoomFeaturesPage";
+import AdminRoomsPage from "./pages/Admin/AdminRoomsPage";
+import AdminRoomTypesPage from "./pages/Admin/AdminRoomTypesPage";
+import ContactSubmissionsPage from "./pages/Admin/ContactSubmissionsPage";
 
 const router = createBrowserRouter(
   [
@@ -44,7 +52,8 @@ const router = createBrowserRouter(
           element: <BlogRootLayout />,
           children: [
             { index: true, element: <BlogPage /> },
-            { path: "room-booking", element: <RoomBookingPage /> }
+            { path: "room-booking", element: <RoomBookingPage /> },
+            { path: "full-blog", element: <FullBlogPage /> }
           ]
         },
         {
@@ -55,9 +64,22 @@ const router = createBrowserRouter(
             { path: "details/:roomIndex", element: <RoomDetailsPage /> },
           ],
         },
+        {
+          path: "/admin",
+          element: <AdminRootLayout />,
+          children: [
+            { index: true, element: <OverviewPage /> },
+            { path: "bookings", element: <AdminBookingsPage /> },
+            { path: "room-features", element: <AdminRoomFeaturesPage /> },
+            { path: "rooms", element: <AdminRoomsPage /> },
+            { path: "room-types", element: <AdminRoomTypesPage /> },
+            { path: "contact-submissions", element: <ContactSubmissionsPage /> },
+            // { path: "details/:roomIndex", element: <RoomDetailsPage /> },
+          ],
+        },
         { path: "room-booking", element: <RoomBookingPage /> },
         { path: "amenity-booking", element: <AmenityBookingPage /> },
-        { path: "booking-confirmation", element: <BookingConfirmationPage /> },
+        { path: "booking-confirmation", element: <BookingConfirmationPage /> }
         // {path: '/blog/:id', element: <BlogPostPage />},
         // {path: '/blog/:id/edit', element: <BlogPostEditPage />},
       ],
