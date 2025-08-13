@@ -343,7 +343,7 @@ export default function AmenityBookingPage() {
               <CustomInput2
                 header="Amenity"
                 $type="select"
-                $placeholder="Diplomatic Room"
+                $placeholder="Select Amenity"
                 name="room-category"
                 value={amenity}
                 onChange={(e) => setAmenity(e.target.value)}

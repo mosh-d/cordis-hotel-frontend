@@ -67,6 +67,23 @@ export default function Carousel({
   const [imageIndex, setImageIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
+  // Safety check for ImageUrls
+  if (!ImageUrls || ImageUrls.length === 0) {
+    return (
+      <div style={{ 
+        width: '100%', 
+        height: '100%', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        backgroundColor: 'var(--cordis-light-gray)',
+        color: 'var(--cordis-text-color)'
+      }}>
+        No images available
+      </div>
+    );
+  }
+
   // Call onIndexChange on mount to set initial index
   useEffect(() => {
     if (onIndexChange) onIndexChange(imageIndex);

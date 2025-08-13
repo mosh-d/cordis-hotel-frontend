@@ -71,8 +71,8 @@ export default function AvailableRoomsPage() {
           <Text>Check available rooms</Text>
         </StyledTextWrapper>
         <StyledCardWrapper>
-          <RoomAvailabilityCard $type="budget" />
-          <RoomAvailabilityCard />
+          <RoomAvailabilityCard $type="standard" />
+          <RoomAvailabilityCard $type="executive" />
         </StyledCardWrapper>
       </StyledAvailableRoomsPage>
     </>

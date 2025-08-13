@@ -2,6 +2,7 @@ import Room from "../shared/Room";
 import styled from "styled-components";
 import Text from "../shared/Text";
 import { media } from "../../util/breakpoints";
+import { ROOMS } from "../../util/room-data";
 
 const RoomText = styled.div`
   display: flex;
@@ -35,6 +36,7 @@ const StyledRoomSection = styled.div`
     &::after {
       content: "← Scroll for more →";
       position: absolute;
+      bottom: 16rem;
       font-size: 1.2rem;
       color: var(--cordis-gray);
       pointer-events: none;
@@ -149,13 +151,16 @@ export default function RoomSection() {
 
         <StyledRooms>
           <StyledRoomContainer>
-            <Room imageType="budget" headerText="Budget" buttonText="Reserve" flippable={true} />
+            <Room imageType="standard" headerText={ROOMS[0].name} buttonText="Reserve" flippable={true} />
           </StyledRoomContainer>
           <StyledRoomContainer>
-            <Room imageType="diplomatic" headerText="Diplomatic" buttonText="Reserve" flippable={true} />
+            <Room imageType="executive" headerText={ROOMS[1].name} buttonText="Reserve" flippable={true} />
           </StyledRoomContainer>
           <StyledRoomContainer>
-            <Room imageType="diplomatic" headerText="Diplomatic" buttonText="Reserve" flippable={true} />
+            <Room imageType="executiveDeluxe" headerText={ROOMS[2].name}  buttonText="Reserve" flippable={true} />
+          </StyledRoomContainer>
+          <StyledRoomContainer>
+            <Room imageType="executiveSuite" headerText={ROOMS[3].name}  buttonText="Reserve" flippable={true} />
           </StyledRoomContainer>
         </StyledRooms>
       </StyledRoomSection>

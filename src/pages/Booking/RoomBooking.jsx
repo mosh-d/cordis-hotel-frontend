@@ -246,13 +246,17 @@ export default function RoomBookingPage() {
 
   //Room price calculation
   const ROOM_PRICES = {
-    budget: 150000,
-    diplomatic: 200000,
+    standard: 120000,
+    executive: 250000,
+    executiveDeluxe: 160000,
+    executiveSuite: 250000,
   };
 
   const ROOM_NAMES = {
-    budget: "Budget Room",
-    diplomatic: "Diplomatic Room",
+    standard: "Standard Room",
+    executive: "Executive Room",
+    executiveDeluxe: "Executive Deluxe Room",
+    executiveSuite: "Executive Suite Room",
   };
 
   const roomPrice = ROOM_PRICES[roomCategory] || 0;
@@ -374,14 +378,16 @@ export default function RoomBookingPage() {
               <CustomInput2
                 header="Room Category"
                 $type="select"
-                $placeholder="Diplomatic Room"
+                $placeholder="Standard Room"
                 name="room-category"
                 value={roomCategory}
                 onChange={(e) => setRoomCategory(e.target.value)}
               >
                 <option value="">Choose a room type</option>
-                <option value="budget">Budget Room</option>
-                <option value="diplomatic">Diplomatic Room</option>
+                <option value="standard">Standard Room</option>
+                <option value="executive">Executive Room</option>
+                <option value="executiveDeluxe">Executive Deluxe Room</option>
+                <option value="executiveSuite">Executive Suite Room</option>
               </CustomInput2>
             </StyledInputRow>
             <StyledInputRow>

@@ -1,7 +1,7 @@
 const ROOMS = [
   {
-    name : "Budget",
-    price : "₦150,000",
+    name : "Standard",
+    price : "₦120,000",
     size : "150 M2",
     bed : "1 King size bed",
     capacity : "2 Adults & 1 Child",
@@ -9,7 +9,25 @@ const ROOMS = [
     amenities: ["Free WiFi", "Air Conditioning", "Smart TV", "Mini Bar", "Work Desk"]
   },
   {
-    name : "Diplomatic",
+    name : "Executive",
+    price : "₦250,000",
+    size : "250 M2",
+    bed : "2 King size bed",
+    capacity : "3 Adults & 2 Children",
+    view : "Exotic City View",
+    amenities: ["Free WiFi", "Air Conditioning", "Smart TV", "Mini Bar", "Work Desk"]
+  },
+  {
+    name : "Executive Deluxe",
+    price : "₦160,000",
+    size : "250 M2",
+    bed : "2 King size bed",
+    capacity : "3 Adults & 2 Children",
+    view : "Exotic City View",
+    amenities: ["Free WiFi", "Air Conditioning", "Smart TV", "Mini Bar", "Work Desk"]
+  },
+  {
+    name : "Executive Suite",
     price : "₦250,000",
     size : "250 M2",
     bed : "2 King size bed",

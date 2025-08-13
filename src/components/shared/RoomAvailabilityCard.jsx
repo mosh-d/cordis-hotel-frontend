@@ -4,12 +4,12 @@ import RoomDetailsBlock from "./RoomDetailsBlock";
 export default function RoomAvailabilityCard({ $type }) {
   return (
     <Room
-      imageType={$type === "budget" ? "budget" : undefined}
-      headerText={$type === "budget" ? "Budget" : "Diplomatic"}
+      imageType={$type === "standard" ? "standard" : "executive"}
+      headerText={$type === "standard" ? "Standard" : "Executive"}
       buttonText="Reserve"
       $bgColor="var(--cordis-text-color)"
     >
-      <RoomDetailsBlock $type={$type === "budget" ? "budget" : undefined} />
+      <RoomDetailsBlock $type={$type === "standard" ? "standard" : "executive"} />
     </Room>
   );
 }
