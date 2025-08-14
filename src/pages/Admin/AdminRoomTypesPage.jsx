@@ -1,7 +1,8 @@
 import Text from "../../components/shared/Text";
+import { styled } from "styled-components";
 
 export default function AdminRoomTypesPage() {
   return (
-    <Text>Admin Room Types Page</Text>
-  )
+    <Text $type="h1" $weight="bold">Room Types</Text>
+  );
 }

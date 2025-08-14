@@ -19,6 +19,8 @@ const StyledButton = styled.button`
       ? "none"
       : $type === "white"
       ? "var(--cordis-white)"
+      : $type === "black"
+      ? "var(--cordis-black)"
       : $type === "accent"
       ? "var(--cordis-accent)"
       : "none"};
@@ -30,6 +32,8 @@ const StyledButton = styled.button`
         : $type === "underlined"
         ? "var(--cordis-black)"
         : $type === "white-ghost"
+        ? "var(--cordis-white)"
+        : $type === "black"
         ? "var(--cordis-white)"
         : "var(--cordis-black)"};
   }
@@ -100,6 +104,8 @@ const StyledButton = styled.button`
           ? "2px solid var(--cordis-emphasis)"
           : $type === "accent"
           ? "2px solid var(--cordis-accent)"
+          : $type === "black"
+          ? "2px solid var(--cordis-black)"
           : "none"};
     }
   }
@@ -153,6 +159,8 @@ const StyledButton = styled.button`
         ? "2px solid var(--cordis-emphasis)"
         : $type === "accent"
         ? "2px solid var(--cordis-accent)"
+        : $type === "black"
+        ? "2px solid var(--cordis-black)"
         : "none"};
   }
 `;

@@ -10,7 +10,7 @@ const StyledOverview = styled.div`
 const StyledCardWrapper = styled.div`
   display: grid;
   grid-template-rows: repeat(2, 1fr);
-  grid-template-columns: repeat(auto-fit, minmax(33rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(33rem, 1fr));
   grid-gap: 6rem;
 `;
 

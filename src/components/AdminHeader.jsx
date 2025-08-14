@@ -1,11 +1,23 @@
 import LOGO from "../assets/cordis-logo-2.png";
 import { styled } from "styled-components";
+import Text from "../components/shared/Text";
 
 const StyledHeader = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
   background-color: var(--cordis-emphasis);
+`;
+
+const StyledTextContainer = styled.div`
+  position: absolute;
+  right: 0;
+  margin: 4rem;
+  cursor: pointer;
+  
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const StyledImageContainer = styled.div`
@@ -29,6 +41,9 @@ export default function AdminHeader() {
         <StyledImageContainer>
           <StyledImage></StyledImage>
         </StyledImageContainer>
+        <StyledTextContainer>
+          <Text $size="extra-large" $weight="bold" $color="var(--cordis-black)">Log out</Text>
+        </StyledTextContainer>
       </StyledHeader>
     </>
   );

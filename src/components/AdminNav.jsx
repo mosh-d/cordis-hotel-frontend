@@ -19,7 +19,13 @@ const StyledNavItems = styled.ul`
   gap: 4rem;
 `;
 
-const NavItem = styled.li``;
+const NavItem = styled.li`
+
+   & .main-nav-item-active p {
+      color: var(--cordis-emphasis);
+      font-weight: 600;
+    }
+`;
 
 const StyledBlogLink = styled.div``;
 
@@ -33,6 +39,7 @@ export default function AdminNav() {
             className={({ isActive }) =>
               isActive ? "main-nav-item-active" : ""
             }
+            end
           >
             <Text $color="var(--cordis-white)" $weight="bold">
               OVERVIEW
@@ -41,7 +48,7 @@ export default function AdminNav() {
         </NavItem>
         <NavItem>
           <NavLink
-            to="/rooms"
+            to="rooms"
             className={({ isActive }) =>
               isActive ? "main-nav-item-active" : ""
             }
@@ -53,7 +60,7 @@ export default function AdminNav() {
         </NavItem>
         <NavItem>
           <NavLink
-            to="/room-types"
+            to="room-types"
             className={({ isActive }) =>
               isActive ? "main-nav-item-active" : ""
             }
@@ -65,7 +72,7 @@ export default function AdminNav() {
         </NavItem>
         <NavItem>
           <NavLink
-            to="/room-features"
+            to="room-features"
             className={({ isActive }) =>
               isActive ? "main-nav-item-active" : ""
             }
@@ -77,7 +84,7 @@ export default function AdminNav() {
         </NavItem>
         <NavItem>
           <NavLink
-            to="/bookings"
+            to="bookings"
             className={({ isActive }) =>
               isActive ? "main-nav-item-active" : ""
             }
@@ -89,7 +96,7 @@ export default function AdminNav() {
         </NavItem>
         <NavItem>
           <NavLink
-            to="/contact-submissions"
+            to="contact-submissions"
             className={({ isActive }) =>
               isActive ? "main-nav-item-active" : ""
             }
