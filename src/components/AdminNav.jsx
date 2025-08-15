@@ -108,18 +108,16 @@ export default function AdminNav() {
         </NavItem>
       </StyledNavItems>
       <StyledBlogLink>
-        <Link>
-          <NavLink
-            to="/admin"
-            className={({ isActive }) =>
-              isActive ? "main-nav-item-active" : ""
-            }
-          >
-            <Text $color="var(--cordis-white)" $weight="bold">
-              BLOG MANAGER
-            </Text>
-          </NavLink>
-        </Link>
+        <NavLink
+          to="/admin"
+          className={({ isActive }) =>
+            isActive ? "main-nav-item-active" : ""
+          }
+        >
+          <Text $color="var(--cordis-white)" $weight="bold">
+            BLOG MANAGER
+          </Text>
+        </NavLink>
       </StyledBlogLink>
     </StyledAdminNav>
   );

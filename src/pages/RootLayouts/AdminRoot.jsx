@@ -22,6 +22,7 @@ const StyledOutlet = styled.div`
   padding: 8rem;
   background-color: var(--cordis-light-gray);
   flex: 1;
+  overflow-x: auto;
 `;
 
 const StyledAdminBody = styled.div`

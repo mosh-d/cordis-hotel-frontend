@@ -96,10 +96,15 @@ const DetailItem = styled.div`
   }
 `;
 
+const AmenitiesWrapper = styled.div`
+  width: 100%;
+
+`;
+
 const AmenitiesList = styled.ul`
   list-style: none;
   padding: 0;
-  margin: 1rem 0;
+  margin: 1rem 0 0 1rem;
 
   li {
     padding: 0.25rem 0;
@@ -165,7 +170,7 @@ export default function Room({
         </Text>
       </DetailItem>
 
-      <div>
+      <AmenitiesWrapper>
         <Text $color="var(--cordis-white)" $weight="bold">
           Amenities:
         </Text>
@@ -178,7 +183,7 @@ export default function Room({
             </li>
           ))}
         </AmenitiesList>
-      </div>
+      </AmenitiesWrapper>
 
       <Text
         $color="var(--cordis-gray)"
