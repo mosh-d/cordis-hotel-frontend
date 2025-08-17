@@ -53,7 +53,7 @@ const router = createBrowserRouter(
           children: [
             { index: true, element: <BlogPage /> },
             { path: "room-booking", element: <RoomBookingPage /> },
-            { path: "full-blog", element: <FullBlogPage /> }
+            { path: ":slug", element: <FullBlogPage /> }
           ]
         },
         {

@@ -76,7 +76,7 @@ const StyledButtonWrapper = styled.div`
   }
 `;
 
-export default function BlogPost({ image, title, content }) {
+export default function BlogPost({ image, title, content, slug }) {
   //state management
   const [textOpen, setTextOpen] = useState(false);
 
@@ -116,7 +116,7 @@ export default function BlogPost({ image, title, content }) {
           </Text>
         </StyledButton>
         <StyledButton>
-          <RouterLink to="/blog/full-blog">
+          <RouterLink to={`/blog/${slug}`}>
             <Text $size="medium" $weight="regular">
               View Full Blog
             </Text>
