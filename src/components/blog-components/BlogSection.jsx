@@ -152,6 +152,7 @@ export default function BlogSection() {
             image={blogs[activeBlog].image}
             title={blogs[activeBlog].title}
             content={blogs[activeBlog].caption}
+            slug={blogs[activeBlog].slug}
           />
         </StyledMainBlogContainer>
         <StyledMiniBlogWrapper>
