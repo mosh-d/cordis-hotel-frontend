@@ -109,7 +109,7 @@ const StyledDetailText2 = styled.div`
   text-align: right;
   min-width: 0;
   word-wrap: break-word;
-  
+
   & * {
     text-align: right !important;
     word-wrap: break-word;
@@ -160,6 +160,18 @@ const StyledButtonContainer = styled.div`
 
 export default function RoomDetailsPage() {
   const params = useParams();
+
+  const ICON = {
+    FreeWiFi: <RiWifiLine color="var(--cordis-black)" size="3rem" />,
+    Kettle: <GiWaterFlask color="var(--cordis-black)" size="3rem" />,
+    SmartTV: <RiTv2Line color="var(--cordis-black)" size="3rem" />,
+    Towel: <PiTowel color="var(--cordis-black)" size="3rem" />,
+    Waterheater: <MdOutlineHeatPump color="var(--cordis-black)" size="3rem" />,
+    Fridge: <RiFridgeLine color="var(--cordis-black)" size="3rem" />,
+    Sofa: <RiSofaLine color="var(--cordis-black)" size="3rem" />,
+    Desk: <GiDesk color="var(--cordis-black)" size="3rem" />,
+    WoodenCloset: <BiCloset color="var(--cordis-black)" size="3rem" />,
+  };
 
   return (
     <>
@@ -244,42 +256,12 @@ export default function RoomDetailsPage() {
               Amenities
             </Text>
             <StyledFeatureWrapper>
-              <StyledFeature>
-                <RiWifiLine color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Free WiFi</Text>
-              </StyledFeature>
-              <StyledFeature>
-                <GiWaterFlask color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Kettle</Text>
-              </StyledFeature>
-              <StyledFeature>
-                <RiTv2Line color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Smart TV</Text>
-              </StyledFeature>
-              <StyledFeature>
-                <PiTowel color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Towel</Text>
-              </StyledFeature>
-              <StyledFeature>
-                <MdOutlineHeatPump color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Water heater</Text>
-              </StyledFeature>
-              <StyledFeature>
-                <RiFridgeLine color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Fridge</Text>
-              </StyledFeature>
-              <StyledFeature>
-                <RiSofaLine color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Sofa</Text>
-              </StyledFeature>
-              <StyledFeature>
-                <GiDesk color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Desk</Text>
-              </StyledFeature>
-              <StyledFeature>
-                <BiCloset color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Wooden Closet</Text>
-              </StyledFeature>
+              {ROOMS[params.roomIndex].amenities.map((amenity, index) => (
+                <StyledFeature key={index}>
+                  {ICON[amenity.replace(/\s+/g, "")]}
+                  <Text style={{ paddingTop: ".5rem" }}>{amenity}</Text>
+                </StyledFeature>
+              ))}
             </StyledFeatureWrapper>
           </StyledFeatures>
           <StyledServices>
@@ -287,42 +269,12 @@ export default function RoomDetailsPage() {
               Services
             </Text>
             <StyledServiceWrapper>
-              <StyledService>
-                <RiCheckLine color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Free WiFi</Text>
-              </StyledService>
-              <StyledService>
-                <RiCheckLine color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Kettle</Text>
-              </StyledService>
-              <StyledService>
-                <RiCheckLine color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Smart TV</Text>
-              </StyledService>
-              <StyledService>
-                <RiCheckLine color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Towel</Text>
-              </StyledService>
-              <StyledService>
-                <RiCheckLine color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Water heater</Text>
-              </StyledService>
-              <StyledService>
-                <RiCheckLine color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Fridge</Text>
-              </StyledService>
-              <StyledService>
-                <RiCheckLine color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Sofa</Text>
-              </StyledService>
-              <StyledService>
-                <RiCheckLine color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Desk</Text>
-              </StyledService>
-              <StyledService>
-                <RiCheckLine color="var(--cordis-black)" size="3rem" />
-                <Text style={{ paddingTop: ".5rem" }}>Wooden Closet</Text>
-              </StyledService>
+              {ROOMS[params.roomIndex].services.map((service, index) => (
+                <StyledFeature key={index}>
+                  <RiCheckLine color="var(--cordis-black)" size="3rem" />
+                  <Text style={{ paddingTop: ".5rem" }}>{service}</Text>
+                </StyledFeature>
+              ))}
             </StyledServiceWrapper>
           </StyledServices>
           <StyledButtonContainer>

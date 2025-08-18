@@ -42,7 +42,7 @@ export default function AdminHeader() {
           <StyledImage></StyledImage>
         </StyledImageContainer>
         <StyledTextContainer>
-          <Text $size="extra-large" $weight="bold" $color="var(--cordis-black)">Log out</Text>
+          <Text $size="extra-large" $weight="regular" $color="var(--cordis-black)">Log out</Text>
         </StyledTextContainer>
       </StyledHeader>
     </>

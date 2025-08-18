@@ -71,12 +71,12 @@ const RoomDetailsContent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   padding: 2rem;
   text-align: center;
 
   ${media.tablet} {
-    gap: 1rem;
+    gap: .1rem;
   }
 
   ${media.mobile} {

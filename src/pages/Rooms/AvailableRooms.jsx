@@ -73,6 +73,8 @@ export default function AvailableRoomsPage() {
         <StyledCardWrapper>
           <RoomAvailabilityCard $type="standard" />
           <RoomAvailabilityCard $type="executive" />
+          <RoomAvailabilityCard $type="executiveDeluxe" />
+          <RoomAvailabilityCard $type="executiveSuite" />
         </StyledCardWrapper>
       </StyledAvailableRoomsPage>
     </>

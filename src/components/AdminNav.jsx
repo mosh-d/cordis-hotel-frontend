@@ -41,7 +41,7 @@ export default function AdminNav() {
             }
             end
           >
-            <Text $color="var(--cordis-white)" $weight="bold">
+            <Text $color="var(--cordis-white)" $weight="regular">
               OVERVIEW
             </Text>
           </NavLink>
@@ -53,7 +53,7 @@ export default function AdminNav() {
               isActive ? "main-nav-item-active" : ""
             }
           >
-            <Text $color="var(--cordis-white)" $weight="bold">
+            <Text $color="var(--cordis-white)" $weight="regular">
               ROOMS
             </Text>
           </NavLink>
@@ -65,7 +65,7 @@ export default function AdminNav() {
               isActive ? "main-nav-item-active" : ""
             }
           >
-            <Text $color="var(--cordis-white)" $weight="bold">
+            <Text $color="var(--cordis-white)" $weight="regular">
               ROOM TYPES
             </Text>
           </NavLink>
@@ -77,7 +77,7 @@ export default function AdminNav() {
               isActive ? "main-nav-item-active" : ""
             }
           >
-            <Text $color="var(--cordis-white)" $weight="bold">
+            <Text $color="var(--cordis-white)" $weight="regular">
               ROOM FEATURES
             </Text>
           </NavLink>
@@ -89,7 +89,7 @@ export default function AdminNav() {
               isActive ? "main-nav-item-active" : ""
             }
           >
-            <Text $color="var(--cordis-white)" $weight="bold">
+            <Text $color="var(--cordis-white)" $weight="regular">
               BOOKINGS
             </Text>
           </NavLink>
@@ -101,7 +101,7 @@ export default function AdminNav() {
               isActive ? "main-nav-item-active" : ""
             }
           >
-            <Text $color="var(--cordis-white)" $weight="bold">
+            <Text $color="var(--cordis-white)" $weight="regular">
               CONTACT SUBMISSIONS
             </Text>
           </NavLink>
@@ -114,7 +114,7 @@ export default function AdminNav() {
             isActive ? "main-nav-item-active" : ""
           }
         >
-          <Text $color="var(--cordis-white)" $weight="bold">
+          <Text $color="var(--cordis-white)" $weight="regular">
             BLOG MANAGER
           </Text>
         </NavLink>

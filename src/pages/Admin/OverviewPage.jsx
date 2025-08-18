@@ -43,7 +43,7 @@ export default function OverviewPage() {
         <StyledCardWrapper>
           <StyledCard>
             <StyledCardText>
-              <Text $size="extra-large" $weight="bold">Total Rooms</Text>
+              <Text $size="extra-large" $weight="regular">Total Rooms</Text>
             </StyledCardText>
             <StyledCardNumber>
               <Text $type="h3" $typeFace="primary" $size="large" $weight="bold">2</Text>
@@ -51,7 +51,7 @@ export default function OverviewPage() {
           </StyledCard>
           <StyledCard>
             <StyledCardText>
-              <Text $size="extra-large" $weight="bold">Total Available Rooms</Text>
+              <Text $size="extra-large" $weight="regular">Total Available Rooms</Text>
             </StyledCardText>
             <StyledCardNumber>
               <Text $type="h3" $typeFace="primary" $size="large" $weight="bold">24</Text>
@@ -59,7 +59,7 @@ export default function OverviewPage() {
           </StyledCard>
           <StyledCard>
             <StyledCardText>
-              <Text $size="extra-large" $weight="bold">Active Bookings (past 24 hours)</Text>
+              <Text $size="extra-large" $weight="regular">Active Bookings (past 24 hours)</Text>
             </StyledCardText>
             <StyledCardNumber>
               <Text $type="h3" $typeFace="primary" $size="large" $weight="bold">2</Text>
@@ -67,7 +67,7 @@ export default function OverviewPage() {
           </StyledCard>
           <StyledCard>
             <StyledCardText>
-              <Text $size="extra-large" $weight="bold">Expired Bookings (past 48 hours)</Text>
+              <Text $size="extra-large" $weight="regular">Expired Bookings (past 48 hours)</Text>
             </StyledCardText>
             <StyledCardNumber>
               <Text $type="h3" $typeFace="primary" $size="large" $weight="bold">24</Text>
