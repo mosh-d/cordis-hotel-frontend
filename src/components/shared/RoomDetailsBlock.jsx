@@ -38,10 +38,10 @@ const StyledTextWrapper = styled.div`
 
 export default function RoomDetailsBlock({ $type }) {
   const getRoomData = () => {
-    if ($type === "standard") return { data: ROOMS[0], index: 0, available: "12 Available" };
-    if ($type === "executive") return { data: ROOMS[1], index: 1, available: "9 Available" };
-    if ($type === "executiveDeluxe") return { data: ROOMS[2], index: 2, available: "7 Available" };
-    if ($type === "executiveSuite") return { data: ROOMS[3], index: 3, available: "5 Available" };
+    if (ROOMS[0] && $type === "standard") return { data: ROOMS[0], index: 0, available: "12 Available" };
+    if (ROOMS[1] && $type === "executive") return { data: ROOMS[1], index: 1, available: "9 Available" };
+    if (ROOMS[2] && $type === "executiveDeluxe") return { data: ROOMS[2], index: 2, available: "7 Available" };
+    if (ROOMS[3] && $type === "executiveSuite") return { data: ROOMS[3], index: 3, available: "5 Available" };
     return { data: ROOMS[0], index: 0, available: "12 Available" };
   };
 

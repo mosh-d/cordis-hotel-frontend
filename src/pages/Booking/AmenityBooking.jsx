@@ -9,7 +9,7 @@ import Button from "../../components/shared/Button";
 import { media } from "../../util/breakpoints";
 
 //State Imports
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 //Styles
 const StyledRoomBookingPage = styled.div`
@@ -244,7 +244,34 @@ export default function AmenityBookingPage() {
   // Local state for amenity-specific fields
   const [sessionStart, setSessionStart] = useState("");
   const [amenity, setAmenity] = useState("");
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState("");
+
+  // Validation helpers (mirroring RoomBooking)
+  const today = new Date().toISOString().split('T')[0];
+  const emailIsInvalid = !email.includes("@") || !email.includes(".");
+  const phoneNumberIsInvalid = phoneNumber.length < 9;
+  const firstNameIsInvalid = !firstName || firstName.length < 3;
+  const lastNameIsInvalid = !lastName || lastName.length < 3;
+  const checkInIsInvalid = !checkIn || checkIn < today;
+  const now = new Date();
+  const pad = (n) => String(n).padStart(2, '0');
+  const currentTime = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  const sessionStartIsInvalid = checkIn === today && sessionStart !== "" && sessionStart < currentTime;
+  const parsedDuration = parseInt(duration, 10);
+  const durationIsInvalid = duration !== "" && (isNaN(parsedDuration) || parsedDuration < 1);
+
+  // If user switches check-in to today, ensure session start is not earlier than now
+  useEffect(() => {
+    if (checkIn === today && sessionStart) {
+      const nowLocal = new Date();
+      const hh = pad(nowLocal.getHours());
+      const mm = pad(nowLocal.getMinutes());
+      const nowTime = `${hh}:${mm}`;
+      if (sessionStart < nowTime) {
+        setSessionStart(nowTime);
+      }
+    }
+  }, [checkIn]);
 
   //Amenity price
   const AMENITY_PRICES = {
@@ -258,17 +285,15 @@ export default function AmenityBookingPage() {
   };
 
   const durationText = () => {
-    if (duration === 1) {
-      return "1 hour";
-    } else {
-      return duration + " hours";
-    }
+    const d = parseInt(duration, 10);
+    if (!d) return "0 hours";
+    return d === 1 ? "1 hour" : `${d} hours`;
   };
 
   const amenityPrice = AMENITY_PRICES[amenity] || 0;
   const amenityName = AMENITY_NAMES[amenity] || "Select an Amenity";
 
-  const subtotal = amenityPrice * duration;
+  const subtotal = amenityPrice * (parsedDuration || 0);
   const vat = subtotal * 0.075; // 7.5%
   const stateTax = subtotal * 0.05; // 5%
   const serviceCharge = subtotal * 0.1; // 10%
@@ -338,6 +363,7 @@ export default function AmenityBookingPage() {
                 $placeholder="eg. John"
                 type="text"
                 value={firstName}
+                style={{ color: firstNameIsInvalid ? "red" : "var(--cordis-black)" }}
                 onChange={(e) => setFirstName(e.target.value)}
               />
               <CustomInput2
@@ -359,13 +385,22 @@ export default function AmenityBookingPage() {
                 $placeholder="eg. Doe"
                 type="text"
                 value={lastName}
+                style={{ color: lastNameIsInvalid ? "red" : "var(--cordis-black)" }}
                 onChange={(e) => setLastName(e.target.value)}
               />
               <CustomInput2
                 header="Check-In"
                 type="date"
                 value={checkIn}
-                onChange={(e) => setCheckIn(e.target.value)}
+                min={today}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === "") {
+                    setCheckIn("");
+                    return;
+                  }
+                  setCheckIn(val < today ? today : val);
+                }}
               />
             </StyledInputRow>
             <StyledInputRow>
@@ -374,13 +409,27 @@ export default function AmenityBookingPage() {
                 $placeholder="example@email.com"
                 type="email"
                 value={email}
+                style={{ color: emailIsInvalid ? "red" : "var(--cordis-black)" }}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <CustomInput2
                 header="Session Start"
                 type="time"
                 value={sessionStart}
-                onChange={(e) => setSessionStart(e.target.value)}
+                style={{ color: sessionStartIsInvalid ? "red" : "var(--cordis-black)" }}
+                min={checkIn === today ? currentTime : undefined}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === "") {
+                    setSessionStart("");
+                    return;
+                  }
+                  if (checkIn === today && val < currentTime) {
+                    setSessionStart(currentTime);
+                  } else {
+                    setSessionStart(val);
+                  }
+                }}
               />
             </StyledInputRow>
             <StyledInputRow>
@@ -408,18 +457,68 @@ export default function AmenityBookingPage() {
                     type="tel"
                     placeholder="803 123 4567"
                     value={phoneNumber}
+                    style={{ color: phoneNumberIsInvalid ? "red" : "var(--cordis-black)" }}
                     onChange={handlePhoneChange}
                     maxLength="13"
                   />
                 </StyledPhoneInputContainer>
               </StyledPhoneInputWrapper>
               <CustomInput2
-                header="Duration"
+                header="Duration (hours)"
+                $placeholder="e.g., 1"
                 type="number"
+                min="1"
+                step="1"
+                inputMode="numeric"
                 value={duration}
-                onChange={(e) => setDuration(e.target.value)}
+                style={{ color: durationIsInvalid ? "red" : "var(--cordis-black)" }}
+                onChange={(e) => {
+                  const raw = e.target.value;
+                  const digitsOnly = raw.replace(/\D/g, "");
+                  if (digitsOnly === "") {
+                    setDuration("");
+                    return;
+                  }
+                  const n = parseInt(digitsOnly, 10);
+                  setDuration(n < 1 ? "1" : String(n));
+                }}
               />
             </StyledInputRow>
+            {sessionStartIsInvalid && sessionStart.length > 0 && (
+              <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
+                Session start must be now or later for a same-day booking
+              </Text>
+            )}
+            {emailIsInvalid && email.length > 0 && (
+              <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
+                Please enter a valid email address
+              </Text>
+            )}
+            {phoneNumberIsInvalid && phoneNumber.length > 0 && (
+              <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
+                Please enter a valid phone number (at least 9 digits)
+              </Text>
+            )}
+            {firstNameIsInvalid && firstName.length > 0 && (
+              <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
+                Please enter a valid first name (must be at least 3 characters long)
+              </Text>
+            )}
+            {lastNameIsInvalid && lastName.length > 0 && (
+              <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
+                Please enter a valid last name (must be at least 3 characters long)
+              </Text>
+            )}
+            {checkInIsInvalid && checkIn.length > 0 && (
+              <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
+                Please enter a valid check-in date (must be today or later)
+              </Text>
+            )}
+            {durationIsInvalid && duration !== "" && (
+              <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
+                Duration must be at least 1 hour
+              </Text>
+            )}
           </StyledInputs>
           <StyledMessagerow>
             <Text

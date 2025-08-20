@@ -261,6 +261,7 @@ const HeroSection = forwardRef((props, ref) => {
   const [isPlaying, setIsPlaying] = useState(false); // Start as false
   const [videoLoaded, setVideoLoaded] = useState(false);
   const videoRef = useRef(null);
+  const today = new Date().toISOString().split('T')[0];
 
   // Handle autoplay and video events
   useEffect(() => {
@@ -389,21 +390,53 @@ const HeroSection = forwardRef((props, ref) => {
           $for="check-in"
           $type="date"
           value={checkIn}
-          onChange={(e) => setCheckIn(e.target.value)}
+          min={today}
+          onChange={(e) => {
+            const val = e.target.value;
+            if (val === "") {
+              setCheckIn("");
+              return;
+            }
+            setCheckIn(val < today ? today : val);
+          }}
         />
         <CustomInput
           label="When do you check out?"
           $for="check-out"
           $type="date"
           value={checkOut}
-          onChange={(e) => setCheckOut(e.target.value)}
+          min={checkIn || today}
+          onChange={(e) => {
+            const val = e.target.value;
+            if (val === "") {
+              setCheckOut("");
+              return;
+            }
+            const minDate = checkIn || today;
+            setCheckOut(val < minDate ? minDate : val);
+          }}
         />
         <StyledCustomInput
-          label="How many rooms?"
+          label="How many rooms? (1-4)"
           $for="guests"
           $type="number"
+          min="1"
+          max="4"
+          step="1"
+          inputMode="numeric"
           value={noOfRooms}
-          onChange={(e) => setNoOfRooms(e.target.value)}
+          onChange={(e) => {
+            const rawValue = e.target.value;
+            const digitsOnly = rawValue.replace(/\D/g, "");
+            if (digitsOnly === "") {
+              setNoOfRooms("");
+              return;
+            }
+            const firstDigit = digitsOnly[0];
+            if (["1", "2", "3", "4"].includes(firstDigit)) {
+              setNoOfRooms(firstDigit);
+            }
+          }}
         />
         <RouterLink to="/rooms">
           <Button $type="emphasis">

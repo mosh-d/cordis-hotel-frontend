@@ -30,38 +30,38 @@ const StyledRoomSection = styled.div`
     padding: 12rem 1rem;
   }
 
-   /* Alternative: Add scroll indicators */
-    position: relative;
-    
-    &::after {
-      content: "← Scroll for more →";
-      position: absolute;
+  /* Alternative: Add scroll indicators */
+  position: relative;
+
+  &::after {
+    content: "← Scroll for more →";
+    position: absolute;
+    bottom: 16rem;
+    font-size: 1.2rem;
+    color: var(--cordis-gray);
+    pointer-events: none;
+    opacity: 0.7;
+
+    ${media.large} {
       bottom: 16rem;
-      font-size: 1.2rem;
-      color: var(--cordis-gray);
-      pointer-events: none;
-      opacity: 0.7;
-      
-      ${media.large} {
-        bottom: 16rem;
-        left: 12rem;
-      }
-
-      ${media.desktop} {
-        bottom: 16rem;
-        left: 4rem;
-      }
-
-      ${media.tablet} {
-        bottom: 16rem;
-        left: 4rem;
-      }
-
-      ${media.mobile} {
-        bottom: 13.5rem;
-        left: 1rem;
-      }
+      left: 12rem;
     }
+
+    ${media.desktop} {
+      bottom: 16rem;
+      left: 4rem;
+    }
+
+    ${media.tablet} {
+      bottom: 16rem;
+      left: 4rem;
+    }
+
+    ${media.mobile} {
+      bottom: 13.5rem;
+      left: 1rem;
+    }
+  }
 `;
 
 const StyledRooms = styled.div`
@@ -70,7 +70,7 @@ const StyledRooms = styled.div`
   overflow-y: hidden;
   padding-bottom: 4rem;
   -webkit-overflow-scrolling: touch;
-  
+
   & > * {
     min-width: calc(50% - 0.5rem);
 
@@ -84,21 +84,21 @@ const StyledRooms = styled.div`
 
   /* Standard scrollbar styling */
   &::-webkit-scrollbar {
-    width: .1rem;
-    height: .5rem;
+    width: 0.1rem;
+    height: 0.5rem;
   }
 
   &::-webkit-scrollbar-track {
     background-color: var(--cordis-light-gray);
-    height: .5rem;
+    height: 0.5rem;
     /* border-radius: .4rem; */
   }
 
   &::-webkit-scrollbar-thumb {
     background-color: var(--cordis-text-color);
-    height: .5rem;
+    height: 0.5rem;
     /* border-radius: .4rem; */
-    
+
     &:hover {
       background-color: var(--cordis-black);
       cursor: grab;
@@ -132,9 +132,7 @@ const StyledRooms = styled.div`
   } */
 `;
 
-const StyledRoomContainer = styled.div`
-
-`;
+const StyledRoomContainer = styled.div``;
 
 export default function RoomSection() {
   return (
@@ -150,18 +148,21 @@ export default function RoomSection() {
         </RoomText>
 
         <StyledRooms>
-          <StyledRoomContainer>
-            <Room imageType="standard" headerText={ROOMS[0].name} buttonText="Reserve" flippable={true} />
-          </StyledRoomContainer>
-          <StyledRoomContainer>
-            <Room imageType="executive" headerText={ROOMS[1].name} buttonText="Reserve" flippable={true} />
-          </StyledRoomContainer>
-          <StyledRoomContainer>
-            <Room imageType="executiveDeluxe" headerText={ROOMS[2].name}  buttonText="Reserve" flippable={true} />
-          </StyledRoomContainer>
-          <StyledRoomContainer>
-            <Room imageType="executiveSuite" headerText={ROOMS[3].name}  buttonText="Reserve" flippable={true} />
-          </StyledRoomContainer>
+          {ROOMS.map((room, index) => (
+            <StyledRoomContainer key={index}>
+              <Room
+                imageType={room.propName}
+                headerText={room.name}
+                buttonText="Reserve"
+                flippable={true}
+              />
+            </StyledRoomContainer>
+          ))}
+
+          {/* {!ROOMS[0] && <Text>Standard Room not available</Text>}
+          {!ROOMS[1] && <Text>Executive Room not available</Text>}
+          {!ROOMS[2] && <Text>Executive Deluxe Room not available</Text>}
+          {!ROOMS[3] && <Text>Executive Suite not available</Text>} */}
         </StyledRooms>
       </StyledRoomSection>
     </>

@@ -49,7 +49,7 @@ function RootLayout() {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [roomCategory, setRoomCategory] = useState("");
-  const [noOfRooms, setNoOfRooms] = useState(0);
+  const [noOfRooms, setNoOfRooms] = useState("");
 
   return (
     <>

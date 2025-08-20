@@ -125,10 +125,10 @@ export default function Room({
   const { roomCategory, setRoomCategory } = useOutletContext();
 
   const getRoomData = () => {
-    if (imageType === "standard") return ROOMS[0];
-    if (imageType === "executive") return ROOMS[1];
-    if (imageType === "executiveDeluxe") return ROOMS[2];
-    if (imageType === "executiveSuite") return ROOMS[3];
+    if (ROOMS[0] && imageType === "standard") return ROOMS[0];
+    if (ROOMS[1] && imageType === "executive") return ROOMS[1];
+    if (ROOMS[2] && imageType === "executiveDeluxe") return ROOMS[2];
+    if (ROOMS[3] && imageType === "executiveSuite") return ROOMS[3];
     return ROOMS[0];
   };
 

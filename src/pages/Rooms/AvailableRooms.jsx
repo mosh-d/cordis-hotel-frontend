@@ -3,6 +3,7 @@ import RoomAvailabilityCard from "../../components/shared/RoomAvailabilityCard";
 import { styled } from "styled-components";
 import Text from "../../components/shared/Text";
 import { media } from "../../util/breakpoints";
+import { ROOMS } from "../../util/room-data";
 
 const StyledAvailableRoomsPage = styled.div`
   display: flex;
@@ -71,10 +72,11 @@ export default function AvailableRoomsPage() {
           <Text>Check available rooms</Text>
         </StyledTextWrapper>
         <StyledCardWrapper>
-          <RoomAvailabilityCard $type="standard" />
-          <RoomAvailabilityCard $type="executive" />
-          <RoomAvailabilityCard $type="executiveDeluxe" />
-          <RoomAvailabilityCard $type="executiveSuite" />
+          {
+            ROOMS.map((room, index) => (
+              <RoomAvailabilityCard key={index} $type={room.propName} />
+            ))
+          }
         </StyledCardWrapper>
       </StyledAvailableRoomsPage>
     </>

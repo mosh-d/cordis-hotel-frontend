@@ -9,7 +9,7 @@ import Button from "../../components/shared/Button";
 import { media } from "../../util/breakpoints";
 
 //Styles
-const StyledRoomBookingPage = styled.div`
+const StyledRoomBookingPage = styled.form`
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -244,6 +244,18 @@ export default function RoomBookingPage() {
     noOfRooms, setNoOfRooms
   } = useOutletContext();
 
+  const today = new Date().toISOString().split('T')[0];
+
+  const emailIsInvalid = !email.includes("@") || !email.includes(".");
+  const phoneNumberIsInvalid = phoneNumber.length < 9;
+  // Update noOfRooms validation to allow empty/intermediate values
+  const parsedNoOfRooms = parseInt(noOfRooms, 10);
+  const noOfRoomsIsInvalid = noOfRooms !== "" && (isNaN(parsedNoOfRooms) || parsedNoOfRooms <= 0 || parsedNoOfRooms > 4);
+  const checkInIsInvalid = !checkIn || checkIn < today;
+  const checkOutIsInvalid = !checkOut || checkOut < today;
+  const firstNameIsInvalid = !firstName || firstName.length < 3;
+  const lastNameIsInvalid = !lastName || lastName.length < 3;
+
   //Room price calculation
   const ROOM_PRICES = {
     standard: 120000,
@@ -322,9 +334,14 @@ export default function RoomBookingPage() {
     { code: "+233", country: "GH", name: "Ghana" },
   ];
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted");
+  };
+
   return (
     <>
-      <StyledRoomBookingPage>
+      <StyledRoomBookingPage onSubmit={handleSubmit}>
         <StyledRoomBooking>
           <StyledHeaderWrapper>
             <RouterLink to={returnTo}>
@@ -343,13 +360,23 @@ export default function RoomBookingPage() {
                 $placeholder="eg. John"
                 type="text"
                 value={firstName}
+                style={{ color: emailIsInvalid ? "red" : "var(--cordis-black)" }}
                 onChange={(e) => setFirstName(e.target.value)}
               />
               <CustomInput2
                 header="Check-In"
                 type="date"
                 value={checkIn}
-                onChange={(e) => setCheckIn(e.target.value)}
+                min={today}
+                // style={{ color: checkInIsInvalid ? "red" : "var(--cordis-black)" }}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === "") {
+                    setCheckIn("");
+                    return;
+                  }
+                  setCheckIn(val < today ? today : val);
+                }}
               />
             </StyledInputRow>
             <StyledInputRow>
@@ -358,13 +385,24 @@ export default function RoomBookingPage() {
                 $placeholder="eg. Doe"
                 type="text"
                 value={lastName}
+                style={{ color: emailIsInvalid ? "red" : "var(--cordis-black)" }}
                 onChange={(e) => setLastName(e.target.value)}
               />
               <CustomInput2
                 header="Check-Out"
                 type="date"
                 value={checkOut}
-                onChange={(e) => setCheckOut(e.target.value)}
+                min={checkIn || today}
+                // style={{ color: checkOutIsInvalid ? "red" : "var(--cordis-black)" }}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === "") {
+                    setCheckOut("");
+                    return;
+                  }
+                  const minDate = checkIn || today;
+                  setCheckOut(val < minDate ? minDate : val);
+                }}
               />
             </StyledInputRow>
             <StyledInputRow>
@@ -373,6 +411,7 @@ export default function RoomBookingPage() {
                 $placeholder="example@email.com"
                 type="email"
                 value={email}
+                style={{ color: emailIsInvalid ? "red" : "var(--cordis-black)" }}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <CustomInput2
@@ -415,6 +454,7 @@ export default function RoomBookingPage() {
                     type="tel"
                     placeholder="803 123 4567"
                     value={phoneNumber}
+                    style={{ color: phoneNumberIsInvalid ? "red" : "var(--cordis-black)" }}
                     onChange={handlePhoneChange}
                     maxLength="13"
                   />
@@ -424,10 +464,75 @@ export default function RoomBookingPage() {
                 header="Number of Rooms"
                 $placeholder="eg. 2"
                 type="number"
+                min="1"
+                max="4"
+                step="1"
+                inputMode="numeric"
                 value={noOfRooms}
-                onChange={(e) => setNoOfRooms(e.target.value)}
+                style={{ color: noOfRoomsIsInvalid ? "red" : "var(--cordis-black)" }}
+                onChange={(e) => {
+                  const rawValue = e.target.value;
+                  const digitsOnly = rawValue.replace(/\D/g, "");
+                  if (digitsOnly === "") {
+                    setNoOfRooms("");
+                    return;
+                  }
+                  const firstDigit = digitsOnly[0];
+                  if (["1", "2", "3", "4"].includes(firstDigit)) {
+                    setNoOfRooms(firstDigit);
+                  }
+                }}
               />
             </StyledInputRow>
+            {
+              emailIsInvalid && email.length > 0 && (
+                <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
+                  Please enter a valid email address
+                </Text>
+              )
+            }
+            {
+              phoneNumberIsInvalid && phoneNumber.length > 0 && (
+                <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
+                  Please enter a valid phone number (at least 9 digits)
+                </Text>
+              )
+            }
+            {
+              noOfRoomsIsInvalid && noOfRooms !== "" && (
+                <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
+                  Please enter a valid number of rooms (1-4)
+                </Text>
+              )
+            }
+            {
+              checkInIsInvalid && checkIn.length > 0 && (
+                <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
+                  Please enter a valid check-in date (must be today or later)
+                </Text>
+              )
+            }
+            {
+              checkOutIsInvalid && checkOut.length > 0 && (
+                <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
+                  Please enter a valid check-out date (must be today or later)
+                </Text>
+              )
+            }
+            {
+              firstNameIsInvalid && firstName.length > 0 && (
+                <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
+                  Please enter a valid first name (must be at least 3 characters long)
+                </Text>
+              )
+            }
+            {
+              lastNameIsInvalid && lastName.length > 0 && (
+                <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
+                  Please enter a valid last name (must be at least 3 characters long)
+                </Text>
+              )
+            }
           </StyledInputs>
           <StyledMessagerow>
             <Text
@@ -582,11 +687,11 @@ export default function RoomBookingPage() {
             <Text $color="var(--cordis-white)" $size="extra-large">
               ₦{total.toLocaleString()}
             </Text>
-            <RouterLink to="/booking-confirmation">
-              <Button $type="emphasis">
+            {/* <RouterLink to="/booking-confirmation"> */}
+              <Button $type="emphasis" type="submit">
                 <Text>Confirm Booking</Text>
               </Button>
-            </RouterLink>
+            {/* </RouterLink> */}
           </StyledConfirmationTotalWrapper>
         </StyledBookingSummary>
       </StyledRoomBookingPage>
