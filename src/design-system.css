@@ -69,6 +69,7 @@ body {
   --cordis-white: hsla(0, 0%, 100%, 1);
   --cordis-text-color: hsla(180, 1.8%, 21.4%, 1);
   --cordis-gray: hsla(0, 0%, 64.7%, 1);
+  --cordis-brown: hsla(40, 15%, 32%, 1);
   
   /* Typography */
   --font-family-primary: 'Cambay', ui-sans-serif, system-ui, -apple-system, sans-serif;

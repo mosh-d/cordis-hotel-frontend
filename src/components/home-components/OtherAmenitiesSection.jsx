@@ -7,16 +7,11 @@ import { Link as RouterLink } from "react-router-dom";
 import { media } from "../../util/breakpoints";
 
 //images
-import Laundry1 from "../../assets/cordis-laundry/CORDIS-LAUNDRY-1.png";
-import ConferenceRoom1 from "../../assets/cordis-conference-room/CORDIS-CONFERENCE-ROOM-1.png";
-
-//pool images
-import Pool1 from "../../assets/cordis-pool/CORDIS-POOL-1.png";
-import Pool2 from "../../assets/cordis-pool/CORDIS-POOL-2.png";
-import Pool3 from "../../assets/cordis-pool/CORDIS-POOL-3.png";
-import Pool4 from "../../assets/cordis-pool/CORDIS-POOL-4.png";
-
-const PoolImages = [Pool1, Pool2, Pool3, Pool4];
+import CoffeeShop from "../../assets/cordis-amenities/CORDIS-COFFEE-SHOP.png";
+import ConferenceRoom from "../../assets/cordis-amenities/CORDIS-CONFERENCE-HALL.png";
+import ParkingSpace from "../../assets/cordis-amenities/CORDIS-PARKING-SPACE.png";
+import SafeDepositBox from "../../assets/cordis-amenities/CORDIS-SAFE-DEPOSIT-BOXES.png";
+import SitOut from "../../assets/cordis-amenities/CORDIS-SIT-OUT.png";
 
 const StyledOtherAmenitiesSection = styled.section`
   position: relative;
@@ -26,21 +21,22 @@ const StyledOtherAmenitiesSection = styled.section`
   justify-content: center;
   height: 120rem;
   width: 100%;
-  padding: 15rem 30rem;
+  padding: 15rem 40rem;
   gap: 6rem;
 
   @media (max-width: 1400px) {
-    padding: 15rem 4rem;
+    padding: 15rem 15rem;
   }
 
   ${media.tablet} {
     flex-direction: column;
-    padding: 12rem 0;
-    height: 220rem;
+    padding: 12rem 10rem;
+    height: 120rem;
   }
 
   ${media.mobile} {
-    height: 180rem;
+    height: 100rem;
+    padding: 12rem 0rem;
   }
 `;
 
@@ -49,7 +45,7 @@ const StyledAmenityText = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   width: 100%;
   gap: 2rem;
 `;
@@ -57,7 +53,7 @@ const StyledAmenityText = styled.div`
 const StyledAmenityWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   height: 100%;
   width: 100%;
   gap: 4.8rem;
@@ -103,11 +99,16 @@ const StyledAmenity = styled.div`
 const AmenityTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   width: 100%;
   gap: 2rem;
-  
+  text-align: center;
+
+  & * {
+    text-align: center;
+  }
+
   ${media.tablet} {
     display: none;
   }
@@ -116,10 +117,15 @@ const AmenityTextWrapper = styled.div`
 const AmenityTextWrapper1 = styled.div`
   display: none;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   width: 100%;
   gap: 2rem;
+  text-align: center;
+
+  & * {
+    text-align: center;
+  }
 
   ${media.tablet} {
     display: flex;
@@ -131,77 +137,28 @@ const AmenityTextWrapper1 = styled.div`
   }
 `;
 
-const StyledPool = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  background-color: var(--cordis-light-gray);
-
-  ${media.mobile} {
-    height: auto;
-    min-height: 60rem;
-  }
-`;
-
-const StyledPoolWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 1rem;
-  width: 100%;
-  height: 100%;
-
-  ${media.tablet} {
-    padding: 0 4rem;
-  }
-
-  ${media.mobile} {
-    height: 75rem;
-    padding: 0;
-  }
-`;
-
-const StyledPoolTextWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  width: 100%;
-  gap: 2rem;
-
-  /* ${media.tablet} {
-    padding: 0 4rem;
-  } */
-
-  ${media.mobile} {
-    padding: 0 2rem;
-  }
-`;  
-
 const BackDrop = styled.div`
-  background-color: var(--cordis-light-gray);
+  background-color: var(--cordis-brown);
   position: absolute;
   top: 10rem;
-  right: 20rem;
-  width: 55vw;
+  right: 7rem;
+  width: 84vw;
   height: 105rem;
   z-index: -1;
 
   ${media.tablet} {
     right: 0;
     width: 100%;
-    height: 200rem;
+    height: 100rem;
   }
 
   ${media.mobile} {
-    height: 178rem;
+    height: 100rem;
     top: 1rem;
   }
 `;
 
-const LaundryText = (
+const CoffeeShopText = (
   <StyledAmenityText>
     <Text
       $type="h3"
@@ -211,7 +168,7 @@ const LaundryText = (
       $weight="bold"
       $color="var(--cordis-black)"
     >
-      Laundry Services
+      Coffee Shop
     </Text>
     <Text
       $typeFace="secondary"
@@ -220,11 +177,11 @@ const LaundryText = (
       $weight="regular"
       $color="var(--cordis-black)"
     >
-      Enjoy our convenient laundry services, available to all guests for a fresh and comfortable stay.
+      Freshly brewed moments — enjoy artisanal coffee and light bites in a cozy,
+      welcoming space.
     </Text>
   </StyledAmenityText>
 );
-
 const ConferenceRoomText = (
   <StyledAmenityText>
     <Text
@@ -244,19 +201,109 @@ const ConferenceRoomText = (
       $weight="regular"
       $color="var(--cordis-black)"
     >
-      Host your meetings and events in our fully equipped conference room, designed for productivity and comfort.
+      Host with confidence — our fully equipped conference hall is designed for
+      seamless meetings, events, and gatherings.
+    </Text>
+  </StyledAmenityText>
+);
+
+const ParkingSpaceText = (
+  <StyledAmenityText>
+    <Text
+      $type="h3"
+      $size="extra-small"
+      $typeFace="primary"
+      $spacing=".2em"
+      $weight="bold"
+      $color="var(--cordis-black)"
+    >
+      Parking Space
+    </Text>
+    <Text
+      $typeFace="secondary"
+      $size="large"
+      $spacing=".05em"
+      $weight="regular"
+      $color="var(--cordis-black)"
+    >
+      Convenient and secure — ample parking space ensures peace of mind for all
+      our guests.
+    </Text>
+  </StyledAmenityText>
+);
+
+const SafeDepositBoxText = (
+  <StyledAmenityText>
+    <Text
+      $type="h3"
+      $size="extra-small"
+      $typeFace="primary"
+      $spacing=".2em"
+      $weight="bold"
+      $color="var(--cordis-black)"
+    >
+      Safe Deposit Box
+    </Text>
+    <Text
+      $typeFace="secondary"
+      $size="large"
+      $spacing=".05em"
+      $weight="regular"
+      $color="var(--cordis-black)"
+    >
+      Your valuables, our priority — secure storage with modern safe deposit
+      boxes.
+    </Text>
+  </StyledAmenityText>
+);
+
+const SitOutText = (
+  <StyledAmenityText>
+    <Text
+      $type="h3"
+      $size="extra-small"
+      $typeFace="primary"
+      $spacing=".2em"
+      $weight="bold"
+      $color="var(--cordis-black)"
+    >
+      Sit Out
+    </Text>
+    <Text
+      $typeFace="secondary"
+      $size="large"
+      $spacing=".05em"
+      $weight="regular"
+      $color="var(--cordis-black)"
+    >
+      Relax in style — our outdoor sit-out offers a refreshing retreat for
+      casual conversations or quiet reflection.
     </Text>
   </StyledAmenityText>
 );
 
 const Amenities = [
   {
-    ImageUrl: Laundry1,
-    text: LaundryText,
+    ImageUrl: CoffeeShop,
+    text: CoffeeShopText,
   },
   {
-    ImageUrl: ConferenceRoom1,
+    ImageUrl: ConferenceRoom,
     text: ConferenceRoomText,
+  },
+  {
+    ImageUrl: ParkingSpace,
+    text: ParkingSpaceText,
+  },
+
+  {
+    ImageUrl: SafeDepositBox,
+    text: SafeDepositBoxText,
+  },
+
+  {
+    ImageUrl: SitOut,
+    text: SitOutText,
   },
 ];
 
@@ -266,46 +313,36 @@ export default function OtherAmenitiesSection() {
   return (
     <StyledOtherAmenitiesSection>
       <AmenityTextWrapper1>
-        <Text $type="h1" $color="var(--cordis-black)" $weight="bold">
+        <Text
+          style={{ textAlign: "center" }}
+          $type="h1"
+          $color="var(--cordis-black)"
+          $weight="bold"
+        >
           Other Amenities
         </Text>
         <Text $color="var(--cordis-black)">
-          Discover a range of thoughtful amenities designed to make your stay comfortable and convenient, from our modern laundry facilities to versatile conference spaces and more.
+          Discover a range of thoughtful amenities designed to make your stay
+          comfortable and convenient, from our modern laundry facilities to
+          versatile conference spaces and more.
         </Text>
       </AmenityTextWrapper1>
-      <StyledPoolWrapper>
-        <StyledPool>
-          <Carousel ImageUrls={PoolImages} />
-        </StyledPool>
-        <StyledPoolTextWrapper>
-          <Text
-            $type="h3"
-            $size="extra-small"
-            $typeFace="primary"
-            $spacing=".2em"
-            $weight="bold"
-          >
-            Cordis Pool
-          </Text>
-          <Text
-            $typeFace="secondary"
-            $size="large"
-            $spacing=".05em"
-            $weight="regular"
-          >
-            Dive into relaxation at the Cordis Pool, where you can swim, unwind, or simply soak up the tranquil atmosphere in a refreshing oasis designed for your leisure and enjoyment.
-          </Text>
-        </StyledPoolTextWrapper>
-      </StyledPoolWrapper>
 
       <StyledAmenityWrapper>
         <StyledTextAmenityWrapper>
           <AmenityTextWrapper>
-            <Text $type="h1" $color="var(--cordis-black)" $weight="bold">
+            <Text
+              style={{ textAlign: "center" }}
+              $type="h1"
+              $color="var(--cordis-black)"
+              $weight="bold"
+            >
               Other Amenities
             </Text>
             <Text $color="var(--cordis-black)">
-              Discover a range of thoughtful amenities designed to make your stay comfortable and convenient, from our modern laundry facilities to versatile conference spaces and more.
+              Discover a range of thoughtful amenities designed to make your
+              stay comfortable and convenient, from our modern laundry
+              facilities to versatile conference spaces and more.
             </Text>
           </AmenityTextWrapper>
           <StyledAmenity>
@@ -314,7 +351,9 @@ export default function OtherAmenitiesSection() {
               onIndexChange={setCurrentIndex}
             />
             {Amenities[currentIndex] && (
-              <StyledAmenityText>{Amenities[currentIndex].text}</StyledAmenityText>
+              <StyledAmenityText>
+                {Amenities[currentIndex].text}
+              </StyledAmenityText>
             )}
           </StyledAmenity>
         </StyledTextAmenityWrapper>
@@ -326,7 +365,7 @@ export default function OtherAmenitiesSection() {
           </Button>
         </RouterLink>
       </StyledAmenityWrapper>
-      <BackDrop></BackDrop>
+      {/* <BackDrop></BackDrop> */}
     </StyledOtherAmenitiesSection>
   );
 }

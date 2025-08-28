@@ -9,20 +9,20 @@ import Restaurant2 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-2.png"
 import Restaurant3 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-3.png";
 
 //bar images
-import Bar1 from "../../assets/cordis-bar/CORDIS-BAR-1.png";
-import Bar2 from "../../assets/cordis-bar/CORDIS-BAR-2.png";
-import Bar3 from "../../assets/cordis-bar/CORDIS-BAR-3.png";
+import Bistro1 from "../../assets/cordis-bistro/CORDIS-BISTRO-1.png";
+import Bistro2 from "../../assets/cordis-bistro/CORDIS-BISTRO-2.png";
+import Bistro3 from "../../assets/cordis-bistro/CORDIS-BISTRO-3.png";
 
 //specials images
-import Specials1 from "../../assets/cordis-specials/CORDIS-SPECIALS-1.png";
-import Specials2 from "../../assets/cordis-specials/CORDIS-SPECIALS-2.png";
-import Specials3 from "../../assets/cordis-specials/CORDIS-SPECIALS-3.png";
+import FineDining1 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-1.png";
+import FineDining2 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-2.png";
+import FineDining3 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-3.png";
 import Button from "../shared/Button";
 import { media } from "../../util/breakpoints";
 
 const RestaurantImages = [Restaurant1, Restaurant2, Restaurant3];
-const BarImages = [Bar1, Bar2, Bar3];
-const SpecialsImages = [Specials1, Specials2, Specials3];
+const BistroImages = [Bistro1, Bistro2, Bistro3];
+const FineDiningImages = [FineDining1, FineDining2, FineDining3];
 
 const StyledDiningDrinksSection = styled.section`
   position: relative;
@@ -251,12 +251,12 @@ const BackDrop = styled.div`
   }
 `;
 
-export default function DiningDrinksSection() {
+export default function FlavorsOfCordisSection() {
   return (
     <StyledDiningDrinksSection>
       <DiningDrinksText2>
         <Text $type="h1" $color="var(--cordis-white)" $weight="bold">
-          Dining & Drinks
+          Flavors of Cordis
         </Text>
         <Text $color="var(--cordis-gray)">
           Indulge in flame‑grilled specialties, authentic Nigerian tastes, and
@@ -276,7 +276,7 @@ export default function DiningDrinksSection() {
           $weight="bold"
           $color="var(--cordis-text-color)"
         >
-          Cordis Restaurant
+          Restaurant
         </RestaurantTitle>
         <RestaurantTitle2
           $color="var(--cordis-black)"
@@ -285,14 +285,15 @@ export default function DiningDrinksSection() {
           $spacing=".05em"
           $weight="regular"
         >
-          A vibrant celebration of authentic Nigerian culinary artistry.
+          A vibrant dining hub serving a rich mix of local and international
+          flavors.{" "}
         </RestaurantTitle2>
       </RestaurantWrapper>
 
       <StyledBarSpecials>
         <DiningDrinksText>
           <Text $type="h1" $color="var(--cordis-white)" $weight="bold">
-            Dining & Drinks
+            Flavors of Cordis
           </Text>
           <Text $color="var(--cordis-gray)">
             Indulge in flame‑grilled specialties, authentic Nigerian tastes, and
@@ -303,7 +304,7 @@ export default function DiningDrinksSection() {
         <BarSpecialsContainer>
           <BarWrapper>
             <StyledBar>
-              <Carousel ImageUrls={BarImages} />
+              <Carousel ImageUrls={BistroImages} />
             </StyledBar>
             <Text
               $type="h3"
@@ -313,7 +314,7 @@ export default function DiningDrinksSection() {
               $weight="bold"
               $color="var(--cordis-white)"
             >
-              Cordis Bar
+              Bistro
             </Text>
             <Text
               $typeFace="secondary"
@@ -322,13 +323,12 @@ export default function DiningDrinksSection() {
               $spacing=".05em"
               $weight="regular"
             >
-              An intimate, multi-course journey curated by our executive chef.
-            </Text>
+The perfect spot for light bites, fresh brews, and relaxed conversations.            </Text>
           </BarWrapper>
 
           <SpecialsWrapper>
             <StyledSpecials>
-              <Carousel ImageUrls={SpecialsImages} />
+              <Carousel ImageUrls={FineDiningImages} />
             </StyledSpecials>
             <Text
               $type="h3"
@@ -338,7 +338,7 @@ export default function DiningDrinksSection() {
               $weight="bold"
               $color="var(--cordis-white)"
             >
-              Cordis Specials
+              Fine Dining
             </Text>
             <Text
               $typeFace="secondary"
@@ -347,8 +347,7 @@ export default function DiningDrinksSection() {
               $spacing=".05em"
               $weight="regular"
             >
-              An intimate, multi-course journey curated by our executive chef.
-            </Text>
+An elevated culinary experience where every plate is a masterpiece.            </Text>
           </SpecialsWrapper>
         </BarSpecialsContainer>
         <RouterLink to="/room-booking">
