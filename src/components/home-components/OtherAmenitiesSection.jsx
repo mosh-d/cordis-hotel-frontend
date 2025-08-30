@@ -48,6 +48,7 @@ const StyledAmenityText = styled.div`
   margin-top: 0.5rem;
   width: 100%;
   gap: 2rem;
+  height: 12rem;
 `;
 
 const StyledAmenityWrapper = styled.div`

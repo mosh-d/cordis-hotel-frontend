@@ -288,8 +288,8 @@ export default function RoomBookingPage() {
   const subtotal = roomPrice * nights * (parseInt(noOfRooms) || 0);
   const vat = subtotal * 0.075; // 7.5%
   const stateTax = subtotal * 0.05; // 5%
-  const serviceCharge = subtotal * 0.1; // 10%
-  const total = subtotal + vat + stateTax + serviceCharge;
+  // const serviceCharge = subtotal * 0.1; // 10%
+  const total = subtotal + vat + stateTax /* + serviceCharge */;
 
   // Phone number formatting function
   const formatPhoneNumber = (value) => {
@@ -661,7 +661,7 @@ export default function RoomBookingPage() {
                 ₦{stateTax.toLocaleString()}
               </Text>
             </StyledTextWrapper>
-            <StyledTextWrapper>
+            {/* <StyledTextWrapper>
               <Text
                 $typeFace="secondary"
                 $size="extra-large"
@@ -678,7 +678,7 @@ export default function RoomBookingPage() {
               >
                 ₦{serviceCharge.toLocaleString()}
               </Text>
-            </StyledTextWrapper>
+            </StyledTextWrapper> */}
           </StyledConfirmationTextWrapper>
           <StyledConfirmationTotalWrapper>
             <Text $type="h3" $color="var(--cordis-white)" $weight="bold">
