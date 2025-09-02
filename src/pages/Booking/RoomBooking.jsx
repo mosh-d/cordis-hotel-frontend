@@ -230,27 +230,46 @@ const StyledPhoneInput = styled.input`
 
 export default function RoomBookingPage() {
   const [searchParams] = useSearchParams();
-  const returnTo = searchParams.get('returnTo') || '/';
+  const returnTo = searchParams.get("returnTo") || "/";
 
   const {
-    firstName, setFirstName,
-    lastName, setLastName,
-    email, setEmail,
-    phoneNumber, setPhoneNumber,
-    countryCode, setCountryCode,
-    checkIn, setCheckIn,
-    checkOut, setCheckOut,
-    roomCategory, setRoomCategory,
-    noOfRooms, setNoOfRooms
+    firstName,
+    setFirstName,
+    lastName,
+    setLastName,
+    email,
+    setEmail,
+    phoneNumber,
+    setPhoneNumber,
+    countryCode,
+    setCountryCode,
+    checkIn,
+    setCheckIn,
+    checkOut,
+    setCheckOut,
+    roomCategory,
+    setRoomCategory,
+    noOfRooms,
+    setNoOfRooms,
+    noOfAdults,
+    setNoOfAdults,
+    noOfChildren,
+    setNoOfChildren,
+    rollawayBed,
+    setRollawayBed,
+    roomsAndGuests,
+    setRoomsAndGuests,
   } = useOutletContext();
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
 
   const emailIsInvalid = !email.includes("@") || !email.includes(".");
   const phoneNumberIsInvalid = phoneNumber.length < 9;
   // Update noOfRooms validation to allow empty/intermediate values
   const parsedNoOfRooms = parseInt(noOfRooms, 10);
-  const noOfRoomsIsInvalid = noOfRooms !== "" && (isNaN(parsedNoOfRooms) || parsedNoOfRooms <= 0 || parsedNoOfRooms > 4);
+  const noOfRoomsIsInvalid =
+    noOfRooms !== "" &&
+    (isNaN(parsedNoOfRooms) || parsedNoOfRooms <= 0 || parsedNoOfRooms > 4);
   const checkInIsInvalid = !checkIn || checkIn < today;
   const checkOutIsInvalid = !checkOut || checkOut < today;
   const firstNameIsInvalid = !firstName || firstName.length < 3;
@@ -270,8 +289,10 @@ export default function RoomBookingPage() {
     executiveDeluxe: "Executive Deluxe Room",
     executiveSuite: "Executive Suite Room",
   };
+  
+  const rollAwayBedPrice = rollawayBed ? 20000 : 0;
 
-  const roomPrice = ROOM_PRICES[roomCategory] || 0;
+  const roomPrice = ROOM_PRICES[roomCategory] + rollAwayBedPrice || 0;
   const roomName = ROOM_NAMES[roomCategory] || "Select a room";
 
   // Calculate nights
@@ -283,13 +304,14 @@ export default function RoomBookingPage() {
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   };
 
+
   const nights = calculateNights();
   const nightText = nights > 1 ? "nights" : "night";
   const subtotal = roomPrice * nights * (parseInt(noOfRooms) || 0);
   const vat = subtotal * 0.075; // 7.5%
   const stateTax = subtotal * 0.05; // 5%
   // const serviceCharge = subtotal * 0.1; // 10%
-  const total = subtotal + vat + stateTax /* + serviceCharge */;
+  const total = subtotal + vat + stateTax; /* + serviceCharge */
 
   // Phone number formatting function
   const formatPhoneNumber = (value) => {
@@ -339,6 +361,8 @@ export default function RoomBookingPage() {
     console.log("Form submitted");
   };
 
+  let dropdownValue = "true";
+
   return (
     <>
       <StyledRoomBookingPage onSubmit={handleSubmit}>
@@ -360,7 +384,9 @@ export default function RoomBookingPage() {
                 $placeholder="eg. John"
                 type="text"
                 value={firstName}
-                style={{ color: emailIsInvalid ? "red" : "var(--cordis-black)" }}
+                style={{
+                  color: emailIsInvalid ? "red" : "var(--cordis-black)",
+                }}
                 onChange={(e) => setFirstName(e.target.value)}
               />
               <CustomInput2
@@ -385,7 +411,9 @@ export default function RoomBookingPage() {
                 $placeholder="eg. Doe"
                 type="text"
                 value={lastName}
-                style={{ color: emailIsInvalid ? "red" : "var(--cordis-black)" }}
+                style={{
+                  color: emailIsInvalid ? "red" : "var(--cordis-black)",
+                }}
                 onChange={(e) => setLastName(e.target.value)}
               />
               <CustomInput2
@@ -411,7 +439,9 @@ export default function RoomBookingPage() {
                 $placeholder="example@email.com"
                 type="email"
                 value={email}
-                style={{ color: emailIsInvalid ? "red" : "var(--cordis-black)" }}
+                style={{
+                  color: emailIsInvalid ? "red" : "var(--cordis-black)",
+                }}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <CustomInput2
@@ -454,24 +484,34 @@ export default function RoomBookingPage() {
                     type="tel"
                     placeholder="803 123 4567"
                     value={phoneNumber}
-                    style={{ color: phoneNumberIsInvalid ? "red" : "var(--cordis-black)" }}
+                    style={{
+                      color: phoneNumberIsInvalid
+                        ? "red"
+                        : "var(--cordis-black)",
+                    }}
                     onChange={handlePhoneChange}
                     maxLength="13"
                   />
                 </StyledPhoneInputContainer>
               </StyledPhoneInputWrapper>
               <CustomInput2
-                header="Number of Rooms"
+                dropdown={dropdownValue}
+                header="Rooms and Guests"
                 $placeholder="eg. 2"
                 type="number"
                 min="1"
                 max="4"
                 step="1"
                 inputMode="numeric"
-                value={noOfRooms}
-                style={{ color: noOfRoomsIsInvalid ? "red" : "var(--cordis-black)" }}
+                value={roomsAndGuests}
+                style={{
+                  color: noOfRoomsIsInvalid ? "red" : "var(--cordis-black)",
+                }}
                 onChange={(e) => {
-                  const rawValue = e.target.value;
+                  // setRoomsAndGuests(e.target.value);
+
+
+                  /* const rawValue = e.target.value;
                   const digitsOnly = rawValue.replace(/\D/g, "");
                   if (digitsOnly === "") {
                     setNoOfRooms("");
@@ -480,59 +520,89 @@ export default function RoomBookingPage() {
                   const firstDigit = digitsOnly[0];
                   if (["1", "2", "3", "4"].includes(firstDigit)) {
                     setNoOfRooms(firstDigit);
-                  }
+                  } */
                 }}
               />
             </StyledInputRow>
-            {
-              emailIsInvalid && email.length > 0 && (
-                <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
-                  Please enter a valid email address
-                </Text>
-              )
-            }
-            {
-              phoneNumberIsInvalid && phoneNumber.length > 0 && (
-                <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
-                  Please enter a valid phone number (at least 9 digits)
-                </Text>
-              )
-            }
-            {
-              noOfRoomsIsInvalid && noOfRooms !== "" && (
-                <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
-                  Please enter a valid number of rooms (1-4)
-                </Text>
-              )
-            }
-            {
-              checkInIsInvalid && checkIn.length > 0 && (
-                <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
-                  Please enter a valid check-in date (must be today or later)
-                </Text>
-              )
-            }
-            {
-              checkOutIsInvalid && checkOut.length > 0 && (
-                <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
-                  Please enter a valid check-out date (must be today or later)
-                </Text>
-              )
-            }
-            {
-              firstNameIsInvalid && firstName.length > 0 && (
-                <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
-                  Please enter a valid first name (must be at least 3 characters long)
-                </Text>
-              )
-            }
-            {
-              lastNameIsInvalid && lastName.length > 0 && (
-                <Text $size="extra-small" $type="p" $color="red" $weight="light" $typeFace="primary">
-                  Please enter a valid last name (must be at least 3 characters long)
-                </Text>
-              )
-            }
+            {emailIsInvalid && email.length > 0 && (
+              <Text
+                $size="extra-small"
+                $type="p"
+                $color="red"
+                $weight="light"
+                $typeFace="primary"
+              >
+                Please enter a valid email address
+              </Text>
+            )}
+            {phoneNumberIsInvalid && phoneNumber.length > 0 && (
+              <Text
+                $size="extra-small"
+                $type="p"
+                $color="red"
+                $weight="light"
+                $typeFace="primary"
+              >
+                Please enter a valid phone number (at least 9 digits)
+              </Text>
+            )}
+            {noOfRoomsIsInvalid && noOfRooms !== "" && (
+              <Text
+                $size="extra-small"
+                $type="p"
+                $color="red"
+                $weight="light"
+                $typeFace="primary"
+              >
+                Please enter a valid number of rooms (1-4)
+              </Text>
+            )}
+            {checkInIsInvalid && checkIn.length > 0 && (
+              <Text
+                $size="extra-small"
+                $type="p"
+                $color="red"
+                $weight="light"
+                $typeFace="primary"
+              >
+                Please enter a valid check-in date (must be today or later)
+              </Text>
+            )}
+            {checkOutIsInvalid && checkOut.length > 0 && (
+              <Text
+                $size="extra-small"
+                $type="p"
+                $color="red"
+                $weight="light"
+                $typeFace="primary"
+              >
+                Please enter a valid check-out date (must be today or later)
+              </Text>
+            )}
+            {firstNameIsInvalid && firstName.length > 0 && (
+              <Text
+                $size="extra-small"
+                $type="p"
+                $color="red"
+                $weight="light"
+                $typeFace="primary"
+              >
+                Please enter a valid first name (must be at least 3 characters
+                long)
+              </Text>
+            )}
+            {lastNameIsInvalid && lastName.length > 0 && (
+              <Text
+                $size="extra-small"
+                $type="p"
+                $color="red"
+                $weight="light"
+                $typeFace="primary"
+              >
+                Please enter a valid last name (must be at least 3 characters
+                long)
+              </Text>
+            )}
           </StyledInputs>
           <StyledMessagerow>
             <Text
@@ -633,6 +703,60 @@ export default function RoomBookingPage() {
                 $weight="bold"
                 $color="var(--cordis-white)"
               >
+                Number of Adults
+              </Text>
+              <Text
+                $size="small"
+                $weight="light"
+                $color="var(--cordis-light-gray)"
+              >
+                {noOfAdults}
+              </Text>
+            </StyledTextWrapper>
+            <StyledTextWrapper>
+              <Text
+                $typeFace="secondary"
+                $size="extra-large"
+                $spacing=".05em"
+                $weight="bold"
+                $color="var(--cordis-white)"
+              >
+                Number of Children
+              </Text>
+              <Text
+                $size="small"
+                $weight="light"
+                $color="var(--cordis-light-gray)"
+              >
+                {noOfChildren}
+              </Text>
+            </StyledTextWrapper>
+            <StyledTextWrapper>
+              <Text
+                $typeFace="secondary"
+                $size="extra-large"
+                $spacing=".05em"
+                $weight="bold"
+                $color="var(--cordis-white)"
+              >
+                Rollaway Bed?
+              </Text>
+              <Text
+                $size="small"
+                $weight="light"
+                $color="var(--cordis-light-gray)"
+              >
+                {rollawayBed === true ? "Yes (+₦20,000)" : "No"}
+              </Text>
+            </StyledTextWrapper>
+            <StyledTextWrapper>
+              <Text
+                $typeFace="secondary"
+                $size="extra-large"
+                $spacing=".05em"
+                $weight="bold"
+                $color="var(--cordis-white)"
+              >
                 VAT (7.5%)
               </Text>
               <Text
@@ -688,9 +812,9 @@ export default function RoomBookingPage() {
               ₦{total.toLocaleString()}
             </Text>
             {/* <RouterLink to="/booking-confirmation"> */}
-              <Button $type="emphasis" type="submit">
-                <Text>Confirm Booking</Text>
-              </Button>
+            <Button $type="emphasis" type="submit">
+              <Text>Confirm Booking</Text>
+            </Button>
             {/* </RouterLink> */}
           </StyledConfirmationTotalWrapper>
         </StyledBookingSummary>

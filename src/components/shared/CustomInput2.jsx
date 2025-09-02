@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import Text from "./Text";
+import RoomsAndGuestsPopup from "../../components/shared/RoomsAndGuestsPopup";
 
 const StyledCustomInput2 = styled.div`
   display: flex;
@@ -9,11 +10,12 @@ const StyledCustomInput2 = styled.div`
   width: 100%;
   gap: 1rem;
   flex: 1;
-  padding-bottom: .3rem;
+  padding-bottom: 0.3rem;
   width: 100%;
 `;
 
 const StyledCustomInput2Black = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -21,9 +23,9 @@ const StyledCustomInput2Black = styled.div`
   /* min-width: 20rem; */
   gap: 1rem;
   flex: 1;
-  padding-bottom: .3rem;
+  padding-bottom: 0.3rem;
   width: 100%;
-`
+`;
 
 const StyledInput = styled.input`
   display: flex;
@@ -37,7 +39,7 @@ const StyledInput = styled.input`
   letter-spacing: 0.2rem;
   border-bottom: 1px solid var(--cordis-accent);
 
-   &:focus-visible {
+  &:focus-visible {
     outline: none;
     border-color: var(--cordis-emphasis);
   }
@@ -61,7 +63,7 @@ const StyledSelect = styled.select`
   letter-spacing: 0.2rem;
   border-bottom: 1px solid var(--cordis-accent);
 
-   &:focus-visible {
+  &:focus-visible {
     outline: none;
     border-color: var(--cordis-emphasis);
   }
@@ -125,30 +127,58 @@ const StyledInputBlack = styled.input`
   }
 `;
 
-export default function CustomInput2({ $type, $style, header, $placeholder, children, ...props }) {
-  return(
+const StyledRoomsAndGuestsPopup = styled(RoomsAndGuestsPopup)`
+`;
+
+export default function CustomInput2({
+  $type,
+  $style,
+  header,
+  $placeholder,
+  dropdown,
+  children,
+  ...props
+}) {
+  return (
     <>
-    {
-      $style === "accent" ? (
-      <StyledCustomInput2>
-        <Text $type="p" $color="var(--cordis-accent)" $weight="light" $typeFace="primary">{header}</Text>
-        {$type === "select" ? (
-          <StyledSelect placeholder={$placeholder} {...props}>{children}</StyledSelect>
-        ) : (
-          <StyledInput placeholder={$placeholder} {...props} />
-        )}
-      </StyledCustomInput2>
+      {$style === "accent" ? (
+        <StyledCustomInput2>
+          <Text
+            $type="p"
+            $color="var(--cordis-accent)"
+            $weight="light"
+            $typeFace="primary"
+          >
+            {header}
+          </Text>
+          {$type === "select" ? (
+            <StyledSelect placeholder={$placeholder} {...props}>
+              {children}
+            </StyledSelect>
+          ) : (
+            <StyledInput placeholder={$placeholder} {...props} />
+          )}
+        </StyledCustomInput2>
       ) : (
         <StyledCustomInput2Black>
-          <Text $type="p" $color="var(--cordis-black)" $weight="light" $typeFace="primary">{header}</Text>
+          <Text
+            $type="p"
+            $color="var(--cordis-black)"
+            $weight="light"
+            $typeFace="primary"
+          >
+            {header}
+          </Text>
           {$type === "select" ? (
-            <StyledSelectBlack placeholder={$placeholder} {...props}>{children}</StyledSelectBlack>
+            <StyledSelectBlack placeholder={$placeholder} {...props}>
+              {children}
+            </StyledSelectBlack>
           ) : (
             <StyledInputBlack placeholder={$placeholder} {...props} />
           )}
+          {dropdown === "true" ? <StyledRoomsAndGuestsPopup /> : undefined}
         </StyledCustomInput2Black>
-      )
-    }
+      )}
     </>
-  )
+  );
 }

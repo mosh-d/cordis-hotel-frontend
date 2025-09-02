@@ -49,7 +49,11 @@ function RootLayout() {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [roomCategory, setRoomCategory] = useState("");
-  const [noOfRooms, setNoOfRooms] = useState("");
+  const [noOfRooms, setNoOfRooms] = useState(1);
+  const [noOfAdults, setNoOfAdults] = useState(1);
+  const [noOfChildren, setNoOfChildren] = useState(0);
+  const [rollawayBed, setRollawayBed] = useState(false);
+  const [roomsAndGuests, setRoomsAndGuests] = useState(`Rooms: ${noOfRooms}, Adults: ${noOfAdults}, Children: ${noOfChildren}`);
 
   return (
     <>
@@ -80,6 +84,10 @@ function RootLayout() {
           checkOut, setCheckOut,
           roomCategory, setRoomCategory,
           noOfRooms, setNoOfRooms,
+          noOfAdults, setNoOfAdults,
+          noOfChildren, setNoOfChildren,
+          rollawayBed, setRollawayBed,
+          roomsAndGuests, setRoomsAndGuests
         }}
       />
       {isAbout || isContact || isBlog ? <Footer /> : undefined}
