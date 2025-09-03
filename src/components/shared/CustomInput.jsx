@@ -1,10 +1,13 @@
 import PropTypes from "prop-types";
 import { styled } from "styled-components";
+import { useState, useRef, useEffect } from "react";
+import RoomsAndGuestsPopup from "./RoomsAndGuestsPopup";
 
 const StyledCustomInput = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
+  position: relative;
 
   & label {
     color: var(--cordis-white);
@@ -25,14 +28,89 @@ const StyledCustomInput = styled.div`
       outline: 1px solid var(--cordis-emphasis);
       outline-offset: 4px;
     }
+
+    /* Style the calendar icon for date inputs */
+    &[type="date"] {
+      color-scheme: light;
+      
+      &::-webkit-calendar-picker-indicator {
+        /* Filter to convert icon to cordis accent color (light golden/cream) */
+        filter: brightness(0) saturate(100%) invert(89%) sepia(45%) saturate(1234%) hue-rotate(359deg) brightness(103%) contrast(96%);
+        opacity: 1;
+        cursor: pointer;
+      }
+      
+      &::-webkit-inner-spin-button,
+      &::-webkit-clear-button {
+        display: none;
+      }
+    }
   }
 `;
 
-export default function CustomInput({ label, $for, $type = "text", ...props }) {
+const StyledRoomsAndGuestsPopup = styled(RoomsAndGuestsPopup)`
+`;
+
+const StyledInputWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+export default function CustomInput({ label, $for, $type = "text", dropdown, onClick, ...props }) {
+  const [showPopup, setShowPopup] = useState(false);
+  const inputRef = useRef(null);
+  const popupRef = useRef(null);
+
+  // Handle click outside to close popup
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        inputRef.current && 
+        !inputRef.current.contains(event.target) &&
+        popupRef.current && 
+        !popupRef.current.contains(event.target)
+      ) {
+        setShowPopup(false);
+      }
+    };
+
+    if (showPopup) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showPopup]);
+
+  const handleInputClick = (e) => {
+    if (dropdown === "true") {
+      e.preventDefault();
+      setShowPopup(!showPopup);
+    }
+    if (onClick) {
+      onClick(e);
+    }
+  };
+
   return (
-    <StyledCustomInput>
+    <StyledCustomInput ref={inputRef}>
       <label htmlFor={$for}>{label}</label>
-      <input id={$for} type={$type} {...props} />
+      <StyledInputWrapper>
+        <input 
+          id={$for} 
+          type={$type} 
+          onClick={handleInputClick}
+          readOnly={dropdown === "true"}
+          style={{ cursor: dropdown === "true" ? "pointer" : "text" }}
+          {...props} 
+        />
+        {dropdown === "true" && showPopup && (
+          <div ref={popupRef}>
+            <StyledRoomsAndGuestsPopup />
+          </div>
+        )}
+      </StyledInputWrapper>
     </StyledCustomInput>
   );
 }

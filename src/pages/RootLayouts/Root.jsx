@@ -53,7 +53,7 @@ function RootLayout() {
   const [noOfAdults, setNoOfAdults] = useState(1);
   const [noOfChildren, setNoOfChildren] = useState(0);
   const [rollawayBed, setRollawayBed] = useState(false);
-  const [roomsAndGuests, setRoomsAndGuests] = useState(`Rooms: ${noOfRooms}, Adults: ${noOfAdults}, Children: ${noOfChildren}`);
+  const [roomsAndGuests, setRoomsAndGuests] = useState("");
 
   return (
     <>

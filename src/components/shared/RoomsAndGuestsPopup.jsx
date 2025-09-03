@@ -106,12 +106,10 @@ export default function RoomsAndGuestsPopup() {
   let adultsMinusDisabled = noOfAdults <= 1 ? true : false;
   let adultsPlusDisabled = noOfAdults >= 2 ? true : false;
   let childrenMinusDisabled = noOfChildren <= 0 ? true : false;
-  let childrenPlusDisabled =
-    noOfChildren >= 1 && roomCategory != "Executive Suite Room"
-      ? true
-      : noOfChildren >= 2 && roomCategory == "Executive Suite Room"
-      ? true
-      : false;
+  
+  // Children limit based on room category
+  let maxChildren = roomCategory === "executiveSuite" ? 4 : 1;
+  let childrenPlusDisabled = noOfChildren >= maxChildren;
 
   return (
     <StyledRoomGuests>
@@ -190,7 +188,10 @@ export default function RoomsAndGuestsPopup() {
             Children
           </Text>
           <Text $size="extra-small" $color="var(--cordis-gray)">
-            (Max: 1 child per room aged 7 or younger)
+            {roomCategory === "executiveSuite" 
+              ? "(Max: 4 children aged 7 or younger)" 
+              : "(Max: 1 child per room aged 7 or younger)"
+            }
           </Text>
         </StyledTextContainer>
         <StyledOptionContainer>

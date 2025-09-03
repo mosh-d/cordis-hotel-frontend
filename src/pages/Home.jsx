@@ -51,6 +51,10 @@ function HomePage() {
     checkOut, setCheckOut,
     roomCategory, setRoomCategory,
     noOfRooms, setNoOfRooms,
+    noOfAdults, setNoOfAdults,
+    noOfChildren, setNoOfChildren,
+    rollawayBed, setRollawayBed,
+    roomsAndGuests, setRoomsAndGuests,
   } = useOutletContext();
 
   return (
@@ -63,6 +67,14 @@ function HomePage() {
         setCheckOut={setCheckOut}
         noOfRooms={noOfRooms}
         setNoOfRooms={setNoOfRooms}
+        noOfAdults={noOfAdults}
+        setNoOfAdults={setNoOfAdults}
+        noOfChildren={noOfChildren}
+        setNoOfChildren={setNoOfChildren}
+        rollawayBed={rollawayBed}
+        setRollawayBed={setRollawayBed}
+        roomsAndGuests={roomsAndGuests}
+        setRoomsAndGuests={setRoomsAndGuests}
       />
       {/* <button onClick={() => navigate('/about')}>View Products</button> */}{" "}
       {/* This is a way to navigate to a different page (programmatically .ie. afer a timeout or something) */}

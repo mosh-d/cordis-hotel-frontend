@@ -10,6 +10,7 @@ import Text from "../shared/Text";
 import { forwardRef, useState, useRef, useEffect } from "react";
 import { RiPlayFill, RiPauseFill } from "react-icons/ri";
 import { media } from "../../util/breakpoints";
+import CustomInput2 from "../shared/CustomInput2";
 
 const StyledHeroSection = styled.section`
   display: flex;
@@ -159,9 +160,9 @@ const QuickCheckIn = styled.div`
   display: flex;
   justify-content: center;
   align-items: end;
-  gap: 2.5rem;
+  gap: 4.8rem;
   width: 100%;
-  padding: 2rem 0;
+  padding: 2rem 8rem;
   background: hsla(180, 2%, 22%, 0.2);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -169,17 +170,19 @@ const QuickCheckIn = styled.div`
 
   ${media.tablet} {
     flex-direction: column;
+    /* justify-content: center; */
+    padding: 2rem 8rem;
     align-items: center;
-    justify-content: stretch;
 
     & input {
-      width: 40vw;
+      width: 100%;
     }
   }
 
   ${media.mobile} {
+    padding: 2rem;
     & input {
-      width: 60vw;
+      width: 100%;
     }
   }
 
@@ -257,11 +260,34 @@ const HeroSection = forwardRef((props, ref) => {
     setCheckOut,
     noOfRooms,
     setNoOfRooms,
+    noOfAdults,
+    setNoOfAdults,
+    noOfChildren,
+    setNoOfChildren,
+    rollawayBed,
+    setRollawayBed,
+    roomsAndGuests,
+    setRoomsAndGuests,
   } = props;
   const [isPlaying, setIsPlaying] = useState(false); // Start as false
   const [videoLoaded, setVideoLoaded] = useState(false);
   const videoRef = useRef(null);
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
+
+  // Update roomsAndGuests display value when individual values change
+  useEffect(() => {
+    const updateRoomsAndGuests = () => {
+      const roomText = noOfRooms === 1 ? "room" : "rooms";
+      const adultText = noOfAdults === 1 ? "adult" : "adults";
+      const childText = noOfChildren === 1 ? "child" : "children";
+      let display = `${noOfRooms} ${roomText}, ${noOfAdults} ${adultText}`;
+      if (noOfChildren > 0) {
+        display += `, ${noOfChildren} ${childText}`;
+      }
+      setRoomsAndGuests(display);
+    };
+    updateRoomsAndGuests();
+  }, [noOfRooms, noOfAdults, noOfChildren, setRoomsAndGuests]);
 
   // Handle autoplay and video events
   useEffect(() => {
@@ -385,10 +411,10 @@ const HeroSection = forwardRef((props, ref) => {
       </NavContainer>
 
       <QuickCheckIn>
-        <CustomInput
-          label="When do you check in?"
-          $for="check-in"
-          $type="date"
+        <CustomInput2
+          header="When do you check in?"
+          $style="accent"
+          type="date"
           value={checkIn}
           min={today}
           onChange={(e) => {
@@ -400,10 +426,10 @@ const HeroSection = forwardRef((props, ref) => {
             setCheckIn(val < today ? today : val);
           }}
         />
-        <CustomInput
-          label="When do you check out?"
-          $for="check-out"
-          $type="date"
+        <CustomInput2
+          header="When do you check out?"
+          $style="accent"
+          type="date"
           value={checkOut}
           min={checkIn || today}
           onChange={(e) => {
@@ -416,27 +442,14 @@ const HeroSection = forwardRef((props, ref) => {
             setCheckOut(val < minDate ? minDate : val);
           }}
         />
-        <StyledCustomInput
-          label="How many rooms? (1-4)"
-          $for="guests"
-          $type="number"
-          min="1"
-          max="4"
-          step="1"
-          inputMode="numeric"
-          value={noOfRooms}
-          onChange={(e) => {
-            const rawValue = e.target.value;
-            const digitsOnly = rawValue.replace(/\D/g, "");
-            if (digitsOnly === "") {
-              setNoOfRooms("");
-              return;
-            }
-            const firstDigit = digitsOnly[0];
-            if (["1", "2", "3", "4"].includes(firstDigit)) {
-              setNoOfRooms(firstDigit);
-            }
-          }}
+        <CustomInput2
+          dropdown="true"
+          header="Rooms and Guests"
+          $placeholder="Select rooms and guests"
+          $style="accent"
+          type="text"
+          value={roomsAndGuests}
+          readOnly
         />
         <RouterLink to="/rooms">
           <Button $type="emphasis">

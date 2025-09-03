@@ -1,17 +1,20 @@
 import { styled } from "styled-components";
 import Text from "./Text";
 import RoomsAndGuestsPopup from "../../components/shared/RoomsAndGuestsPopup";
+import { useState, useRef, useEffect } from "react";
 
 const StyledCustomInput2 = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
+  height: 100%;
   gap: 1rem;
   flex: 1;
   padding-bottom: 0.3rem;
   width: 100%;
+  position: relative;
 `;
 
 const StyledCustomInput2Black = styled.div`
@@ -127,7 +130,11 @@ const StyledInputBlack = styled.input`
   }
 `;
 
-const StyledRoomsAndGuestsPopup = styled(RoomsAndGuestsPopup)`
+const StyledRoomsAndGuestsPopup = styled(RoomsAndGuestsPopup)``;
+
+const StyledInputWrapper = styled.div`
+  position: relative;
+  width: 100%;
 `;
 
 export default function CustomInput2({
@@ -137,30 +144,79 @@ export default function CustomInput2({
   $placeholder,
   dropdown,
   children,
+  onClick,
   ...props
 }) {
+  const [showPopup, setShowPopup] = useState(false);
+  const inputRef = useRef(null);
+  const popupRef = useRef(null);
+
+  // Handle click outside to close popup
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        inputRef.current &&
+        !inputRef.current.contains(event.target) &&
+        popupRef.current &&
+        !popupRef.current.contains(event.target)
+      ) {
+        setShowPopup(false);
+      }
+    };
+
+    if (showPopup) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showPopup]);
+
+  const handleInputClick = (e) => {
+    if (dropdown === "true") {
+      e.preventDefault();
+      setShowPopup(!showPopup);
+    }
+    if (onClick) {
+      onClick(e);
+    }
+  };
   return (
     <>
       {$style === "accent" ? (
-        <StyledCustomInput2>
+        <StyledCustomInput2 ref={inputRef}>
           <Text
             $type="p"
-            $color="var(--cordis-accent)"
+            $color="var(--cordis-white)"
             $weight="light"
             $typeFace="primary"
           >
             {header}
           </Text>
-          {$type === "select" ? (
-            <StyledSelect placeholder={$placeholder} {...props}>
-              {children}
-            </StyledSelect>
-          ) : (
-            <StyledInput placeholder={$placeholder} {...props} />
-          )}
+          <StyledInputWrapper>
+            {$type === "select" ? (
+              <StyledSelect placeholder={$placeholder} {...props}>
+                {children}
+              </StyledSelect>
+            ) : (
+              <StyledInput
+                placeholder={$placeholder}
+                onClick={handleInputClick}
+                readOnly={dropdown === "true"}
+                style={{ cursor: dropdown === "true" ? "pointer" : "text" }}
+                {...props}
+              />
+            )}
+            {dropdown === "true" && showPopup && (
+              <div ref={popupRef}>
+                <StyledRoomsAndGuestsPopup />
+              </div>
+            )}
+          </StyledInputWrapper>
         </StyledCustomInput2>
       ) : (
-        <StyledCustomInput2Black>
+        <StyledCustomInput2Black ref={inputRef}>
           <Text
             $type="p"
             $color="var(--cordis-black)"
@@ -169,14 +225,26 @@ export default function CustomInput2({
           >
             {header}
           </Text>
-          {$type === "select" ? (
-            <StyledSelectBlack placeholder={$placeholder} {...props}>
-              {children}
-            </StyledSelectBlack>
-          ) : (
-            <StyledInputBlack placeholder={$placeholder} {...props} />
-          )}
-          {dropdown === "true" ? <StyledRoomsAndGuestsPopup /> : undefined}
+          <StyledInputWrapper>
+            {$type === "select" ? (
+              <StyledSelectBlack placeholder={$placeholder} {...props}>
+                {children}
+              </StyledSelectBlack>
+            ) : (
+              <StyledInputBlack
+                placeholder={$placeholder}
+                onClick={handleInputClick}
+                readOnly={dropdown === "true"}
+                style={{ cursor: dropdown === "true" ? "pointer" : "text" }}
+                {...props}
+              />
+            )}
+            {dropdown === "true" && showPopup && (
+              <div ref={popupRef}>
+                <StyledRoomsAndGuestsPopup />
+              </div>
+            )}
+          </StyledInputWrapper>
         </StyledCustomInput2Black>
       )}
     </>

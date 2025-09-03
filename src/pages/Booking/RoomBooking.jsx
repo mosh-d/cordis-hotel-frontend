@@ -7,6 +7,7 @@ import { Link as RouterLink, useSearchParams } from "react-router-dom";
 import CustomInput2 from "../../components/shared/CustomInput2";
 import Button from "../../components/shared/Button";
 import { media } from "../../util/breakpoints";
+import { useEffect } from "react";
 
 //Styles
 const StyledRoomBookingPage = styled.form`
@@ -57,6 +58,7 @@ const StyledInputs = styled.div`
 const StyledInputRow = styled.div`
   display: flex;
   gap: 8rem;
+  align-items: flex-end;
 
   ${media.desktop} {
     gap: 2rem;
@@ -173,6 +175,7 @@ const StyledPhoneInputContainer = styled.div`
   display: flex;
   width: 100%;
   gap: 0.5rem;
+  align-items: flex-end;
 `;
 
 const StyledCountrySelect = styled.select`
@@ -261,6 +264,21 @@ export default function RoomBookingPage() {
     setRoomsAndGuests,
   } = useOutletContext();
 
+  // Update roomsAndGuests display value when individual values change
+  useEffect(() => {
+    const updateRoomsAndGuests = () => {
+      const roomText = noOfRooms === 1 ? "room" : "rooms";
+      const adultText = noOfAdults === 1 ? "adult" : "adults";
+      const childText = noOfChildren === 1 ? "child" : "children";
+      let display = `${noOfRooms} ${roomText}, ${noOfAdults} ${adultText}`;
+      if (noOfChildren > 0) {
+        display += `, ${noOfChildren} ${childText}`;
+      }
+      setRoomsAndGuests(display);
+    };
+    updateRoomsAndGuests();
+  }, [noOfRooms, noOfAdults, noOfChildren, setRoomsAndGuests]);
+
   const today = new Date().toISOString().split("T")[0];
 
   const emailIsInvalid = !email.includes("@") || !email.includes(".");
@@ -289,7 +307,7 @@ export default function RoomBookingPage() {
     executiveDeluxe: "Executive Deluxe Room",
     executiveSuite: "Executive Suite Room",
   };
-  
+
   const rollAwayBedPrice = rollawayBed ? 20000 : 0;
 
   const roomPrice = ROOM_PRICES[roomCategory] + rollAwayBedPrice || 0;
@@ -303,7 +321,6 @@ export default function RoomBookingPage() {
     const diffTime = Math.abs(end - start);
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   };
-
 
   const nights = calculateNights();
   const nightText = nights > 1 ? "nights" : "night";
@@ -497,31 +514,13 @@ export default function RoomBookingPage() {
               <CustomInput2
                 dropdown={dropdownValue}
                 header="Rooms and Guests"
-                $placeholder="eg. 2"
-                type="number"
-                min="1"
-                max="4"
-                step="1"
-                inputMode="numeric"
+                $placeholder="Select rooms and guests"
+                type="text"
                 value={roomsAndGuests}
                 style={{
                   color: noOfRoomsIsInvalid ? "red" : "var(--cordis-black)",
                 }}
-                onChange={(e) => {
-                  // setRoomsAndGuests(e.target.value);
-
-
-                  /* const rawValue = e.target.value;
-                  const digitsOnly = rawValue.replace(/\D/g, "");
-                  if (digitsOnly === "") {
-                    setNoOfRooms("");
-                    return;
-                  }
-                  const firstDigit = digitsOnly[0];
-                  if (["1", "2", "3", "4"].includes(firstDigit)) {
-                    setNoOfRooms(firstDigit);
-                  } */
-                }}
+                readOnly
               />
             </StyledInputRow>
             {emailIsInvalid && email.length > 0 && (
@@ -603,6 +602,10 @@ export default function RoomBookingPage() {
                 long)
               </Text>
             )}
+            <Text $size="small" $color="var(--cordis-gray)">
+              Note: Only Executive Suite Room has capacity for a family (up to 4
+              children).
+            </Text>
           </StyledInputs>
           <StyledMessagerow>
             <Text
