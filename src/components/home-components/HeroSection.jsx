@@ -163,7 +163,7 @@ const QuickCheckIn = styled.div`
   gap: 4.8rem;
   width: 100%;
   padding: 2rem 8rem;
-  background: hsla(180, 2%, 22%, 0.2);
+  background: hsla(180, 2%, 22%, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transition: all 0.3s ease-in-out;
