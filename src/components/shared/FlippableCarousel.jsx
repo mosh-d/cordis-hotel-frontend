@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { MoveLeft, MoveRight } from "lucide-react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
+import { useImagePreloader } from "../../hooks/useImagePreloader";
 
 const StyledButton = styled.button`
   background-color: var(--cordis-black);
@@ -94,20 +95,84 @@ const StyledText = styled.div`
   height: 100%;
 `;
 
+const StyledLoadingContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--cordis-light-gray);
+  color: var(--cordis-text-color);
+  gap: 1rem;
+`;
+
+const StyledProgressBar = styled.div`
+  width: 60%;
+  height: 4px;
+  background-color: var(--cordis-gray);
+  border-radius: 2px;
+  overflow: hidden;
+`;
+
+const StyledProgressFill = styled.div`
+  height: 100%;
+  background-color: var(--cordis-emphasis);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+  width: ${props => props.$progress}%;
+`;
+
+const StyledLoadingText = styled.div`
+  font-size: var(--text-sm);
+  color: var(--cordis-text-color);
+  text-align: center;
+`;
+
 export default function FlippableCarousel({
   ImageUrls,
   Description = [],
   onIndexChange,
   backContent,
 }) {
+  // All hooks must be called at the top, before any conditional returns
   const [imageIndex, setImageIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
+  
+  // Preload all images - this hook must always be called
+  const { imagesLoaded, loadedCount, totalImages, loadingProgress } = useImagePreloader(ImageUrls);
 
   // Call onIndexChange on mount to set initial index
   useEffect(() => {
     if (onIndexChange) onIndexChange(imageIndex);
   }, []);
+
+  // Safety check for ImageUrls - after all hooks
+  if (!ImageUrls || ImageUrls.length === 0) {
+    return (
+      <StyledLoadingContainer>
+        <StyledLoadingText>No images available</StyledLoadingText>
+      </StyledLoadingContainer>
+    );
+  }
+
+  // Show loading state while images are preloading
+  if (!imagesLoaded) {
+    return (
+      <StyledLoadingContainer>
+        <StyledLoadingText>
+          Loading images... ({loadedCount}/{totalImages})
+        </StyledLoadingText>
+        <StyledProgressBar>
+          <StyledProgressFill $progress={loadingProgress} />
+        </StyledProgressBar>
+        <StyledLoadingText style={{ fontSize: 'var(--text-xs)', opacity: 0.7 }}>
+          {loadingProgress}%
+        </StyledLoadingText>
+      </StyledLoadingContainer>
+    );
+  }
 
   function showPrevImage(e) {
     e.stopPropagation(); // Prevent flip when clicking navigation
