@@ -66,7 +66,7 @@ const StyledAmenityWrapper = styled.div`
 
   ${media.mobile} {
     height: 60rem;
-    padding: 0 2rem;
+    padding: 0;
   }
 `;
 
@@ -87,6 +87,7 @@ const StyledTextAmenityWrapper = styled.div`
 const StyledAmenity = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   width: 100%;
   height: 100%;
 

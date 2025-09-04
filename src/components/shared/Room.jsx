@@ -66,6 +66,31 @@ const StyledRoomCarousel = styled.div`
   }
 `;
 
+const StyledRoomCarousel2 = styled.div`
+  width: 100%;
+  height: 55rem;
+  background-color: ${({ $bgColor }) => $bgColor || "transparent"};
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+
+  ${media.tablet} {
+    height: 50rem;
+  }
+
+  ${media.mobile} {
+  }
+`;
+
 const RoomDetailsContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -76,7 +101,7 @@ const RoomDetailsContent = styled.div`
   text-align: center;
 
   ${media.tablet} {
-    gap: .1rem;
+    gap: 0.1rem;
   }
 
   ${media.mobile} {
@@ -98,17 +123,20 @@ const DetailItem = styled.div`
 
 const AmenitiesWrapper = styled.div`
   width: 100%;
-
 `;
 
 const AmenitiesList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 1rem 0 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 2rem;
 
   li {
     padding: 0.25rem 0;
     color: var(--cordis-white);
+    list-style-type: circle;
   }
 `;
 
@@ -121,6 +149,7 @@ export default function Room({
   children,
   $bgColor,
   flippable = false,
+  unavailable = false,
 }) {
   const { roomCategory, setRoomCategory } = useOutletContext();
 
@@ -153,21 +182,18 @@ export default function Room({
         <Text $color="var(--cordis-white)">Price:</Text>
         <Text $color="var(--cordis-emphasis)" $weight="bold">
           {getRoomData().price}
+          {console.log(getRoomData().price)}
         </Text>
       </DetailItem>
 
       <DetailItem>
         <Text $color="var(--cordis-white)">Size:</Text>
-        <Text $color="var(--cordis-white)">
-          {getRoomData().size}
-        </Text>
+        <Text $color="var(--cordis-white)">{getRoomData().size}</Text>
       </DetailItem>
 
       <DetailItem>
         <Text $color="var(--cordis-white)">Capacity:</Text>
-        <Text $color="var(--cordis-white)">
-          {getRoomData().capacity}
-        </Text>
+        <Text $color="var(--cordis-white)">{getRoomData().capacity}</Text>
       </DetailItem>
 
       <AmenitiesWrapper>
@@ -178,7 +204,8 @@ export default function Room({
           {getRoomData().amenities.map((amenity, index) => (
             <li key={index}>
               <Text $color="var(--cordis-white)" $size="small">
-                • {amenity}
+                {/* •  */}
+                {amenity}
               </Text>
             </li>
           ))}
@@ -208,20 +235,30 @@ export default function Room({
       </Text>
 
       <StyledRoomCardWrapper>
-        <StyledRoomCarousel $bgColor={$bgColor}>
-          {flippable ? (
-            <FlippableCarousel ImageUrls={images} backContent={backContent} />
-          ) : (
-            <Carousel ImageUrls={images} />
-          )}
-        </StyledRoomCarousel>
+        {unavailable ? (
+          <StyledRoomCarousel2>
+             {flippable ? (
+              <FlippableCarousel ImageUrls={images} backContent={backContent} />
+            ) : (
+              <Carousel ImageUrls={images} />
+            )}
+          </StyledRoomCarousel2>
+        ) : (
+          <StyledRoomCarousel $bgColor={$bgColor}>
+            {flippable ? (
+              <FlippableCarousel ImageUrls={images} backContent={backContent} />
+            ) : (
+              <Carousel ImageUrls={images} />
+            )}
+          </StyledRoomCarousel>
+        )}
+
         {children}
       </StyledRoomCardWrapper>
 
       <StyledButtonContainer>
         <RouteLink to="/room-booking">
           <Button onClick={() => setRoomCategory(imageType)} $type="underlined">
-            {console.log(roomCategory)}
             <Text $type="p" $size="medium" $weight="regular">
               {buttonText}
             </Text>

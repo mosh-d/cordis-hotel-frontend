@@ -7,11 +7,13 @@ import {
   RiFridgeLine,
   RiSofaLine,
   RiCheckLine,
+  RiLuggageDepositLine,
 } from "react-icons/ri";
-import { GiWaterFlask, GiDesk } from "react-icons/gi";
+import { GiWaterFlask, GiDesk, GiSlippers, GiRobe } from "react-icons/gi";
 import { MdOutlineHeatPump } from "react-icons/md";
+import { LiaMugHotSolid } from "react-icons/lia";
 import { PiTowel } from "react-icons/pi";
-import { BiCloset } from "react-icons/bi";
+import { BiCloset, BiDrink  } from "react-icons/bi";
 import Button from "../../components/shared/Button";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { ROOMS } from "../../util/room-data";
@@ -170,7 +172,13 @@ export default function RoomDetailsPage() {
     Fridge: <RiFridgeLine color="var(--cordis-black)" size="3rem" />,
     Sofa: <RiSofaLine color="var(--cordis-black)" size="3rem" />,
     Desk: <GiDesk color="var(--cordis-black)" size="3rem" />,
-    WoodenCloset: <BiCloset color="var(--cordis-black)" size="3rem" />,
+    Wardrobe: <BiCloset color="var(--cordis-black)" size="3rem" />,
+    Bathroomslippers: <GiSlippers  color="var(--cordis-black)" size="3rem" />,
+    Teaamenities: <LiaMugHotSolid  color="var(--cordis-black)" size="3rem" />,
+    Bathrobe: <GiRobe color="var(--cordis-black)" size="3rem" />,
+    Luggagerack: <RiLuggageDepositLine color="var(--cordis-black)" size="3rem" />,
+    MiniFridge: <RiFridgeLine color="var(--cordis-black)" size="3rem" />,
+    MiniBar: <BiDrink color="var(--cordis-black)" size="3rem" />,
   };
 
   return (
@@ -239,7 +247,7 @@ export default function RoomDetailsPage() {
                   </Text>
                 </StyledDetailText2>
               </StyledDetail>
-              <StyledDetail>
+              {/* <StyledDetail>
                 <StyledDetailText1>
                   <Text $color="var(--cordis-black)">View</Text>
                 </StyledDetailText1>
@@ -248,7 +256,7 @@ export default function RoomDetailsPage() {
                     {ROOMS[params.roomIndex].view}
                   </Text>
                 </StyledDetailText2>
-              </StyledDetail>
+              </StyledDetail> */}
             </StyledDetailsBox>
           </StyledDetails>
           <StyledFeatures>
@@ -264,7 +272,7 @@ export default function RoomDetailsPage() {
               ))}
             </StyledFeatureWrapper>
           </StyledFeatures>
-          <StyledServices>
+          {/* <StyledServices>
             <Text $type="h3" $weight="bold" $size="small">
               Services
             </Text>
@@ -276,7 +284,7 @@ export default function RoomDetailsPage() {
                 </StyledFeature>
               ))}
             </StyledServiceWrapper>
-          </StyledServices>
+          </StyledServices> */}
           <StyledButtonContainer>
             <RouterLink to="..">
               <Button $type="ghost">

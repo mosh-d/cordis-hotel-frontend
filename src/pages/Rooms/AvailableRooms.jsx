@@ -34,10 +34,20 @@ const StyledTextWrapper = styled.div`
 
 export default function AvailableRoomsPage() {
   const context = useOutletContext();
-  
+
+  // Check if a specific room exists
+  const roomExists = ROOMS.some((room) => room.propName === "executiveSuite");
+
+  // Find a specific room
+  const executiveSuite = ROOMS.find(
+    (room) => room.propName === "executiveSuite"
+  );
+
   // Handle case where context is undefined
   if (!context) {
-    console.error("AvailableRoomsPage: No outlet context found. Make sure this route is nested under RootLayout.");
+    console.error(
+      "AvailableRoomsPage: No outlet context found. Make sure this route is nested under RootLayout."
+    );
     return (
       <div>
         <Text $type="h1" $color="var(--cordis-black)">
@@ -48,37 +58,52 @@ export default function AvailableRoomsPage() {
   }
 
   const {
-    firstName, setFirstName,
-    lastName, setLastName,
-    email, setEmail,
-    phoneNumber, setPhoneNumber,
-    countryCode, setCountryCode,
-    checkIn, setCheckIn,
-    checkOut, setCheckOut,
-    roomCategory, setRoomCategory,
-    noOfRooms, setNoOfRooms
+    firstName,
+    setFirstName,
+    lastName,
+    setLastName,
+    email,
+    setEmail,
+    phoneNumber,
+    setPhoneNumber,
+    countryCode,
+    setCountryCode,
+    checkIn,
+    setCheckIn,
+    checkOut,
+    setCheckOut,
+    roomCategory,
+    setRoomCategory,
+    noOfRooms,
+    setNoOfRooms,
   } = context;
 
   return (
     <>
       <StyledAvailableRoomsPage>
         <StyledTextWrapper>
-          <Text $type="h1" $size="extra-large" $weight="bold" $color="var(--cordis-black)">
-            {checkIn && checkOut 
-              ? `21 Rooms available from ${new Date(checkIn).toLocaleDateString()} to ${new Date(checkOut).toLocaleDateString()}`
-              : "21 Rooms available"
-            }
+          <Text
+            $type="h1"
+            $size="extra-large"
+            $weight="bold"
+            $color="var(--cordis-black)"
+          >
+            {checkIn && checkOut
+              ? `21 Rooms available from ${new Date(
+                  checkIn
+                ).toLocaleDateString()} to ${new Date(
+                  checkOut
+                ).toLocaleDateString()}`
+              : "21 Rooms available"}
           </Text>
           <Text>Check available rooms</Text>
         </StyledTextWrapper>
         <StyledCardWrapper>
-          {
-            ROOMS.map((room, index) => (
-              <RoomAvailabilityCard key={index} $type={room.propName} />
-            ))
-          }
+          {ROOMS.map((room, index) => (
+            <RoomAvailabilityCard key={index} $type={room.propName} />
+          ))}
         </StyledCardWrapper>
       </StyledAvailableRoomsPage>
     </>
-  )
+  );
 }

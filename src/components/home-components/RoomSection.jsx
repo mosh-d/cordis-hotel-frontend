@@ -134,7 +134,20 @@ const StyledRooms = styled.div`
 
 const StyledRoomContainer = styled.div``;
 
+const StyledUnavailableRoomContainer = styled.div``;
+
 export default function RoomSection() {
+  const standardRoomExists = ROOMS.find((room) => room.propName === "standard");
+  const executiveRoomExists = ROOMS.find(
+    (room) => room.propName === "executive"
+  );
+  const executiveDeluxeRoomExists = ROOMS.find(
+    (room) => room.propName === "executiveDeluxe"
+  );
+  const executiveSuiteRoomExists = ROOMS.find(
+    (room) => room.propName === "executiveSuite"
+  );
+
   return (
     <>
       <StyledRoomSection>
@@ -148,7 +161,7 @@ export default function RoomSection() {
         </RoomText>
 
         <StyledRooms>
-          {ROOMS.map((room, index) => (
+          {ROOMS.filter((room) => room.propName).map((room, index) => (
             <StyledRoomContainer key={index}>
               <Room
                 imageType={room.propName}
@@ -158,6 +171,54 @@ export default function RoomSection() {
               />
             </StyledRoomContainer>
           ))}
+
+          {!standardRoomExists && (
+            <StyledUnavailableRoomContainer>
+              <Room
+                imageType="standard"
+                headerText="Standard"
+                buttonText="Reserve"
+                flippable={true}
+                unavailable={true}
+              />
+            </StyledUnavailableRoomContainer>
+          )}
+
+          {!executiveRoomExists && (
+            <StyledUnavailableRoomContainer>
+              <Room
+                imageType="executive"
+                headerText="Executive"
+                buttonText="Reserve"
+                flippable={true}
+                unavailable={true}
+              />
+            </StyledUnavailableRoomContainer>
+          )}
+
+          {!executiveDeluxeRoomExists && (
+            <StyledUnavailableRoomContainer>
+              <Room
+                imageType="executiveDeluxe"
+                headerText="Executive Deluxe"
+                buttonText="Reserve"
+                flippable={true}
+                unavailable={true}
+              />
+            </StyledUnavailableRoomContainer>
+          )}
+
+          {!executiveSuiteRoomExists && (
+            <StyledUnavailableRoomContainer>
+              <Room
+                imageType="executiveSuite"
+                headerText="Executive Suite"
+                buttonText="Reserve"
+                flippable={true}
+                unavailable={true}
+              />
+            </StyledUnavailableRoomContainer>
+          )}
 
           {/* {!ROOMS[0] && <Text>Standard Room not available</Text>}
           {!ROOMS[1] && <Text>Executive Room not available</Text>}
