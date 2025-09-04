@@ -402,7 +402,7 @@ export default function RoomBookingPage() {
                 type="text"
                 value={firstName}
                 style={{
-                  color: emailIsInvalid ? "red" : "var(--cordis-black)",
+                  color: firstNameIsInvalid ? "red" : "var(--cordis-black)",
                 }}
                 onChange={(e) => setFirstName(e.target.value)}
               />
@@ -429,7 +429,7 @@ export default function RoomBookingPage() {
                 type="text"
                 value={lastName}
                 style={{
-                  color: emailIsInvalid ? "red" : "var(--cordis-black)",
+                  color: lastNameIsInvalid ? "red" : "var(--cordis-black)",
                 }}
                 onChange={(e) => setLastName(e.target.value)}
               />

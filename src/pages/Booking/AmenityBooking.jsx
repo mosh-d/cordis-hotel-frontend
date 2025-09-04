@@ -190,6 +190,7 @@ const StyledCountrySelect = styled.select`
   border-right: none;
   padding: 0.5rem 0;
   width: 9rem;
+  cursor: pointer;
 
   ${media.mobile} {
     padding: 0;
@@ -309,7 +310,7 @@ export default function AmenityBookingPage() {
       return phoneNumber;
     } else if (phoneNumber.length <= 6) {
       return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3)}`;
-    } else if (phoneNumber.length <= 10) {
+    } else if (phoneNumber.length <= 11) {
       return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(
         3,
         6
@@ -318,7 +319,7 @@ export default function AmenityBookingPage() {
       return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(
         3,
         6
-      )} ${phoneNumber.slice(6, 10)}`;
+      )} ${phoneNumber.slice(6, 11)}`;
     }
   };
 
@@ -459,7 +460,7 @@ export default function AmenityBookingPage() {
                     value={phoneNumber}
                     style={{ color: phoneNumberIsInvalid ? "red" : "var(--cordis-black)" }}
                     onChange={handlePhoneChange}
-                    maxLength="13"
+                    maxLength="14"
                   />
                 </StyledPhoneInputContainer>
               </StyledPhoneInputWrapper>

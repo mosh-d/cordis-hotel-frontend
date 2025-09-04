@@ -22,7 +22,8 @@ const StyledCustomInput2Black = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: space-between;
+  height: 100%;
   /* min-width: 20rem; */
   gap: 1rem;
   flex: 1;

@@ -221,8 +221,13 @@ const StyledVideoControls = styled.div`
   z-index: 1;
 
   ${media.tablet} {
-    top: 45%;
+    top: 35%;
   }
+  ${media.mobile} {
+    top: 30%;
+  }
+
+
 `;
 
 const StyledPlayButton = styled.button`
