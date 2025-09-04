@@ -134,7 +134,25 @@ const StyledRooms = styled.div`
 
 const StyledRoomContainer = styled.div``;
 
-const StyledUnavailableRoomContainer = styled.div``;
+const StyledUnavailableRoomOverlay = styled.div`
+  /* background-color: rgba(194, 13, 13, 0.5); */
+  backdrop-filter: blur(0.5rem);
+`;
+
+const StyledUnavailableTextContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+`;
+
+// const StyledUnavailableRoom = styled(Room)`
+//   display: relative;
+//   opacity: 0.5;
+//   cursor: not-allowed;
+// `;
 
 export default function RoomSection() {
   const standardRoomExists = ROOMS.find((room) => room.propName === "standard");
@@ -173,19 +191,31 @@ export default function RoomSection() {
           ))}
 
           {!standardRoomExists && (
-            <StyledUnavailableRoomContainer>
-              <Room
-                imageType="standard"
-                headerText="Standard"
-                buttonText="Reserve"
-                flippable={true}
-                unavailable={true}
-              />
-            </StyledUnavailableRoomContainer>
+            <>
+              <StyledUnavailableRoomOverlay>
+                <Room
+                  imageType="standard"
+                  headerText="Standard"
+                  buttonText="Reserve"
+                  flippable={true}
+                  unavailable={true}
+                />
+                <StyledUnavailableTextContainer>
+                  <Text
+                    $type="h3"
+                    $color="var(--cordis-white)"
+                    $weight="bold"
+                    $size="extra-large"
+                  >
+                    Unavailable
+                  </Text>
+                </StyledUnavailableTextContainer>
+              </StyledUnavailableRoomOverlay>
+            </>
           )}
 
           {!executiveRoomExists && (
-            <StyledUnavailableRoomContainer>
+            <StyledUnavailableRoomOverlay>
               <Room
                 imageType="executive"
                 headerText="Executive"
@@ -193,11 +223,21 @@ export default function RoomSection() {
                 flippable={true}
                 unavailable={true}
               />
-            </StyledUnavailableRoomContainer>
+              <StyledUnavailableTextContainer>
+                <Text
+                  $type="h3"
+                  $color="var(--cordis-white)"
+                  $weight="bold"
+                  $size="extra-large"
+                >
+                  Unavailable
+                </Text>
+              </StyledUnavailableTextContainer>
+            </StyledUnavailableRoomOverlay>
           )}
 
           {!executiveDeluxeRoomExists && (
-            <StyledUnavailableRoomContainer>
+            <StyledUnavailableRoomOverlay>
               <Room
                 imageType="executiveDeluxe"
                 headerText="Executive Deluxe"
@@ -205,11 +245,21 @@ export default function RoomSection() {
                 flippable={true}
                 unavailable={true}
               />
-            </StyledUnavailableRoomContainer>
+              <StyledUnavailableTextContainer>
+                <Text
+                  $type="h3"
+                  $color="var(--cordis-white)"
+                  $weight="bold"
+                  $size="extra-large"
+                >
+                  Unavailable
+                </Text>
+              </StyledUnavailableTextContainer>
+            </StyledUnavailableRoomOverlay>
           )}
 
           {!executiveSuiteRoomExists && (
-            <StyledUnavailableRoomContainer>
+            <StyledUnavailableRoomOverlay>
               <Room
                 imageType="executiveSuite"
                 headerText="Executive Suite"
@@ -217,7 +267,17 @@ export default function RoomSection() {
                 flippable={true}
                 unavailable={true}
               />
-            </StyledUnavailableRoomContainer>
+              <StyledUnavailableTextContainer>
+                <Text
+                  $type="h3"
+                  $color="var(--cordis-white)"
+                  $weight="bold"
+                  $size="extra-large"
+                >
+                  Unavailable
+                </Text>
+              </StyledUnavailableTextContainer>
+            </StyledUnavailableRoomOverlay>
           )}
 
           {/* {!ROOMS[0] && <Text>Standard Room not available</Text>}

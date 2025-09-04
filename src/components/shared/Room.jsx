@@ -71,6 +71,7 @@ const StyledRoomCarousel2 = styled.div`
   height: 55rem;
   background-color: ${({ $bgColor }) => $bgColor || "transparent"};
   position: relative;
+  /* opacity: 0.7; */
 
   &::after {
     content: "";
@@ -79,7 +80,7 @@ const StyledRoomCarousel2 = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(36, 0, 0, .8);
     z-index: 1;
   }
 
@@ -90,6 +91,16 @@ const StyledRoomCarousel2 = styled.div`
   ${media.mobile} {
   }
 `;
+
+// const StyledUnavailableOverlay = styled.div`
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background-color: rgba(90, 0, 0, 0.7);
+//   z-index: 100;
+// `;
 
 const RoomDetailsContent = styled.div`
   display: flex;
@@ -224,25 +235,46 @@ export default function Room({
 
   return (
     <StyledRoom>
-      <Text
-        $type="h3"
-        $spacing=".2em"
-        $typeFace="primary"
-        $size="medium"
-        $weight="regular"
-      >
-        {headerText}
-      </Text>
+      {unavailable ? (
+        <Text
+          $type="h3"
+          $spacing=".2em"
+          $typeFace="primary"
+          $size="medium"
+          $weight="regular"
+          $opacity=".5"
+        >
+          {headerText}
+        </Text>
+      ) : (
+        <Text
+          $type="h3"
+          $spacing=".2em"
+          $typeFace="primary"
+          $size="medium"
+          $weight="regular"
+        >
+          {headerText}
+        </Text>
+      )}
 
       <StyledRoomCardWrapper>
         {unavailable ? (
-          <StyledRoomCarousel2>
-             {flippable ? (
-              <FlippableCarousel ImageUrls={images} backContent={backContent} />
-            ) : (
-              <Carousel ImageUrls={images} />
-            )}
-          </StyledRoomCarousel2>
+          <>
+            {/* <StyledUnavailableOverlay>
+            <Text>Unavailable</Text>
+          </StyledUnavailableOverlay> */}
+            <StyledRoomCarousel2>
+              {flippable ? (
+                <FlippableCarousel
+                  ImageUrls={images}
+                  backContent={backContent}
+                />
+              ) : (
+                <Carousel ImageUrls={images} />
+              )}
+            </StyledRoomCarousel2>
+          </>
         ) : (
           <StyledRoomCarousel $bgColor={$bgColor}>
             {flippable ? (
@@ -258,11 +290,16 @@ export default function Room({
 
       <StyledButtonContainer>
         <RouteLink to="/room-booking">
-          <Button onClick={() => setRoomCategory(imageType)} $type="underlined">
-            <Text $type="p" $size="medium" $weight="regular">
-              {buttonText}
-            </Text>
-          </Button>
+          {unavailable ? null : (
+            <Button
+              onClick={() => setRoomCategory(imageType)}
+              $type="underlined"
+            >
+              <Text $type="p" $size="medium" $weight="regular">
+                {buttonText}
+              </Text>
+            </Button>
+          )}
         </RouteLink>
       </StyledButtonContainer>
     </StyledRoom>
