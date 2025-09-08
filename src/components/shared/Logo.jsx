@@ -2,6 +2,12 @@ import { styled } from "styled-components";
 
 import ghostLogo from "../../assets/cordis-logo-1.png";
 import filledLogo from "../../assets/cordis-logo-2.png";
+import { cloudinaryBg } from "../../config/cloudinary";
+
+// ghost logo
+
+// filled logo
+
 
 const StyledLogo = styled.div`
   width: 15rem;

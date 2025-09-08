@@ -2,13 +2,11 @@
   "name": "the-cordis-hotel",
   "private": true,
   "version": "1.0.0",
-
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "vercel-build": "npm run build",
-
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "watch:sass": "node-sass sass/main.scss src/index.css -w",
@@ -19,6 +17,8 @@
     "build:css": "npm-run-all compile:sass concat:css prefix:css compress:css"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.14.3",
+    "@cloudinary/url-gen": "^1.22.0",
     "@react-google-maps/api": "^2.20.7",
     "framer-motion": "^12.23.0",
     "lucide-react": "^0.525.0",

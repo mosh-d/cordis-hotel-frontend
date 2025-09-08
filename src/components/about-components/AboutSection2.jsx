@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import Text from "../shared/Text";
+import { cloudinaryBg } from "../../config/cloudinary";
 import { media } from "../../util/breakpoints";
 
 //image

@@ -7,6 +7,9 @@ import { Link as RouterLink } from "react-router-dom";
 import CustomInput2 from "../../components/shared/CustomInput2";
 import Button from "../../components/shared/Button";
 import { media } from "../../util/breakpoints";
+import { cloudinaryBg } from "../../config/cloudinary";
+
+//Booking image
 
 //State Imports
 import { useState, useEffect } from "react";

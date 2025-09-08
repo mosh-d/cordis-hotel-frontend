@@ -4,6 +4,7 @@ import Text from "../shared/Text";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
 import { media } from "../../util/breakpoints";
+import { cloudinaryBg } from "../../config/cloudinary";
 
 //images
 import Exterior1 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-1.png";
@@ -74,7 +75,7 @@ const StyledTextImageWrapper = styled.div`
 const CustomScrollbarContainer = styled.div`
   position: relative;
   width: 40%;
-  height: .2rem;
+  height: 0.2rem;
   background: var(--cordis-gray);
   cursor: pointer;
   display: flex;
@@ -171,40 +172,39 @@ export default function HotelExterior() {
           <StyledHotelExteriorImage src={Exterior3} alt="Hotel Exterior" />
           <StyledHotelExteriorImage src={Exterior4} alt="Hotel Exterior" />
         </StyledHotelExteriorImageWrapper>
-       
       </StyledTextImageWrapper>
       <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "100%",
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        <StyledHotelExteriorButtonWrapper>
+          <RouterLink to="/room-booking">
+            <Button $type="emphasis2">
+              <Text $weight="regular" $size="medium">
+                Reserve
+              </Text>
+            </Button>
+          </RouterLink>
+        </StyledHotelExteriorButtonWrapper>
+        <CustomScrollbarContainer
+          onClick={(e) => {
+            const el = imageWrapperRef.current;
+            const rect = e.currentTarget.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const containerWidth = e.currentTarget.offsetWidth;
+            const percent = clickX / containerWidth;
+            el.scrollLeft = percent * (el.scrollWidth - el.clientWidth);
           }}
         >
-          <StyledHotelExteriorButtonWrapper>
-            <RouterLink to="/room-booking">
-              <Button $type="emphasis2">
-                <Text $weight="regular" $size="medium">
-                  Reserve
-                </Text>
-              </Button>
-            </RouterLink>
-          </StyledHotelExteriorButtonWrapper>
-          <CustomScrollbarContainer
-            onClick={(e) => {
-              const el = imageWrapperRef.current;
-              const rect = e.currentTarget.getBoundingClientRect();
-              const clickX = e.clientX - rect.left;
-              const containerWidth = e.currentTarget.offsetWidth;
-              const percent = clickX / containerWidth;
-              el.scrollLeft = percent * (el.scrollWidth - el.clientWidth);
-            }}
-          >
-            <CustomScrollbarThumb
-              style={{ width: thumbWidth, left: thumbLeft }}
-              onMouseDown={onThumbMouseDown}
-            />
-          </CustomScrollbarContainer>
+          <CustomScrollbarThumb
+            style={{ width: thumbWidth, left: thumbLeft }}
+            onMouseDown={onThumbMouseDown}
+          />
+        </CustomScrollbarContainer>
       </div>
     </StyledHotelExteriorSection>
   );

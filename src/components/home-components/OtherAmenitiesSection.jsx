@@ -5,6 +5,7 @@ import Carousel from "../shared/Carousel";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
 import { media } from "../../util/breakpoints";
+import { cloudinaryBg } from "../../config/cloudinary";
 
 //images
 import CoffeeShop from "../../assets/cordis-amenities/CORDIS-COFFEE-SHOP.png";

@@ -1,7 +1,10 @@
 import styled from "styled-components";
-import Banner from "../../assets/BANNER.png";
 import Text from "../shared/Text";
 import { media } from "../../util/breakpoints";
+import { cloudinaryBg } from "../../config/cloudinary";
+
+// Images
+const Banner = "cordis/banner";
 
 const StyledIntroSection = styled.section`
   display: flex;
@@ -38,7 +41,7 @@ const StyledBanner = styled.div`
   width: 100%;
   background-size: cover;
   background-repeat: no-repeat;
-  background-image: url(${Banner});
+  background-image: ${cloudinaryBg(Banner)};
 `;
 
 export default function IntroSection() {

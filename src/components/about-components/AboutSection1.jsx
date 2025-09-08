@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import Text from "../shared/Text";
 import { media } from "../../util/breakpoints";
+import { cloudinaryBg } from "../../config/cloudinary";
 
 //images
 import About1_1 from "../../assets/cordis-about-1/CORDIS-ABOUT-1-1.png";

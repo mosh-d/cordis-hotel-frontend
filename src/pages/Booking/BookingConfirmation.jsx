@@ -4,6 +4,9 @@ import Text from "../../components/shared/Text";
 import { Link as RouterLink } from "react-router-dom";
 import { styled } from "styled-components";
 import { media } from "../../util/breakpoints";
+import { cloudinaryBg } from "../../config/cloudinary";
+
+//Booking image
 
 const StyledBookingConfirmation = styled.div`
   width: 100vw;

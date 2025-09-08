@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import Text from "../shared/Text";
 import { media } from "../../util/breakpoints";
+import { cloudinaryBg } from "../../config/cloudinary";
 
 //image
 import MissionVisionBachground from "../../assets/mission-vision/MISSION-VISION-1.png";

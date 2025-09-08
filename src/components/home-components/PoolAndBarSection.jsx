@@ -4,6 +4,7 @@ import Text from "../shared/Text";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
 import Carousel from "../shared/Carousel";
+import { cloudinaryBg } from "../../config/cloudinary";
 
 //pool images
 import Pool1 from "../../assets/cordis-pool/CORDIS-POOL-1.png";

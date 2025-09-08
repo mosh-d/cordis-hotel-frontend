@@ -108,34 +108,11 @@ const StyledRooms = styled.div`
   &::-webkit-scrollbar-button {
     display: none;
   }
-
-  /* iOS Safari specific fixes */
-  /* ${media.mobile} {
-    &::-webkit-scrollbar {
-      height: 1rem;
-      -webkit-appearance: none;
-    }
-    
-    &::-webkit-scrollbar-track {
-      background-color: rgba(0, 0, 0, 0.1);
-      height: 1rem;
-      border-radius: .5rem;
-    }
-    
-    &::-webkit-scrollbar-thumb {
-      background-color: var(--cordis-text-color);
-      height: 1rem;
-      border-radius: .5rem;
-      border: 2px solid transparent;
-      background-clip: content-box;
-    }
-  } */
 `;
 
 const StyledRoomContainer = styled.div``;
 
 const StyledUnavailableRoomOverlay = styled.div`
-  /* background-color: rgba(194, 13, 13, 0.5); */
   backdrop-filter: blur(0.5rem);
 `;
 
@@ -147,12 +124,6 @@ const StyledUnavailableTextContainer = styled.div`
   z-index: 1;
   pointer-events: none;
 `;
-
-// const StyledUnavailableRoom = styled(Room)`
-//   display: relative;
-//   opacity: 0.5;
-//   cursor: not-allowed;
-// `;
 
 export default function RoomSection() {
   const standardRoomExists = ROOMS.find((room) => room.propName === "standard");

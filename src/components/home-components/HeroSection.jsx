@@ -1,7 +1,5 @@
 import { Link as RouterLink } from "react-router-dom";
 import { styled } from "styled-components";
-import HeroImage from "../../assets/HERO.png";
-import HeroVideo from "../../assets/bg-videos/CORDIS-HERO-VIDEO.mp4";
 import Logo from "../shared/Logo";
 import MainNavBar from "../MainNavBar";
 import CustomInput from "../shared/CustomInput";
@@ -11,6 +9,19 @@ import { forwardRef, useState, useRef, useEffect } from "react";
 import { RiPlayFill, RiPauseFill } from "react-icons/ri";
 import { media } from "../../util/breakpoints";
 import CustomInput2 from "../shared/CustomInput2";
+import {
+  cloudinaryBg,
+  getCloudinaryUrl,
+  getCloudinaryVideoUrl,
+} from "../../config/cloudinary";
+
+//Hero image
+const HeroImage = "cordis/hero/image";
+
+//Hero video
+const HeroVideo = "cordis/hero/video";
+// Test with Cloudinary's sample video (uncomment to test)
+// const HeroVideo = "sample";
 
 const StyledHeroSection = styled.section`
   display: flex;
@@ -26,7 +37,7 @@ const StyledHeroSection = styled.section`
     left: 0;
     width: 100%;
     height: 100%;
-    background: url(${HeroImage}) center/cover no-repeat;
+    background: ${cloudinaryBg(HeroImage)} center/cover no-repeat;
     z-index: -2;
     opacity: ${(props) => (props.$videoLoaded ? 0 : 1)};
     transition: opacity 0.5s ease;
@@ -226,8 +237,6 @@ const StyledVideoControls = styled.div`
   ${media.mobile} {
     top: 30%;
   }
-
-
 `;
 
 const StyledPlayButton = styled.button`
@@ -298,8 +307,14 @@ const HeroSection = forwardRef((props, ref) => {
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
+      // Debug: Log the video URL to check if it's correct
+      const videoUrl = getCloudinaryVideoUrl(HeroVideo);
+      console.log("🎬 Video URL:", videoUrl);
+      console.log("🎬 Video public ID:", HeroVideo);
+
       // Add event listeners
       const handleLoadedData = () => {
+        console.log("✅ Video loaded successfully");
         setVideoLoaded(true);
         // Try to play after video is loaded
         const playPromise = video.play();
@@ -328,7 +343,16 @@ const HeroSection = forwardRef((props, ref) => {
       };
 
       const handleLoadStart = () => {
+        console.log("🔄 Video load start");
         setVideoLoaded(false);
+      };
+
+      const handleError = (e) => {
+        console.error("❌ Video error:", e);
+        console.error("❌ Video error details:", video.error);
+        console.error("❌ Video src:", video.src);
+        console.error("❌ Video networkState:", video.networkState);
+        console.error("❌ Video readyState:", video.readyState);
       };
 
       video.addEventListener("loadeddata", handleLoadedData);
@@ -336,6 +360,7 @@ const HeroSection = forwardRef((props, ref) => {
       video.addEventListener("play", handlePlay);
       video.addEventListener("pause", handlePause);
       video.addEventListener("loadstart", handleLoadStart);
+      video.addEventListener("error", handleError);
 
       // Force load the video
       video.load();
@@ -347,6 +372,7 @@ const HeroSection = forwardRef((props, ref) => {
         video.removeEventListener("play", handlePlay);
         video.removeEventListener("pause", handlePause);
         video.removeEventListener("loadstart", handleLoadStart);
+        video.removeEventListener("error", handleError);
       };
     }
   }, []);
@@ -382,7 +408,7 @@ const HeroSection = forwardRef((props, ref) => {
           transition: "opacity 0.5s ease",
         }}
       >
-        <source src={HeroVideo} type="video/mp4" />
+        <source src={getCloudinaryVideoUrl(HeroVideo)} type="video/mp4" />
       </video>
 
       {/* Overlay to hide native controls during initial load */}

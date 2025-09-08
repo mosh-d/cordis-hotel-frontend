@@ -7,28 +7,32 @@ import Button from "./Button";
 import { Link as RouteLink } from "react-router-dom";
 import { media } from "../../util/breakpoints";
 import { ROOMS } from "../../util/room-data";
+import { getCloudinaryUrl } from "../../config/cloudinary";
 
 //Standard room images
-import StandardRoom1 from "../../assets/standard-room/STANDARD-ROOM-1.jpg";
-import StandardRoom2 from "../../assets/standard-room/STANDARD-ROOM-2.jpg";
-import StandardRoom3 from "../../assets/standard-room/STANDARD-ROOM-3.jpg";
+const StandardRoom1 = "cordis/standard-room-1";
+const StandardRoom2 = "cordis/standard-room-2";
+const StandardRoom3 = "cordis/standard-room-3";
+const StandardRoom4 = "cordis/standard-room-4";
 
 //Executive room images
-import ExecutiveRoom1 from "../../assets/executive-room/EXECUTIVE-ROOM-1.jpg";
-import ExecutiveRoom2 from "../../assets/executive-room/EXECUTIVE-ROOM-2.jpg";
+const ExecutiveRoom1 = "cordis/executive-room-1";
+const ExecutiveRoom2 = "cordis/executive-room-2";
+const ExecutiveRoom3 = "cordis/executive-room-3";
+const ExecutiveRoom4 = "cordis/executive-room-4";
 
 //Executive Deluxe room images
-import ExecutiveDeluxeRoom1 from "../../assets/executive-deluxe-room/EXECUTIVE-DELUXE-ROOM-1.jpg";
-import ExecutiveDeluxeRoom2 from "../../assets/executive-deluxe-room/EXECUTIVE-DELUXE-ROOM-2.jpg";
+const ExecutiveDeluxeRoom1 = "cordis/executive-deluxe-room-1";
+const ExecutiveDeluxeRoom2 = "cordis/executive-deluxe-room-2";
 
 //Executive Suite images
-import ExecutiveSuite1 from "../../assets/executive-suite/EXECUTIVE-SUITE-1.jpg";
-import ExecutiveSuite2 from "../../assets/executive-suite/EXECUTIVE-SUITE-2.jpg";
+const ExecutiveSuite1 = "cordis/executive-suite-1";
+const ExecutiveSuite2 = "cordis/executive-suite-2";
 
-const StandardRoomImages = [StandardRoom1, StandardRoom2, StandardRoom3];
-const ExecutiveRoomImages = [ExecutiveRoom1, ExecutiveRoom2];
-const ExecutiveDeluxeRoomImages = [ExecutiveDeluxeRoom1, ExecutiveDeluxeRoom2];
-const ExecutiveSuiteImages = [ExecutiveSuite1, ExecutiveSuite2];
+const StandardRoomImages = [getCloudinaryUrl(StandardRoom1), getCloudinaryUrl(StandardRoom2), getCloudinaryUrl(StandardRoom3), getCloudinaryUrl(StandardRoom4)];
+const ExecutiveRoomImages = [getCloudinaryUrl(ExecutiveRoom1), getCloudinaryUrl(ExecutiveRoom2), getCloudinaryUrl(ExecutiveRoom3), getCloudinaryUrl(ExecutiveRoom4)];
+const ExecutiveDeluxeRoomImages = [getCloudinaryUrl(ExecutiveDeluxeRoom1), getCloudinaryUrl(ExecutiveDeluxeRoom2)];
+const ExecutiveSuiteImages = [getCloudinaryUrl(ExecutiveSuite1), getCloudinaryUrl(ExecutiveSuite2)];
 
 const StyledRoom = styled.div`
   width: 100%;

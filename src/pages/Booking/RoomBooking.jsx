@@ -8,6 +8,10 @@ import CustomInput2 from "../../components/shared/CustomInput2";
 import Button from "../../components/shared/Button";
 import { media } from "../../util/breakpoints";
 import { useEffect } from "react";
+import { cloudinaryBg } from "../../config/cloudinary";
+
+//Booking image
+
 
 //Styles
 const StyledRoomBookingPage = styled.form`

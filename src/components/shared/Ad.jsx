@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import Text from "./Text";
 import Button from "./Button";
+import { cloudinaryBg } from "../../config/cloudinary";
 
 //image
 import AD1 from "../../assets/cordis-ads/CORDIS-AD-1.png";

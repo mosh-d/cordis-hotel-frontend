@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Carousel from "../shared/Carousel";
 import Text from "../shared/Text";
 import { Link as RouterLink } from "react-router-dom";
+import { cloudinaryBg } from "../../config/cloudinary";
 
 //restaurantimages
 import Restaurant1 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-1.png";

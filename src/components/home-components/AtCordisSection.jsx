@@ -3,6 +3,7 @@ import Text from "../shared/Text";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
 import { media } from "../../util/breakpoints";
+import { cloudinaryBg } from "../../config/cloudinary";
 
 //image
 import AtCordisBackground from "../../assets/at-cordis/AT-CORDIS.png";
