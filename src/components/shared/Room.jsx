@@ -8,6 +8,10 @@ import { Link as RouteLink } from "react-router-dom";
 import { media } from "../../util/breakpoints";
 import { ROOMS } from "../../util/room-data";
 import { getCloudinaryUrl } from "../../config/cloudinary";
+// Import the new progressive loading components
+// import LazyCloudinaryImage from "./LazyCloudinaryImage";
+// import ProgressiveCarousel from "./ProgressiveCarousel";
+// import { useProgressiveImagePreloader } from "../../hooks/useProgressiveImagePreloader";
 
 //Standard room images
 const StandardRoom1 = "cordis/standard-room-1";

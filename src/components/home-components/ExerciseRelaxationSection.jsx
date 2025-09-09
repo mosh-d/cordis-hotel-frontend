@@ -4,21 +4,33 @@ import Text from "../shared/Text";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
 import { media } from "../../util/breakpoints";
-import { cloudinaryBg } from "../../config/cloudinary";
+import { getCloudinaryUrl } from "../../config/cloudinary";
 
 //gym images
-import Gym1 from "../../assets/cordis-gym/CORDIS-GYM-1.png";
-import Gym2 from "../../assets/cordis-gym/CORDIS-GYM-2.png";
-import Gym3 from "../../assets/cordis-gym/CORDIS-GYM-3.png";
-import Gym4 from "../../assets/cordis-gym/CORDIS-GYM-4.png";
+const Gym1 = "cordis/gym-1";
+const Gym2 = "cordis/gym-2";
+const Gym3 = "cordis/gym-3";
+const Gym4 = "cordis/gym-4";
 
 //spa images
-import Spa1 from "../../assets/cordis-spa/CORDIS-SPA-1.png";
-import Spa2 from "../../assets/cordis-spa/CORDIS-SPA-2.png";
-import Spa3 from "../../assets/cordis-spa/CORDIS-SPA-3.png";
+const Spa1 = "cordis/spa-1";
+const Spa2 = "cordis/spa-2";
+const Spa3 = "cordis/spa-3";
 
-const GymImages = [Gym1, Gym2, Gym3, Gym4];
-const SpaImages = [Spa1, Spa2, Spa3];
+const GymImages = [
+  getCloudinaryUrl(Gym1),
+  getCloudinaryUrl(Gym2),
+  getCloudinaryUrl(Gym3),
+  getCloudinaryUrl(Gym4),
+];
+const SpaImages = [
+  getCloudinaryUrl(Spa1),
+  getCloudinaryUrl(Spa2),
+  getCloudinaryUrl(Spa3),
+];
+
+console.log(GymImages);
+console.log(SpaImages);
 
 const StyledExerciseRelaxationSection = styled.section`
   position: relative;
@@ -130,7 +142,6 @@ const SpaTextWrapper = styled.div`
 `;
 
 const StyledButtonContainer = styled.div`
-  
   ${media.tablet} {
     display: none;
   }
@@ -216,7 +227,10 @@ export default function ExerciseRelaxationSection() {
               $spacing=".05em"
               $weight="regular"
             >
-              Experience a modern fitness center with advanced cardio, strength equipment, and spaces for stretching or personal training. Cordis Gym is your welcoming space to energize or unwind and reach your wellness goals.
+              Experience a modern fitness center with advanced cardio, strength
+              equipment, and spaces for stretching or personal training. Cordis
+              Gym is your welcoming space to energize or unwind and reach your
+              wellness goals.
             </Text>
           </GymTextWrapper>
         </StyledGymContainer>
@@ -255,19 +269,21 @@ export default function ExerciseRelaxationSection() {
               $spacing=".05em"
               $weight="regular"
             >
-              Cordis Spa is your serene retreat for relaxing treatments, soothing massages, and expert care to leave you refreshed and restored.
+              Cordis Spa is your serene retreat for relaxing treatments,
+              soothing massages, and expert care to leave you refreshed and
+              restored.
             </Text>
           </SpaTextWrapper>
         </StyledSpaWrapper>
-      <RouterLink to="/amenity-booking">
-        <StyledButtonContainer2>
-          <Button $type="emphasis2">
-            <Text $weight="bold" $size="medium">
-              Book Gym/Spa
-            </Text>
-          </Button>
-        </StyledButtonContainer2>
-      </RouterLink>
+        <RouterLink to="/amenity-booking">
+          <StyledButtonContainer2>
+            <Button $type="emphasis2">
+              <Text $weight="bold" $size="medium">
+                Book Gym/Spa
+              </Text>
+            </Button>
+          </StyledButtonContainer2>
+        </RouterLink>
       </StyledSpaWrapperContainer>
       <BackDrop></BackDrop>
     </StyledExerciseRelaxationSection>

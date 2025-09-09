@@ -5,14 +5,14 @@ import Carousel from "../shared/Carousel";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
 import { media } from "../../util/breakpoints";
-import { cloudinaryBg } from "../../config/cloudinary";
+import { getCloudinaryUrl } from "../../config/cloudinary";
 
 //images
-import CoffeeShop from "../../assets/cordis-amenities/CORDIS-COFFEE-SHOP.png";
-import ConferenceRoom from "../../assets/cordis-amenities/CORDIS-CONFERENCE-HALL.png";
-import ParkingSpace from "../../assets/cordis-amenities/CORDIS-PARKING-SPACE.png";
-import SafeDepositBox from "../../assets/cordis-amenities/CORDIS-SAFE-DEPOSIT-BOXES.png";
-import SitOut from "../../assets/cordis-amenities/CORDIS-SIT-OUT.png";
+const CoffeeShop = getCloudinaryUrl("cordis/amenity/coffee-shop");
+const ConferenceRoom = getCloudinaryUrl("cordis/amenity/conference-hall");
+const ParkingSpace = getCloudinaryUrl("cordis/amenity/parking-space");  
+const SafeDepositBox = getCloudinaryUrl("cordis/amenity/safe-deposit-boxes");
+const SitOut = getCloudinaryUrl("cordis/amenity/sit-out");
 
 const StyledOtherAmenitiesSection = styled.section`
   position: relative;

@@ -2,28 +2,28 @@ import styled from "styled-components";
 import Carousel from "../shared/Carousel";
 import Text from "../shared/Text";
 import { Link as RouterLink } from "react-router-dom";
-import { cloudinaryBg } from "../../config/cloudinary";
-
-//restaurantimages
-import Restaurant1 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-1.png";
-import Restaurant2 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-2.png";
-import Restaurant3 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-3.png";
-
-//bar images
-import Bistro1 from "../../assets/cordis-bistro/CORDIS-BISTRO-1.png";
-import Bistro2 from "../../assets/cordis-bistro/CORDIS-BISTRO-2.png";
-import Bistro3 from "../../assets/cordis-bistro/CORDIS-BISTRO-3.png";
-
-//specials images
-import FineDining1 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-1.png";
-import FineDining2 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-2.png";
-import FineDining3 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-3.png";
+import { getCloudinaryUrl } from "../../config/cloudinary";
 import Button from "../shared/Button";
 import { media } from "../../util/breakpoints";
 
-const RestaurantImages = [Restaurant1, Restaurant2, Restaurant3];
-const BistroImages = [Bistro1, Bistro2, Bistro3];
-const FineDiningImages = [FineDining1, FineDining2, FineDining3];
+//restaurantimages
+const Restaurant1 = "cordis/restaurant-1";
+const Restaurant2 = "cordis/restaurant-2";
+const Restaurant3 = "cordis/restaurant-3";
+
+//bar images
+const Bistro1 = "cordis/bistro-1";
+const Bistro2 = "cordis/bistro-2";
+const Bistro3 = "cordis/bistro-3";
+
+//specials images
+const FineDining1 = "cordis/fine-dining-1";
+const FineDining2 = "cordis/fine-dining-2";
+const FineDining3 = "cordis/fine-dining-3";
+
+const RestaurantImages = [getCloudinaryUrl(Restaurant1), getCloudinaryUrl(Restaurant2), getCloudinaryUrl(Restaurant3)];
+const BistroImages = [getCloudinaryUrl(Bistro1), getCloudinaryUrl(Bistro2), getCloudinaryUrl(Bistro3)];
+const FineDiningImages = [getCloudinaryUrl(FineDining1), getCloudinaryUrl(FineDining2), getCloudinaryUrl(FineDining3)];
 
 const StyledDiningDrinksSection = styled.section`
   position: relative;

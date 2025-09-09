@@ -4,21 +4,23 @@ import Text from "../shared/Text";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
 import Carousel from "../shared/Carousel";
-import { cloudinaryBg } from "../../config/cloudinary";
+import { getCloudinaryUrl } from "../../config/cloudinary";
 
 //pool images
-import Pool1 from "../../assets/cordis-pool/CORDIS-POOL-1.png";
-import Pool2 from "../../assets/cordis-pool/CORDIS-POOL-2.png";
-import Pool3 from "../../assets/cordis-pool/CORDIS-POOL-3.png";
-import Pool4 from "../../assets/cordis-pool/CORDIS-POOL-4.png";
+const Pool1 = "cordis/pool-1";
+const Pool2 = "cordis/pool-2";
+const Pool3 = "cordis/pool-3";
+const Pool4 = "cordis/pool-4";
 
-//bar images
-import Bar1 from "../../assets/cordis-bar/CORDIS-BAR-1.png";
-import Bar2 from "../../assets/cordis-bar/CORDIS-BAR-2.png";
-import Bar3 from "../../assets/cordis-bar/CORDIS-BAR-3.png";
+//bar images - update these to match your actual Cloudinary public IDs
+const Bar1 = "cordis/bar-1"; // Check if this exists in your Cloudinary dashboard
+const Bar2 = "cordis/bar-2"; // Check if this exists in your Cloudinary dashboard  
+const Bar3 = "cordis/bar-3"; // Check if this exists in your Cloudinary dashboard
 
-const PoolImages = [Pool1, Pool2, Pool3, Pool4];
-const BarImages = [Bar1, Bar2, Bar3];
+const PoolImages = [getCloudinaryUrl(Pool1), getCloudinaryUrl(Pool2), getCloudinaryUrl(Pool3), getCloudinaryUrl(Pool4)];
+const BarImages = [getCloudinaryUrl(Bar1), getCloudinaryUrl(Bar2), getCloudinaryUrl(Bar3)];
+
+console.log(BarImages);
 
 const StyledPoolAndBarSection = styled.section`
   position: relative;
