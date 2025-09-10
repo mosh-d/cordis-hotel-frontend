@@ -169,7 +169,7 @@ export default function Room({
   headerText,
   buttonText,
   children,
-  $bgColor,
+  $bgColor, 
   flippable = false,
   unavailable = false,
 }) {
