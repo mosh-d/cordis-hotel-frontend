@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { useMemo } from "react";
 import Text from "../../components/shared/Text";
 import {
   RiArrowLeftLine,
@@ -15,8 +16,8 @@ import { LiaMugHotSolid } from "react-icons/lia";
 import { PiTowel } from "react-icons/pi";
 import { BiCloset, BiDrink  } from "react-icons/bi";
 import Button from "../../components/shared/Button";
-import { Link as RouterLink, useParams } from "react-router-dom";
-import { ROOMS } from "../../util/room-data";
+import { Link as RouterLink, useParams, useOutletContext } from "react-router-dom";
+import { useDynamicRoomData } from "../../hooks/useDynamicRoomData";
 import { media } from "../../util/breakpoints";
 
 const StyledRoomDetails = styled.div`
@@ -162,6 +163,53 @@ const StyledButtonContainer = styled.div`
 
 export default function RoomDetailsPage() {
   const params = useParams();
+  const context = useOutletContext();
+
+  // Generate search parameters using context dates
+  const searchParams = useMemo(() => {
+    // Fallback dates if context doesn't have them
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    return {
+      checkInDate: context?.checkIn || today.toISOString().split('T')[0],
+      checkOutDate: context?.checkOut || tomorrow.toISOString().split('T')[0],
+      adultNo: context?.noOfAdults || 2,
+      childNo: context?.noOfChildren || 1,
+      facilityTypeId: 1
+    };
+  }, [context?.checkIn, context?.checkOut, context?.noOfAdults, context?.noOfChildren]);
+
+  // Get API room data
+  const { ROOMS, loading, error, isFromApi } = useDynamicRoomData(searchParams);
+
+  if (loading) {
+    return (
+      <StyledRoomDetails>
+        <div style={{ textAlign: 'center', padding: '4rem' }}>
+          <Text $type="h2" $color="var(--cordis-black)">
+            Loading room details...
+          </Text>
+        </div>
+      </StyledRoomDetails>
+    );
+  }
+
+  if (error || !ROOMS[params.roomIndex]) {
+    return (
+      <StyledRoomDetails>
+        <div style={{ textAlign: 'center', padding: '4rem', color: 'red' }}>
+          <Text $type="h2">Error loading room details</Text>
+          <RouterLink to="..">
+            <Button $type="ghost">
+              <Text>Go Back</Text>
+            </Button>
+          </RouterLink>
+        </div>
+      </StyledRoomDetails>
+    );
+  }
 
   const ICON = {
     FreeWiFi: <RiWifiLine color="var(--cordis-black)" size="3rem" />,
@@ -199,9 +247,22 @@ export default function RoomDetailsPage() {
         </StyledHeaderWrapper>
 
         <StyledDetailsWrapper>
-          <Text $weight="bold" $size="extra-large">
-            {ROOMS[params.roomIndex].name} Room
-          </Text>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <Text $weight="bold" $size="extra-large">
+              {ROOMS[params.roomIndex].name} Room
+            </Text>
+            {isFromApi && (
+              <div style={{ 
+                background: 'green', 
+                color: 'white', 
+                padding: '4px 8px', 
+                borderRadius: '4px', 
+                fontSize: '12px' 
+              }}>
+                LIVE DATA
+              </div>
+            )}
+          </div>
           <StyledDetails>
             <Text $type="h3" $weight="bold" $size="small">
               Details

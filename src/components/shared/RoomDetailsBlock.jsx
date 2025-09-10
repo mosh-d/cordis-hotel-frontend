@@ -1,8 +1,9 @@
 import { styled } from "styled-components";
+import { useMemo } from "react";
 import Text from "../shared/Text";
 import Button from "../shared/Button";
-import { Link as RouterLink } from "react-router-dom";
-import { ROOMS } from "../../util/room-data.js";
+import { Link as RouterLink, useOutletContext } from "react-router-dom";
+import { useDynamicRoomData } from "../../hooks/useDynamicRoomData";
 import { media } from "../../util/breakpoints";
 
 const StyledRoomDetailsBlock = styled.div`
@@ -37,13 +38,63 @@ const StyledTextWrapper = styled.div`
 `;
 
 export default function RoomDetailsBlock({ $type }) {
+  const context = useOutletContext();
+
+  // Generate search parameters using context dates
+  const searchParams = useMemo(() => {
+    // Fallback dates if context doesn't have them
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    return {
+      checkInDate: context?.checkIn || today.toISOString().split('T')[0],
+      checkOutDate: context?.checkOut || tomorrow.toISOString().split('T')[0],
+      adultNo: context?.noOfAdults || 2,
+      childNo: context?.noOfChildren || 1,
+      facilityTypeId: 1
+    };
+  }, [context?.checkIn, context?.checkOut, context?.noOfAdults, context?.noOfChildren]);
+
+  // Get API room data
+  const { ROOMS, loading, error } = useDynamicRoomData(searchParams);
+
   const getRoomData = () => {
-    if (ROOMS[0] && $type === "standard") return { data: ROOMS[0], index: 0, available: "12 Available" };
-    if (ROOMS[1] && $type === "executive") return { data: ROOMS[1], index: 1, available: "9 Available" };
-    if (ROOMS[2] && $type === "executiveDeluxe") return { data: ROOMS[2], index: 2, available: "7 Available" };
-    if (ROOMS[3] && $type === "executiveSuite") return { data: ROOMS[3], index: 3, available: "5 Available" };
-    return { data: ROOMS[0], index: 0, available: "12 Available" };
+    // Find the room by propName from API data
+    const roomIndex = ROOMS.findIndex(room => room.propName === $type);
+    const room = ROOMS[roomIndex];
+    
+    if (room && roomIndex !== -1) {
+      return { 
+        data: room, 
+        index: roomIndex, 
+        available: room.available ? `${room.available} Available` : "Not Available"
+      };
+    }
+    
+    // Fallback if room not found
+    return { 
+      data: ROOMS[0] || {}, 
+      index: 0, 
+      available: "Loading..." 
+    };
   };
+
+  if (loading) {
+    return (
+      <StyledRoomDetailsBlock>
+        <Text $color="var(--cordis-white)">Loading room details...</Text>
+      </StyledRoomDetailsBlock>
+    );
+  }
+
+  if (error || !ROOMS.length) {
+    return (
+      <StyledRoomDetailsBlock>
+        <Text $color="var(--cordis-white)">Error loading room data</Text>
+      </StyledRoomDetailsBlock>
+    );
+  }
 
   const roomInfo = getRoomData();
 
@@ -130,7 +181,7 @@ export default function RoomDetailsBlock({ $type }) {
           {roomInfo.data.capacity}
         </Text>
       </StyledTextWrapper>
-      <StyledTextWrapper>
+      {/* <StyledTextWrapper>
         <Text
           $typeFace="secondary"
           $size="extra-large"
@@ -147,7 +198,7 @@ export default function RoomDetailsBlock({ $type }) {
         >
           {roomInfo.data.view}
         </Text>
-      </StyledTextWrapper>
+      </StyledTextWrapper> */}
 
       <StyledButtonContainer>
         <RouterLink to={`details/${roomInfo.index}`}>

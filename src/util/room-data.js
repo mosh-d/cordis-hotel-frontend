@@ -124,7 +124,7 @@ const ROOMS = [
   },
   {
     name: "Executive Suite",
-    // propName: "executiveSuite",
+    propName: "executiveSuite",
     price: "₦250,000",
     size: "250 M2",
     bed: "2 King size bed",

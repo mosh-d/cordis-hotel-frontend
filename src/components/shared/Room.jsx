@@ -1,4 +1,5 @@
 import { useOutletContext } from "react-router-dom";
+import { useMemo } from "react";
 import Text from "./Text";
 import styled from "styled-components";
 import Carousel from "./Carousel";
@@ -6,12 +7,8 @@ import FlippableCarousel from "./FlippableCarousel";
 import Button from "./Button";
 import { Link as RouteLink } from "react-router-dom";
 import { media } from "../../util/breakpoints";
-import { ROOMS } from "../../util/room-data";
 import { getCloudinaryUrl } from "../../config/cloudinary";
-// Import the new progressive loading components
-// import LazyCloudinaryImage from "./LazyCloudinaryImage";
-// import ProgressiveCarousel from "./ProgressiveCarousel";
-// import { useProgressiveImagePreloader } from "../../hooks/useProgressiveImagePreloader";
+import { useDynamicRoomData } from "../../hooks/useDynamicRoomData";
 
 //Standard room images
 const StandardRoom1 = "cordis/standard-room-1";
@@ -33,10 +30,26 @@ const ExecutiveDeluxeRoom2 = "cordis/executive-deluxe-room-2";
 const ExecutiveSuite1 = "cordis/executive-suite-1";
 const ExecutiveSuite2 = "cordis/executive-suite-2";
 
-const StandardRoomImages = [getCloudinaryUrl(StandardRoom1), getCloudinaryUrl(StandardRoom2), getCloudinaryUrl(StandardRoom3), getCloudinaryUrl(StandardRoom4)];
-const ExecutiveRoomImages = [getCloudinaryUrl(ExecutiveRoom1), getCloudinaryUrl(ExecutiveRoom2), getCloudinaryUrl(ExecutiveRoom3), getCloudinaryUrl(ExecutiveRoom4)];
-const ExecutiveDeluxeRoomImages = [getCloudinaryUrl(ExecutiveDeluxeRoom1), getCloudinaryUrl(ExecutiveDeluxeRoom2)];
-const ExecutiveSuiteImages = [getCloudinaryUrl(ExecutiveSuite1), getCloudinaryUrl(ExecutiveSuite2)];
+const StandardRoomImages = [
+  getCloudinaryUrl(StandardRoom1),
+  getCloudinaryUrl(StandardRoom2),
+  getCloudinaryUrl(StandardRoom3),
+  getCloudinaryUrl(StandardRoom4),
+];
+const ExecutiveRoomImages = [
+  getCloudinaryUrl(ExecutiveRoom1),
+  getCloudinaryUrl(ExecutiveRoom2),
+  getCloudinaryUrl(ExecutiveRoom3),
+  getCloudinaryUrl(ExecutiveRoom4),
+];
+const ExecutiveDeluxeRoomImages = [
+  getCloudinaryUrl(ExecutiveDeluxeRoom1),
+  getCloudinaryUrl(ExecutiveDeluxeRoom2),
+];
+const ExecutiveSuiteImages = [
+  getCloudinaryUrl(ExecutiveSuite1),
+  getCloudinaryUrl(ExecutiveSuite2),
+];
 
 const StyledRoom = styled.div`
   width: 100%;
@@ -88,7 +101,7 @@ const StyledRoomCarousel2 = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(36, 0, 0, .8);
+    background-color: rgba(36, 0, 0, 0.8);
     z-index: 1;
   }
 
@@ -99,16 +112,6 @@ const StyledRoomCarousel2 = styled.div`
   ${media.mobile} {
   }
 `;
-
-// const StyledUnavailableOverlay = styled.div`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background-color: rgba(90, 0, 0, 0.7);
-//   z-index: 100;
-// `;
 
 const RoomDetailsContent = styled.div`
   display: flex;
@@ -172,6 +175,46 @@ export default function Room({
 }) {
   const { roomCategory, setRoomCategory } = useOutletContext();
 
+  // Generate search parameters using context dates or fallback to current/next day
+  const searchParams = useMemo(() => {
+    const context = useOutletContext();
+    
+    // Fallback dates if context doesn't have them
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    return {
+      checkInDate: context?.checkIn || today.toISOString().split('T')[0],
+      checkOutDate: context?.checkOut || tomorrow.toISOString().split('T')[0],
+      adultNo: context?.noOfAdults || 2,
+      childNo: context?.noOfChildren || 1,
+      facilityTypeId: 1
+    };
+  }, [roomCategory, setRoomCategory]); // Re-run when context changes
+
+  const { ROOMS, loading, error, isFromApi } = useDynamicRoomData(searchParams);
+
+  // Add simple console log to track price source
+  console.log('💰 Room price source:', {
+    isFromApi,
+    standardRoomPrice: ROOMS[0]?.price,
+    totalRooms: ROOMS.length
+  });
+
+  if (loading) return (
+    <div style={{ padding: '2rem', textAlign: 'center' }}>
+      <Text $type="h3">Loading rooms from API...</Text>
+    </div>
+  );
+
+  if (error) return (
+    <div style={{ padding: '2rem', textAlign: 'center', color: 'red' }}>
+      <Text $type="h3">Error loading rooms: {error}</Text>
+      <Text $size="small">Using fallback data</Text>
+    </div>
+  );
+
   const getRoomData = () => {
     if (ROOMS[0] && imageType === "standard") return ROOMS[0];
     if (ROOMS[1] && imageType === "executive") return ROOMS[1];
@@ -201,7 +244,7 @@ export default function Room({
         <Text $color="var(--cordis-white)">Price:</Text>
         <Text $color="var(--cordis-emphasis)" $weight="bold">
           {getRoomData().price}
-          {console.log(getRoomData().price)}
+          {console.log('💰 Price source:', getRoomData().price, 'isFromApi:', isFromApi)}
         </Text>
       </DetailItem>
 

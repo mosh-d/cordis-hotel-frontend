@@ -1,9 +1,10 @@
 import { useOutletContext } from "react-router-dom";
+import { useMemo } from "react";
 import RoomAvailabilityCard from "../../components/shared/RoomAvailabilityCard";
 import { styled } from "styled-components";
 import Text from "../../components/shared/Text";
 import { media } from "../../util/breakpoints";
-import { ROOMS } from "../../util/room-data";
+import { useDynamicRoomData } from "../../hooks/useDynamicRoomData";
 
 const StyledAvailableRoomsPage = styled.div`
   display: flex;
@@ -34,14 +35,6 @@ const StyledTextWrapper = styled.div`
 
 export default function AvailableRoomsPage() {
   const context = useOutletContext();
-
-  // Check if a specific room exists
-  const roomExists = ROOMS.some((room) => room.propName === "executiveSuite");
-
-  // Find a specific room
-  const executiveSuite = ROOMS.find(
-    (room) => room.propName === "executiveSuite"
-  );
 
   // Handle case where context is undefined
   if (!context) {
@@ -76,7 +69,51 @@ export default function AvailableRoomsPage() {
     setRoomCategory,
     noOfRooms,
     setNoOfRooms,
+    noOfAdults,
+    noOfChildren,
   } = context;
+
+  // Generate search parameters using context dates
+  const searchParams = useMemo(() => {
+    // Fallback dates if context doesn't have them
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    return {
+      checkInDate: checkIn || today.toISOString().split('T')[0],
+      checkOutDate: checkOut || tomorrow.toISOString().split('T')[0],
+      adultNo: noOfAdults || 2,
+      childNo: noOfChildren || 1,
+      facilityTypeId: 1
+    };
+  }, [checkIn, checkOut, noOfAdults, noOfChildren]);
+
+  // Get API room data
+  const { ROOMS, loading, error, isFromApi } = useDynamicRoomData(searchParams);
+
+  if (loading) {
+    return (
+      <StyledAvailableRoomsPage>
+        <div style={{ textAlign: 'center', padding: '4rem' }}>
+          <Text $type="h2" $color="var(--cordis-black)">
+            Loading available rooms...
+          </Text>
+        </div>
+      </StyledAvailableRoomsPage>
+    );
+  }
+
+  if (error) {
+    return (
+      <StyledAvailableRoomsPage>
+        <div style={{ textAlign: 'center', padding: '4rem', color: 'red' }}>
+          <Text $type="h2">Error loading rooms: {error}</Text>
+          <Text>Showing fallback room data</Text>
+        </div>
+      </StyledAvailableRoomsPage>
+    );
+  }
 
   return (
     <>
@@ -89,14 +126,26 @@ export default function AvailableRoomsPage() {
             $color="var(--cordis-black)"
           >
             {checkIn && checkOut
-              ? `21 Rooms available from ${new Date(
+              ? `${ROOMS.length} Rooms available from ${new Date(
                   checkIn
                 ).toLocaleDateString()} to ${new Date(
                   checkOut
                 ).toLocaleDateString()}`
-              : "21 Rooms available"}
+              : `${ROOMS.length} Rooms available`}
+            {isFromApi && (
+              <span style={{ 
+                background: 'green', 
+                color: 'white', 
+                padding: '4px 8px', 
+                borderRadius: '4px', 
+                fontSize: '14px',
+                marginLeft: '1rem'
+              }}>
+                LIVE DATA
+              </span>
+            )}
           </Text>
-          <Text>Check available rooms</Text>
+          <Text>Check available rooms {isFromApi ? '(Real-time availability)' : '(Static data)'}</Text>
         </StyledTextWrapper>
         <StyledCardWrapper>
           {ROOMS.map((room, index) => (
