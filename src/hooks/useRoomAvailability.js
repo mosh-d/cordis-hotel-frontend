@@ -14,7 +14,7 @@ export const useRoomAvailability = () => {
 
     try {
       const response = await fetch(
-        "http://213.199.37.11:8443/api/hotel/availability",
+        "https://secure.thecordishotelikeja.com/ ",
         {
           method: "POST",
           headers: {
