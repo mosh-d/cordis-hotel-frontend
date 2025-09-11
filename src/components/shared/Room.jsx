@@ -173,25 +173,30 @@ export default function Room({
   flippable = false,
   unavailable = false,
 }) {
-  const { roomCategory, setRoomCategory } = useOutletContext();
+  const {
+    roomCategory,
+    setRoomCategory,
+    checkIn,
+    checkOut,
+    noOfAdults,
+    noOfChildren,
+  } = useOutletContext();
 
   // Generate search parameters using context dates or fallback to current/next day
   const searchParams = useMemo(() => {
-    const context = useOutletContext();
-    
     // Fallback dates if context doesn't have them
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    
+
     return {
-      checkInDate: context?.checkIn || today.toISOString().split('T')[0],
-      checkOutDate: context?.checkOut || tomorrow.toISOString().split('T')[0],
-      adultNo: context?.noOfAdults || 2,
-      childNo: context?.noOfChildren || 1,
-      facilityTypeId: 1
+      checkInDate: checkIn || today.toISOString().split('T')[0],
+      checkOutDate: checkOut || tomorrow.toISOString().split('T')[0],
+      adultNo: noOfAdults || 2,
+      childNo: noOfChildren || 1,
+      facilityTypeId: 1,
     };
-  }, [roomCategory, setRoomCategory]); // Re-run when context changes
+  }, [checkIn, checkOut, noOfAdults, noOfChildren]);
 
   const { ROOMS, loading, error, isFromApi } = useDynamicRoomData(searchParams);
 
