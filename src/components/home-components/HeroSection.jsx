@@ -454,7 +454,13 @@ const HeroSection = forwardRef((props, ref) => {
               setCheckIn("");
               return;
             }
-            setCheckIn(val < today ? today : val);
+            const newCheckIn = val < today ? today : val;
+            setCheckIn(newCheckIn);
+            
+            // If check-out is before the new check-in date, update check-out
+            if (checkOut && checkOut < newCheckIn) {
+              setCheckOut(newCheckIn);
+            }
           }}
         />
         <CustomInput2

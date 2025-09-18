@@ -25,7 +25,7 @@ function Logo({$type, ...props}) {
 
   return (
     <StyledLogo>
-      <img src={logo} alt="logo" {...props} />
+      <img src={logo} alt="cordis hotel logo" {...props} />
     </StyledLogo>
   );
 }

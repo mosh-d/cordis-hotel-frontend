@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import Text from "./Text";
 import RoomsAndGuestsPopup from "../../components/shared/RoomsAndGuestsPopup";
+import DatePickerPopup from "./DatePickerPopup";
 import { useState, useRef, useEffect } from "react";
 
 const StyledCustomInput2 = styled.div`
@@ -53,6 +54,16 @@ const StyledInput = styled.input`
     font-size: var(--text-sm);
     opacity: 0.5;
     letter-spacing: 0.2rem;
+  }
+
+  /* Hide date picker icon for date inputs */
+  &[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
+  &[type="date"]::-webkit-inner-spin-button,
+  &[type="date"]::-webkit-outer-spin-button {
+    display: none;
   }
 `;
 const StyledSelect = styled.select`
@@ -129,9 +140,21 @@ const StyledInputBlack = styled.input`
     opacity: 0.5;
     letter-spacing: 0.2rem;
   }
+
+  /* Hide date picker icon for date inputs */
+  &[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
+  &[type="date"]::-webkit-inner-spin-button,
+  &[type="date"]::-webkit-outer-spin-button {
+    display: none;
+  }
 `;
 
 const StyledRoomsAndGuestsPopup = styled(RoomsAndGuestsPopup)``;
+
+// const StyledDatePickerPopup = styled(DatePickerPopup)``;
 
 const StyledInputWrapper = styled.div`
   position: relative;
@@ -146,11 +169,25 @@ export default function CustomInput2({
   dropdown,
   children,
   onClick,
+  type,
   ...props
 }) {
+  // Use either $type or type prop
+  const inputType = $type || type;
+  
+  // Create dynamic placeholder for date inputs
+  const getPlaceholder = () => {
+    if (inputType === "date") {
+      return props.value ? "" : "mm/dd/yyyy";
+    }
+    return $placeholder;
+  };
+  
   const [showPopup, setShowPopup] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const inputRef = useRef(null);
   const popupRef = useRef(null);
+  const datePickerRef = useRef(null);
 
   // Handle click outside to close popup
   useEffect(() => {
@@ -159,29 +196,51 @@ export default function CustomInput2({
         inputRef.current &&
         !inputRef.current.contains(event.target) &&
         popupRef.current &&
-        !popupRef.current.contains(event.target)
+        !popupRef.current.contains(event.target) &&
+        datePickerRef.current &&
+        !datePickerRef.current.contains(event.target)
       ) {
         setShowPopup(false);
+        setShowDatePicker(false);
       }
     };
 
-    if (showPopup) {
+    if (showPopup || showDatePicker) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [showPopup]);
+  }, [showPopup, showDatePicker]);
 
   const handleInputClick = (e) => {
     if (dropdown === "true") {
       e.preventDefault();
       setShowPopup(!showPopup);
+    } else if (inputType === "date") {
+      e.preventDefault();
+      setShowDatePicker(!showDatePicker);
     }
     if (onClick) {
       onClick(e);
     }
+  };
+
+  const handleDateChange = (newValue) => {
+    // Create a synthetic event to pass to the onChange handler
+    const syntheticEvent = {
+      target: {
+        value: newValue
+      }
+    };
+    if (props.onChange) {
+      props.onChange(syntheticEvent);
+    }
+  };
+
+  const handleDatePickerClose = () => {
+    setShowDatePicker(false);
   };
   return (
     <>
@@ -196,22 +255,34 @@ export default function CustomInput2({
             {header}
           </Text>
           <StyledInputWrapper>
-            {$type === "select" ? (
+            {inputType === "select" ? (
               <StyledSelect placeholder={$placeholder} {...props}>
                 {children}
               </StyledSelect>
             ) : (
               <StyledInput
-                placeholder={$placeholder}
+                placeholder={getPlaceholder()}
                 onClick={handleInputClick}
-                readOnly={dropdown === "true"}
-                style={{ cursor: dropdown === "true" ? "pointer" : "text" }}
+                readOnly={dropdown === "true" || inputType === "date"}
+                title={inputType === "date" ? "Click to open date picker" : undefined}
+                style={{ cursor: dropdown === "true" || inputType === "date" ? "pointer" : "text" }}
                 {...props}
               />
             )}
             {dropdown === "true" && showPopup && (
               <div ref={popupRef}>
                 <StyledRoomsAndGuestsPopup />
+              </div>
+            )}
+            {inputType === "date" && showDatePicker && (
+              <div ref={datePickerRef}>
+                <DatePickerPopup
+                  value={props.value}
+                  onChange={handleDateChange}
+                  onClose={handleDatePickerClose}
+                  min={props.min}
+                  max={props.max}
+                />
               </div>
             )}
           </StyledInputWrapper>
@@ -227,22 +298,34 @@ export default function CustomInput2({
             {header}
           </Text>
           <StyledInputWrapper>
-            {$type === "select" ? (
+            {inputType === "select" ? (
               <StyledSelectBlack placeholder={$placeholder} {...props}>
                 {children}
               </StyledSelectBlack>
             ) : (
               <StyledInputBlack
-                placeholder={$placeholder}
+                placeholder={getPlaceholder()}
                 onClick={handleInputClick}
-                readOnly={dropdown === "true"}
-                style={{ cursor: dropdown === "true" ? "pointer" : "text" }}
+                readOnly={dropdown === "true" || inputType === "date"}
+                title={inputType === "date" ? "Click to open date picker" : undefined}
+                style={{ cursor: dropdown === "true" || inputType === "date" ? "pointer" : "text" }}
                 {...props}
               />
             )}
             {dropdown === "true" && showPopup && (
               <div ref={popupRef}>
                 <StyledRoomsAndGuestsPopup />
+              </div>
+            )}
+            {inputType === "date" && showDatePicker && (
+              <div ref={datePickerRef}>
+                <DatePickerPopup
+                  value={props.value}
+                  onChange={handleDateChange}
+                  onClose={handleDatePickerClose}
+                  min={props.min}
+                  max={props.max}
+                />
               </div>
             )}
           </StyledInputWrapper>
