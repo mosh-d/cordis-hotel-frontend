@@ -192,24 +192,34 @@ export default function CustomInput2({
   // Handle click outside to close popup
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        inputRef.current &&
-        !inputRef.current.contains(event.target) &&
-        popupRef.current &&
-        !popupRef.current.contains(event.target) &&
-        datePickerRef.current &&
-        !datePickerRef.current.contains(event.target)
-      ) {
+      console.log("Click outside handler triggered", {
+        target: event.target,
+        showPopup,
+        showDatePicker,
+        inputRef: inputRef.current,
+        popupRef: popupRef.current,
+        datePickerRef: datePickerRef.current
+      });
+      
+      // Check if click is outside input and all popups
+      const isOutsideInput = inputRef.current && !inputRef.current.contains(event.target);
+      const isOutsidePopup = !popupRef.current || !popupRef.current.contains(event.target);
+      const isOutsideDatePicker = !datePickerRef.current || !datePickerRef.current.contains(event.target);
+      
+      if (isOutsideInput && isOutsidePopup && isOutsideDatePicker) {
+        console.log("Closing popups");
         setShowPopup(false);
         setShowDatePicker(false);
       }
     };
 
     if (showPopup || showDatePicker) {
+      console.log("Adding click outside listener");
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
+      console.log("Removing click outside listener");
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showPopup, showDatePicker]);
@@ -225,6 +235,7 @@ export default function CustomInput2({
     if (onClick) {
       onClick(e);
     }
+    // Don't stop propagation - let click outside handler work
   };
 
   const handleDateChange = (newValue) => {
@@ -270,12 +281,18 @@ export default function CustomInput2({
               />
             )}
             {dropdown === "true" && showPopup && (
-              <div ref={popupRef}>
+              <div 
+                ref={popupRef}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <StyledRoomsAndGuestsPopup />
               </div>
             )}
             {inputType === "date" && showDatePicker && (
-              <div ref={datePickerRef}>
+              <div 
+                ref={datePickerRef}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <DatePickerPopup
                   value={props.value}
                   onChange={handleDateChange}
@@ -313,12 +330,18 @@ export default function CustomInput2({
               />
             )}
             {dropdown === "true" && showPopup && (
-              <div ref={popupRef}>
+              <div 
+                ref={popupRef}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <StyledRoomsAndGuestsPopup />
               </div>
             )}
             {inputType === "date" && showDatePicker && (
-              <div ref={datePickerRef}>
+              <div 
+                ref={datePickerRef}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <DatePickerPopup
                   value={props.value}
                   onChange={handleDateChange}

@@ -3,6 +3,9 @@ import styled from "styled-components";
 import Text from "../shared/Text";
 import { media } from "../../util/breakpoints";
 import { ROOMS } from "../../util/room-data";
+import { useDynamicRoomData } from "../../hooks/useDynamicRoomData";
+import { useOutletContext } from "react-router-dom";
+import { useMemo } from "react";
 
 const RoomText = styled.div`
   display: flex;
@@ -125,17 +128,65 @@ const StyledUnavailableTextContainer = styled.div`
   pointer-events: none;
 `;
 
-export default function RoomSection() {
-  const standardRoomExists = ROOMS.find((room) => room.propName === "standard");
-  const executiveRoomExists = ROOMS.find(
-    (room) => room.propName === "executive"
-  );
-  const executiveDeluxeRoomExists = ROOMS.find(
-    (room) => room.propName === "executiveDeluxe"
-  );
-  const executiveSuiteRoomExists = ROOMS.find(
-    (room) => room.propName === "executiveSuite"
-  );
+export default function RoomSection({$type}) {
+  // Get context data for search parameters
+  const {
+    checkIn,
+    checkOut,
+    noOfAdults,
+    noOfChildren,
+  } = useOutletContext();
+
+  // Generate search parameters using context dates or fallback to current/next day
+  const searchParams = useMemo(() => {
+    // Fallback dates if context doesn't have them
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    return {
+      checkInDate: checkIn || today.toISOString().split('T')[0],
+      checkOutDate: checkOut || tomorrow.toISOString().split('T')[0],
+      adultNo: noOfAdults || 2,
+      childNo: noOfChildren || 1,
+      facilityTypeId: 1,
+    };
+  }, [checkIn, checkOut, noOfAdults, noOfChildren]);
+
+  // Helper function to check if a room is available based on API data
+  const isRoomAvailable = (room) => {
+    // If available is a number, check if it's greater than 0
+    if (typeof room.available === 'number') {
+      return room.available > 0;
+    }
+    // If available is a boolean, use it directly
+    if (typeof room.available === 'boolean') {
+      return room.available;
+    }
+    // If no available property exists, assume room is available
+    return true;
+  };
+
+  // Use the dynamic room data hook to get API data
+  const { ROOMS: dynamicRooms, loading, error, isFromApi } = useDynamicRoomData(searchParams);
+
+  // Helper function to get room availability by propName
+  const getRoomAvailability = (propName) => {
+    const room = dynamicRooms.find(r => r.propName === propName);
+    return room ? isRoomAvailable(room) : true; // Default to available if not found
+  };
+
+  // Clear data source logging (reduced frequency)
+  if (dynamicRooms.length > 0) {
+    console.log(isFromApi ? 
+      "🌐 ROOMSECTION: Displaying live API data" : 
+      "📁 ROOMSECTION: Displaying static fallback data", 
+      { 
+        totalRooms: dynamicRooms.length,
+        dataSource: isFromApi ? "Live API" : "Static file"
+      }
+    );
+  }
 
   return (
     <>
@@ -150,18 +201,43 @@ export default function RoomSection() {
         </RoomText>
 
         <StyledRooms>
-          {ROOMS.filter((room) => room.propName).map((room, index) => (
-            <StyledRoomContainer key={index}>
-              <Room
-                imageType={room.propName}
-                headerText={room.name}
-                buttonText="Reserve"
-                flippable={true}
-              />
-            </StyledRoomContainer>
-          ))}
+          {loading ? (
+            <Text $type="p" $size="large">Loading room availability...</Text>
+          ) : error && !isFromApi ? (
+            <>
+              <Text $type="p" $size="small" $color="var(--cordis-gray)" style={{marginBottom: '1rem'}}>
+                API unavailable - using fallback data
+              </Text>
+              {ROOMS.map((room, index) => (
+                <StyledRoomContainer key={index}>
+                  <Room
+                    imageType={room.propName}
+                    headerText={room.name}
+                    buttonText="Reserve"
+                    flippable={true}
+                    unavailable={!isRoomAvailable(room)}
+                    roomData={ROOMS} // Pass static data to Room component
+                  />
+                </StyledRoomContainer>
+              ))}
+            </>
+          ) : (
+            // Use dynamic room data with API availability
+            dynamicRooms.map((room, index) => (
+              <StyledRoomContainer key={index}>
+                <Room
+                  imageType={room.propName}
+                  headerText={room.name}
+                  buttonText="Reserve"
+                  flippable={true}
+                  unavailable={!getRoomAvailability(room.propName)}
+                  roomData={dynamicRooms} // Pass the API data to Room component
+                />
+              </StyledRoomContainer>
+            ))
+          )}
 
-          {!standardRoomExists && (
+          {/* {!standardRoomExists && (
             <>
               <StyledUnavailableRoomOverlay>
                 <Room
@@ -249,7 +325,7 @@ export default function RoomSection() {
                 </Text>
               </StyledUnavailableTextContainer>
             </StyledUnavailableRoomOverlay>
-          )}
+          )} */}
 
           {/* {!ROOMS[0] && <Text>Standard Room not available</Text>}
           {!ROOMS[1] && <Text>Executive Room not available</Text>}

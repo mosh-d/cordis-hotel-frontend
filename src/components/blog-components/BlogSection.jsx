@@ -34,7 +34,7 @@ const StyledBlogContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: var(--cordis-white);
-  width: 70%;
+  width: 100%;
   align-items: center;
   gap: 4.8rem;
   box-shadow: var(--popup-xl);
@@ -168,9 +168,9 @@ export default function BlogSection() {
           ))}
         </StyledMiniBlogWrapper>
       </StyledBlogContainer>
-      <StyledAdContainer>
+      {/* <StyledAdContainer>
         <Ad />
-      </StyledAdContainer>
+      </StyledAdContainer> */}
     </StyledBlogSection>
   );
 }

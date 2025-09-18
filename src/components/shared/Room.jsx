@@ -1,5 +1,4 @@
 import { useOutletContext } from "react-router-dom";
-import { useMemo } from "react";
 import Text from "./Text";
 import styled from "styled-components";
 import Carousel from "./Carousel";
@@ -8,7 +7,7 @@ import Button from "./Button";
 import { Link as RouteLink } from "react-router-dom";
 import { media } from "../../util/breakpoints";
 import { getCloudinaryUrl } from "../../config/cloudinary";
-import { useDynamicRoomData } from "../../hooks/useDynamicRoomData";
+import { ROOMS } from "../../util/room-data";
 
 //Standard room images
 const StandardRoom1 = "cordis/standard-room-1";
@@ -101,7 +100,7 @@ const StyledRoomCarousel2 = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(36, 0, 0, 0.8);
+    background-color: rgba(41, 34, 22, 0.9);
     z-index: 1;
   }
 
@@ -169,63 +168,56 @@ export default function Room({
   headerText,
   buttonText,
   children,
-  $bgColor, 
+  $bgColor,
   flippable = false,
   unavailable = false,
+  roomData = null, // Accept room data as prop from parent
 }) {
-  const {
-    roomCategory,
-    setRoomCategory,
-    checkIn,
-    checkOut,
-    noOfAdults,
-    noOfChildren,
-  } = useOutletContext();
+  const { roomCategory, setRoomCategory } = useOutletContext();
 
-  // Generate search parameters using context dates or fallback to current/next day
-  const searchParams = useMemo(() => {
-    // Fallback dates if context doesn't have them
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-
-    return {
-      checkInDate: checkIn || today.toISOString().split('T')[0],
-      checkOutDate: checkOut || tomorrow.toISOString().split('T')[0],
-      adultNo: noOfAdults || 2,
-      childNo: noOfChildren || 1,
-      facilityTypeId: 1,
-    };
-  }, [checkIn, checkOut, noOfAdults, noOfChildren]);
-
-  const { ROOMS, loading, error, isFromApi } = useDynamicRoomData(searchParams);
-
-  // Add simple console log to track price source
-  console.log('💰 Room price source:', {
-    isFromApi,
-    standardRoomPrice: ROOMS[0]?.price,
-    totalRooms: ROOMS.length
+  console.log(`🏠 ROOM COMPONENT: ${imageType}`, {
+    imageType,
+    headerText,
+    unavailable,
+    unavailableType: typeof unavailable,
+    hasRoomData: !!roomData,
+    roomDataLength: roomData?.length || 0,
+    willShowAsUnavailable: unavailable === true,
   });
 
-  if (loading) return (
-    <div style={{ padding: '2rem', textAlign: 'center' }}>
-      <Text $type="h3">Loading rooms from API...</Text>
-    </div>
-  );
-
-  if (error) return (
-    <div style={{ padding: '2rem', textAlign: 'center', color: 'red' }}>
-      <Text $type="h3">Error loading rooms: {error}</Text>
-      <Text $size="small">Using fallback data</Text>
-    </div>
-  );
-
   const getRoomData = () => {
-    if (ROOMS[0] && imageType === "standard") return ROOMS[0];
-    if (ROOMS[1] && imageType === "executive") return ROOMS[1];
-    if (ROOMS[2] && imageType === "executiveDeluxe") return ROOMS[2];
-    if (ROOMS[3] && imageType === "executiveSuite") return ROOMS[3];
-    return ROOMS[0];
+    // Use passed roomData if available, otherwise fallback to static ROOMS
+    const roomsToUse = roomData || ROOMS;
+
+    // Find room by propName instead of array index
+    let selectedRoom = roomsToUse.find((room) => room.propName === imageType);
+
+    // Fallback to array index method if propName search fails
+    if (!selectedRoom) {
+      if (roomsToUse[0] && imageType === "standard")
+        selectedRoom = roomsToUse[0];
+      else if (roomsToUse[1] && imageType === "executive")
+        selectedRoom = roomsToUse[1];
+      else if (roomsToUse[2] && imageType === "executiveDeluxe")
+        selectedRoom = roomsToUse[2];
+      else if (roomsToUse[3] && imageType === "executiveSuite")
+        selectedRoom = roomsToUse[3];
+      else selectedRoom = roomsToUse[0] || ROOMS[0];
+    }
+
+    console.log(`📊 ROOM DATA: ${imageType}`, {
+      selectedRoom: {
+        name: selectedRoom?.name,
+        propName: selectedRoom?.propName,
+        price: selectedRoom?.price,
+        available: selectedRoom?.available,
+        availableType: typeof selectedRoom?.available,
+      },
+      dataSource: roomData ? "API" : "Static",
+      totalRoomsAvailable: roomsToUse.length,
+    });
+
+    return selectedRoom;
   };
 
   const images =
@@ -249,7 +241,6 @@ export default function Room({
         <Text $color="var(--cordis-white)">Price:</Text>
         <Text $color="var(--cordis-emphasis)" $weight="bold">
           {getRoomData().price}
-          {console.log('💰 Price source:', getRoomData().price, 'isFromApi:', isFromApi)}
         </Text>
       </DetailItem>
 
@@ -322,10 +313,13 @@ export default function Room({
           </StyledUnavailableOverlay> */}
             <StyledRoomCarousel2>
               {flippable ? (
-                <FlippableCarousel
-                  ImageUrls={images}
-                  backContent={backContent}
-                />
+                <>
+                  <FlippableCarousel
+                    ImageUrls={images}
+                    backContent={backContent}
+                  />
+                  <Text $size="extra-large" $weight="bold" $color="var(--cordis-white)" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 1000 }}>Unavailable</Text>
+                </>
               ) : (
                 <Carousel ImageUrls={images} />
               )}

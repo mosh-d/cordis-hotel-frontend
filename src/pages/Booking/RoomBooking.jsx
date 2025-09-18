@@ -7,8 +7,9 @@ import { Link as RouterLink, useSearchParams } from "react-router-dom";
 import CustomInput2 from "../../components/shared/CustomInput2";
 import Button from "../../components/shared/Button";
 import { media } from "../../util/breakpoints";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { cloudinaryBg } from "../../config/cloudinary";
+import { useDynamicRoomData } from "../../hooks/useDynamicRoomData";
 
 //Booking image
 
@@ -268,6 +269,32 @@ export default function RoomBookingPage() {
     setRoomsAndGuests,
   } = useOutletContext();
 
+  // Generate search parameters for API
+  const apiSearchParams = useMemo(() => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    return {
+      checkInDate: checkIn || today.toISOString().split('T')[0],
+      checkOutDate: checkOut || tomorrow.toISOString().split('T')[0],
+      adultNo: noOfAdults || 2,
+      childNo: noOfChildren || 1,
+      facilityTypeId: 1
+    };
+  }, [checkIn, checkOut, noOfAdults, noOfChildren]);
+
+  // Get API room data for dynamic pricing
+  const { ROOMS: apiRooms, loading, error, isFromApi } = useDynamicRoomData(apiSearchParams);
+
+  // Reduced logging for booking page
+  if (apiRooms && apiRooms.length > 0) {
+    console.log(isFromApi ? 
+      "🌐 BOOKING PAGE: Using live API pricing" : 
+      "📁 BOOKING PAGE: Using static fallback pricing"
+    );
+  }
+
   // Update roomsAndGuests display value when individual values change
   useEffect(() => {
     const updateRoomsAndGuests = () => {
@@ -297,25 +324,51 @@ export default function RoomBookingPage() {
   const firstNameIsInvalid = !firstName || firstName.length < 3;
   const lastNameIsInvalid = !lastName || lastName.length < 3;
 
-  //Room price calculation
-  const ROOM_PRICES = {
-    standard: 120000,
-    executive: 250000,
-    executiveDeluxe: 160000,
-    executiveSuite: 250000,
+  //Room price calculation - use API data if available
+  const getRoomPriceAndName = () => {
+    // Static fallback prices and names
+    const FALLBACK_PRICES = {
+      standard: 120000,
+      executive: 250000,
+      executiveDeluxe: 160000,
+      executiveSuite: 250000,
+    };
+
+    const FALLBACK_NAMES = {
+      standard: "Standard Room",
+      executive: "Executive Room",
+      executiveDeluxe: "Executive Deluxe Room",
+      executiveSuite: "Executive Suite Room",
+    };
+
+    // Try to get data from API first
+    if (apiRooms && apiRooms.length > 0) {
+      const selectedRoom = apiRooms.find(room => room.propName === roomCategory);
+      if (selectedRoom) {
+        // Extract price number from API price string (e.g., "₦120,000" -> 120000)
+        const priceMatch = selectedRoom.price.match(/[\d,]+/);
+        const apiPrice = priceMatch ? parseInt(priceMatch[0].replace(/,/g, '')) : FALLBACK_PRICES[roomCategory];
+        
+        return {
+          price: apiPrice,
+          name: selectedRoom.name,
+          isFromApi: true
+        };
+      }
+    }
+
+    // Fallback to static data
+    return {
+      price: FALLBACK_PRICES[roomCategory] || 0,
+      name: FALLBACK_NAMES[roomCategory] || "Select a room",
+      isFromApi: false
+    };
   };
 
-  const ROOM_NAMES = {
-    standard: "Standard Room",
-    executive: "Executive Room",
-    executiveDeluxe: "Executive Deluxe Room",
-    executiveSuite: "Executive Suite Room",
-  };
-
+  const roomInfo = getRoomPriceAndName();
   const rollAwayBedPrice = rollawayBed ? 20000 : 0;
-
-  const roomPrice = ROOM_PRICES[roomCategory] + rollAwayBedPrice || 0;
-  const roomName = ROOM_NAMES[roomCategory] || "Select a room";
+  const roomPrice = roomInfo.price + rollAwayBedPrice;
+  const roomName = roomInfo.name;
 
   // Calculate nights
   const calculateNights = () => {
@@ -477,13 +530,52 @@ export default function RoomBookingPage() {
                 $placeholder="Standard Room"
                 name="room-category"
                 value={roomCategory}
-                onChange={(e) => setRoomCategory(e.target.value)}
+                onChange={(e) => {
+                  // Check if selected room is available before allowing selection
+                  const selectedRoom = apiRooms?.find(room => room.propName === e.target.value);
+                  if (selectedRoom) {
+                    const isAvailable = typeof selectedRoom.available === 'number' ? selectedRoom.available > 0 : 
+                                       typeof selectedRoom.available === 'boolean' ? selectedRoom.available : true;
+                    if (isAvailable) {
+                      setRoomCategory(e.target.value);
+                    }
+                  } else {
+                    // If no API data, allow selection (fallback behavior)
+                    setRoomCategory(e.target.value);
+                  }
+                }}
               >
                 <option value="">Choose a room type</option>
-                <option value="standard">Standard Room</option>
-                <option value="executive">Executive Room</option>
-                <option value="executiveDeluxe">Executive Deluxe Room</option>
-                <option value="executiveSuite">Executive Suite Room</option>
+                {/* Generate options dynamically based on API data */}
+                {apiRooms && apiRooms.length > 0 ? (
+                  // Use API data to determine availability
+                  apiRooms.map((room) => {
+                    const isAvailable = typeof room.available === 'number' ? room.available > 0 : 
+                                       typeof room.available === 'boolean' ? room.available : true;
+                    
+                    return (
+                      <option 
+                        key={room.propName}
+                        value={room.propName}
+                        disabled={!isAvailable}
+                        style={{
+                          color: isAvailable ? 'inherit' : '#999',
+                          backgroundColor: isAvailable ? 'inherit' : '#f5f5f5'
+                        }}
+                      >
+                        {room.name} {!isAvailable ? '(Unavailable)' : ''}
+                      </option>
+                    );
+                  })
+                ) : (
+                  // Fallback to static options when no API data
+                  <>
+                    <option value="standard">Standard Room</option>
+                    <option value="executive">Executive Room</option>
+                    <option value="executiveDeluxe">Executive Deluxe Room</option>
+                    <option value="executiveSuite">Executive Suite Room</option>
+                  </>
+                )}
               </CustomInput2>
             </StyledInputRow>
             <StyledInputRow>
@@ -529,6 +621,7 @@ export default function RoomBookingPage() {
                 value={roomsAndGuests}
                 style={{
                   color: noOfRoomsIsInvalid ? "red" : "var(--cordis-black)",
+                  cursor: "pointer",
                 }}
                 readOnly
               />

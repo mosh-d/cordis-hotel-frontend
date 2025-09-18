@@ -90,7 +90,16 @@ export default function AvailableRoomsPage() {
   }, [checkIn, checkOut, noOfAdults, noOfChildren]);
 
   // Get API room data
+  console.log("🔍 AVAILABLE ROOMS: API search parameters:", searchParams);
   const { ROOMS, loading, error, isFromApi } = useDynamicRoomData(searchParams);
+  
+  console.log("🏨 AVAILABLE ROOMS: Received room data:", ROOMS.map(room => ({
+    name: room.name,
+    propName: room.propName,
+    price: room.price,
+    available: room.available,
+    availableType: typeof room.available
+  })));
 
   if (loading) {
     return (
@@ -132,7 +141,7 @@ export default function AvailableRoomsPage() {
                   checkOut
                 ).toLocaleDateString()}`
               : `${ROOMS.length} Rooms available`}
-            {isFromApi && (
+            {/* {isFromApi && (
               <span style={{ 
                 background: 'green', 
                 color: 'white', 
@@ -143,14 +152,39 @@ export default function AvailableRoomsPage() {
               }}>
                 LIVE DATA
               </span>
-            )}
+            )} */}
           </Text>
-          <Text>Check available rooms {isFromApi ? '(Real-time availability)' : '(Static data)'}</Text>
+          <Text>Check available rooms {isFromApi ? '(Real-time availability)' : '(Please refresh the page for live-data)'}</Text>
         </StyledTextWrapper>
         <StyledCardWrapper>
-          {ROOMS.map((room, index) => (
-            <RoomAvailabilityCard key={index} $type={room.propName} />
-          ))}
+          {ROOMS.map((room, index) => {
+            // Check if room is available
+            const isAvailable = typeof room.available === 'number' ? room.available > 0 : 
+                               typeof room.available === 'boolean' ? room.available : true;
+            
+            console.log(`🔍 AVAILABLE ROOMS: Checking ${room.name} (${room.propName})`, {
+              available: room.available,
+              availableType: typeof room.available,
+              isAvailable: isAvailable,
+              unavailable: !isAvailable,
+              logicCheck: {
+                isNumber: typeof room.available === 'number',
+                numberCheck: typeof room.available === 'number' ? room.available > 0 : 'N/A',
+                isBoolean: typeof room.available === 'boolean',
+                booleanValue: typeof room.available === 'boolean' ? room.available : 'N/A',
+                defaultsToTrue: typeof room.available !== 'number' && typeof room.available !== 'boolean'
+              }
+            });
+            
+            return (
+              <RoomAvailabilityCard 
+                key={index} 
+                $type={room.propName} 
+                roomData={ROOMS}
+                unavailable={!isAvailable}
+              />
+            );
+          })}
         </StyledCardWrapper>
       </StyledAvailableRoomsPage>
     </>

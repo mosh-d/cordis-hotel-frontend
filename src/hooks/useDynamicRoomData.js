@@ -9,19 +9,37 @@ export const useDynamicRoomData = (searchParams = null) => {
 
   useEffect(() => {
     if (searchParams) {
-      // Fetch from API when search params are provided
-      fetchRooms(searchParams);
+      // Add a small delay to debounce rapid calls
+      const timeoutId = setTimeout(() => {
+        fetchRooms(searchParams);
+      }, 100);
+      
+      return () => clearTimeout(timeoutId);
     }
-  }, [searchParams]); // Removed fetchRooms to prevent infinite loop
+  }, [searchParams?.checkInDate, searchParams?.checkOutDate, searchParams?.adultNo, searchParams?.childNo]); // Only re-run when actual search values change
 
   useEffect(() => {
     if (apiRooms.length > 0) {
       // Transform API data to match your structure
       const transformedRooms = transformApiRoomsToRoomData(apiRooms);
       setRoomData(transformedRooms);
+      // Only log once per unique data set
+      if (JSON.stringify(transformedRooms) !== JSON.stringify(roomData)) {
+        console.log("✅ DATA SOURCE: Using live API data", {
+          roomCount: transformedRooms.length,
+          source: "Live API"
+        });
+      }
     } else if (!loading && !searchParams) {
       // Use static data when no API call is made
       setRoomData(ROOMS);
+      // Only log if switching from API to static
+      if (roomData !== ROOMS) {
+        console.log("📁 DATA SOURCE: Using static fallback data", {
+          roomCount: ROOMS.length,
+          source: "Static file"
+        });
+      }
     }
   }, [apiRooms, loading, searchParams]);
 

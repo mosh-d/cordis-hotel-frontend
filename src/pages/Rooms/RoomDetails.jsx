@@ -247,17 +247,39 @@ export default function RoomDetailsPage() {
         </StyledHeaderWrapper>
 
         <StyledDetailsWrapper>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
             <Text $weight="bold" $size="extra-large">
               {ROOMS[params.roomIndex].name} Room
             </Text>
+            {/* Availability Status */}
+            {(() => {
+              const room = ROOMS[params.roomIndex];
+              const isAvailable = typeof room.available === 'number' ? room.available > 0 : 
+                                 typeof room.available === 'boolean' ? room.available : true;
+              
+              return (
+                <div style={{ 
+                  background: isAvailable ? 'green' : 'red', 
+                  color: 'white', 
+                  padding: '4px 12px', 
+                  borderRadius: '4px', 
+                  fontSize: '12px',
+                  fontWeight: 'bold'
+                }}>
+                  {isAvailable ? 
+                    (typeof room.available === 'number' ? `${room.available} Available` : 'Available') : 
+                    'Not Available'
+                  }
+                </div>
+              );
+            })()}
             {isFromApi && (
               <div style={{ 
-                background: 'green', 
+                background: '#007bff', 
                 color: 'white', 
                 padding: '4px 8px', 
                 borderRadius: '4px', 
-                fontSize: '12px' 
+                fontSize: '10px' 
               }}>
                 LIVE DATA
               </div>

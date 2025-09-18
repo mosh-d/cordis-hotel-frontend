@@ -5,6 +5,7 @@ import RoomSection from "../components/home-components/RoomSection";
 import ExerciseRelaxationSection from "../components/home-components/ExerciseRelaxationSection";
 import OtherAmenitiesSection from "../components/home-components/OtherAmenitiesSection";
 import HotelExterior from "../components/home-components/HotelExterior";
+import ServicesAmenitiesPolicies from "../components/home-components/ServicesAmenities&Policies";
 import AtCordisSection from "../components/home-components/AtCordisSection";
 import LocateUsSection from "../components/home-components/LocateUsSection";
 import { useEffect, useRef } from "react";
@@ -85,6 +86,7 @@ function HomePage() {
       <PoolAndBarSection />
       <OtherAmenitiesSection />
       <HotelExterior />
+      <ServicesAmenitiesPolicies />
       <AtCordisSection />
       <LocateUsSection />
       <Footer $type="default" />

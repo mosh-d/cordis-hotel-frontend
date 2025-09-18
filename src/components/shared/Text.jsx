@@ -17,10 +17,10 @@ const StyledP = styled.p`
     $weight === "light"
       ? "300"
       : $weight === "regular"
-      ? "600"
+      ? "400"
       : $weight === "bold"
-      ? "1000"
-      : "500"};
+      ? "700"
+      : "400"};
   font-family: ${({ $typeFace }) =>
     $typeFace === "secondary"
       ? "var(--font-family-secondary)"
@@ -54,10 +54,10 @@ const StyledH1 = styled.h1`
     $weight === "light"
       ? "100"
       : $weight === "regular"
-      ? "500"
+      ? "400"
       : $weight === "bold"
       ? "700"
-      : "500"};
+      : "400"};
   font-family: ${({ $typeFace }) =>
     $typeFace === "primary"
       ? "var(--font-family-primary)"
@@ -90,10 +90,10 @@ const StyledH2 = styled.h2`
     $weight === "light"
       ? "100"
       : $weight === "regular"
-      ? "500"
+      ? "400"
       : $weight === "bold"
       ? "700"
-      : "500"};
+      : "400"};
   font-family: ${({ $typeFace }) =>
     $typeFace === "primary"
       ? "var(--font-family-primary)"
@@ -126,10 +126,10 @@ const StyledH3 = styled.h3`
     $weight === "light"
       ? "100"
       : $weight === "regular"
-      ? "500"
+      ? "400"
       : $weight === "bold"
       ? "700"
-      : "500"};
+      : "400"};
   font-family: ${({ $typeFace }) =>
     $typeFace === "primary"
       ? "var(--font-family-primary)"

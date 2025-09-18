@@ -1,10 +1,9 @@
 import { styled } from "styled-components";
-import { useMemo } from "react";
 import Text from "../shared/Text";
 import Button from "../shared/Button";
-import { Link as RouterLink, useOutletContext } from "react-router-dom";
-import { useDynamicRoomData } from "../../hooks/useDynamicRoomData";
+import { Link as RouterLink } from "react-router-dom";
 import { media } from "../../util/breakpoints";
+import { ROOMS } from "../../util/room-data";
 
 const StyledRoomDetailsBlock = styled.div`
   display: flex;
@@ -37,64 +36,38 @@ const StyledTextWrapper = styled.div`
   flex-direction: column;
 `;
 
-export default function RoomDetailsBlock({ $type }) {
-  const context = useOutletContext();
-
-  // Generate search parameters using context dates
-  const searchParams = useMemo(() => {
-    // Fallback dates if context doesn't have them
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    
-    return {
-      checkInDate: context?.checkIn || today.toISOString().split('T')[0],
-      checkOutDate: context?.checkOut || tomorrow.toISOString().split('T')[0],
-      adultNo: context?.noOfAdults || 2,
-      childNo: context?.noOfChildren || 1,
-      facilityTypeId: 1
-    };
-  }, [context?.checkIn, context?.checkOut, context?.noOfAdults, context?.noOfChildren]);
-
-  // Get API room data
-  const { ROOMS, loading, error } = useDynamicRoomData(searchParams);
-
+export default function RoomDetailsBlock({ $type, roomData = null }) {
   const getRoomData = () => {
+    // Use passed roomData if available, otherwise fallback to static ROOMS
+    const roomsToUse = roomData || ROOMS;
+    
     // Find the room by propName from API data
-    const roomIndex = ROOMS.findIndex(room => room.propName === $type);
-    const room = ROOMS[roomIndex];
+    const roomIndex = roomsToUse.findIndex(room => room.propName === $type);
+    const room = roomsToUse[roomIndex];
     
     if (room && roomIndex !== -1) {
+      // Format availability display
+      let availabilityText = "Available";
+      if (typeof room.available === 'number') {
+        availabilityText = room.available > 0 ? `${room.available} Available` : "Not Available";
+      } else if (typeof room.available === 'boolean') {
+        availabilityText = room.available ? "Available" : "Not Available";
+      }
+      
       return { 
         data: room, 
         index: roomIndex, 
-        available: room.available ? `${room.available} Available` : "Not Available"
+        available: availabilityText
       };
     }
     
     // Fallback if room not found
     return { 
-      data: ROOMS[0] || {}, 
+      data: roomsToUse[0] || ROOMS[0] || {}, 
       index: 0, 
-      available: "Loading..." 
+      available: "Available" 
     };
   };
-
-  if (loading) {
-    return (
-      <StyledRoomDetailsBlock>
-        <Text $color="var(--cordis-white)">Loading room details...</Text>
-      </StyledRoomDetailsBlock>
-    );
-  }
-
-  if (error || !ROOMS.length) {
-    return (
-      <StyledRoomDetailsBlock>
-        <Text $color="var(--cordis-white)">Error loading room data</Text>
-      </StyledRoomDetailsBlock>
-    );
-  }
 
   const roomInfo = getRoomData();
 
