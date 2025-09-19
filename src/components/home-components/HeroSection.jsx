@@ -355,7 +355,7 @@ const HeroSection = forwardRef((props, ref) => {
   // Handle autoplay and video events
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
+    if (video && isSafari !== null) { // Wait for Safari detection to complete
       // Debug: Log the video URL to check if it's correct
       const videoUrl = getCloudinaryVideoUrl(HeroVideo);
       console.log("🎬 Video URL:", videoUrl);
@@ -366,34 +366,39 @@ const HeroSection = forwardRef((props, ref) => {
         console.log("✅ Video loaded successfully");
         setVideoLoaded(true);
         
-        // Force autoplay for Safari - try multiple times
-        const attemptAutoplay = () => {
-          const playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise
-              .then(() => {
-                console.log("🎬 Autoplay successful");
-                setIsPlaying(true);
-              })
-              .catch((error) => {
-                console.log("⚠️ Autoplay failed:", error.message);
-                // Try again after a short delay for Safari
-                setTimeout(() => {
-                  video.play().then(() => {
-                    console.log("🎬 Delayed autoplay successful");
-                    setIsPlaying(true);
-                  }).catch(() => {
-                    console.log("❌ All autoplay attempts failed - user interaction required");
-                    setIsPlaying(false);
-                  });
-                }, 100);
-              });
-          }
-        };
-        
-        // Try autoplay immediately and after a short delay
-        attemptAutoplay();
-        setTimeout(attemptAutoplay, 50);
+        // Only attempt autoplay for non-Safari browsers
+        if (!isSafari) {
+          // Force autoplay for non-Safari browsers
+          const attemptAutoplay = () => {
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+              playPromise
+                .then(() => {
+                  console.log("🎬 Autoplay successful");
+                  setIsPlaying(true);
+                })
+                .catch((error) => {
+                  console.log("⚠️ Autoplay failed:", error.message);
+                  // Try again after a short delay
+                  setTimeout(() => {
+                    video.play().then(() => {
+                      console.log("🎬 Delayed autoplay successful");
+                      setIsPlaying(true);
+                    }).catch(() => {
+                      console.log("❌ All autoplay attempts failed - user interaction required");
+                      setIsPlaying(false);
+                    });
+                  }, 100);
+                });
+            }
+          };
+          
+          // Try autoplay immediately and after a short delay
+          attemptAutoplay();
+          setTimeout(attemptAutoplay, 50);
+        } else {
+          console.log("🍎 Safari detected - letting native controls handle playback");
+        }
       };
 
       const handleCanPlay = () => {
@@ -441,7 +446,7 @@ const HeroSection = forwardRef((props, ref) => {
         video.removeEventListener("error", handleError);
       };
     }
-  }, []);
+  }, [isSafari]);
 
   const togglePlayPause = () => {
     if (videoRef.current) {
