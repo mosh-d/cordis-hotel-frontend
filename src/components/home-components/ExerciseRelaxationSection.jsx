@@ -235,11 +235,11 @@ export default function ExerciseRelaxationSection() {
           </GymTextWrapper>
         </StyledGymContainer>
 
-        <RouterLink to="/amenity-booking">
+        <RouterLink to="/room-booking">
           <StyledButtonContainer>
             <Button $type="emphasis2">
               <Text $weight="bold" $size="medium">
-                Book Gym/Spa
+                Reserve
               </Text>
             </Button>
           </StyledButtonContainer>

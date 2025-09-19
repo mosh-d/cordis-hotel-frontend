@@ -10,8 +10,6 @@ const StyledButton = styled.button`
   border: none;
   border-radius: 50%;
   padding: 1rem;
-  width: 5rem;
-  height: 5rem;
   margin: 2rem;
   opacity: 70%;
   z-index: 200;
@@ -258,10 +256,10 @@ export default function FlippableCarousel({
               }}
             >
               <StyledButton onClick={showPrevImage}>
-                <MoveLeft color="black" />
+                <MoveLeft color="black" size="2rem"/>
               </StyledButton>
               <StyledButton onClick={showNextImage}>
-                <MoveRight color="black" />
+                <MoveRight color="black" size="2rem"/>
               </StyledButton>
             </StyledButtonContainer>
           </StyledBottomContainer>
