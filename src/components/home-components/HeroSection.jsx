@@ -360,14 +360,40 @@ const HeroSection = forwardRef((props, ref) => {
       const videoUrl = getCloudinaryVideoUrl(HeroVideo);
       console.log("🎬 Video URL:", videoUrl);
       console.log("🎬 Video public ID:", HeroVideo);
+      console.log("🔍 Is Safari:", isSafari);
 
-      // Add event listeners
-      const handleLoadedData = () => {
-        console.log("✅ Video loaded successfully");
-        setVideoLoaded(true);
+      if (isSafari) {
+        // For Safari: minimal setup, let native controls handle everything
+        console.log("🍎 Safari detected - using minimal setup");
         
-        // Only attempt autoplay for non-Safari browsers
-        if (!isSafari) {
+        const handleLoadedData = () => {
+          console.log("✅ Safari video loaded - ready for user interaction");
+          setVideoLoaded(true);
+        };
+
+        const handleError = (e) => {
+          console.error("❌ Safari video error:", e);
+        };
+
+        // Only add essential event listeners for Safari
+        video.addEventListener("loadeddata", handleLoadedData);
+        video.addEventListener("error", handleError);
+
+        // Force load the video
+        video.load();
+
+        return () => {
+          video.removeEventListener("loadeddata", handleLoadedData);
+          video.removeEventListener("error", handleError);
+        };
+      } else {
+        // For non-Safari: full programmatic control
+        console.log("🌐 Non-Safari browser - using full programmatic control");
+        
+        const handleLoadedData = () => {
+          console.log("✅ Video loaded successfully");
+          setVideoLoaded(true);
+          
           // Force autoplay for non-Safari browsers
           const attemptAutoplay = () => {
             const playPromise = video.play();
@@ -379,7 +405,6 @@ const HeroSection = forwardRef((props, ref) => {
                 })
                 .catch((error) => {
                   console.log("⚠️ Autoplay failed:", error.message);
-                  // Try again after a short delay
                   setTimeout(() => {
                     video.play().then(() => {
                       console.log("🎬 Delayed autoplay successful");
@@ -393,58 +418,51 @@ const HeroSection = forwardRef((props, ref) => {
             }
           };
           
-          // Try autoplay immediately and after a short delay
           attemptAutoplay();
           setTimeout(attemptAutoplay, 50);
-        } else {
-          console.log("🍎 Safari detected - letting native controls handle playback");
-        }
-      };
+        };
 
-      const handleCanPlay = () => {
-        setVideoLoaded(true);
-      };
+        const handleCanPlay = () => {
+          setVideoLoaded(true);
+        };
 
-      const handlePlay = () => {
-        setIsPlaying(true);
-      };
+        const handlePlay = () => {
+          setIsPlaying(true);
+        };
 
-      const handlePause = () => {
-        setIsPlaying(false);
-      };
+        const handlePause = () => {
+          setIsPlaying(false);
+        };
 
-      const handleLoadStart = () => {
-        console.log("🔄 Video load start");
-        setVideoLoaded(false);
-      };
+        const handleLoadStart = () => {
+          console.log("🔄 Video load start");
+          setVideoLoaded(false);
+        };
 
-      const handleError = (e) => {
-        console.error("❌ Video error:", e);
-        console.error("❌ Video error details:", video.error);
-        console.error("❌ Video src:", video.src);
-        console.error("❌ Video networkState:", video.networkState);
-        console.error("❌ Video readyState:", video.readyState);
-      };
+        const handleError = (e) => {
+          console.error("❌ Video error:", e);
+          console.error("❌ Video error details:", video.error);
+        };
 
-      video.addEventListener("loadeddata", handleLoadedData);
-      video.addEventListener("canplay", handleCanPlay);
-      video.addEventListener("play", handlePlay);
-      video.addEventListener("pause", handlePause);
-      video.addEventListener("loadstart", handleLoadStart);
-      video.addEventListener("error", handleError);
+        video.addEventListener("loadeddata", handleLoadedData);
+        video.addEventListener("canplay", handleCanPlay);
+        video.addEventListener("play", handlePlay);
+        video.addEventListener("pause", handlePause);
+        video.addEventListener("loadstart", handleLoadStart);
+        video.addEventListener("error", handleError);
 
-      // Force load the video
-      video.load();
+        // Force load the video
+        video.load();
 
-      // Cleanup
-      return () => {
-        video.removeEventListener("loadeddata", handleLoadedData);
-        video.removeEventListener("canplay", handleCanPlay);
-        video.removeEventListener("play", handlePlay);
-        video.removeEventListener("pause", handlePause);
-        video.removeEventListener("loadstart", handleLoadStart);
-        video.removeEventListener("error", handleError);
-      };
+        return () => {
+          video.removeEventListener("loadeddata", handleLoadedData);
+          video.removeEventListener("canplay", handleCanPlay);
+          video.removeEventListener("play", handlePlay);
+          video.removeEventListener("pause", handlePause);
+          video.removeEventListener("loadstart", handleLoadStart);
+          video.removeEventListener("error", handleError);
+        };
+      }
     }
   }, [isSafari]);
 
@@ -468,6 +486,7 @@ const HeroSection = forwardRef((props, ref) => {
         muted
         loop
         playsInline
+        playsinline="true"
         webkit-playsinline="true"
         x-webkit-airplay="deny"
         controls={isSafari} // Show controls for Safari, hide for others
