@@ -43,6 +43,19 @@ const StyledHeroSection = styled.section`
     transition: opacity 0.5s ease;
   }
 
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgb(36, 25, 4) 0%, rgb(255, 255, 255) 60%, transparent);
+    mix-blend-mode: multiply;
+    z-index: 1;
+    pointer-events: none;
+  }
+
   & video {
     position: absolute;
     top: 0;
@@ -51,6 +64,7 @@ const StyledHeroSection = styled.section`
     height: 100%;
     object-fit: cover;
     z-index: -1;
+    -webkit-appearance: none !important;
 
     /* Aggressive iOS Safari control hiding */
     &::-webkit-media-controls,
@@ -64,7 +78,12 @@ const StyledHeroSection = styled.section`
     &::-webkit-media-controls-current-time-display,
     &::-webkit-media-controls-time-remaining-display,
     &::-webkit-media-controls-mute-button,
-    &::-webkit-media-controls-volume-slider {
+    &::-webkit-media-controls-volume-slider,
+    &::-webkit-media-controls-seek-back-button,
+    &::-webkit-media-controls-seek-forward-button,
+    &::-webkit-media-controls-rewind-button,
+    &::-webkit-media-controls-return-to-realtime-button,
+    &::-webkit-media-controls-toggle-closed-captions-button {
       display: none !important;
       -webkit-appearance: none !important;
       opacity: 0 !important;
@@ -72,16 +91,22 @@ const StyledHeroSection = styled.section`
       width: 0 !important;
       height: 0 !important;
       overflow: hidden !important;
+      pointer-events: none !important;
     }
 
     /* Additional iOS specific fixes */
     &[controls] {
-      /* -webkit-appearance: none !important; */
+      -webkit-appearance: none !important;
     }
 
     /* Force remove any possible overlay */
     &::before,
     &::after {
+      display: none !important;
+    }
+
+    /* Safari specific hiding */
+    &::-webkit-media-controls-overlay-enclosure {
       display: none !important;
     }
   }
@@ -91,13 +116,21 @@ const StyledHeroSection = styled.section`
   height: 100vh;
   /* min-height: 50vw; */
   width: 100%;
+
+  ${media.mobile} {
+    min-height: 110rem;
+  }
 `;
 
 const StyledLogoWrapper = styled.div`
+  z-index: 10;
+  position: relative;
+  
   ${media.mobile} {
     position: absolute;
     left: 0;
     top: 0;
+    z-index: 10;
   }
 `;
 
@@ -126,6 +159,8 @@ const StyledNavBar = styled.div`
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transition: all 0.3s ease-in-out;
+  z-index: 10;
+  position: relative;
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
@@ -164,6 +199,8 @@ const NavContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  z-index: 10;
+  position: relative;
   /* gap: .1rem; */
 `;
 
@@ -316,18 +353,35 @@ const HeroSection = forwardRef((props, ref) => {
       const handleLoadedData = () => {
         console.log("✅ Video loaded successfully");
         setVideoLoaded(true);
-        // Try to play after video is loaded
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              setIsPlaying(true);
-            })
-            .catch(() => {
-              // Autoplay failed, user interaction required
-              setIsPlaying(false);
-            });
-        }
+        
+        // Force autoplay for Safari - try multiple times
+        const attemptAutoplay = () => {
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                console.log("🎬 Autoplay successful");
+                setIsPlaying(true);
+              })
+              .catch((error) => {
+                console.log("⚠️ Autoplay failed:", error.message);
+                // Try again after a short delay for Safari
+                setTimeout(() => {
+                  video.play().then(() => {
+                    console.log("🎬 Delayed autoplay successful");
+                    setIsPlaying(true);
+                  }).catch(() => {
+                    console.log("❌ All autoplay attempts failed - user interaction required");
+                    setIsPlaying(false);
+                  });
+                }, 100);
+              });
+          }
+        };
+        
+        // Try autoplay immediately and after a short delay
+        attemptAutoplay();
+        setTimeout(attemptAutoplay, 50);
       };
 
       const handleCanPlay = () => {
@@ -398,14 +452,17 @@ const HeroSection = forwardRef((props, ref) => {
         loop
         playsInline
         webkit-playsinline="true"
+        x-webkit-airplay="deny"
         controls={false}
+        controlsList="nodownload nofullscreen noremoteplayback"
         disablePictureInPicture
-        preload="metadata"
+        preload="auto"
         poster=""
         style={{
           pointerEvents: "none",
           opacity: videoLoaded ? 1 : 0,
           transition: "opacity 0.5s ease",
+          WebkitAppearance: "none",
         }}
       >
         <source src={getCloudinaryVideoUrl(HeroVideo)} type="video/mp4" />
