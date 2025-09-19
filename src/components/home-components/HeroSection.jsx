@@ -64,9 +64,13 @@ const StyledHeroSection = styled.section`
     height: 100%;
     object-fit: cover;
     z-index: -1;
+  }
+
+  /* Only hide controls for non-Safari browsers */
+  &:not(.safari-browser) video {
     -webkit-appearance: none !important;
 
-    /* Aggressive iOS Safari control hiding */
+    /* Aggressive control hiding for non-Safari browsers */
     &::-webkit-media-controls,
     &::-webkit-media-controls-panel,
     &::-webkit-media-controls-play-button,
@@ -94,7 +98,7 @@ const StyledHeroSection = styled.section`
       pointer-events: none !important;
     }
 
-    /* Additional iOS specific fixes */
+    /* Additional fixes for non-Safari */
     &[controls] {
       -webkit-appearance: none !important;
     }
@@ -105,7 +109,6 @@ const StyledHeroSection = styled.section`
       display: none !important;
     }
 
-    /* Safari specific hiding */
     &::-webkit-media-controls-overlay-enclosure {
       display: none !important;
     }
@@ -322,8 +325,17 @@ const HeroSection = forwardRef((props, ref) => {
   } = props;
   const [isPlaying, setIsPlaying] = useState(false); // Start as false
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [isSafari, setIsSafari] = useState(false);
   const videoRef = useRef(null);
   const today = new Date().toISOString().split("T")[0];
+
+  // Detect Safari browser
+  useEffect(() => {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const safari = /safari/.test(userAgent) && !/chrome/.test(userAgent) && !/chromium/.test(userAgent);
+    setIsSafari(safari);
+    console.log("🔍 Browser detection:", safari ? "Safari" : "Other browser");
+  }, []);
 
   // Update roomsAndGuests display value when individual values change
   useEffect(() => {
@@ -443,26 +455,26 @@ const HeroSection = forwardRef((props, ref) => {
   };
 
   return (
-    <StyledHeroSection ref={ref} $videoLoaded={videoLoaded}>
+    <StyledHeroSection ref={ref} $videoLoaded={videoLoaded} className={isSafari ? 'safari-browser' : ''}>
       <video
         key="hero-video"
         ref={videoRef}
-        autoPlay
+        autoPlay={!isSafari} // Disable autoplay for Safari
         muted
         loop
         playsInline
         webkit-playsinline="true"
         x-webkit-airplay="deny"
-        controls={false}
-        controlsList="nodownload nofullscreen noremoteplayback"
-        disablePictureInPicture
+        controls={isSafari} // Show controls for Safari, hide for others
+        controlsList={isSafari ? "" : "nodownload nofullscreen noremoteplayback"}
+        disablePictureInPicture={!isSafari}
         preload="auto"
         poster=""
         style={{
-          pointerEvents: "none",
+          pointerEvents: isSafari ? "auto" : "none", // Allow interaction for Safari
           opacity: videoLoaded ? 1 : 0,
           transition: "opacity 0.5s ease",
-          WebkitAppearance: "none",
+          WebkitAppearance: isSafari ? "auto" : "none",
         }}
       >
         <source src={getCloudinaryVideoUrl(HeroVideo)} type="video/mp4" />
@@ -472,7 +484,7 @@ const HeroSection = forwardRef((props, ref) => {
       <StyledVideoOverlay $isPlaying={isPlaying && videoLoaded} />
 
       <StyledVideoControls>
-        {videoLoaded && (
+        {videoLoaded && !isSafari && ( // Hide custom controls for Safari
           <StyledPlayButton onClick={togglePlayPause}>
             {isPlaying ? (
               <RiPauseFill color="rgba(255, 255, 255, 0.5)" size="2rem" />
