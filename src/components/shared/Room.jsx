@@ -325,13 +325,13 @@ export default function Room({
               )}
             </StyledRoomCarousel2>
           </>
+        ) : flippable ? (
+          <StyledRoomCarousel $bgColor={$bgColor}>
+              <FlippableCarousel ImageUrls={images} backContent={backContent} />
+          </StyledRoomCarousel>
         ) : (
           <StyledRoomCarousel $bgColor={$bgColor}>
-            {flippable ? (
-              <FlippableCarousel ImageUrls={images} backContent={backContent} />
-            ) : (
-              <Carousel ImageUrls={images} />
-            )}
+            <Carousel ImageUrls={images} />
           </StyledRoomCarousel>
         )}
 

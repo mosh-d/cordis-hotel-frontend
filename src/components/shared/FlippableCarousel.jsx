@@ -3,12 +3,15 @@ import { MoveLeft, MoveRight } from "lucide-react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 import { useImagePreloader } from "../../hooks/useImagePreloader";
+import Text from "../shared/Text";
 
 const StyledButton = styled.button`
-  background-color: var(--cordis-black);
+  background-color: var(--cordis-white);
   border: none;
   border-radius: 50%;
   padding: 1rem;
+  width: 5rem;
+  height: 5rem;
   margin: 2rem;
   opacity: 70%;
   z-index: 200;
@@ -26,10 +29,25 @@ const StyledButton = styled.button`
   }
 `;
 
+const StyledBottomContainer = styled.div`
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0)
+  );
+  height: 20rem;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+`;
+
 const StyledButtonContainer = styled.div`
   display: flex;
   z-index: 200;
-  position: absolute;
+  // position: absolute;
   bottom: 0;
   right: 0;
   backface-visibility: hidden;
@@ -120,7 +138,7 @@ const StyledProgressFill = styled.div`
   background-color: var(--cordis-emphasis);
   border-radius: 2px;
   transition: width 0.3s ease;
-  width: ${props => props.$progress}%;
+  width: ${(props) => props.$progress}%;
 `;
 
 const StyledLoadingText = styled.div`
@@ -139,9 +157,10 @@ export default function FlippableCarousel({
   const [imageIndex, setImageIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
-  
+
   // Preload all images - this hook must always be called
-  const { imagesLoaded, loadedCount, totalImages, loadingProgress } = useImagePreloader(ImageUrls);
+  const { imagesLoaded, loadedCount, totalImages, loadingProgress } =
+    useImagePreloader(ImageUrls);
 
   // Call onIndexChange on mount to set initial index
   useEffect(() => {
@@ -167,7 +186,7 @@ export default function FlippableCarousel({
         <StyledProgressBar>
           <StyledProgressFill $progress={loadingProgress} />
         </StyledProgressBar>
-        <StyledLoadingText style={{ fontSize: 'var(--text-xs)', opacity: 0.7 }}>
+        <StyledLoadingText style={{ fontSize: "var(--text-xs)", opacity: 0.7 }}>
           {loadingProgress}%
         </StyledLoadingText>
       </StyledLoadingContainer>
@@ -224,14 +243,28 @@ export default function FlippableCarousel({
             )}
           </AnimatePresence>
 
-          <StyledButtonContainer style={{ opacity: isFlipped ? 0 : 1, pointerEvents: isFlipped ? 'none' : 'auto' }}>
-            <StyledButton onClick={showPrevImage}>
-              <MoveLeft color="white" />
-            </StyledButton>
-            <StyledButton onClick={showNextImage}>
-              <MoveRight color="white" />
-            </StyledButton>
-          </StyledButtonContainer>
+          <StyledBottomContainer>
+            <Text
+              $size="extra-large"
+              $color="var(--cordis-white)"
+              style={{ marginLeft: "2rem", marginBottom: "3rem" }}
+            >
+              Click the image for details
+            </Text>
+            <StyledButtonContainer
+              style={{
+                opacity: isFlipped ? 0 : 1,
+                pointerEvents: isFlipped ? "none" : "auto",
+              }}
+            >
+              <StyledButton onClick={showPrevImage}>
+                <MoveLeft color="black" />
+              </StyledButton>
+              <StyledButton onClick={showNextImage}>
+                <MoveRight color="black" />
+              </StyledButton>
+            </StyledButtonContainer>
+          </StyledBottomContainer>
         </StyledCardFront>
 
         {/* Back Face - Room Details */}

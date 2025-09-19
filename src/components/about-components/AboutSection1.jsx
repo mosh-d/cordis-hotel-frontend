@@ -181,13 +181,12 @@ export default function AboutSection1() {
           $weight="bold"
           $spacing="0.04em"
         >
-          Five Clover Inn, Abijo GRA seamlessly blends modern comfort with the
-          warmth of West African hospitality, offering a unique and inviting
-          experience for our esteemed guests. Located in the serene and upscale
-          area of Abijo GRA, Lagos, our hotel offers a balanced mix of
-          relaxation, workspaces, and proximity to popular destinations, making
-          it a top choice for travelers seeking comfort and convenience in
-          Abijo.
+          Cordis Hotel perfectly combines modern elegance with the warmth of
+          Nigerian hospitality, creating a refined yet welcoming experience for
+          every guest. Nestled in the heart of Lagos, our hotel offers the ideal
+          balance of relaxation, stylish workspaces, and easy access to the
+          city’s key destinations, making Cordis a preferred choice for
+          travelers who value both comfort and convenience.
         </Text>
       </StyledTextWrapper>
     </StyledAboutSection1>

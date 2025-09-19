@@ -64,13 +64,8 @@ const StyledHeroSection = styled.section`
     height: 100%;
     object-fit: cover;
     z-index: -1;
-  }
 
-  /* Only hide controls for non-Safari browsers */
-  &:not(.safari-browser) video {
-    -webkit-appearance: none !important;
-
-    /* Aggressive control hiding for non-Safari browsers */
+    /* Aggressive iOS Safari control hiding */
     &::-webkit-media-controls,
     &::-webkit-media-controls-panel,
     &::-webkit-media-controls-play-button,
@@ -82,12 +77,7 @@ const StyledHeroSection = styled.section`
     &::-webkit-media-controls-current-time-display,
     &::-webkit-media-controls-time-remaining-display,
     &::-webkit-media-controls-mute-button,
-    &::-webkit-media-controls-volume-slider,
-    &::-webkit-media-controls-seek-back-button,
-    &::-webkit-media-controls-seek-forward-button,
-    &::-webkit-media-controls-rewind-button,
-    &::-webkit-media-controls-return-to-realtime-button,
-    &::-webkit-media-controls-toggle-closed-captions-button {
+    &::-webkit-media-controls-volume-slider {
       display: none !important;
       -webkit-appearance: none !important;
       opacity: 0 !important;
@@ -95,21 +85,16 @@ const StyledHeroSection = styled.section`
       width: 0 !important;
       height: 0 !important;
       overflow: hidden !important;
-      pointer-events: none !important;
     }
 
-    /* Additional fixes for non-Safari */
+    /* Additional iOS specific fixes */
     &[controls] {
-      -webkit-appearance: none !important;
+      /* -webkit-appearance: none !important; */
     }
 
     /* Force remove any possible overlay */
     &::before,
     &::after {
-      display: none !important;
-    }
-
-    &::-webkit-media-controls-overlay-enclosure {
       display: none !important;
     }
   }
@@ -205,6 +190,10 @@ const NavContainer = styled.div`
   z-index: 10;
   position: relative;
   /* gap: .1rem; */
+
+  &:hover {
+    background-color: var(--cordis-text-color);
+  }
 `;
 
 const QuickCheckIn = styled.div`
@@ -325,17 +314,8 @@ const HeroSection = forwardRef((props, ref) => {
   } = props;
   const [isPlaying, setIsPlaying] = useState(false); // Start as false
   const [videoLoaded, setVideoLoaded] = useState(false);
-  const [isSafari, setIsSafari] = useState(false);
   const videoRef = useRef(null);
   const today = new Date().toISOString().split("T")[0];
-
-  // Detect Safari browser
-  useEffect(() => {
-    const userAgent = navigator.userAgent.toLowerCase();
-    const safari = /safari/.test(userAgent) && !/chrome/.test(userAgent) && !/chromium/.test(userAgent);
-    setIsSafari(safari);
-    console.log("🔍 Browser detection:", safari ? "Safari" : "Other browser");
-  }, []);
 
   // Update roomsAndGuests display value when individual values change
   useEffect(() => {
@@ -355,116 +335,76 @@ const HeroSection = forwardRef((props, ref) => {
   // Handle autoplay and video events
   useEffect(() => {
     const video = videoRef.current;
-    if (video && isSafari !== null) { // Wait for Safari detection to complete
+    if (video) {
       // Debug: Log the video URL to check if it's correct
       const videoUrl = getCloudinaryVideoUrl(HeroVideo);
       console.log("🎬 Video URL:", videoUrl);
       console.log("🎬 Video public ID:", HeroVideo);
-      console.log("🔍 Is Safari:", isSafari);
 
-      if (isSafari) {
-        // For Safari: minimal setup, let native controls handle everything
-        console.log("🍎 Safari detected - using minimal setup");
-        
-        const handleLoadedData = () => {
-          console.log("✅ Safari video loaded - ready for user interaction");
-          setVideoLoaded(true);
-        };
+      // Add event listeners
+      const handleLoadedData = () => {
+        console.log("✅ Video loaded successfully");
+        setVideoLoaded(true);
+        // Try to play after video is loaded
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              setIsPlaying(true);
+            })
+            .catch(() => {
+              // Autoplay failed, user interaction required
+              setIsPlaying(false);
+            });
+        }
+      };
 
-        const handleError = (e) => {
-          console.error("❌ Safari video error:", e);
-        };
+      const handleCanPlay = () => {
+        setVideoLoaded(true);
+      };
 
-        // Only add essential event listeners for Safari
-        video.addEventListener("loadeddata", handleLoadedData);
-        video.addEventListener("error", handleError);
+      const handlePlay = () => {
+        setIsPlaying(true);
+      };
 
-        // Force load the video
-        video.load();
+      const handlePause = () => {
+        setIsPlaying(false);
+      };
 
-        return () => {
-          video.removeEventListener("loadeddata", handleLoadedData);
-          video.removeEventListener("error", handleError);
-        };
-      } else {
-        // For non-Safari: full programmatic control
-        console.log("🌐 Non-Safari browser - using full programmatic control");
-        
-        const handleLoadedData = () => {
-          console.log("✅ Video loaded successfully");
-          setVideoLoaded(true);
-          
-          // Force autoplay for non-Safari browsers
-          const attemptAutoplay = () => {
-            const playPromise = video.play();
-            if (playPromise !== undefined) {
-              playPromise
-                .then(() => {
-                  console.log("🎬 Autoplay successful");
-                  setIsPlaying(true);
-                })
-                .catch((error) => {
-                  console.log("⚠️ Autoplay failed:", error.message);
-                  setTimeout(() => {
-                    video.play().then(() => {
-                      console.log("🎬 Delayed autoplay successful");
-                      setIsPlaying(true);
-                    }).catch(() => {
-                      console.log("❌ All autoplay attempts failed - user interaction required");
-                      setIsPlaying(false);
-                    });
-                  }, 100);
-                });
-            }
-          };
-          
-          attemptAutoplay();
-          setTimeout(attemptAutoplay, 50);
-        };
+      const handleLoadStart = () => {
+        console.log("🔄 Video load start");
+        setVideoLoaded(false);
+      };
 
-        const handleCanPlay = () => {
-          setVideoLoaded(true);
-        };
+      const handleError = (e) => {
+        console.error("❌ Video error:", e);
+        console.error("❌ Video error details:", video.error);
+        console.error("❌ Video src:", video.src);
+        console.error("❌ Video networkState:", video.networkState);
+        console.error("❌ Video readyState:", video.readyState);
+      };
 
-        const handlePlay = () => {
-          setIsPlaying(true);
-        };
+      video.addEventListener("loadeddata", handleLoadedData);
+      video.addEventListener("canplay", handleCanPlay);
+      video.addEventListener("play", handlePlay);
+      video.addEventListener("pause", handlePause);
+      video.addEventListener("loadstart", handleLoadStart);
+      video.addEventListener("error", handleError);
 
-        const handlePause = () => {
-          setIsPlaying(false);
-        };
+      // Force load the video
+      video.load();
 
-        const handleLoadStart = () => {
-          console.log("🔄 Video load start");
-          setVideoLoaded(false);
-        };
-
-        const handleError = (e) => {
-          console.error("❌ Video error:", e);
-          console.error("❌ Video error details:", video.error);
-        };
-
-        video.addEventListener("loadeddata", handleLoadedData);
-        video.addEventListener("canplay", handleCanPlay);
-        video.addEventListener("play", handlePlay);
-        video.addEventListener("pause", handlePause);
-        video.addEventListener("loadstart", handleLoadStart);
-        video.addEventListener("error", handleError);
-
-        // Force load the video
-        video.load();
-
-        return () => {
-          video.removeEventListener("loadeddata", handleLoadedData);
-          video.removeEventListener("canplay", handleCanPlay);
-          video.removeEventListener("play", handlePlay);
-          video.removeEventListener("pause", handlePause);
-          video.removeEventListener("loadstart", handleLoadStart);
-          video.removeEventListener("error", handleError);
-        };
-      }
+      // Cleanup
+      return () => {
+        video.removeEventListener("loadeddata", handleLoadedData);
+        video.removeEventListener("canplay", handleCanPlay);
+        video.removeEventListener("play", handlePlay);
+        video.removeEventListener("pause", handlePause);
+        video.removeEventListener("loadstart", handleLoadStart);
+        video.removeEventListener("error", handleError);
+      };
     }
-  }, [isSafari]);
+  }, []);
 
   const togglePlayPause = () => {
     if (videoRef.current) {
@@ -478,27 +418,23 @@ const HeroSection = forwardRef((props, ref) => {
   };
 
   return (
-    <StyledHeroSection ref={ref} $videoLoaded={videoLoaded} className={isSafari ? 'safari-browser' : ''}>
+    <StyledHeroSection ref={ref} $videoLoaded={videoLoaded}>
       <video
         key="hero-video"
         ref={videoRef}
-        autoPlay={!isSafari} // Disable autoplay for Safari
+        autoPlay
         muted
         loop
         playsInline
-        playsinline="true"
         webkit-playsinline="true"
-        x-webkit-airplay="deny"
-        controls={isSafari} // Show controls for Safari, hide for others
-        controlsList={isSafari ? "" : "nodownload nofullscreen noremoteplayback"}
-        disablePictureInPicture={!isSafari}
-        preload="auto"
+        controls={false}
+        disablePictureInPicture
+        preload="metadata"
         poster=""
         style={{
-          pointerEvents: isSafari ? "auto" : "none", // Allow interaction for Safari
+          pointerEvents: "none",
           opacity: videoLoaded ? 1 : 0,
           transition: "opacity 0.5s ease",
-          WebkitAppearance: isSafari ? "auto" : "none",
         }}
       >
         <source src={getCloudinaryVideoUrl(HeroVideo)} type="video/mp4" />
@@ -508,7 +444,7 @@ const HeroSection = forwardRef((props, ref) => {
       <StyledVideoOverlay $isPlaying={isPlaying && videoLoaded} />
 
       <StyledVideoControls>
-        {videoLoaded && !isSafari && ( // Hide custom controls for Safari
+        {videoLoaded && (
           <StyledPlayButton onClick={togglePlayPause}>
             {isPlaying ? (
               <RiPauseFill color="rgba(255, 255, 255, 0.5)" size="2rem" />

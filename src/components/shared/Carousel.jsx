@@ -102,6 +102,7 @@ export default function Carousel({
   // All hooks must be called at the top, before any conditional returns
   const [imageIndex, setImageIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [animationKey, setAnimationKey] = useState(0);
 
   // Preload all images - this hook must always be called
   const { imagesLoaded, loadedCount, totalImages, loadingProgress } =
@@ -140,8 +141,9 @@ export default function Carousel({
 
   function showPrevImage() {
     setDirection(-1);
-    // Delay the index change until next render cycle
+    // Delay both the animation key and index change until next render cycle
     setTimeout(() => {
+      setAnimationKey(prev => prev + 1);
       const newIndex = imageIndex === 0 ? ImageUrls.length - 1 : imageIndex - 1;
       setImageIndex(newIndex);
       if (onIndexChange) onIndexChange(newIndex);
@@ -150,8 +152,9 @@ export default function Carousel({
 
   function showNextImage() {
     setDirection(1);
-    // Delay the index change until next render cycle
+    // Delay both the animation key and index change until next render cycle
     setTimeout(() => {
+      setAnimationKey(prev => prev + 1);
       const newIndex = imageIndex === ImageUrls.length - 1 ? 0 : imageIndex + 1;
       setImageIndex(newIndex);
       if (onIndexChange) onIndexChange(newIndex);
@@ -162,12 +165,13 @@ export default function Carousel({
     <StyledCarousel>
       <AnimatePresence initial={false} mode="wait">
         <StyledImage
-          key={ImageUrls[imageIndex]}
+          key={`${imageIndex}-${animationKey}`}
           src={ImageUrls[imageIndex]}
           alt="Carousel"
+          custom={direction}
           initial={{ opacity: 0.2, x: direction === 1 ? 80 : -80 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0.2, x: direction === 1 ? -100 : 100 }}
+          exit={(custom) => ({ opacity: 0.2, x: custom === 1 ? -100 : 100 })}
           transition={{ duration: 0.4, ease: [0, 0.34, 1, 0.34] }}
         />
       </AnimatePresence>

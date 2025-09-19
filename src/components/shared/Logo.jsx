@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { NavLink } from "react-router-dom";
 
 import ghostLogo from "../../assets/cordis-logo-1.png";
 import filledLogo from "../../assets/cordis-logo-2.png";
@@ -10,8 +11,8 @@ import { cloudinaryBg } from "../../config/cloudinary";
 
 
 const StyledLogo = styled.div`
-  width: 15rem;
-  height: 15rem;
+  width: 16rem;
+  height: 16rem;
 
   & img {
     width: 100%;
@@ -25,7 +26,9 @@ function Logo({$type, ...props}) {
 
   return (
     <StyledLogo>
-      <img src={logo} alt="cordis hotel logo" {...props} />
+      <NavLink to="/">
+        <img src={logo} alt="cordis hotel logo" {...props} />
+      </NavLink>
     </StyledLogo>
   );
 }

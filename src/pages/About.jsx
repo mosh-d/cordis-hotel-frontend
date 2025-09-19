@@ -8,7 +8,7 @@ function AboutPage() {
     <>
       <AboutSection1 />
       <AboutSection2 />
-      <AboutSection3 />
+      {/* <AboutSection3 /> */}
       <MissionVision />
     </>
   );

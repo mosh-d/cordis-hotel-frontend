@@ -132,69 +132,69 @@ export default function LocateUsSection() {
               Nearby Locations
             </Text>
             <Text $color="var(--cordis-black)">
-              Locations in a 50km radius you might want to know about
+              Locations within a 10km radius you might want to know about
             </Text>
             <StyledLocations>
               <StyledLocation>
                 <StyledLocationText1>
-                  <Text $color="var(--cordis-black)">Lufasi Nature Park</Text>
+                  <Text $color="var(--cordis-black)">
+                    Johnson Jakande Tinubu (JJT) Park
+                  </Text>
                 </StyledLocationText1>
                 <StyledLocationText2>
-                  <Text $color="var(--cordis-black)">14km away</Text>
+                  <Text $color="var(--cordis-black)">2km away</Text>
                 </StyledLocationText2>
               </StyledLocation>
               <StyledLocation>
                 <StyledLocationText1>
-                  <Text $color="var(--cordis-black)">Omu Resort</Text>
+                  <Text $color="var(--cordis-black)">Ndubuisi Kanu Park</Text>
                 </StyledLocationText1>
                 <StyledLocationText2>
-                  <Text $color="var(--cordis-black)">31km away</Text>
+                  <Text $color="var(--cordis-black)">3km away</Text>
                 </StyledLocationText2>
               </StyledLocation>
               <StyledLocation>
                 <StyledLocationText1>
                   <Text $color="var(--cordis-black)">
-                    Upbeat Recreation Centre
+                    The New Afrika Shrine
                   </Text>
                 </StyledLocationText1>
                 <StyledLocationText2>
-                  <Text $color="var(--cordis-black)">37km away</Text>
+                  <Text $color="var(--cordis-black)">5km away</Text>
                 </StyledLocationText2>
               </StyledLocation>
               <StyledLocation>
                 <StyledLocationText1>
-                  <Text $color="var(--cordis-black)">Bics Boat Club</Text>
+                  <Text $color="var(--cordis-black)"> Ikeja City Mall</Text>
                 </StyledLocationText1>
                 <StyledLocationText2>
-                  <Text $color="var(--cordis-black)">39km away</Text>
+                  <Text $color="var(--cordis-black)">1km away</Text>
+                </StyledLocationText2>
+              </StyledLocation>
+              <StyledLocation>
+                <StyledLocationText1>
+                  <Text $color="var(--cordis-black)">Terra Kulture</Text>
+                </StyledLocationText1>
+                <StyledLocationText2>
+                  <Text $color="var(--cordis-black)">8km away</Text>
+                </StyledLocationText2>
+              </StyledLocation>
+              <StyledLocation>
+                <StyledLocationText1>
+                  <Text $color="var(--cordis-black)">NiteShift Coliseum</Text>
+                </StyledLocationText1>
+                <StyledLocationText2>
+                  <Text $color="var(--cordis-black)">4km away</Text>
                 </StyledLocationText2>
               </StyledLocation>
               <StyledLocation>
                 <StyledLocationText1>
                   <Text $color="var(--cordis-black)">
-                    Lekki Conservation Centre
+                    Kalakuta Republic Museum
                   </Text>
                 </StyledLocationText1>
                 <StyledLocationText2>
-                  <Text $color="var(--cordis-black)">28km away</Text>
-                </StyledLocationText2>
-              </StyledLocation>
-              <StyledLocation>
-                <StyledLocationText1>
-                  <Text $color="var(--cordis-black)">Novare Mall</Text>
-                </StyledLocationText1>
-                <StyledLocationText2>
-                  <Text $color="var(--cordis-black)">18km away</Text>
-                </StyledLocationText2>
-              </StyledLocation>
-              <StyledLocation>
-                <StyledLocationText1>
-                  <Text $color="var(--cordis-black)">
-                    Lakowe Lakes Golf & Country Estate
-                  </Text>
-                </StyledLocationText1>
-                <StyledLocationText2>
-                  <Text $color="var(--cordis-black)">10km away</Text>
+                  <Text $color="var(--cordis-black)">6km away</Text>
                 </StyledLocationText2>
               </StyledLocation>
             </StyledLocations>

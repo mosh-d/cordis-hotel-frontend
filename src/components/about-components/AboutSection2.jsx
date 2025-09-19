@@ -125,15 +125,13 @@ export default function AboutSection2() {
           $weight="bold"
           $spacing="0.04em"
         >
-          Welcome to a new standard of hospitality in Abijo GRA. The Five Clover
-          Inn is a modern hotel located in the peaceful Abijo area with few
-          minutes' drive from the lekki Epe-Expressway. It offers a perfect
-          environment for both business and leisure travelers by combining
-          comfort, functionality, and elegance. The inn features a variety of
-          well-appointed rooms designed for relaxation, including king-sized
-          beds with luxurious bedding, a coffee station with complimentary
-          packages, air conditioning, free Wi-Fi, flat-screen TVs, and ensuite
-          bathrooms.
+          Welcome to a new standard of hospitality in Lagos. Cordis Hotel is a
+          contemporary haven designed for both business and leisure travelers,
+          blending comfort, functionality, and elegance. Ideally located in the
+          vibrant heart of the city, Cordis offers well-appointed rooms
+          featuring king-sized beds with plush linens, in-room coffee stations,
+          air conditioning, complimentary high-speed Wi-Fi, flat-screen TVs, and
+          modern ensuite bathrooms—everything you need for a seamless stay.
         </Text>
       </StyledTextWrapper>
       <StyledImageContainer></StyledImageContainer>
@@ -153,15 +151,13 @@ export default function AboutSection2() {
           $weight="bold"
           $spacing="0.04em"
         >
-          Welcome to a new standard of hospitality in Abijo GRA. The Five Clover
-          Inn is a modern hotel located in the peaceful Abijo area with few
-          minutes' drive from the lekki Epe-Expressway. It offers a perfect
-          environment for both business and leisure travelers by combining
-          comfort, functionality, and elegance. The inn features a variety of
-          well-appointed rooms designed for relaxation, including king-sized
-          beds with luxurious bedding, a coffee station with complimentary
-          packages, air conditioning, free Wi-Fi, flat-screen TVs, and ensuite
-          bathrooms.
+          Welcome to a new standard of hospitality in Lagos. Cordis Hotel is a
+          contemporary haven designed for both business and leisure travelers,
+          blending comfort, functionality, and elegance. Ideally located in the
+          vibrant heart of the city, Cordis offers well-appointed rooms
+          featuring king-sized beds with plush linens, in-room coffee stations,
+          air conditioning, complimentary high-speed Wi-Fi, flat-screen TVs, and
+          modern ensuite bathrooms—everything you need for a seamless stay.
         </Text>
       </StyledTextWrapper2>
     </StyledAboutSection2>
