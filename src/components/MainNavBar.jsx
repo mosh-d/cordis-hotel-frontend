@@ -175,6 +175,7 @@ function MainNavBar({ $type, showLogo = true }) {
                     border: "1px solid hsla(360, 0%, 100%, 0.3)",
                     padding: "2rem",
                     borderRadius: "0.5rem",
+                    marginTop: "1rem",
                   }}
                 >
                   <ul
