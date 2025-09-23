@@ -3,16 +3,15 @@ import { styled } from "styled-components";
 import Booking1 from "../../assets/cordis-booking/CORDIS-BOOKING-1.png";
 import { RiArrowLeftLine } from "react-icons/ri";
 import Text from "../../components/shared/Text";
-import { Link as RouterLink, useSearchParams } from "react-router-dom";
+import { Link as RouterLink, useSearchParams, useNavigate } from "react-router-dom";
 import CustomInput2 from "../../components/shared/CustomInput2";
 import Button from "../../components/shared/Button";
 import { media } from "../../util/breakpoints";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { cloudinaryBg } from "../../config/cloudinary";
 import { useDynamicRoomData } from "../../hooks/useDynamicRoomData";
 
 //Booking image
-
 
 //Styles
 const StyledRoomBookingPage = styled.form`
@@ -236,9 +235,36 @@ const StyledPhoneInput = styled.input`
   }
 `;
 
+const StyledButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+
+  @media (max-width: 1150px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  ${media.tablet} {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
 export default function RoomBookingPage() {
   const [searchParams] = useSearchParams();
   const returnTo = searchParams.get("returnTo") || "/";
+  
+  // Form validation state
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     firstName,
@@ -269,29 +295,216 @@ export default function RoomBookingPage() {
     setRoomsAndGuests,
   } = useOutletContext();
 
+  const navigate = useNavigate();
+
+  // Form validation function
+  const validateForm = () => {
+    const errors = {};
+    const today = new Date().toISOString().split("T")[0];
+    
+    // Validate required fields
+    if (!firstName || firstName.trim().length < 2) {
+      errors.firstName = "First name is required (minimum 2 characters)";
+    }
+    
+    if (!lastName || lastName.trim().length < 2) {
+      errors.lastName = "Last name is required (minimum 2 characters)";
+    }
+    
+    if (!email || !email.includes("@") || !email.includes(".")) {
+      errors.email = "Valid email address is required";
+    }
+    
+    if (!phoneNumber || phoneNumber.replace(/\s/g, "").length < 9) {
+      errors.phoneNumber = "Valid phone number is required (at least 9 digits)";
+    }
+    
+    if (!checkIn || checkIn < today) {
+      errors.checkIn = "Valid check-in date is required (must be today or later)";
+    }
+    
+    if (!checkOut || checkOut < today) {
+      errors.checkOut = "Valid check-out date is required (must be today or later)";
+    }
+    
+    if (checkIn && checkOut && checkOut <= checkIn) {
+      errors.checkOut = "Check-out date must be after check-in date";
+    }
+    
+    if (!roomCategory) {
+      errors.roomCategory = "Room category selection is required";
+    }
+    
+    if (!noOfAdults || noOfAdults < 1) {
+      errors.noOfAdults = "At least 1 adult is required";
+    }
+    
+    if (!noOfRooms || noOfRooms < 1 || noOfRooms > 4) {
+      errors.noOfRooms = "Number of rooms must be between 1 and 4";
+    }
+    
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const roomTypeId =
+    roomCategory === "standard"
+      ? 1
+      : roomCategory === "executive"
+      ? 2
+      : roomCategory === "executiveDeluxe"
+      ? 3
+      : roomCategory === "executiveSuite"
+      ? 4
+      : undefined;
+
+  const bookOnHold = async (e) => {
+    e.preventDefault();
+    
+    // Validate form before making API call
+    if (!validateForm()) {
+      // Scroll to top to show validation errors
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    
+    setIsSubmitting(true);
+    const requestBody = {
+      guest: {
+        title: "Mrs.",
+        firstName: firstName,
+        lastName: lastName,
+        phone: phoneNumber,
+        email: email,
+        sex: "Female",
+        occupation: "nil",
+        countryId: 1,
+        address1: "default",
+        address2: "nil",
+        city: "default",
+        stateId: 2,
+      },
+      reservations: [
+        {
+          roomTypeId: roomTypeId,
+          checkInDate: checkIn,
+          checkOutDate: checkOut,
+          adultNo: noOfAdults,
+          childNo: noOfChildren,
+          arrivalTime: "2:00 PM",
+          purpose: "Business",
+          rate: 50000.0,
+          additionalReq: "tea",
+          quantity: 1,
+        },
+      ],
+    };
+
+    console.log(requestBody);
+
+    try {
+      console.log("🚀 Making API call to:", "https://secure.thecordishotelikeja.com/api/hotel/bookings/hold");
+      console.log("📦 Request body:", requestBody);
+    console.log("📦 Request body as JSON string:", JSON.stringify(requestBody, null, 2));
+    console.log("📦 Guest details:", requestBody.guest);
+    console.log("📦 Reservation details:", requestBody.reservations[0]);
+      
+      const response = await fetch(
+        "https://secure.thecordishotelikeja.com/api/hotel/bookings/hold",
+        {
+          method: "POST",
+          mode: 'cors',
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Cache-Control": "no-cache",
+          },
+          body: JSON.stringify(requestBody),
+          redirect: 'follow', // Handle redirects properly
+        }
+      );
+
+      console.log("📡 Response status:", response.status);
+      console.log("📡 Response headers:", response.headers);
+      
+      // Check if response is actually JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const textResponse = await response.text();
+        console.error("❌ Response is not JSON:", textResponse);
+        throw new Error(`Expected JSON response but got ${contentType}. Response: ${textResponse.substring(0, 200)}...`);
+      }
+
+      if (!response.ok) {
+        // For 422 errors, try to get the response content to see what's wrong
+        let errorDetails = '';
+        try {
+          const errorResponse = await response.text();
+          errorDetails = errorResponse;
+          console.error("❌ API Error Response:", errorResponse);
+        } catch (e) {
+          console.error("❌ Could not read error response:", e);
+        }
+        
+        throw new Error(`HTTP error! status: ${response.status}. Details: ${errorDetails}`);
+      }
+
+      const data = await response.json();
+
+      console.log("✅ API Response:", data);
+
+      if (data.errorCode === 0) {
+        // Navigate with booking data
+        navigate(`/booking-confirmation?bookingRef=${data.bookingRef}&message=${encodeURIComponent(data.errorMessage)}`);
+      } else {
+        // Show error message
+        throw new Error(data.errorMessage || "Failed to complete booking");
+      }
+    } catch (error) {
+      console.error("❌ Booking Error:", error);
+      setIsSubmitting(false);
+      
+      // Show user-friendly error message
+      if (error.message.includes("422")) {
+        alert("Booking failed: The server couldn't process your request. Please check all your information and try again.");
+      } else {
+        alert(`Booking failed: ${error.message}`);
+      }
+    }
+  };
+
+  const payWithPaystack = async () => {};
+
   // Generate search parameters for API
   const apiSearchParams = useMemo(() => {
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    
+
     return {
-      checkInDate: checkIn || today.toISOString().split('T')[0],
-      checkOutDate: checkOut || tomorrow.toISOString().split('T')[0],
+      checkInDate: checkIn || today.toISOString().split("T")[0],
+      checkOutDate: checkOut || tomorrow.toISOString().split("T")[0],
       adultNo: noOfAdults || 2,
       childNo: noOfChildren || 1,
-      facilityTypeId: 1
+      facilityTypeId: 1,
     };
   }, [checkIn, checkOut, noOfAdults, noOfChildren]);
 
   // Get API room data for dynamic pricing
-  const { ROOMS: apiRooms, loading, error, isFromApi } = useDynamicRoomData(apiSearchParams);
+  const {
+    ROOMS: apiRooms,
+    loading,
+    error,
+    isFromApi,
+  } = useDynamicRoomData(apiSearchParams);
 
   // Reduced logging for booking page
   if (apiRooms && apiRooms.length > 0) {
-    console.log(isFromApi ? 
-      "🌐 BOOKING PAGE: Using live API pricing" : 
-      "📁 BOOKING PAGE: Using static fallback pricing"
+    console.log(
+      isFromApi
+        ? "🌐 BOOKING PAGE: Using live API pricing"
+        : "📁 BOOKING PAGE: Using static fallback pricing"
     );
   }
 
@@ -343,16 +556,20 @@ export default function RoomBookingPage() {
 
     // Try to get data from API first
     if (apiRooms && apiRooms.length > 0) {
-      const selectedRoom = apiRooms.find(room => room.propName === roomCategory);
+      const selectedRoom = apiRooms.find(
+        (room) => room.propName === roomCategory
+      );
       if (selectedRoom) {
         // Extract price number from API price string (e.g., "₦120,000" -> 120000)
         const priceMatch = selectedRoom.price.match(/[\d,]+/);
-        const apiPrice = priceMatch ? parseInt(priceMatch[0].replace(/,/g, '')) : FALLBACK_PRICES[roomCategory];
-        
+        const apiPrice = priceMatch
+          ? parseInt(priceMatch[0].replace(/,/g, ""))
+          : FALLBACK_PRICES[roomCategory];
+
         return {
           price: apiPrice,
           name: selectedRoom.name,
-          isFromApi: true
+          isFromApi: true,
         };
       }
     }
@@ -361,7 +578,7 @@ export default function RoomBookingPage() {
     return {
       price: FALLBACK_PRICES[roomCategory] || 0,
       name: FALLBACK_NAMES[roomCategory] || "Select a room",
-      isFromApi: false
+      isFromApi: false,
     };
   };
 
@@ -433,6 +650,7 @@ export default function RoomBookingPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted");
+    // The actual booking logic is handled by the button onClick handlers
   };
 
   let dropdownValue = "true";
@@ -451,6 +669,30 @@ export default function RoomBookingPage() {
               Room Reservation
             </Text>
           </StyledHeaderWrapper>
+          
+          {/* Form validation errors */}
+          {Object.keys(formErrors).length > 0 && (
+            <div style={{ 
+              backgroundColor: '#fee', 
+              border: '1px solid #fcc', 
+              borderRadius: '8px', 
+              padding: '1rem', 
+              marginBottom: '2rem' 
+            }}>
+              <Text $type="h4" $color="#d00" $weight="bold" style={{ marginBottom: '0.5rem' }}>
+                Please complete the form:
+              </Text>
+              <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
+                {Object.values(formErrors).map((error, index) => (
+                  <li key={index} style={{ color: '#d00', marginBottom: '0.25rem' }}>
+                    <Text $size="small" $color="#d00">
+                      {error}
+                    </Text>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <StyledInputs>
             <StyledInputRow>
               <CustomInput2
@@ -477,7 +719,7 @@ export default function RoomBookingPage() {
                   }
                   const newCheckIn = val < today ? today : val;
                   setCheckIn(newCheckIn);
-                  
+
                   // If check-out is before the new check-in date, update check-out
                   if (checkOut && checkOut < newCheckIn) {
                     setCheckOut(newCheckIn);
@@ -532,10 +774,16 @@ export default function RoomBookingPage() {
                 value={roomCategory}
                 onChange={(e) => {
                   // Check if selected room is available before allowing selection
-                  const selectedRoom = apiRooms?.find(room => room.propName === e.target.value);
+                  const selectedRoom = apiRooms?.find(
+                    (room) => room.propName === e.target.value
+                  );
                   if (selectedRoom) {
-                    const isAvailable = typeof selectedRoom.available === 'number' ? selectedRoom.available > 0 : 
-                                       typeof selectedRoom.available === 'boolean' ? selectedRoom.available : true;
+                    const isAvailable =
+                      typeof selectedRoom.available === "number"
+                        ? selectedRoom.available > 0
+                        : typeof selectedRoom.available === "boolean"
+                        ? selectedRoom.available
+                        : true;
                     if (isAvailable) {
                       setRoomCategory(e.target.value);
                     }
@@ -543,6 +791,7 @@ export default function RoomBookingPage() {
                     // If no API data, allow selection (fallback behavior)
                     setRoomCategory(e.target.value);
                   }
+                  console.log(roomCategory);
                 }}
               >
                 <option value="">Choose a room type</option>
@@ -550,20 +799,24 @@ export default function RoomBookingPage() {
                 {apiRooms && apiRooms.length > 0 ? (
                   // Use API data to determine availability
                   apiRooms.map((room) => {
-                    const isAvailable = typeof room.available === 'number' ? room.available > 0 : 
-                                       typeof room.available === 'boolean' ? room.available : true;
-                    
+                    const isAvailable =
+                      typeof room.available === "number"
+                        ? room.available > 0
+                        : typeof room.available === "boolean"
+                        ? room.available
+                        : true;
+
                     return (
-                      <option 
+                      <option
                         key={room.propName}
                         value={room.propName}
                         disabled={!isAvailable}
                         style={{
-                          color: isAvailable ? 'inherit' : '#999',
-                          backgroundColor: isAvailable ? 'inherit' : '#f5f5f5'
+                          color: isAvailable ? "inherit" : "#999",
+                          backgroundColor: isAvailable ? "inherit" : "#f5f5f5",
                         }}
                       >
-                        {room.name} {!isAvailable ? '(Unavailable)' : ''}
+                        {room.name} {!isAvailable ? "(Unavailable)" : ""}
                       </option>
                     );
                   })
@@ -572,7 +825,9 @@ export default function RoomBookingPage() {
                   <>
                     <option value="standard">Standard Room</option>
                     <option value="executive">Executive Room</option>
-                    <option value="executiveDeluxe">Executive Deluxe Room</option>
+                    <option value="executiveDeluxe">
+                      Executive Deluxe Room
+                    </option>
                     <option value="executiveSuite">Executive Suite Room</option>
                   </>
                 )}
@@ -917,11 +1172,41 @@ export default function RoomBookingPage() {
             <Text $color="var(--cordis-white)" $size="extra-large">
               ₦{total.toLocaleString()}
             </Text>
-            {/* <RouterLink to="/booking-confirmation"> */}
-            <Button $type="emphasis" type="submit">
-              <Text>Confirm Booking</Text>
-            </Button>
-            {/* </RouterLink> */}
+            <StyledButtonWrapper>
+              {/* <RouterLink to="/booking-confirmation"> */}
+              <Button 
+                $type="white-ghost" 
+                type="button"
+                onClick={bookOnHold}
+                disabled={isSubmitting}
+                style={{
+                  opacity: isSubmitting ? 0.6 : 1,
+                  cursor: isSubmitting ? 'not-allowed' : 'pointer'
+                }}
+              >
+                <Text>
+                  {isSubmitting ? 'Processing...' : 'Book on Hold'}
+                </Text>
+              </Button>
+              {/* </RouterLink> */}
+              <Text $color="var(--cordis-white)">or</Text>
+              {/* <RouterLink to="/booking-confirmation"> */}
+              <Button 
+                $type="emphasis" 
+                type="button"
+                onClick={payWithPaystack}
+                disabled={isSubmitting}
+                style={{
+                  opacity: isSubmitting ? 0.6 : 1,
+                  cursor: isSubmitting ? 'not-allowed' : 'pointer'
+                }}
+              >
+                <Text>
+                  {isSubmitting ? 'Processing...' : 'Pay with Paystack'}
+                </Text>
+              </Button>
+              {/* </RouterLink> */}
+            </StyledButtonWrapper>
           </StyledConfirmationTotalWrapper>
         </StyledBookingSummary>
       </StyledRoomBookingPage>

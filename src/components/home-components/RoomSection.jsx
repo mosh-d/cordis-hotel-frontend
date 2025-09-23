@@ -128,14 +128,9 @@ const StyledUnavailableTextContainer = styled.div`
   pointer-events: none;
 `;
 
-export default function RoomSection({$type}) {
+export default function RoomSection({ $type }) {
   // Get context data for search parameters
-  const {
-    checkIn,
-    checkOut,
-    noOfAdults,
-    noOfChildren,
-  } = useOutletContext();
+  const { checkIn, checkOut, noOfAdults, noOfChildren } = useOutletContext();
 
   // Generate search parameters using context dates or fallback to current/next day
   const searchParams = useMemo(() => {
@@ -145,8 +140,8 @@ export default function RoomSection({$type}) {
     tomorrow.setDate(tomorrow.getDate() + 1);
 
     return {
-      checkInDate: checkIn || today.toISOString().split('T')[0],
-      checkOutDate: checkOut || tomorrow.toISOString().split('T')[0],
+      checkInDate: checkIn || today.toISOString().split("T")[0],
+      checkOutDate: checkOut || tomorrow.toISOString().split("T")[0],
       adultNo: noOfAdults || 2,
       childNo: noOfChildren || 1,
       facilityTypeId: 1,
@@ -156,11 +151,11 @@ export default function RoomSection({$type}) {
   // Helper function to check if a room is available based on API data
   const isRoomAvailable = (room) => {
     // If available is a number, check if it's greater than 0
-    if (typeof room.available === 'number') {
+    if (typeof room.available === "number") {
       return room.available > 0;
     }
     // If available is a boolean, use it directly
-    if (typeof room.available === 'boolean') {
+    if (typeof room.available === "boolean") {
       return room.available;
     }
     // If no available property exists, assume room is available
@@ -168,22 +163,28 @@ export default function RoomSection({$type}) {
   };
 
   // Use the dynamic room data hook to get API data
-  const { ROOMS: dynamicRooms, loading, error, isFromApi } = useDynamicRoomData(searchParams);
+  const {
+    ROOMS: dynamicRooms,
+    loading,
+    error,
+    isFromApi,
+  } = useDynamicRoomData(searchParams);
 
   // Helper function to get room availability by propName
   const getRoomAvailability = (propName) => {
-    const room = dynamicRooms.find(r => r.propName === propName);
+    const room = dynamicRooms.find((r) => r.propName === propName);
     return room ? isRoomAvailable(room) : true; // Default to available if not found
   };
 
   // Clear data source logging (reduced frequency)
   if (dynamicRooms.length > 0) {
-    console.log(isFromApi ? 
-      "🌐 ROOMSECTION: Displaying live API data" : 
-      "📁 ROOMSECTION: Displaying static fallback data", 
-      { 
+    console.log(
+      isFromApi
+        ? "🌐 ROOMSECTION: Displaying live API data"
+        : "📁 ROOMSECTION: Displaying static fallback data",
+      {
         totalRooms: dynamicRooms.length,
-        dataSource: isFromApi ? "Live API" : "Static file"
+        dataSource: isFromApi ? "Live API" : "Static file",
       }
     );
   }
@@ -200,14 +201,21 @@ export default function RoomSection({$type}) {
           </Text>
         </RoomText>
 
-        <StyledRooms>
-          {loading ? (
-            <Text $type="p" $size="large">Loading room availability...</Text>
-          ) : error && !isFromApi ? (
-            <>
-              <Text $type="p" $size="small" $color="var(--cordis-gray)" style={{marginBottom: '1rem'}}>
-                API unavailable - using fallback data
-              </Text>
+        {loading ? (
+          <Text $type="p" $size="large">
+            Loading room availability...
+          </Text>
+        ) : error && !isFromApi ? (
+          <>
+            <Text
+              $type="p"
+              $size="small"
+              $color="var(--cordis-gray)"
+              style={{ marginBottom: "1rem" }}
+            >
+              PMS unavailable - using default data
+            </Text>
+            <StyledRooms>
               {ROOMS.map((room, index) => (
                 <StyledRoomContainer key={index}>
                   <Room
@@ -220,10 +228,12 @@ export default function RoomSection({$type}) {
                   />
                 </StyledRoomContainer>
               ))}
-            </>
-          ) : (
-            // Use dynamic room data with API availability
-            dynamicRooms.map((room, index) => (
+            </StyledRooms>
+          </>
+        ) : (
+          // Use dynamic room data with API availability
+          <StyledRooms>
+            {dynamicRooms.map((room, index) => (
               <StyledRoomContainer key={index}>
                 <Room
                   imageType={room.propName}
@@ -234,10 +244,11 @@ export default function RoomSection({$type}) {
                   roomData={dynamicRooms} // Pass the API data to Room component
                 />
               </StyledRoomContainer>
-            ))
-          )}
+            ))}
+          </StyledRooms>
+        )}
 
-          {/* {!standardRoomExists && (
+        {/* {!standardRoomExists && (
             <>
               <StyledUnavailableRoomOverlay>
                 <Room
@@ -327,11 +338,10 @@ export default function RoomSection({$type}) {
             </StyledUnavailableRoomOverlay>
           )} */}
 
-          {/* {!ROOMS[0] && <Text>Standard Room not available</Text>}
+        {/* {!ROOMS[0] && <Text>Standard Room not available</Text>}
           {!ROOMS[1] && <Text>Executive Room not available</Text>}
           {!ROOMS[2] && <Text>Executive Deluxe Room not available</Text>}
           {!ROOMS[3] && <Text>Executive Suite not available</Text>} */}
-        </StyledRooms>
       </StyledRoomSection>
     </>
   );

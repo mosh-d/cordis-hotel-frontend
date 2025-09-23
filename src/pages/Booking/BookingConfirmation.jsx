@@ -1,10 +1,12 @@
 import Booking1 from "../../assets/cordis-booking/CORDIS-BOOKING-1.png";
 import { RiArrowLeftLine, RiCheckboxCircleLine } from "react-icons/ri";
 import Text from "../../components/shared/Text";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import { styled } from "styled-components";
 import { media } from "../../util/breakpoints";
 import { cloudinaryBg } from "../../config/cloudinary";
+import { useEffect, useState } from "react";
+import Button from "../../components/shared/Button";
 
 //Booking image
 
@@ -74,30 +76,139 @@ const StyledTextIconWrapper = styled.div`
   }
 `;
 
+const StyledBookingCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: var(--cordis-white);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+`;
+
+const StyledButtonContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
 export default function BookingConfirmationPage() {
+  const location = useLocation();
+  const [bookingRef, setBookingRef] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Parse URL parameters
+    const params = new URLSearchParams(location.search);
+    const ref = params.get("bookingRef");
+    const msg = params.get("message");
+
+    if (ref) {
+      setBookingRef(ref);
+    }
+    if (msg) {
+      setMessage(decodeURIComponent(msg));
+    }
+
+    setLoading(false);
+  }, [location]);
+
+  if (loading) {
+    return (
+      <StyledBookingConfirmation>
+        <StyledTextWrapper>
+          <Text $color="var(--cordis-white)" $type="h1">
+            Loading booking details...
+          </Text>
+        </StyledTextWrapper>
+      </StyledBookingConfirmation>
+    );
+  }
+
   return (
     <>
       <StyledBookingConfirmation>
-        <RouterLink to="..">
+        {/* <RouterLink to="..">
           <StyledBackArrow>
-            <RiArrowLeftLine color="var(--cordis-emphasis)" size="7rem" />
+            <RiArrowLeftLine color="var(--cordis-white)" size="5rem" />
           </StyledBackArrow>
-        </RouterLink>
+        </RouterLink> */}
         <StyledTextWrapper>
-          <StyledTextIconWrapper>
-            <Text $color="var(--cordis-white)" $type="h1">
-              Booking Confirmed
+          <StyledBookingCard>
+            <Text
+              $type="h3"
+              $color="var(--cordis-black)"
+              style={{ marginBottom: "1rem", textAlign: "center" }}
+            >
+              {message || "Your reservation has been successfully made."}
             </Text>
-            <RiCheckboxCircleLine color="var(--cordis-white)" size="10rem" />
-          </StyledTextIconWrapper>
-          <Text
-            style={{ textAlign: "center" }}
-            $type="h3"
-            $color="var(--cordis-white)"
-          >
-            Check your email for a confirmation message. Can’t wait to have you
-            around!
-          </Text>
+
+            <div
+              style={{
+                backgroundColor: "var(--cordis-light-gray)",
+                padding: "1.5rem",
+                borderRadius: "8px",
+                marginBottom: "1.5rem",
+                textAlign: "center",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                $type="p"
+                $color="var(--cordis-text-color)"
+                style={{ marginBottom: "0.5rem" }}
+              >
+                Booking Reference
+              </Text>
+              <Text
+                $type="h2"
+                $color="var(--cordis-black)"
+                style={{
+                  fontFamily: "monospace",
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  letterSpacing: "2px",
+                }}
+              >
+                {bookingRef}
+              </Text>
+            </div>
+
+            <Text
+              style={{ textAlign: "center", marginBottom: "2rem" }}
+              $type="p"
+              $color="var(--cordis-gray)"
+            >
+              Check your email for a confirmation message. Can't wait to have
+              you around!
+            </Text>
+
+            <StyledButtonContainer>
+              <RouterLink to="/">
+                <Button $type="ghost">
+                  <Text $type="p" $size="small">
+                    Return to Home
+                  </Text>
+                </Button>
+              </RouterLink>
+
+              <RouterLink to="/rooms">
+                <Button $type="black">
+                  <Text $type="p" $size="small">
+                    Reserve another Room
+                  </Text>
+                </Button>
+              </RouterLink>
+            </StyledButtonContainer>
+          </StyledBookingCard>
         </StyledTextWrapper>
       </StyledBookingConfirmation>
     </>

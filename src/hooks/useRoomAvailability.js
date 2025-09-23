@@ -26,16 +26,34 @@ export const useRoomAvailability = () => {
     });
 
     try {
+      console.log("🚀 Making availability API call to:", "https://secure.thecordishotelikeja.com/api/hotel/availability");
+      
       const response = await fetch(
-        "https://secure.thecordishotelikeja.com/api/hotel/availability  ",
+        "https://secure.thecordishotelikeja.com/api/hotel/availability",
         {
           method: "POST",
+          mode: 'cors',
           headers: {
             "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Cache-Control": "no-cache",
           },
           body: JSON.stringify(requestBody),
+          redirect: 'follow', // Handle redirects properly
         }
       );
+
+      console.log("📡 Availability Response status:", response.status);
+      console.log("📡 Availability Response headers:", response.headers);
+      
+      // Check if response is actually JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const textResponse = await response.text();
+        console.error("❌ Availability Response is not JSON:", textResponse);
+        throw new Error(`Expected JSON response but got ${contentType}. Response: ${textResponse.substring(0, 200)}...`);
+      }
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
