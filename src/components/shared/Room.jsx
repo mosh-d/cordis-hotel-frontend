@@ -18,8 +18,8 @@ const StandardRoom4 = "cordis/standard-room-4";
 //Executive room images
 const ExecutiveRoom1 = "cordis/executive-room-1";
 const ExecutiveRoom2 = "cordis/executive-room-2";
-const ExecutiveRoom3 = "cordis/executive-room-3";
-const ExecutiveRoom4 = "cordis/executive-room-4";
+// const ExecutiveRoom3 = "cordis/executive-room-3";
+// const ExecutiveRoom4 = "cordis/executive-room-4";
 
 //Executive Deluxe room images
 const ExecutiveDeluxeRoom1 = "cordis/executive-deluxe-room-1";
@@ -38,8 +38,8 @@ const StandardRoomImages = [
 const ExecutiveRoomImages = [
   getCloudinaryUrl(ExecutiveRoom1),
   getCloudinaryUrl(ExecutiveRoom2),
-  getCloudinaryUrl(ExecutiveRoom3),
-  getCloudinaryUrl(ExecutiveRoom4),
+  // getCloudinaryUrl(ExecutiveRoom3),
+  // getCloudinaryUrl(ExecutiveRoom4),
 ];
 const ExecutiveDeluxeRoomImages = [
   getCloudinaryUrl(ExecutiveDeluxeRoom1),

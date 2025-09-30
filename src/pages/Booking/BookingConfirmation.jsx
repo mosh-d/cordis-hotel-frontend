@@ -193,7 +193,7 @@ export default function BookingConfirmationPage() {
 
             <StyledButtonContainer>
               <RouterLink to="/">
-                <Button $type="ghost">
+                <Button $type="black">
                   <Text $type="p" $size="small">
                     Return to Home
                   </Text>
@@ -201,7 +201,7 @@ export default function BookingConfirmationPage() {
               </RouterLink>
 
               <RouterLink to="/rooms">
-                <Button $type="black">
+                <Button $type="underlined">
                   <Text $type="p" $size="small">
                     Reserve another Room
                   </Text>

@@ -9,8 +9,8 @@ import { getCloudinaryUrl } from "../../config/cloudinary";
 //gym images
 const Gym1 = "cordis/gym-1";
 const Gym2 = "cordis/gym-2";
-const Gym3 = "cordis/gym-3";
-const Gym4 = "cordis/gym-4";
+// const Gym3 = "cordis/gym-3";
+// const Gym4 = "cordis/gym-4";
 
 //spa images
 const Spa1 = "cordis/spa-1";
@@ -20,8 +20,8 @@ const Spa3 = "cordis/spa-3";
 const GymImages = [
   getCloudinaryUrl(Gym1),
   getCloudinaryUrl(Gym2),
-  getCloudinaryUrl(Gym3),
-  getCloudinaryUrl(Gym4),
+  // getCloudinaryUrl(Gym3),
+  // getCloudinaryUrl(Gym4),
 ];
 const SpaImages = [
   getCloudinaryUrl(Spa1),

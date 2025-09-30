@@ -419,7 +419,7 @@ const HeroSection = forwardRef((props, ref) => {
 
   return (
     <StyledHeroSection ref={ref} $videoLoaded={videoLoaded}>
-      <video
+      {/* COMMENT THIS BACK IN TO ENABLE VIDEO <video
         key="hero-video"
         ref={videoRef}
         autoPlay
@@ -438,7 +438,7 @@ const HeroSection = forwardRef((props, ref) => {
         }}
       >
         <source src={getCloudinaryVideoUrl(HeroVideo)} type="video/mp4" />
-      </video>
+      </video> */}
 
       {/* Overlay to hide native controls during initial load */}
       <StyledVideoOverlay $isPlaying={isPlaying && videoLoaded} />

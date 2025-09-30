@@ -3,7 +3,11 @@ import { styled } from "styled-components";
 import Booking1 from "../../assets/cordis-booking/CORDIS-BOOKING-1.png";
 import { RiArrowLeftLine } from "react-icons/ri";
 import Text from "../../components/shared/Text";
-import { Link as RouterLink, useSearchParams, useNavigate } from "react-router-dom";
+import {
+  Link as RouterLink,
+  useSearchParams,
+  useNavigate,
+} from "react-router-dom";
 import CustomInput2 from "../../components/shared/CustomInput2";
 import Button from "../../components/shared/Button";
 import { media } from "../../util/breakpoints";
@@ -261,10 +265,12 @@ const StyledButtonWrapper = styled.div`
 export default function RoomBookingPage() {
   const [searchParams] = useSearchParams();
   const returnTo = searchParams.get("returnTo") || "/";
-  
+
   // Form validation state
   const [formErrors, setFormErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isBookingOnHold, setIsBookingOnHold] = useState(false);
+  const [isPayingWithPaystack, setIsPayingWithPaystack] = useState(false);
+  const [isRoomAvailable, setIsRoomAvailable] = useState(true);
 
   const {
     firstName,
@@ -301,48 +307,50 @@ export default function RoomBookingPage() {
   const validateForm = () => {
     const errors = {};
     const today = new Date().toISOString().split("T")[0];
-    
+
     // Validate required fields
     if (!firstName || firstName.trim().length < 2) {
       errors.firstName = "First name is required (minimum 2 characters)";
     }
-    
+
     if (!lastName || lastName.trim().length < 2) {
       errors.lastName = "Last name is required (minimum 2 characters)";
     }
-    
+
     if (!email || !email.includes("@") || !email.includes(".")) {
       errors.email = "Valid email address is required";
     }
-    
+
     if (!phoneNumber || phoneNumber.replace(/\s/g, "").length < 9) {
       errors.phoneNumber = "Valid phone number is required (at least 9 digits)";
     }
-    
+
     if (!checkIn || checkIn < today) {
-      errors.checkIn = "Valid check-in date is required (must be today or later)";
+      errors.checkIn =
+        "Valid check-in date is required (must be today or later)";
     }
-    
+
     if (!checkOut || checkOut < today) {
-      errors.checkOut = "Valid check-out date is required (must be today or later)";
+      errors.checkOut =
+        "Valid check-out date is required (must be today or later)";
     }
-    
+
     if (checkIn && checkOut && checkOut <= checkIn) {
       errors.checkOut = "Check-out date must be after check-in date";
     }
-    
+
     if (!roomCategory) {
       errors.roomCategory = "Room category selection is required";
     }
-    
+
     if (!noOfAdults || noOfAdults < 1) {
       errors.noOfAdults = "At least 1 adult is required";
     }
-    
+
     if (!noOfRooms || noOfRooms < 1 || noOfRooms > 4) {
       errors.noOfRooms = "Number of rooms must be between 1 and 4";
     }
-    
+
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -360,15 +368,15 @@ export default function RoomBookingPage() {
 
   const bookOnHold = async (e) => {
     e.preventDefault();
-    
+
     // Validate form before making API call
     if (!validateForm()) {
       // Scroll to top to show validation errors
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
-    
-    setIsSubmitting(true);
+
+    setIsBookingOnHold(true);
     const requestBody = {
       guest: {
         title: "Mrs.",
@@ -403,42 +411,54 @@ export default function RoomBookingPage() {
     console.log(requestBody);
 
     try {
-      console.log("🚀 Making API call to:", "https://secure.thecordishotelikeja.com/api/hotel/bookings/hold");
+      console.log(
+        "🚀 Making API call to:",
+        "https://secure.thecordishotelikeja.com/api/hotel/bookings/hold"
+      );
       console.log("📦 Request body:", requestBody);
-    console.log("📦 Request body as JSON string:", JSON.stringify(requestBody, null, 2));
-    console.log("📦 Guest details:", requestBody.guest);
-    console.log("📦 Reservation details:", requestBody.reservations[0]);
-      
+      console.log(
+        "📦 Request body as JSON string:",
+        JSON.stringify(requestBody, null, 2)
+      );
+      console.log("📦 Guest details:", requestBody.guest);
+      console.log("📦 Reservation details:", requestBody.reservations[0]);
+
       const response = await fetch(
         "https://secure.thecordishotelikeja.com/api/hotel/bookings/hold",
         {
           method: "POST",
-          mode: 'cors',
+          mode: "cors",
           headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            Accept: "application/json",
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
             "Cache-Control": "no-cache",
           },
           body: JSON.stringify(requestBody),
-          redirect: 'follow', // Handle redirects properly
+          redirect: "follow", // Handle redirects properly
         }
       );
 
       console.log("📡 Response status:", response.status);
       console.log("📡 Response headers:", response.headers);
-      
+
       // Check if response is actually JSON
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
         const textResponse = await response.text();
         console.error("❌ Response is not JSON:", textResponse);
-        throw new Error(`Expected JSON response but got ${contentType}. Response: ${textResponse.substring(0, 200)}...`);
+        throw new Error(
+          `Expected JSON response but got ${contentType}. Response: ${textResponse.substring(
+            0,
+            200
+          )}...`
+        );
       }
 
       if (!response.ok) {
         // For 422 errors, try to get the response content to see what's wrong
-        let errorDetails = '';
+        let errorDetails = "";
         try {
           const errorResponse = await response.text();
           errorDetails = errorResponse;
@@ -446,8 +466,10 @@ export default function RoomBookingPage() {
         } catch (e) {
           console.error("❌ Could not read error response:", e);
         }
-        
-        throw new Error(`HTTP error! status: ${response.status}. Details: ${errorDetails}`);
+
+        throw new Error(
+          `HTTP error! status: ${response.status}. Details: ${errorDetails}`
+        );
       }
 
       const data = await response.json();
@@ -456,25 +478,179 @@ export default function RoomBookingPage() {
 
       if (data.errorCode === 0) {
         // Navigate with booking data
-        navigate(`/booking-confirmation?bookingRef=${data.bookingRef}&message=${encodeURIComponent(data.errorMessage)}`);
+        navigate(
+          `/booking-confirmation?bookingRef=${
+            data.bookingRef
+          }&message=${encodeURIComponent(data.errorMessage)}`
+        );
       } else {
         // Show error message
         throw new Error(data.errorMessage || "Failed to complete booking");
       }
     } catch (error) {
       console.error("❌ Booking Error:", error);
-      setIsSubmitting(false);
-      
+      setIsBookingOnHold(false);
+
       // Show user-friendly error message
       if (error.message.includes("422")) {
-        alert("Booking failed: The server couldn't process your request. Please check all your information and try again.");
+        alert(
+          "Booking failed: The server couldn't process your request. Please check all your information and try again."
+        );
       } else {
         alert(`Booking failed: ${error.message}`);
       }
     }
   };
 
-  const payWithPaystack = async () => {};
+  const payWithPaystack = async () => {
+    // Validate form before making API call
+    if (!validateForm()) {
+      // Scroll to top to show validation errors
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    
+    setIsPayingWithPaystack(true);
+    
+    // Prepare booking data for Paystack API
+    const bookingData = {
+      guest: {
+        title: "Mrs.",
+        firstName: firstName,
+        lastName: lastName,
+        phone: phoneNumber,
+        email: email,
+        sex: "Female",
+        occupation: "nil",
+        countryId: 1,
+        address1: "default",
+        address2: "nil",
+        city: "default",
+        stateId: 2,
+      },
+      reservations: [
+        {
+          roomTypeId: roomTypeId,
+          checkInDate: checkIn,
+          checkOutDate: checkOut,
+          adultNo: noOfAdults,
+          childNo: noOfChildren,
+          arrivalTime: "2:00 PM",
+          purpose: "Business",
+          rate: 50000.0,
+          additionalReq: "tea",
+          quantity: 1,
+        },
+      ],
+    };
+
+    try {
+      console.log("🚀 Initializing Paystack payment...");
+      console.log("📦 Booking data:", bookingData);
+
+      // Step 1: Initialize payment with backend
+      const initResponse = await fetch(
+        "https://secure.thecordishotelikeja.com/api/hotel/bookings/paystack",
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Cache-Control": "no-cache",
+          },
+          body: JSON.stringify(bookingData),
+        }
+      );
+
+      console.log("📡 Init response status:", initResponse.status);
+
+      if (!initResponse.ok) {
+        const errorText = await initResponse.text();
+        console.error("❌ Paystack init failed:", errorText);
+        throw new Error(`Payment initialization failed: ${errorText}`);
+      }
+
+      const initData = await initResponse.json();
+      console.log("✅ Paystack init response:", initData);
+
+      const access_code = initData.access_code || initData.data?.access_code;
+      const reference = initData.reference || initData.data?.reference;
+
+      if (!access_code) {
+        console.error("❌ Missing access_code:", initData);
+        throw new Error("Failed to initialize payment (no access code)");
+      }
+
+      // Step 2: Create Paystack popup and resume transaction
+      const popup = new PaystackPop();
+      
+      popup.resumeTransaction(access_code, {
+        onLoad: (meta) => {
+          console.log("💳 Paystack popup loaded", meta);
+        },
+        onCancel: () => {
+          console.log("❌ Payment cancelled by user");
+          setIsPayingWithPaystack(false);
+          alert("Payment was cancelled. You can try again or choose a different payment method.");
+        },
+        onSuccess: async (transaction) => {
+          console.log("✅ Payment successful!", transaction);
+          
+          try {
+            // Step 3: Verify payment with backend
+            const verifyResponse = await fetch(
+              "https://secure.thecordishotelikeja.com/api/hotel/payments/resume",
+              {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                },
+                body: JSON.stringify({ reference: transaction.reference }),
+              }
+            );
+
+            console.log("📡 Verify response status:", verifyResponse.status);
+
+            if (!verifyResponse.ok) {
+              const errorText = await verifyResponse.text();
+              console.error("❌ Payment verification failed:", errorText);
+              throw new Error(`Payment verification failed: ${errorText}`);
+            }
+
+            const verifyData = await verifyResponse.json();
+            console.log("✅ Payment verification response:", verifyData);
+
+            if (verifyData && verifyData.status) {
+              // Payment verified and booking confirmed
+              alert(`🎉 Booking confirmed! Reference: ${verifyData.booking_reference || transaction.reference}`);
+              
+              // Navigate to confirmation page
+              navigate(
+                `/booking-confirmation?bookingRef=${verifyData.booking_reference || transaction.reference}&message=${encodeURIComponent('Payment successful! Your booking is confirmed.')}`
+              );
+            } else {
+              console.error("❌ Verification failed:", verifyData);
+              throw new Error("Payment verification failed. Please contact support.");
+            }
+          } catch (verifyError) {
+            console.error("❌ Error verifying payment:", verifyError);
+            setIsPayingWithPaystack(false);
+            alert(`Error verifying payment: ${verifyError.message}. Please contact support with your transaction reference: ${transaction.reference}`);
+          }
+        },
+      });
+
+    } catch (error) {
+      console.error("❌ Paystack payment error:", error);
+      setIsPayingWithPaystack(false);
+      alert(`Payment failed: ${error.message}`);
+    }
+  };
 
   // Generate search parameters for API
   const apiSearchParams = useMemo(() => {
@@ -669,22 +845,32 @@ export default function RoomBookingPage() {
               Room Reservation
             </Text>
           </StyledHeaderWrapper>
-          
+
           {/* Form validation errors */}
           {Object.keys(formErrors).length > 0 && (
-            <div style={{ 
-              backgroundColor: '#fee', 
-              border: '1px solid #fcc', 
-              borderRadius: '8px', 
-              padding: '1rem', 
-              marginBottom: '2rem' 
-            }}>
-              <Text $type="h4" $color="#d00" $weight="bold" style={{ marginBottom: '0.5rem' }}>
+            <div
+              style={{
+                backgroundColor: "#fee",
+                border: "1px solid #fcc",
+                borderRadius: "8px",
+                padding: "1rem",
+                marginBottom: "2rem",
+              }}
+            >
+              <Text
+                $type="h4"
+                $color="#d00"
+                $weight="bold"
+                style={{ marginBottom: "0.5rem" }}
+              >
                 Please complete the form:
               </Text>
-              <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
+              <ul style={{ margin: 0, paddingLeft: "1.5rem" }}>
                 {Object.values(formErrors).map((error, index) => (
-                  <li key={index} style={{ color: '#d00', marginBottom: '0.25rem' }}>
+                  <li
+                    key={index}
+                    style={{ color: "#d00", marginBottom: "0.25rem" }}
+                  >
                     <Text $size="small" $color="#d00">
                       {error}
                     </Text>
@@ -1174,35 +1360,33 @@ export default function RoomBookingPage() {
             </Text>
             <StyledButtonWrapper>
               {/* <RouterLink to="/booking-confirmation"> */}
-              <Button 
-                $type="white-ghost" 
+              <Button
+                $type="white"
                 type="button"
                 onClick={bookOnHold}
-                disabled={isSubmitting}
+                disabled={isBookingOnHold}
                 style={{
-                  opacity: isSubmitting ? 0.6 : 1,
-                  cursor: isSubmitting ? 'not-allowed' : 'pointer'
+                  opacity: isBookingOnHold ? 0.6 : 1,
+                  cursor: isBookingOnHold ? "not-allowed" : "pointer",
                 }}
               >
-                <Text>
-                  {isSubmitting ? 'Processing...' : 'Book on Hold'}
-                </Text>
+                <Text>{isBookingOnHold ? "Processing..." : "Book on Hold"}</Text>
               </Button>
               {/* </RouterLink> */}
               <Text $color="var(--cordis-white)">or</Text>
               {/* <RouterLink to="/booking-confirmation"> */}
-              <Button 
-                $type="emphasis" 
+              <Button
+                $type="emphasis"
                 type="button"
                 onClick={payWithPaystack}
-                disabled={isSubmitting}
+                disabled={isPayingWithPaystack}
                 style={{
-                  opacity: isSubmitting ? 0.6 : 1,
-                  cursor: isSubmitting ? 'not-allowed' : 'pointer'
+                  opacity: isPayingWithPaystack ? 0.6 : 1,
+                  cursor: isPayingWithPaystack ? "not-allowed" : "pointer",
                 }}
               >
                 <Text>
-                  {isSubmitting ? 'Processing...' : 'Pay with Paystack'}
+                  {isPayingWithPaystack ? "Processing..." : "Pay with Paystack"}
                 </Text>
               </Button>
               {/* </RouterLink> */}
