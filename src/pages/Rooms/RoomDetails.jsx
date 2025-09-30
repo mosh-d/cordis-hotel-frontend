@@ -14,9 +14,13 @@ import { GiWaterFlask, GiDesk, GiSlippers, GiRobe } from "react-icons/gi";
 import { MdOutlineHeatPump } from "react-icons/md";
 import { LiaMugHotSolid } from "react-icons/lia";
 import { PiTowel } from "react-icons/pi";
-import { BiCloset, BiDrink  } from "react-icons/bi";
+import { BiCloset, BiDrink } from "react-icons/bi";
 import Button from "../../components/shared/Button";
-import { Link as RouterLink, useParams, useOutletContext } from "react-router-dom";
+import {
+  Link as RouterLink,
+  useParams,
+  useOutletContext,
+} from "react-router-dom";
 import { useDynamicRoomData } from "../../hooks/useDynamicRoomData";
 import { media } from "../../util/breakpoints";
 
@@ -171,15 +175,20 @@ export default function RoomDetailsPage() {
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    
+
     return {
-      checkInDate: context?.checkIn || today.toISOString().split('T')[0],
-      checkOutDate: context?.checkOut || tomorrow.toISOString().split('T')[0],
+      checkInDate: context?.checkIn || today.toISOString().split("T")[0],
+      checkOutDate: context?.checkOut || tomorrow.toISOString().split("T")[0],
       adultNo: context?.noOfAdults || 2,
       childNo: context?.noOfChildren || 1,
-      facilityTypeId: 1
+      facilityTypeId: 1,
     };
-  }, [context?.checkIn, context?.checkOut, context?.noOfAdults, context?.noOfChildren]);
+  }, [
+    context?.checkIn,
+    context?.checkOut,
+    context?.noOfAdults,
+    context?.noOfChildren,
+  ]);
 
   // Get API room data
   const { ROOMS, loading, error, isFromApi } = useDynamicRoomData(searchParams);
@@ -187,7 +196,7 @@ export default function RoomDetailsPage() {
   if (loading) {
     return (
       <StyledRoomDetails>
-        <div style={{ textAlign: 'center', padding: '4rem' }}>
+        <div style={{ textAlign: "center", padding: "4rem" }}>
           <Text $type="h2" $color="var(--cordis-black)">
             Loading room details...
           </Text>
@@ -199,7 +208,7 @@ export default function RoomDetailsPage() {
   if (error || !ROOMS[params.roomIndex]) {
     return (
       <StyledRoomDetails>
-        <div style={{ textAlign: 'center', padding: '4rem', color: 'red' }}>
+        <div style={{ textAlign: "center", padding: "4rem", color: "red" }}>
           <Text $type="h2">Error loading room details</Text>
           <RouterLink to="..">
             <Button $type="ghost">
@@ -221,10 +230,12 @@ export default function RoomDetailsPage() {
     Sofa: <RiSofaLine color="var(--cordis-black)" size="3rem" />,
     Desk: <GiDesk color="var(--cordis-black)" size="3rem" />,
     Wardrobe: <BiCloset color="var(--cordis-black)" size="3rem" />,
-    Bathroomslippers: <GiSlippers  color="var(--cordis-black)" size="3rem" />,
-    Teaamenities: <LiaMugHotSolid  color="var(--cordis-black)" size="3rem" />,
+    Bathroomslippers: <GiSlippers color="var(--cordis-black)" size="3rem" />,
+    Teaamenities: <LiaMugHotSolid color="var(--cordis-black)" size="3rem" />,
     Bathrobe: <GiRobe color="var(--cordis-black)" size="3rem" />,
-    Luggagerack: <RiLuggageDepositLine color="var(--cordis-black)" size="3rem" />,
+    Luggagerack: (
+      <RiLuggageDepositLine color="var(--cordis-black)" size="3rem" />
+    ),
     MiniFridge: <RiFridgeLine color="var(--cordis-black)" size="3rem" />,
     MiniBar: <BiDrink color="var(--cordis-black)" size="3rem" />,
   };
@@ -247,43 +258,46 @@ export default function RoomDetailsPage() {
         </StyledHeaderWrapper>
 
         <StyledDetailsWrapper>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "1rem",
+              flexWrap: "wrap",
+            }}
+          >
             <Text $weight="bold" $size="extra-large">
               {ROOMS[params.roomIndex].name} Room
             </Text>
             {/* Availability Status */}
             {(() => {
               const room = ROOMS[params.roomIndex];
-              const isAvailable = typeof room.available === 'number' ? room.available > 0 : 
-                                 typeof room.available === 'boolean' ? room.available : true;
-              
+              const isAvailable =
+                typeof room.available === "number"
+                  ? room.available > 0
+                  : typeof room.available === "boolean"
+                  ? room.available
+                  : true;
+
               return (
-                <div style={{ 
-                  background: isAvailable ? 'green' : 'red', 
-                  color: 'white', 
-                  padding: '4px 12px', 
-                  borderRadius: '4px', 
-                  fontSize: '12px',
-                  fontWeight: 'bold'
-                }}>
-                  {isAvailable ? 
-                    (typeof room.available === 'number' ? `${room.available} Available` : 'Available') : 
-                    'Not Available'
-                  }
+                <div
+                  style={{
+                    background: isAvailable ? "var(--cordis-emphasis)" : "red",
+                    color: isAvailable ? "var(--cordis-text-color)" : "white",
+                    padding: "4px 12px",
+                    borderRadius: "4px",
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {isAvailable
+                    ? typeof room.available === "number"
+                      ? `${room.available} Available`
+                      : "Available"
+                    : "Not Available"}
                 </div>
               );
             })()}
-            {isFromApi && (
-              <div style={{ 
-                background: '#007bff', 
-                color: 'white', 
-                padding: '4px 8px', 
-                borderRadius: '4px', 
-                fontSize: '10px' 
-              }}>
-                LIVE DATA
-              </div>
-            )}
           </div>
           <StyledDetails>
             <Text $type="h3" $weight="bold" $size="small">

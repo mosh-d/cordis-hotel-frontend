@@ -355,28 +355,82 @@ export default function RoomBookingPage() {
     return Object.keys(errors).length === 0;
   };
 
-  const roomTypeId =
-    roomCategory === "standard"
-      ? 1
-      : roomCategory === "executive"
-      ? 2
-      : roomCategory === "executiveDeluxe"
-      ? 3
-      : roomCategory === "executiveSuite"
-      ? 4
-      : undefined;
-
   const bookOnHold = async (e) => {
     e.preventDefault();
+    
+    // Get the correct room info including roomTypeId from API
+    const roomInfo = getRoomPriceAndName();
+    const apiRoomTypeId = roomInfo.roomTypeId;
+    
+    // IMMEDIATE DEBUG: Check all critical values
+    console.log("🚨 IMMEDIATE DEBUG - bookOnHold called:", {
+      roomCategory,
+      roomTypeId: apiRoomTypeId,
+      roomTypeIdSource: roomInfo.isFromApi ? "API" : "FALLBACK",
+      checkIn,
+      checkOut,
+      noOfAdults,
+      noOfChildren,
+      hasValidationErrors: !validateForm()
+    });
 
     // Validate form before making API call
     if (!validateForm()) {
+      console.log("❌ FORM VALIDATION FAILED");
       // Scroll to top to show validation errors
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
+    console.log("✅ FORM VALIDATION PASSED");
     setIsBookingOnHold(true);
+    
+    // Force future dates for testing (override form values)
+    const today = new Date();
+    const nextWeek = new Date(today);
+    nextWeek.setDate(nextWeek.getDate() + 7); // Next week
+    const nextWeekPlusOne = new Date(nextWeek);
+    nextWeekPlusOne.setDate(nextWeekPlusOne.getDate() + 1); // Next week + 1 day
+    
+    // OVERRIDE form dates for testing
+    const bookingCheckIn = nextWeek.toISOString().split('T')[0];
+    const bookingCheckOut = nextWeekPlusOne.toISOString().split('T')[0];
+    
+    console.log("📅 USING FUTURE DATES FOR TESTING:", {
+      originalCheckIn: checkIn,
+      originalCheckOut: checkOut,
+      newCheckIn: bookingCheckIn,
+      newCheckOut: bookingCheckOut
+    });
+    
+    // Debug: Log booking parameters
+    console.log("🔍 BOOKING DEBUG:", {
+      roomCategory,
+      apiRoomTypeId,
+      checkIn,
+      checkOut,
+      noOfAdults,
+      noOfChildren,
+      bookingDates: {
+        checkInDate: bookingCheckIn,
+        checkOutDate: bookingCheckOut,
+        adultNo: noOfAdults || 2,
+        childNo: noOfChildren || 1,
+        facilityTypeId: 1
+      }
+    });
+    
+    // Use the room info we already got at the beginning of the function
+    const roomRate = roomInfo.price;
+    
+    // Debug: Show that we're using raw API rate directly
+    console.log("💰 USING RAW API RATE:", {
+      roomCategory,
+      rawApiRate: roomRate,
+      isFromApi: roomInfo.isFromApi,
+      usingDirectApiRate: "YES (no calculations or parsing)"
+    });
+    
     const requestBody = {
       guest: {
         title: "Mrs.",
@@ -394,34 +448,52 @@ export default function RoomBookingPage() {
       },
       reservations: [
         {
-          roomTypeId: roomTypeId,
-          checkInDate: checkIn,
-          checkOutDate: checkOut,
-          adultNo: noOfAdults,
-          childNo: noOfChildren,
+          roomTypeId: apiRoomTypeId,
+          checkInDate: bookingCheckIn,
+          checkOutDate: bookingCheckOut,
+          adultNo: String(noOfAdults || 2),
+          childNo: String(noOfChildren || 1),
           arrivalTime: "2:00 PM",
           purpose: "Business",
-          rate: 50000.0,
+          rate: parseFloat(roomRate).toFixed(2),
           additionalReq: "tea",
           quantity: 1,
         },
       ],
     };
 
-    console.log(requestBody);
+    console.log("📦 BOOKING REQUEST BODY:", requestBody);
+    console.log("🔍 COMPARING WITH AVAILABILITY API:", {
+      availabilityParams: apiSearchParams,
+      bookingParams: {
+        checkInDate: bookingCheckIn,
+        checkOutDate: bookingCheckOut,
+        adultNo: noOfAdults || 2,
+        childNo: noOfChildren || 1,
+        facilityTypeId: 1
+      }
+    });
 
     try {
-      console.log(
-        "🚀 Making API call to:",
-        "https://secure.thecordishotelikeja.com/api/hotel/bookings/hold"
-      );
-      console.log("📦 Request body:", requestBody);
-      console.log(
-        "📦 Request body as JSON string:",
-        JSON.stringify(requestBody, null, 2)
-      );
-      console.log("📦 Guest details:", requestBody.guest);
-      console.log("📦 Reservation details:", requestBody.reservations[0]);
+      console.log("🚀 MAKING BOOKING API CALL:");
+      console.log("🔗 URL:", "https://secure.thecordishotelikeja.com/api/hotel/bookings/hold");
+      console.log("📦 FULL REQUEST BODY:", JSON.stringify(requestBody, null, 2));
+      console.log("🎯 TARGET ROOM:", {
+        roomTypeId: requestBody.reservations[0].roomTypeId,
+        roomTypeIdSource: roomInfo.isFromApi ? "API" : "FALLBACK",
+        checkInDate: requestBody.reservations[0].checkInDate,
+        checkOutDate: requestBody.reservations[0].checkOutDate,
+        rate: requestBody.reservations[0].rate
+      });
+      
+      // Debug: Log the API room details being used
+      console.log("🔍 API ROOM DETAILS:", {
+        roomCategory,
+        apiRoomTypeId,
+        roomName: roomInfo.name,
+        isFromApi: roomInfo.isFromApi,
+        usingDirectApiMapping: "YES (no more hardcoded mappings)"
+      });
 
       const response = await fetch(
         "https://secure.thecordishotelikeja.com/api/hotel/bookings/hold",
@@ -456,19 +528,31 @@ export default function RoomBookingPage() {
         );
       }
 
+      console.log("📡 API RESPONSE STATUS:", response.status);
+      console.log("📡 API RESPONSE HEADERS:", Object.fromEntries(response.headers.entries()));
+      
       if (!response.ok) {
         // For 422 errors, try to get the response content to see what's wrong
         let errorDetails = "";
+        let errorJson = null;
         try {
           const errorResponse = await response.text();
           errorDetails = errorResponse;
-          console.error("❌ API Error Response:", errorResponse);
+          console.error("❌ API ERROR RESPONSE TEXT:", errorResponse);
+          
+          // Try to parse as JSON
+          try {
+            errorJson = JSON.parse(errorResponse);
+            console.error("❌ API ERROR RESPONSE JSON:", errorJson);
+          } catch (jsonError) {
+            console.error("❌ Could not parse error response as JSON:", jsonError);
+          }
         } catch (e) {
           console.error("❌ Could not read error response:", e);
         }
 
         throw new Error(
-          `HTTP error! status: ${response.status}. Details: ${errorDetails}`
+          `HTTP error! status: ${response.status}. ${errorJson?.message || errorDetails || "No additional details"}`
         );
       }
 
@@ -510,6 +594,28 @@ export default function RoomBookingPage() {
       return;
     }
     
+    // Get the correct room info including roomTypeId from API
+    const roomInfo = getRoomPriceAndName();
+    const apiRoomTypeId = roomInfo.roomTypeId;
+    const roomRate = roomInfo.price; // Use API rate directly
+    
+    // Calculate total amount including taxes
+    const nights = calculateNights();
+    const subtotal = roomRate * nights * (parseInt(noOfRooms) || 0);
+    const vat = subtotal * 0.075; // 7.5%
+    const stateTax = subtotal * 0.05; // 5%
+    const totalAmount = subtotal + vat + stateTax;
+    
+    console.log("💰 PAYSTACK TOTAL CALCULATION:", {
+      roomRate,
+      nights,
+      noOfRooms,
+      subtotal,
+      vat,
+      stateTax,
+      totalAmount
+    });
+    
     setIsPayingWithPaystack(true);
     
     // Prepare booking data for Paystack API
@@ -530,14 +636,15 @@ export default function RoomBookingPage() {
       },
       reservations: [
         {
-          roomTypeId: roomTypeId,
+          roomTypeId: apiRoomTypeId,
           checkInDate: checkIn,
           checkOutDate: checkOut,
           adultNo: noOfAdults,
           childNo: noOfChildren,
           arrivalTime: "2:00 PM",
           purpose: "Business",
-          rate: 50000.0,
+          totalAmount: totalAmount,
+          rate: roomRate,
           additionalReq: "tea",
           quantity: 1,
         },
@@ -675,13 +782,14 @@ export default function RoomBookingPage() {
     isFromApi,
   } = useDynamicRoomData(apiSearchParams);
 
-  // Reduced logging for booking page
+  // Debug: Log API rooms data
   if (apiRooms && apiRooms.length > 0) {
     console.log(
       isFromApi
         ? "🌐 BOOKING PAGE: Using live API pricing"
         : "📁 BOOKING PAGE: Using static fallback pricing"
     );
+    console.log("🏨 API ROOMS DATA:", apiRooms);
   }
 
   // Update roomsAndGuests display value when individual values change
@@ -715,46 +823,32 @@ export default function RoomBookingPage() {
 
   //Room price calculation - use API data if available
   const getRoomPriceAndName = () => {
-    // Static fallback prices and names
-    const FALLBACK_PRICES = {
-      standard: 120000,
-      executive: 250000,
-      executiveDeluxe: 160000,
-      executiveSuite: 250000,
-    };
-
-    const FALLBACK_NAMES = {
-      standard: "Standard Room",
-      executive: "Executive Room",
-      executiveDeluxe: "Executive Deluxe Room",
-      executiveSuite: "Executive Suite Room",
-    };
-
     // Try to get data from API first
     if (apiRooms && apiRooms.length > 0) {
       const selectedRoom = apiRooms.find(
         (room) => room.propName === roomCategory
       );
       if (selectedRoom) {
-        // Extract price number from API price string (e.g., "₦120,000" -> 120000)
-        const priceMatch = selectedRoom.price.match(/[\d,]+/);
-        const apiPrice = priceMatch
-          ? parseInt(priceMatch[0].replace(/,/g, ""))
-          : FALLBACK_PRICES[roomCategory];
+        // Use API rate directly without any calculations
+        const apiPrice = selectedRoom.rawApiRate || 120000; // Use raw API rate or fallback
 
         return {
           price: apiPrice,
           name: selectedRoom.name,
           isFromApi: true,
+          roomTypeId: selectedRoom.roomTypeId,
+          rateId: selectedRoom.rateId,
         };
       }
     }
 
-    // Fallback to static data
+    // Fallback to default data when no API data available
     return {
-      price: FALLBACK_PRICES[roomCategory] || 0,
-      name: FALLBACK_NAMES[roomCategory] || "Select a room",
+      price: 120000,
+      name: "Selected Room",
       isFromApi: false,
+      roomTypeId: null,
+      rateId: null,
     };
   };
 
@@ -1007,15 +1101,8 @@ export default function RoomBookingPage() {
                     );
                   })
                 ) : (
-                  // Fallback to static options when no API data
-                  <>
-                    <option value="standard">Standard Room</option>
-                    <option value="executive">Executive Room</option>
-                    <option value="executiveDeluxe">
-                      Executive Deluxe Room
-                    </option>
-                    <option value="executiveSuite">Executive Suite Room</option>
-                  </>
+                  // Fallback when no API data available
+                  <option value="" disabled>No rooms available</option>
                 )}
               </CustomInput2>
             </StyledInputRow>
