@@ -83,7 +83,9 @@ const StyledImageContainer1 = styled.div`
   width: 29vw;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   z-index: 10;
+  transform-origin: center;
 
   ${media.tablet} {
     width: 27rem;
@@ -108,6 +110,8 @@ const StyledImageContainer2 = styled.div`
   width: 21vw;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
+  transform-origin: center;
 
   ${media.tablet} {
     width: 20rem;
@@ -131,6 +135,8 @@ const StyledImageContainer3 = styled.div`
   width: 16vw;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
+  transform-origin: center;
 
   ${media.tablet} {
     width: 15rem;

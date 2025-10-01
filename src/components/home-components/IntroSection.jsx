@@ -42,7 +42,6 @@ const StyledBanner = styled.div`
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  // background-image: ${cloudinaryBg(Banner)};
   background-color: var(--cordis-emphasis);
 `;
 

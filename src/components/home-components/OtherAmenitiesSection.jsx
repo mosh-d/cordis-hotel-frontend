@@ -8,18 +8,18 @@ import { media } from "../../util/breakpoints";
 import { getCloudinaryUrl } from "../../config/cloudinary";
 
 // Local images
-import coffeeShop from "../../assets/cordis-amenities/COFFEE-SHOP.jpg";
-import conferenceRoom from "../../assets/cordis-amenities/CONFERENCE-ROOM.jpg";
-import parkingSpace from "../../assets/cordis-amenities/PARKING-SPACE.jpg";
-import safeDepositBox from "../../assets/cordis-amenities/SAFE-DEPOSIT-BOX.jpg";
-import sitOut from "../../assets/cordis-amenities/SIT-OUT.jpg";
+import coffeeShop from "../../assets/cordis-amenities/CORDIS-COFFEE-SHOP.png";
+import conferenceRoom from "../../assets/cordis-amenities/CORDIS-CONFERENCE-ROOM.png";
+import parkingSpace from "../../assets/cordis-amenities/CORDIS-PARKING-SPACE.jpg";
+import safeDepositBox from "../../assets/cordis-amenities/CORDIS-SAFE-DEPOSIT-BOXES.png";
+import sitOut from "../../assets/cordis-amenities/CORDIS-SIT-OUT.jpg";
 
-//images
-const CoffeeShop = getCloudinaryUrl("cordis/amenity/coffee-shop");
-const ConferenceRoom = getCloudinaryUrl("cordis/amenity/conference-hall");
-const ParkingSpace = getCloudinaryUrl("cordis/amenity/parking-space");  
-const SafeDepositBox = getCloudinaryUrl("cordis/amenity/safe-deposit-boxes");
-const SitOut = getCloudinaryUrl("cordis/amenity/sit-out");
+// //images
+// const CoffeeShop = getCloudinaryUrl("cordis/amenity/coffee-shop");
+// const ConferenceRoom = getCloudinaryUrl("cordis/amenity/conference-hall");
+// const ParkingSpace = getCloudinaryUrl("cordis/amenity/parking-space");  
+// const SafeDepositBox = getCloudinaryUrl("cordis/amenity/safe-deposit-boxes");
+// const SitOut = getCloudinaryUrl("cordis/amenity/sit-out");
 
 const StyledOtherAmenitiesSection = styled.section`
   position: relative;
@@ -294,25 +294,25 @@ const SitOutText = (
 
 const Amenities = [
   {
-    ImageUrl: CoffeeShop,
+    ImageUrl: coffeeShop,
     text: CoffeeShopText,
   },
   {
-    ImageUrl: ConferenceRoom,
+    ImageUrl: conferenceRoom,
     text: ConferenceRoomText,
   },
   {
-    ImageUrl: ParkingSpace,
+    ImageUrl: parkingSpace,
     text: ParkingSpaceText,
   },
 
   {
-    ImageUrl: SafeDepositBox,
+    ImageUrl: safeDepositBox,
     text: SafeDepositBoxText,
   },
 
   {
-    ImageUrl: SitOut,
+    ImageUrl: sitOut,
     text: SitOutText,
   },
 ];

@@ -34,7 +34,7 @@ const StyledContactSection = styled.div`
 const StyledContctInfo = styled.div`
   display: flex;
   flex-direction: column;
-  width: 35%;
+  width: 40%;
   gap: 1.8rem;
 
   ${media.tablet} {
