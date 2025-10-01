@@ -6,24 +6,51 @@ import { getCloudinaryUrl } from "../../config/cloudinary";
 import Button from "../shared/Button";
 import { media } from "../../util/breakpoints";
 
-//restaurantimages
-const Restaurant1 = "cordis/restaurant-1";
-const Restaurant2 = "cordis/restaurant-2";
-const Restaurant3 = "cordis/restaurant-3";
+// Local Restaurant images
+import restaurant1 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-1.jpg";
+import restaurant2 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-2.jpg";
 
-//bar images
-const Bistro1 = "cordis/bistro-1";
-const Bistro2 = "cordis/bistro-2";
-const Bistro3 = "cordis/bistro-3";
+// Local Bar images
+import bistro1 from "../../assets/cordis-bistro/CORDIS-BISTRO-1.jpg";
+import bistro2 from "../../assets/cordis-bistro/CORDIS-BISTRO-2.jpg";
+import bistro3 from "../../assets/cordis-bistro/CORDIS-BISTRO-3.jpg";
 
-//specials images
-const FineDining1 = "cordis/fine-dining-1";
-const FineDining2 = "cordis/fine-dining-2";
-const FineDining3 = "cordis/fine-dining-3";
+// Local Fine Dining images
+import fineDining1 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-1.jpg";
+import fineDining2 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-2.jpg";
+import fineDining3 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-3.jpg";
+import fineDining4 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-4.jpg";
+import fineDining5 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-5.jpg";
 
-const RestaurantImages = [getCloudinaryUrl(Restaurant1), getCloudinaryUrl(Restaurant2), getCloudinaryUrl(Restaurant3)];
-const BistroImages = [getCloudinaryUrl(Bistro1), getCloudinaryUrl(Bistro2), getCloudinaryUrl(Bistro3)];
-const FineDiningImages = [getCloudinaryUrl(FineDining1), getCloudinaryUrl(FineDining2), getCloudinaryUrl(FineDining3)];
+//Local image arrays
+const restaurantImages = [restaurant1, restaurant2];
+const bistroImages = [bistro1, bistro2, bistro3];
+const fineDiningImages = [
+  fineDining1,
+  fineDining2,
+  fineDining3,
+  fineDining4,
+  fineDining5,
+];
+
+// //restaurantimages
+// const Restaurant1 = "cordis/restaurant-1";
+// const Restaurant2 = "cordis/restaurant-2";
+// const Restaurant3 = "cordis/restaurant-3";
+
+// //bar images
+// const Bistro1 = "cordis/bistro-1";
+// const Bistro2 = "cordis/bistro-2";
+// const Bistro3 = "cordis/bistro-3";
+
+// //fine dining images
+// const FineDining1 = "cordis/fine-dining-1";
+// const FineDining2 = "cordis/fine-dining-2";
+// const FineDining3 = "cordis/fine-dining-3";
+
+// const RestaurantImages = [getCloudinaryUrl(Restaurant1), getCloudinaryUrl(Restaurant2), getCloudinaryUrl(Restaurant3)];
+// const BistroImages = [getCloudinaryUrl(Bistro1), getCloudinaryUrl(Bistro2), getCloudinaryUrl(Bistro3)];
+// const FineDiningImages = [getCloudinaryUrl(FineDining1), getCloudinaryUrl(FineDining2), getCloudinaryUrl(FineDining3)];
 
 const StyledDiningDrinksSection = styled.section`
   position: relative;
@@ -267,7 +294,7 @@ export default function FlavorsOfCordisSection() {
       </DiningDrinksText2>
       <RestaurantWrapper>
         <StyledRestaurant>
-          <Carousel ImageUrls={RestaurantImages} />
+          <Carousel ImageUrls={restaurantImages} />
         </StyledRestaurant>
         <RestaurantTitle
           $type="h3"
@@ -305,7 +332,7 @@ export default function FlavorsOfCordisSection() {
         <BarSpecialsContainer>
           <BarWrapper>
             <StyledBar>
-              <Carousel ImageUrls={BistroImages} />
+              <Carousel ImageUrls={bistroImages} />
             </StyledBar>
             <Text
               $type="h3"
@@ -324,12 +351,14 @@ export default function FlavorsOfCordisSection() {
               $spacing=".05em"
               $weight="regular"
             >
-The perfect spot for light bites, fresh brews, and relaxed conversations.            </Text>
+              The perfect spot for light bites, fresh brews, and relaxed
+              conversations.{" "}
+            </Text>
           </BarWrapper>
 
           <SpecialsWrapper>
             <StyledSpecials>
-              <Carousel ImageUrls={FineDiningImages} />
+              <Carousel ImageUrls={fineDiningImages} />
             </StyledSpecials>
             <Text
               $type="h3"
@@ -348,7 +377,9 @@ The perfect spot for light bites, fresh brews, and relaxed conversations.       
               $spacing=".05em"
               $weight="regular"
             >
-An elevated culinary experience where every plate is a masterpiece.            </Text>
+              An elevated culinary experience where every plate is a
+              masterpiece.{" "}
+            </Text>
           </SpecialsWrapper>
         </BarSpecialsContainer>
         <RouterLink to="/room-booking">
