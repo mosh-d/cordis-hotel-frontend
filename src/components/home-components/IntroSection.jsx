@@ -5,7 +5,7 @@ import { cloudinaryBg } from "../../config/cloudinary";
 import banner from "../../assets/BANNER.jpg";
 
 // Images
-const Banner = "cordis/banner";
+// const Banner = "cordis/banner";
 
 const StyledIntroSection = styled.section`
   display: flex;
@@ -39,12 +39,11 @@ const IntroText = styled.div`
 
 const StyledBanner = styled.div`
   width: 100%;
-  aspect-ratio: 16/9;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   // background-image: ${cloudinaryBg(Banner)};
-  background-image: url(${banner});
+  background-color: var(--cordis-emphasis);
 `;
 
 export default function IntroSection() {
@@ -59,8 +58,9 @@ export default function IntroSection() {
           of comfort and discovery.
         </Text>
       </IntroText>
-      <StyledBanner></StyledBanner>
-      {/* <img src={Banner} alt="Banner" /> */}
+      <StyledBanner>
+        <img src={banner} alt="Banner" style={{ width: "100%", height: "auto" }}   />
+      </StyledBanner>
     </StyledIntroSection>
   );
 }

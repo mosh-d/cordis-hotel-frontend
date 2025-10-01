@@ -231,20 +231,22 @@ export default function RoomSection({ $type }) {
             </StyledRooms>
           </>
         ) : (
-          // Use dynamic room data with API availability
+          // Display all individual API rooms with their actual names and prices
           <StyledRooms>
-            {dynamicRooms.map((room, index) => (
-              <StyledRoomContainer key={index}>
-                <Room
-                  imageType={room.propName}
-                  headerText={room.name}
-                  buttonText="Reserve"
-                  flippable={true}
-                  unavailable={!getRoomAvailability(room.propName)}
-                  roomData={dynamicRooms} // Pass the API data to Room component
-                />
-              </StyledRoomContainer>
-            ))}
+            {dynamicRooms.map((apiRoom, index) => {
+              return (
+                <StyledRoomContainer key={index}>
+                  <Room
+                    imageType={apiRoom.propName} // Use mapped propName for correct images
+                    headerText={apiRoom.name} // Use actual API room name
+                    buttonText="Reserve"
+                    flippable={true}
+                    unavailable={apiRoom.available <= 0} // Use API availability directly
+                    roomData={dynamicRooms} // Use API data
+                  />
+                </StyledRoomContainer>
+              );
+            })}
           </StyledRooms>
         )}
 

@@ -1,8 +1,16 @@
 export const transformApiRoomsToRoomData = (apiRooms) => {
-  console.log("🔄 SIMPLE TRANSFORMER: Using first 4 API rooms directly", apiRooms);
+  console.log("🔄 INDIVIDUAL TRANSFORMER: Processing all API rooms individually", apiRooms);
   
-  // Take only the first 4 rooms from the API
-  const firstFourRooms = apiRooms.slice(0, 4);
+  // Mapping from API room names to static propName values for correct images
+  const roomNameMapping = {
+    'Presidential': 'standard',
+    'Regular': 'standard', 
+    'Executive': 'executive',
+    'Special 1': 'executive',
+    'Delux': 'executiveDeluxe',
+    'Special 2': 'executiveDeluxe',
+    'Executive Suite': 'executiveSuite'
+  };
   
   // Fallback data for amenities, size, capacity, and services
   const fallbackData = {
@@ -33,8 +41,8 @@ export const transformApiRoomsToRoomData = (apiRooms) => {
     defaultCapacity: "2 Adults & 1 Child"
   };
   
-  // Map each API room directly to our format
-  const transformedRooms = firstFourRooms.map((apiRoom, index) => {
+  // Transform each API room individually to show all room types
+  const transformedRooms = apiRooms.map((apiRoom, index) => {
     console.log(`📊 PROCESSING ROOM ${index + 1}:`, {
       originalType: apiRoom.roomType,
       rate: apiRoom.rate,
@@ -43,15 +51,12 @@ export const transformApiRoomsToRoomData = (apiRooms) => {
       rateId: apiRoom.rateId
     });
     
-    // Use API rate directly without any calculations
-    const finalRate = apiRoom.rate;
-    
     return {
-      // Use API data directly
+      // Use actual API room name and price
       name: apiRoom.roomType,
-      propName: apiRoom.roomType.toLowerCase().replace(/\s+/g, ''), // Create simple propName
-      price: `${apiRoom.currencySymbol || '₦'}${finalRate}`,
-      rawApiRate: finalRate, // Store original API rate for booking system
+      propName: roomNameMapping[apiRoom.roomType] || apiRoom.roomType.toLowerCase().replace(/\s+/g, ''), // Map to correct image
+      price: `${apiRoom.currencySymbol || '₦'}${apiRoom.rate}`,
+      rawApiRate: apiRoom.rate,
       available: apiRoom.available,
       rateId: apiRoom.rateId,
       roomTypeId: apiRoom.roomTypeId,
@@ -69,7 +74,7 @@ export const transformApiRoomsToRoomData = (apiRooms) => {
     };
   });
   
-  console.log("✅ SIMPLE TRANSFORMER: Final result:", transformedRooms.map(room => ({
+  console.log("✅ INDIVIDUAL TRANSFORMER: Final result:", transformedRooms.map(room => ({
     name: room.name,
     propName: room.propName,
     price: room.price,

@@ -9,45 +9,110 @@ import { media } from "../../util/breakpoints";
 import { getCloudinaryUrl } from "../../config/cloudinary";
 import { ROOMS } from "../../util/room-data";
 
-//Standard room images
-const StandardRoom1 = "cordis/standard-room-1";
-const StandardRoom2 = "cordis/standard-room-2";
-const StandardRoom3 = "cordis/standard-room-3";
-const StandardRoom4 = "cordis/standard-room-4";
+// Local Standard Room Images
+import standardRoom1 from "../../assets/standard-room/STANDARD-ROOM-1.jpg";
+import standardRoom2 from "../../assets/standard-room/STANDARD-ROOM-2.jpg";
+import standardRoom3 from "../../assets/standard-room/STANDARD-ROOM-3.jpg";
+import standardRoom4 from "../../assets/standard-room/STANDARD-ROOM-4.jpg";
 
-//Executive room images
-const ExecutiveRoom1 = "cordis/executive-room-1";
-const ExecutiveRoom2 = "cordis/executive-room-2";
-// const ExecutiveRoom3 = "cordis/executive-room-3";
-// const ExecutiveRoom4 = "cordis/executive-room-4";
+// Local Executive Room Images
+import executiveRoom1 from "../../assets/executive-room/EXECUTIVE-ROOM-1.jpg";
+import executiveRoom2 from "../../assets/executive-room/EXECUTIVE-ROOM-2.jpg";
+import executiveRoom3 from "../../assets/executive-room/EXECUTIVE-ROOM-3.jpg";
+import executiveRoom4 from "../../assets/executive-room/EXECUTIVE-ROOM-4.jpg";
+import executiveRoom5 from "../../assets/executive-room/EXECUTIVE-ROOM-5.jpg";
 
-//Executive Deluxe room images
-const ExecutiveDeluxeRoom1 = "cordis/executive-deluxe-room-1";
-const ExecutiveDeluxeRoom2 = "cordis/executive-deluxe-room-2";
+// Local Executive Deluxe Room Images
+import executiveDeluxeRoom1 from "../../assets/executive-deluxe-room/EXECUTIVE-DELUXE-ROOM-1.jpg";
+import executiveDeluxeRoom2 from "../../assets/executive-deluxe-room/EXECUTIVE-DELUXE-ROOM-2.jpg";
+import executiveDeluxeRoom3 from "../../assets/executive-deluxe-room/EXECUTIVE-DELUXE-ROOM-3.jpg";
+import executiveDeluxeRoom4 from "../../assets/executive-deluxe-room/EXECUTIVE-DELUXE-ROOM-4.jpg";
+import executiveDeluxeRoom5 from "../../assets/executive-deluxe-room/EXECUTIVE-DELUXE-ROOM-5.jpg";
 
-//Executive Suite images
-const ExecutiveSuite1 = "cordis/executive-suite-1";
-const ExecutiveSuite2 = "cordis/executive-suite-2";
+// Local Executive Suite Room Images
+import executiveSuiteRoom1 from "../../assets/executive-suite/EXECUTIVE-SUITE-1.jpg";
+import executiveSuiteRoom2 from "../../assets/executive-suite/EXECUTIVE-SUITE-2.jpg";
+import executiveSuiteRoom3 from "../../assets/executive-suite/EXECUTIVE-SUITE-3.jpg";
+import executiveSuiteRoom4 from "../../assets/executive-suite/EXECUTIVE-SUITE-4.jpg";
+import executiveSuiteRoom5 from "../../assets/executive-suite/EXECUTIVE-SUITE-5.jpg";
+import executiveSuiteRoom6 from "../../assets/executive-suite/EXECUTIVE-SUITE-6.jpg";
+import executiveSuiteRoom7 from "../../assets/executive-suite/EXECUTIVE-SUITE-7.jpg";
+import executiveSuiteRoom8 from "../../assets/executive-suite/EXECUTIVE-SUITE-8.jpg";
 
-const StandardRoomImages = [
-  getCloudinaryUrl(StandardRoom1),
-  getCloudinaryUrl(StandardRoom2),
-  getCloudinaryUrl(StandardRoom3),
-  getCloudinaryUrl(StandardRoom4),
+// //Standard room images
+// const StandardRoom1 = "cordis/standard-room-1";
+// const StandardRoom2 = "cordis/standard-room-2";
+// const StandardRoom3 = "cordis/standard-room-3";
+// const StandardRoom4 = "cordis/standard-room-4";
+
+// //Executive room images
+// const ExecutiveRoom1 = "cordis/executive-room-1";
+// const ExecutiveRoom2 = "cordis/executive-room-2";
+// // const ExecutiveRoom3 = "cordis/executive-room-3";
+// // const ExecutiveRoom4 = "cordis/executive-room-4";
+
+// //Executive Deluxe room images
+// const ExecutiveDeluxeRoom1 = "cordis/executive-deluxe-room-1";
+// const ExecutiveDeluxeRoom2 = "cordis/executive-deluxe-room-2";
+
+// //Executive Suite images
+// const ExecutiveSuite1 = "cordis/executive-suite-1";
+// const ExecutiveSuite2 = "cordis/executive-suite-2";
+
+// const StandardRoomImages = [
+//   getCloudinaryUrl(StandardRoom1),
+//   getCloudinaryUrl(StandardRoom2),
+//   getCloudinaryUrl(StandardRoom3),
+//   getCloudinaryUrl(StandardRoom4),
+// ];
+// const ExecutiveRoomImages = [
+//   getCloudinaryUrl(ExecutiveRoom1),
+//   getCloudinaryUrl(ExecutiveRoom2),
+//   // getCloudinaryUrl(ExecutiveRoom3),
+//   // getCloudinaryUrl(ExecutiveRoom4),
+// ];
+// const ExecutiveDeluxeRoomImages = [
+//   getCloudinaryUrl(ExecutiveDeluxeRoom1),
+//   getCloudinaryUrl(ExecutiveDeluxeRoom2),
+// ];
+// const ExecutiveSuiteImages = [
+//   getCloudinaryUrl(ExecutiveSuite1),
+//   getCloudinaryUrl(ExecutiveSuite2),
+// ];
+
+// Local Room Arrays
+const standardRoomImages = [
+  standardRoom1,
+  standardRoom2,
+  standardRoom3,
+  standardRoom4,
 ];
-const ExecutiveRoomImages = [
-  getCloudinaryUrl(ExecutiveRoom1),
-  getCloudinaryUrl(ExecutiveRoom2),
-  // getCloudinaryUrl(ExecutiveRoom3),
-  // getCloudinaryUrl(ExecutiveRoom4),
+
+const executiveRoomImages = [
+  executiveRoom1,
+  executiveRoom2,
+  executiveRoom3,
+  executiveRoom4,
+  executiveRoom5,
 ];
-const ExecutiveDeluxeRoomImages = [
-  getCloudinaryUrl(ExecutiveDeluxeRoom1),
-  getCloudinaryUrl(ExecutiveDeluxeRoom2),
+
+const executiveDeluxeRoomImages = [
+  executiveDeluxeRoom1,
+  executiveDeluxeRoom2,
+  executiveDeluxeRoom3,
+  executiveDeluxeRoom4,
+  executiveDeluxeRoom5,
 ];
-const ExecutiveSuiteImages = [
-  getCloudinaryUrl(ExecutiveSuite1),
-  getCloudinaryUrl(ExecutiveSuite2),
+
+const executiveSuiteImages = [
+  executiveSuiteRoom1,
+  executiveSuiteRoom2,
+  executiveSuiteRoom3,
+  executiveSuiteRoom4,
+  executiveSuiteRoom5,
+  executiveSuiteRoom6,
+  executiveSuiteRoom7,
+  executiveSuiteRoom8,
 ];
 
 const StyledRoom = styled.div`
@@ -222,14 +287,14 @@ export default function Room({
 
   const images =
     imageType === "standard"
-      ? StandardRoomImages
+      ? standardRoomImages
       : imageType === "executive"
-      ? ExecutiveRoomImages
+      ? executiveRoomImages
       : imageType === "executiveDeluxe"
-      ? ExecutiveDeluxeRoomImages
+      ? executiveDeluxeRoomImages
       : imageType === "executiveSuite"
-      ? ExecutiveSuiteImages
-      : StandardRoomImages;
+      ? executiveSuiteImages
+      : standardRoomImages;
 
   const backContent = (
     <RoomDetailsContent>
