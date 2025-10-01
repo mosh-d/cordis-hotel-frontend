@@ -6,31 +6,44 @@ import { Link as RouterLink } from "react-router-dom";
 import { media } from "../../util/breakpoints";
 import { getCloudinaryUrl } from "../../config/cloudinary";
 
-//gym images
-const Gym1 = "cordis/gym-1";
-const Gym2 = "cordis/gym-2";
-// const Gym3 = "cordis/gym-3";
-// const Gym4 = "cordis/gym-4";
+// Local Gym images
+import gym1 from "../../assets/cordis-gym/CORDIS-GYM-1.jpg";
+import gym2 from "../../assets/cordis-gym/CORDIS-GYM-2.jpg";
+import gym3 from "../../assets/cordis-gym/CORDIS-GYM-3.jpg";
+import gym4 from "../../assets/cordis-gym/CORDIS-GYM-4.jpg";
+import gym5 from "../../assets/cordis-gym/CORDIS-GYM-5.jpg";
 
-//spa images
-const Spa1 = "cordis/spa-1";
-const Spa2 = "cordis/spa-2";
-const Spa3 = "cordis/spa-3";
+//Local Spa images
+import spa1 from "../../assets/cordis-spa/CORDIS-SPA-1.png";
+import spa2 from "../../assets/cordis-spa/CORDIS-SPA-2.png";
+import spa3 from "../../assets/cordis-spa/CORDIS-SPA-3.png";
 
-const GymImages = [
-  getCloudinaryUrl(Gym1),
-  getCloudinaryUrl(Gym2),
-  // getCloudinaryUrl(Gym3),
-  // getCloudinaryUrl(Gym4),
-];
-const SpaImages = [
-  getCloudinaryUrl(Spa1),
-  getCloudinaryUrl(Spa2),
-  getCloudinaryUrl(Spa3),
-];
+//Local image arrays
+const gymImages = [gym1, gym2, gym3, gym4, gym5];
+const spaImages = [spa1, spa2, spa3];
 
-console.log(GymImages);
-console.log(SpaImages);
+// //gym images
+// const Gym1 = "cordis/gym-1";
+// const Gym2 = "cordis/gym-2";
+// // const Gym3 = "cordis/gym-3";
+// // const Gym4 = "cordis/gym-4";
+
+// //spa images
+// const Spa1 = "cordis/spa-1";
+// const Spa2 = "cordis/spa-2";
+// const Spa3 = "cordis/spa-3";
+
+// const GymImages = [
+//   getCloudinaryUrl(Gym1),
+//   getCloudinaryUrl(Gym2),
+//   // getCloudinaryUrl(Gym3),
+//   // getCloudinaryUrl(Gym4),
+// ];
+// const SpaImages = [
+//   getCloudinaryUrl(Spa1),
+//   getCloudinaryUrl(Spa2),
+//   getCloudinaryUrl(Spa3),
+// ];
 
 const StyledExerciseRelaxationSection = styled.section`
   position: relative;
@@ -207,7 +220,7 @@ export default function ExerciseRelaxationSection() {
 
         <StyledGymContainer>
           <StyledGym>
-            <Carousel ImageUrls={GymImages} />
+            <Carousel ImageUrls={gymImages} />
           </StyledGym>
           <GymTextWrapper>
             <Text
@@ -249,7 +262,7 @@ export default function ExerciseRelaxationSection() {
       <StyledSpaWrapperContainer>
         <StyledSpaWrapper>
           <StyledSpa>
-            <Carousel ImageUrls={SpaImages} />
+            <Carousel ImageUrls={spaImages} />
           </StyledSpa>
           <SpaTextWrapper>
             <Text
