@@ -7,6 +7,13 @@ import { Link as RouterLink } from "react-router-dom";
 import { media } from "../../util/breakpoints";
 import { getCloudinaryUrl } from "../../config/cloudinary";
 
+// Local images
+import coffeeShop from "../../assets/cordis-amenities/COFFEE-SHOP.jpg";
+import conferenceRoom from "../../assets/cordis-amenities/CONFERENCE-ROOM.jpg";
+import parkingSpace from "../../assets/cordis-amenities/PARKING-SPACE.jpg";
+import safeDepositBox from "../../assets/cordis-amenities/SAFE-DEPOSIT-BOX.jpg";
+import sitOut from "../../assets/cordis-amenities/SIT-OUT.jpg";
+
 //images
 const CoffeeShop = getCloudinaryUrl("cordis/amenity/coffee-shop");
 const ConferenceRoom = getCloudinaryUrl("cordis/amenity/conference-hall");

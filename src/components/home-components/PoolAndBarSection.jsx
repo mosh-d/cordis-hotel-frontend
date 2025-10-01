@@ -6,21 +6,33 @@ import { Link as RouterLink } from "react-router-dom";
 import Carousel from "../shared/Carousel";
 import { getCloudinaryUrl } from "../../config/cloudinary";
 
-//pool images
-const Pool1 = "cordis/pool-1";
-const Pool2 = "cordis/pool-2";
-const Pool3 = "cordis/pool-3";
-const Pool4 = "cordis/pool-4";
+// local pool images
+import pool1 from "../../assets/cordis-pool/CORDIS-POOL-1.jpg";
+import pool2 from "../../assets/cordis-pool/CORDIS-POOL-2.jpg";
+import pool3 from "../../assets/cordis-pool/CORDIS-POOL-3.jpg";
 
-//bar images - update these to match your actual Cloudinary public IDs
-const Bar1 = "cordis/bar-1"; // Check if this exists in your Cloudinary dashboard
-const Bar2 = "cordis/bar-2"; // Check if this exists in your Cloudinary dashboard  
-const Bar3 = "cordis/bar-3"; // Check if this exists in your Cloudinary dashboard
+// local bar images
+import bar1 from "../../assets/cordis-bar/CORDIS-BAR-1.jpg";
+import bar2 from "../../assets/cordis-bar/CORDIS-BAR-2.jpg";
+import bar3 from "../../assets/cordis-bar/CORDIS-BAR-3.jpg";
 
-const PoolImages = [getCloudinaryUrl(Pool1), getCloudinaryUrl(Pool2), getCloudinaryUrl(Pool3), getCloudinaryUrl(Pool4)];
-const BarImages = [getCloudinaryUrl(Bar1), getCloudinaryUrl(Bar2), getCloudinaryUrl(Bar3)];
+// Local image arrays
+const poolImages = [pool1, pool2, pool3];
+const barImages = [bar1, bar2, bar3];
 
-console.log(BarImages);
+// //pool images
+// const Pool1 = "cordis/pool-1";
+// const Pool2 = "cordis/pool-2";
+// const Pool3 = "cordis/pool-3";
+// const Pool4 = "cordis/pool-4";
+
+// //bar images - update these to match your actual Cloudinary public IDs
+// const Bar1 = "cordis/bar-1"; 
+// const Bar2 = "cordis/bar-2"; 
+// const Bar3 = "cordis/bar-3";
+
+// const PoolImages = [getCloudinaryUrl(Pool1), getCloudinaryUrl(Pool2), getCloudinaryUrl(Pool3), getCloudinaryUrl(Pool4)];
+// const BarImages = [getCloudinaryUrl(Bar1), getCloudinaryUrl(Bar2), getCloudinaryUrl(Bar3)];
 
 const StyledPoolAndBarSection = styled.section`
   position: relative;
@@ -197,7 +209,7 @@ export default function PoolAndBarSection() {
       </PoolAndBarTextWrapper1>
       <StyledPoolWrapper>
         <StyledPool>
-          <Carousel ImageUrls={PoolImages} />
+          <Carousel ImageUrls={poolImages} />
         </StyledPool>
         <StyledPoolTextWrapper>
           <Text
@@ -232,7 +244,7 @@ export default function PoolAndBarSection() {
           </Text>
         </PoolAndBarTextWrapper2>
         <StyledBar>
-          <Carousel ImageUrls={BarImages} />
+          <Carousel ImageUrls={barImages} />
         </StyledBar>
         <StyledBarTextWrapper>
           <Text
