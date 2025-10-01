@@ -4,9 +4,9 @@ import { media } from "../../util/breakpoints";
 import { cloudinaryBg } from "../../config/cloudinary";
 
 //images
-import About1_1 from "../../assets/cordis-about-1/CORDIS-ABOUT-1-1.png";
-import About1_2 from "../../assets/cordis-about-1/CORDIS-ABOUT-1-2.png";
-import About1_3 from "../../assets/cordis-about-1/CORDIS-ABOUT-1-3.png";
+import About1_1 from "../../assets/cordis-about-1/CORDIS-ABOUT-1-1.jpg";
+import About1_2 from "../../assets/cordis-about-1/CORDIS-ABOUT-1-2.jpg";
+import About1_3 from "../../assets/cordis-about-1/CORDIS-ABOUT-1-3.jpg";
 
 const StyledAboutSection1 = styled.section`
   position: relative;

@@ -14,6 +14,7 @@ import {
   getCloudinaryUrl,
   getCloudinaryVideoUrl,
 } from "../../config/cloudinary";
+import heroImage from "../../assets/HERO.jpg";
 
 //Hero image
 const HeroImage = "cordis/hero/image";
@@ -37,7 +38,8 @@ const StyledHeroSection = styled.section`
     left: 0;
     width: 100%;
     height: 100%;
-    background: ${cloudinaryBg(HeroImage)} center/cover no-repeat;
+    // background: ${cloudinaryBg(HeroImage)} center/cover no-repeat;
+    background: url(${heroImage}) center/cover no-repeat;
     z-index: -2;
     opacity: ${(props) => (props.$videoLoaded ? 0 : 1)};
     transition: opacity 0.5s ease;
@@ -50,7 +52,12 @@ const StyledHeroSection = styled.section`
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgb(36, 25, 4) 0%, rgb(255, 255, 255) 60%, transparent);
+    background: linear-gradient(
+      to bottom,
+      rgb(36, 25, 4) 0%,
+      rgb(255, 255, 255) 60%,
+      transparent
+    );
     mix-blend-mode: multiply;
     z-index: 1;
     pointer-events: none;
@@ -110,10 +117,12 @@ const StyledHeroSection = styled.section`
   }
 `;
 
+console.log(`HERO IMAGE = ${heroImage}`);
+
 const StyledLogoWrapper = styled.div`
   z-index: 10;
   position: relative;
-  
+
   ${media.mobile} {
     position: absolute;
     left: 0;
@@ -485,7 +494,7 @@ const HeroSection = forwardRef((props, ref) => {
             }
             const newCheckIn = val < today ? today : val;
             setCheckIn(newCheckIn);
-            
+
             // If check-out is before the new check-in date, update check-out
             if (checkOut && checkOut < newCheckIn) {
               setCheckOut(newCheckIn);

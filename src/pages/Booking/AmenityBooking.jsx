@@ -1,6 +1,6 @@
 import { useOutletContext } from "react-router-dom";
 import { styled } from "styled-components";
-import Booking1 from "../../assets/cordis-booking/CORDIS-BOOKING-1.png";
+import Booking1 from "../../assets/cordis-booking/CORDIS-BOOKING-1.jpg";
 import { RiArrowLeftLine } from "react-icons/ri";
 import Text from "../../components/shared/Text";
 import { Link as RouterLink } from "react-router-dom";

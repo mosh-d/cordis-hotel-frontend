@@ -7,10 +7,10 @@ import { media } from "../../util/breakpoints";
 import { cloudinaryBg } from "../../config/cloudinary";
 
 //images
-import Exterior1 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-1.png";
-import Exterior2 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-2.png";
-import Exterior3 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-3.png";
-import Exterior4 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-4.png";
+import Exterior1 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-1.jpg";
+import Exterior2 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-2.jpg";
+import Exterior3 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-3.jpg";
+import Exterior4 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-4.jpg";
 
 const StyledHotelExteriorSection = styled.div`
   display: flex;

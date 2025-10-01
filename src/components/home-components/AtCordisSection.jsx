@@ -6,7 +6,7 @@ import { media } from "../../util/breakpoints";
 import { cloudinaryBg } from "../../config/cloudinary";
 
 //image
-import AtCordisBackground from "../../assets/at-cordis/AT-CORDIS.png";
+import AtCordisBackground from "../../assets/at-cordis/AT-CORDIS.jpg";
 
 const StyledAtCordisSection = styled.section`
   display: flex;

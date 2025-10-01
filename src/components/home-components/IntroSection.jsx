@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Text from "../shared/Text";
 import { media } from "../../util/breakpoints";
 import { cloudinaryBg } from "../../config/cloudinary";
+import banner from "../../assets/BANNER.jpg";
 
 // Images
 const Banner = "cordis/banner";
@@ -37,11 +38,13 @@ const IntroText = styled.div`
 `;
 
 const StyledBanner = styled.div`
-  height: 30rem;
   width: 100%;
-  background-size: cover;
+  aspect-ratio: 16/9;
+  background-size: contain;
+  background-position: center;
   background-repeat: no-repeat;
-  background-image: ${cloudinaryBg(Banner)};
+  // background-image: ${cloudinaryBg(Banner)};
+  background-image: url(${banner});
 `;
 
 export default function IntroSection() {

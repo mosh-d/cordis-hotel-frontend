@@ -4,7 +4,7 @@ import { cloudinaryBg } from "../../config/cloudinary";
 import { media } from "../../util/breakpoints";
 
 //image
-import About2_1 from "../../assets/cordis-about-2/CORDIS-ABOUT-2-1.png";
+import About2_1 from "../../assets/cordis-about-2/CORDIS-ABOUT-2-1.jpg";
 
 const StyledAboutSection2 = styled.div`
   display: flex;

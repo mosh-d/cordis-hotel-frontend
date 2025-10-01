@@ -4,7 +4,7 @@ import { media } from "../../util/breakpoints";
 import { cloudinaryBg } from "../../config/cloudinary";
 
 //image
-import MissionVisionBachground from "../../assets/mission-vision/MISSION-VISION-1.png";
+import MissionVisionBachground from "../../assets/mission-vision/MISSION-VISION-1.jpg";
 
 const StyledMissionVision = styled.div`
   display: flex;
