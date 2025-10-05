@@ -44,6 +44,17 @@ const StyledInput = styled.input`
   letter-spacing: 0.2rem;
   border-bottom: 1px solid var(--cordis-accent);
 
+  /* Override browser autofill styling */
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    -webkit-text-fill-color: var(--cordis-accent) !important;
+    background-color: transparent !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
   &:focus-visible {
     outline: none;
     border-color: var(--cordis-emphasis);
@@ -78,6 +89,17 @@ const StyledSelect = styled.select`
   letter-spacing: 0.2rem;
   border-bottom: 1px solid var(--cordis-accent);
 
+  /* Override browser autofill styling */
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    -webkit-text-fill-color: var(--cordis-accent) !important;
+    background-color: transparent !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
   &:focus-visible {
     outline: none;
     border-color: var(--cordis-emphasis);
@@ -104,6 +126,17 @@ const StyledSelectBlack = styled.select`
   cursor: pointer;
   border-bottom: 1px solid var(--cordis-black);
 
+  /* Override browser autofill styling */
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    -webkit-text-fill-color: var(--cordis-black) !important;
+    background-color: transparent !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
   &:focus-visible {
     outline: none;
     border-color: var(--cordis-emphasis);
@@ -128,6 +161,17 @@ const StyledInputBlack = styled.input`
   font-size: var(--text-sm);
   letter-spacing: 0.2rem;
   border-bottom: 1px solid var(--cordis-black);
+
+  /* Override browser autofill styling */
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    -webkit-text-fill-color: var(--cordis-black) !important;
+    background-color: transparent !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
 
   &:focus-visible {
     outline: none;
