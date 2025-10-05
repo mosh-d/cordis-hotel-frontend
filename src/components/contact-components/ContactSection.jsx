@@ -13,6 +13,9 @@ import {
 import Link from "../shared/Link";
 import Button from "../shared/Button";
 import { media } from "../../util/breakpoints";
+import { useState } from "react";
+import { useContactForm } from "../../hooks/useContactForm";
+import SuccessModal from "../shared/SuccessModal";
 
 const StyledContactSection = styled.div`
   display: flex;
@@ -70,15 +73,16 @@ const StyledUserInfoRow1 = styled.div`
 `;
 
 const StyledUserInfoRow2 = styled.div`
-  
+  margin-top: 2.4rem;
 `;
 
 const StyledUserInfoRow3 = styled.div`
-  
+  margin-top: 2.4rem;
 `;
 
 const StyledUserInfoRow4 = styled.div`
-  
+  margin-top: 2.4rem;
+
   ${media.tablet} {
     display: flex;
     justify-content: center;
@@ -107,6 +111,63 @@ const StyledTextarea = styled.textarea`
 `;
 
 export default function ContactSection() {
+  // Form state
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  // Modal state
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  // Contact form hook
+  const { loading, error, success, submitEnquiry, resetForm } = useContactForm();
+
+  // Handle input changes
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      return;
+    }
+
+    const result = await submitEnquiry(formData);
+
+    if (result.success) {
+      // Reset form on success
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+      resetForm();
+
+      // Show success modal
+      setShowSuccessModal(true);
+
+      // Auto-hide modal after 3 seconds
+      setTimeout(() => {
+        setShowSuccessModal(false);
+      }, 3000);
+    }
+  };
+
+  // Close modal handler
+  const handleCloseModal = () => {
+    setShowSuccessModal(false);
+  };
+
   return (
     <StyledContactSection>
       <StyledContctInfo>
@@ -159,39 +220,61 @@ export default function ContactSection() {
         </StyledLinkWrapper>
       </StyledContctInfo>
       <StyledUserInfo>
-        <StyledUserInfoRow1>
-          <CustomInput2
-            header="Your Name"
-            $placeholder="eg. John Doe"
-            type="text"
-          />
-          <CustomInput2
-            header="Your Email"
-            $placeholder="example@test.com"
-            type="email"
-          />
-        </StyledUserInfoRow1>
-        <StyledUserInfoRow2>
-          <CustomInput2
-            header="Subject"
-            $placeholder="eg. Inquiry"
-            type="text"
-          />
-        </StyledUserInfoRow2>
-        <StyledUserInfoRow3>
-          <Text $type="p" $color="var(--cordis-black)" $weight="light" $typeFace="primary">Message</Text>
-          <StyledTextarea 
-            placeholder="Write a message here"
-          />
-        </StyledUserInfoRow3>
-        <StyledUserInfoRow4>
-          <Button $type="ghost">
-            <Text $weight="light" $size="medium">
-              Send Message
-            </Text>
-          </Button>
-        </StyledUserInfoRow4>
+        <form onSubmit={handleSubmit}>
+          <StyledUserInfoRow1>
+            <CustomInput2
+              header="Your Name"
+              $placeholder="eg. John Doe"
+              type="text"
+              value={formData.name}
+              onChange={(e) => handleInputChange("name", e.target.value)}
+            />
+            <CustomInput2
+              header="Your Email"
+              $placeholder="example@test.com"
+              type="email"
+              value={formData.email}
+              onChange={(e) => handleInputChange("email", e.target.value)}
+            />
+          </StyledUserInfoRow1>
+          <StyledUserInfoRow2>
+            <CustomInput2
+              header="Subject"
+              $placeholder="eg. Inquiry"
+              type="text"
+              value={formData.subject}
+              onChange={(e) => handleInputChange("subject", e.target.value)}
+            />
+          </StyledUserInfoRow2>
+          <StyledUserInfoRow3>
+            <Text $type="p" $color="var(--cordis-black)" $weight="light" $typeFace="primary">Message</Text>
+            <StyledTextarea
+              placeholder="Write a message here"
+              value={formData.message}
+              onChange={(e) => handleInputChange("message", e.target.value)}
+            />
+          </StyledUserInfoRow3>
+          <StyledUserInfoRow4>
+            <Button $type="ghost" type="submit" disabled={loading}>
+              <Text $weight="light" $size="medium">
+                {loading ? "Sending..." : "Send Message"}
+              </Text>
+            </Button>
+          </StyledUserInfoRow4>
+        </form>
+        {/* Status messages positioned outside form to avoid layout issues */}
+        {error && (
+          <Text $type="p" $color="var(--cordis-error)" $weight="light" $typeFace="primary" style={{ marginTop: '1rem' }}>
+            {error}
+          </Text>
+        )}
       </StyledUserInfo>
+      {/* Success Modal */}
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={handleCloseModal}
+        message="Message sent successfully!"
+      />
     </StyledContactSection>
   );
 }
