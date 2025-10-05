@@ -18,7 +18,6 @@ const StyledModalOverlay = styled.div`
 const StyledModal = styled.div`
   background: white;
   padding: 3rem;
-  border-radius: 1.2rem;
   max-width: 40rem;
   width: 90%;
   box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.1);
@@ -48,7 +47,7 @@ const StyledSuccessIcon = styled.div`
   width: 6rem;
   height: 6rem;
   border-radius: 50%;
-  background-color: #4CAF50;
+  background-color: var(--cordis-emphasis);
   display: flex;
   align-items: center;
   justify-content: center;

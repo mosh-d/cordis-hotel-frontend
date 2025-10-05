@@ -122,8 +122,36 @@ export default function ContactSection() {
   // Modal state
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
+  // Form validation state
+  const [formErrors, setFormErrors] = useState({});
+
   // Contact form hook
   const { loading, error, success, submitEnquiry, resetForm } = useContactForm();
+
+  // Form validation function
+  const validateForm = () => {
+    const errors = {};
+
+    // Validate required fields
+    if (!formData.name || formData.name.trim().length < 2) {
+      errors.name = "Name is required (minimum 2 characters)";
+    }
+
+    if (!formData.email || !formData.email.includes("@") || !formData.email.includes(".")) {
+      errors.email = "Valid email address is required";
+    }
+
+    if (!formData.subject || formData.subject.trim().length < 3) {
+      errors.subject = "Subject is required (minimum 3 characters)";
+    }
+
+    if (!formData.message || formData.message.trim().length < 10) {
+      errors.message = "Message is required (minimum 10 characters)";
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   // Handle input changes
   const handleInputChange = (field, value) => {
@@ -131,13 +159,22 @@ export default function ContactSection() {
       ...prev,
       [field]: value,
     }));
+
+    // Clear field error when user starts typing
+    if (formErrors[field]) {
+      setFormErrors(prev => ({
+        ...prev,
+        [field]: null,
+      }));
+    }
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+    // Validate form before making API call
+    if (!validateForm()) {
       return;
     }
 
@@ -151,6 +188,7 @@ export default function ContactSection() {
         subject: "",
         message: "",
       });
+      setFormErrors({});
       resetForm();
 
       // Show success modal
@@ -167,6 +205,12 @@ export default function ContactSection() {
   const handleCloseModal = () => {
     setShowSuccessModal(false);
   };
+
+  // Validation state for styling
+  const nameIsInvalid = formErrors.name && (!formData.name || formData.name.trim().length < 2);
+  const emailIsInvalid = formErrors.email && (!formData.email || !formData.email.includes("@") || !formData.email.includes("."));
+  const subjectIsInvalid = formErrors.subject && (!formData.subject || formData.subject.trim().length < 3);
+  const messageIsInvalid = formErrors.message && (!formData.message || formData.message.trim().length < 10);
 
   return (
     <StyledContactSection>
@@ -220,6 +264,40 @@ export default function ContactSection() {
         </StyledLinkWrapper>
       </StyledContctInfo>
       <StyledUserInfo>
+        {/* Form validation errors */}
+        {Object.keys(formErrors).length > 0 && (
+          <div
+            style={{
+              backgroundColor: "#fee",
+              border: "1px solid #fcc",
+              borderRadius: "8px",
+              padding: "1rem",
+              marginBottom: "2rem",
+            }}
+          >
+            <Text
+              $type="h4"
+              $color="#d00"
+              $weight="bold"
+              style={{ marginBottom: "0.5rem" }}
+            >
+              Please complete the form:
+            </Text>
+            <ul style={{ margin: 0, paddingLeft: "1.5rem" }}>
+              {Object.values(formErrors).map((error, index) => (
+                <li
+                  key={index}
+                  style={{ color: "#d00", marginBottom: "0.25rem" }}
+                >
+                  <Text $size="small" $color="#d00">
+                    {error}
+                  </Text>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
           <StyledUserInfoRow1>
             <CustomInput2
@@ -227,6 +305,9 @@ export default function ContactSection() {
               $placeholder="eg. John Doe"
               type="text"
               value={formData.name}
+              style={{
+                color: nameIsInvalid ? "red" : "var(--cordis-black)",
+              }}
               onChange={(e) => handleInputChange("name", e.target.value)}
             />
             <CustomInput2
@@ -234,6 +315,9 @@ export default function ContactSection() {
               $placeholder="example@test.com"
               type="email"
               value={formData.email}
+              style={{
+                color: emailIsInvalid ? "red" : "var(--cordis-black)",
+              }}
               onChange={(e) => handleInputChange("email", e.target.value)}
             />
           </StyledUserInfoRow1>
@@ -243,6 +327,9 @@ export default function ContactSection() {
               $placeholder="eg. Inquiry"
               type="text"
               value={formData.subject}
+              style={{
+                color: subjectIsInvalid ? "red" : "var(--cordis-black)",
+              }}
               onChange={(e) => handleInputChange("subject", e.target.value)}
             />
           </StyledUserInfoRow2>
@@ -251,6 +338,10 @@ export default function ContactSection() {
             <StyledTextarea
               placeholder="Write a message here"
               value={formData.message}
+              style={{
+                color: messageIsInvalid ? "red" : "var(--cordis-black)",
+                borderColor: messageIsInvalid ? "red" : "var(--cordis-black)",
+              }}
               onChange={(e) => handleInputChange("message", e.target.value)}
             />
           </StyledUserInfoRow3>

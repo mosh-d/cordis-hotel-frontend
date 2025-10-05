@@ -7,6 +7,8 @@ import Button from "./shared/Button";
 import { RiTiktokLine, RiFacebookLine, RiInstagramLine, RiTwitterXLine, RiPhoneLine, RiWhatsappLine, RiMailLine } from "react-icons/ri";
 import Link from "./shared/Link";
 import { media } from "../util/breakpoints";
+import { useState } from "react";
+import SuccessModal from "./shared/SuccessModal";
 
 const StyledFooter = styled.footer`
   display: flex;
@@ -242,7 +244,140 @@ const StyledHeader = styled.div`
 `;
 
 export default function Footer({ $type }) {
+  // Subscription state
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
+  // Modal states
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showAlreadySubscribedModal, setShowAlreadySubscribedModal] = useState(false);
+
+  // Email validation function
+  const validateEmail = (email) => {
+    if (!email) {
+      return "Email address is required";
+    }
+    if (!email.includes("@") || !email.includes(".")) {
+      return "Please enter a valid email address";
+    }
+    return "";
+  };
+
+  // Handle email input change
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+
+    // Clear error when user starts typing
+    if (emailError) {
+      setEmailError("");
+    }
+  };
+
+  // Handle subscription
+  const handleSubscribe = async () => {
+    // Validate email
+    const error = validateEmail(email);
+    if (error) {
+      setEmailError(error);
+      return;
+    }
+
+    setIsSubscribing(true);
+    setEmailError("");
+
+    try {
+      console.log("🚀 Making subscription API call to:", "https://secure.thecordishotelikeja.com/api/hotel/subscribe");
+
+      const response = await fetch(
+        "https://secure.thecordishotelikeja.com/api/hotel/subscribe",
+        {
+          method: "POST",
+          mode: 'cors',
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Cache-Control": "no-cache",
+          },
+          body: JSON.stringify({ email }),
+          redirect: 'follow',
+        }
+      );
+
+      console.log("📡 Subscription Response status:", response.status);
+
+      // Check if response is actually JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const textResponse = await response.text();
+        console.error("❌ Subscription Response is not JSON:", textResponse);
+        throw new Error(`Expected JSON response but got ${contentType}. Response: ${textResponse.substring(0, 200)}...`);
+      }
+
+      if (!response.ok) {
+        // For 409 conflicts, try to parse the response to check if it's "already subscribed"
+        if (response.status === 409) {
+          try {
+            const data = await response.json();
+            console.log("📡 409 Response data:", data);
+
+            if (data.status === false && data.message === "Email already subscribed") {
+              // This is the expected "already subscribed" case
+              setShowAlreadySubscribedModal(true);
+              setEmail("");
+              setTimeout(() => {
+                setShowAlreadySubscribedModal(false);
+              }, 3000);
+              setIsSubscribing(false);
+              return;
+            }
+          } catch (jsonError) {
+            console.error("❌ Could not parse 409 response as JSON:", jsonError);
+          }
+        }
+
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("✅ Subscription API Response:", data);
+
+      if (data.status === true) {
+        // Success - show success modal
+        setShowSuccessModal(true);
+        setEmail("");
+        setTimeout(() => {
+          setShowSuccessModal(false);
+        }, 3000);
+      } else if (data.status === false && data.message === "Email already subscribed") {
+        // Already subscribed - show specific modal
+        setShowAlreadySubscribedModal(true);
+        setEmail("");
+        setTimeout(() => {
+          setShowAlreadySubscribedModal(false);
+        }, 3000);
+      } else {
+        // Other error
+        setEmailError(data.message || "Subscription failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("❌ Subscription Error:", error);
+      setEmailError("Network error. Please check your connection and try again.");
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
+
+  // Handle form submission (prevent default)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSubscribe();
+  };
+
   return (
+    <>
     <StyledFooter $type={$type}>
       <StyledMainFooter>
         <StyledOffersContact>
@@ -256,17 +391,34 @@ export default function Footer({ $type }) {
               <Text $type="h3" $spacing="0.3rem" $size="small" $typeFace="primary" $color="var(--cordis-accent)" $weight="bold">
                 Exclusive Offers
               </Text>
-              <CustomInput2
-                $style="accent"
-                header="Email Address"
-                $placeholder="example@test.com"
-                type="email"
-              />
-              <Button $type="accent-ghost">
-                <Text $weight="regular" $size="medium">
-                  Subscribe
-                </Text>
-              </Button>
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
+                <CustomInput2
+                  $style="accent"
+                  header="Email Address"
+                  $placeholder="example@test.com"
+                  type="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  style={{
+                    color: emailError ? "red" : "var(--cordis-black)",
+                  }}
+                />
+                {emailError && (
+                  <Text $type="p" $color="var(--cordis-error)" $weight="light" $size="small">
+                    {emailError}
+                  </Text>
+                )}
+                <Button
+                  $type="accent-ghost"
+                  onClick={handleSubscribe}
+                  disabled={isSubscribing}
+                  type="submit"
+                >
+                  <Text $weight="regular" $size="medium">
+                    {isSubscribing ? "Subscribing..." : "Subscribe"}
+                  </Text>
+                </Button>
+              </form>
             </StyledExclusiveOffers>
             <StyledIcons>
               <RiFacebookLine color="var(--cordis-accent)" size="3rem" />
@@ -397,5 +549,18 @@ export default function Footer({ $type }) {
         </Text>
       </StyledFooterBottom>
     </StyledFooter>
+    {/* Success Modal */}
+    <SuccessModal
+      isOpen={showSuccessModal}
+      onClose={() => setShowSuccessModal(false)}
+      message="Subscription successful!"
+    />
+    {/* Already Subscribed Modal */}
+    <SuccessModal
+      isOpen={showAlreadySubscribedModal}
+      onClose={() => setShowAlreadySubscribedModal(false)}
+      message="You are already subscribed"
+    />
+    </>
   );
 }
