@@ -97,13 +97,24 @@ const StyledTextarea = styled.textarea`
   font-family: var(--font-family-primary);
   font-size: 1.4rem;
   resize: vertical;
-  
+
+  /* Override browser autofill styling */
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: var(--cordis-black) !important;
+    background-color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
   &::placeholder {
     font-size: 1.4rem;
     color: #999;
     font-family: var(--font-family-primary);
   }
-  
+
   &:focus {
     outline: none;
     border-color: var(--cordis-emphasis);
