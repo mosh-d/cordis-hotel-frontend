@@ -194,10 +194,10 @@ export default function RoomSection({ $type }) {
       <StyledRoomSection>
         <RoomText>
           <Text $type="h1" $weight="bold" $color="var(--cordis-black)">
-            Our Rooms
+            Our Rooms and Suites
           </Text>
           <Text $type="p" $size="large" $weight="light">
-            Click the images for details
+            Designed for Comfort and Style
           </Text>
         </RoomText>
 

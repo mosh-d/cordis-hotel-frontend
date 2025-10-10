@@ -70,9 +70,8 @@ export default function MissionVision() {
             $color="var(--cordis-light-gray)"
             $opacity="0.7"
           >
-            At Cordis Hotel, our mission is to create unforgettable experiences
-            by offering world-class comfort, personalized service, and genuine
-            hospitality.
+            To be the most hospitable company in the world by creating
+            world-class experiences for guests.
           </Text>
         </StyledTextContainer>
         <StyledTextContainer>
@@ -90,9 +89,8 @@ export default function MissionVision() {
             $color="var(--cordis-light-gray)"
             $opacity="0.7"
           >
-            We aspire to grow into a globally recognized hotel brand, built
-            organically on the pillars of exceptional places, remarkable
-            service, dedicated people, and innovative systems.
+            To be an organically developed global hotel management company that
+            excels in its core components of system, people, service, and place.
           </Text>
         </StyledTextContainer>
       </StyledTextWrapper>

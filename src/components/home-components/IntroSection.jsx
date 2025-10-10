@@ -49,16 +49,36 @@ export default function IntroSection() {
   return (
     <StyledIntroSection>
       <IntroText>
-        <Text $type="h1" $size="extra-large" $weight="bold" $color="var(--cordis-black)">The Cordis Hotel, where Lagos comes alive</Text>
-        <Text $type="p" $typeFace="secondary" $size="extra-large" $weight="bold" $spacing="0.04em">
-          Step into a world of effortless style and genuine warmth. Nestled in
-          the city’s pulse, we offer thoughtfully appointed rooms, inspired
-          dining, and many more—all designed to make every stay a seamless blend
-          of comfort and discovery.
+        <Text
+          $type="h1"
+          $size="extra-large"
+          $weight="bold"
+          $color="var(--cordis-black)"
+        >
+          The Cordis Hotel Ikeja – Your Comfort Hub in the Heart of Ikeja
+        </Text>
+        <Text
+          $type="p"
+          $typeFace="secondary"
+          $size="extra-large"
+          $weight="bold"
+          $spacing="0.04em"
+        >
+          Step into a world of refined comfort and elevated hospitality at The
+          Cordis Hotel, Ikeja - a distinguished four-star destination located at
+          12, Ashabi cole, Off Agidingbin, Alausa Ikeja. Just steps away from
+          the Ikeja City Mall, Alausa Secretariat and Lagos’ vibrant commercial
+          hub. Blending modern elegance with warm Nigerian hospitality, Cordis
+          offers a tranquil escape from the city bustle while keeping you
+          connected to the best of Ikeja.
         </Text>
       </IntroText>
       <StyledBanner>
-        <img src={banner} alt="Banner" style={{ width: "100%", height: "auto" }}   />
+        <img
+          src={banner}
+          alt="Banner"
+          style={{ width: "100%", height: "auto" }}
+        />
       </StyledBanner>
     </StyledIntroSection>
   );
