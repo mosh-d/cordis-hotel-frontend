@@ -1,4 +1,4 @@
-import Booking1 from "../../assets/cordis-booking/CORDIS-BOOKING-1.jpg";
+import Booking2 from "../../assets/cordis-booking-confirmation/CORDIS-BOOKING-CONFIRMATION-1.jpg";
 import { RiArrowLeftLine, RiCheckboxCircleLine } from "react-icons/ri";
 import Text from "../../components/shared/Text";
 import { Link as RouterLink, useLocation } from "react-router-dom";
@@ -13,7 +13,7 @@ import Button from "../../components/shared/Button";
 const StyledBookingConfirmation = styled.div`
   width: 100vw;
   height: 100vh;
-  background-image: url(${Booking1});
+  background-image: url(${Booking2});
   background-repeat: no-repeat;
   background-size: cover;
   background-origin: center;
@@ -54,7 +54,7 @@ const StyledTextWrapper = styled.div`
   width: 100%;
   height: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   gap: 4.8rem;
 
   & * {
@@ -81,7 +81,7 @@ const StyledBookingCard = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  background-color: var(--cordis-white);
+  background-color: hsla(0, 0.00%, 100.00%, .6);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
@@ -142,7 +142,7 @@ export default function BookingConfirmationPage() {
           <StyledBookingCard>
             <Text
               $type="h3"
-              $color="var(--cordis-black)"
+              $color="var(--cordis-white)"
               style={{ marginBottom: "1rem", textAlign: "center" }}
             >
               {message || "Your reservation has been successfully made."}
@@ -185,7 +185,7 @@ export default function BookingConfirmationPage() {
             <Text
               style={{ textAlign: "center", marginBottom: "2rem" }}
               $type="p"
-              $color="var(--cordis-gray)"
+              $color="var(--cordis-white)"
             >
               Check your email for a confirmation message. Can't wait to have
               you around!
