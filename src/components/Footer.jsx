@@ -4,7 +4,15 @@ import Logo from "../assets/cordis-logo-1.png";
 import Text from "./shared/Text";
 import CustomInput2 from "./shared/CustomInput2";
 import Button from "./shared/Button";
-import { RiTiktokLine, RiFacebookLine, RiInstagramLine, RiTwitterXLine, RiPhoneLine, RiWhatsappLine, RiMailLine } from "react-icons/ri";
+import {
+  RiTiktokLine,
+  RiFacebookLine,
+  RiInstagramLine,
+  RiTwitterXLine,
+  RiPhoneLine,
+  RiWhatsappLine,
+  RiMailLine,
+} from "react-icons/ri";
 import Link from "./shared/Link";
 import { media } from "../util/breakpoints";
 import { useState } from "react";
@@ -19,7 +27,7 @@ const StyledFooter = styled.footer`
   padding: 6rem 12rem;
   gap: 6rem;
   width: 100%;
-  margin-bottom: ${({ $type }) => $type === 'default' ? '0' : '9rem'};
+  margin-bottom: ${({ $type }) => ($type === "default" ? "0" : "9rem")};
 `;
 
 const StyledMainFooter = styled.div`
@@ -136,7 +144,7 @@ const StyledLinkWrapper = styled.div`
   display: flex;
   gap: 1rem;
   align-items: center;
-`
+`;
 
 const StyledFooterBottom = styled.div`
   display: flex;
@@ -162,8 +170,8 @@ const StyledLine = styled.div`
   width: 100%;
   height: 1px;
   background-color: var(--cordis-accent);
-  opacity: .3;
-  
+  opacity: 0.3;
+
   ${media.tablet} {
     display: none;
   }
@@ -173,7 +181,7 @@ const StyledLine1 = styled.div`
   width: 100%;
   height: 1px;
   background-color: var(--cordis-accent);
-  opacity: .3;
+  opacity: 0.3;
   display: none;
 
   ${media.tablet} {
@@ -251,7 +259,8 @@ export default function Footer({ $type }) {
 
   // Modal states
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showAlreadySubscribedModal, setShowAlreadySubscribedModal] = useState(false);
+  const [showAlreadySubscribedModal, setShowAlreadySubscribedModal] =
+    useState(false);
 
   // Email validation function
   const validateEmail = (email) => {
@@ -288,32 +297,41 @@ export default function Footer({ $type }) {
     setEmailError("");
 
     try {
-      console.log("🚀 Making subscription API call to:", "https://secure.thecordishotelikeja.com/api/hotel/subscribe");
+      console.log(
+        "🚀 Making subscription API call to:",
+        "https://secure.thecordishotelikeja.com/api/hotel/subscribe"
+      );
 
       const response = await fetch(
         "https://secure.thecordishotelikeja.com/api/hotel/subscribe",
         {
           method: "POST",
-          mode: 'cors',
+          mode: "cors",
           headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            Accept: "application/json",
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
             "Cache-Control": "no-cache",
           },
           body: JSON.stringify({ email }),
-          redirect: 'follow',
+          redirect: "follow",
         }
       );
 
       console.log("📡 Subscription Response status:", response.status);
 
       // Check if response is actually JSON
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
         const textResponse = await response.text();
         console.error("❌ Subscription Response is not JSON:", textResponse);
-        throw new Error(`Expected JSON response but got ${contentType}. Response: ${textResponse.substring(0, 200)}...`);
+        throw new Error(
+          `Expected JSON response but got ${contentType}. Response: ${textResponse.substring(
+            0,
+            200
+          )}...`
+        );
       }
 
       if (!response.ok) {
@@ -323,7 +341,10 @@ export default function Footer({ $type }) {
             const data = await response.json();
             console.log("📡 409 Response data:", data);
 
-            if (data.status === false && data.message === "Email already subscribed") {
+            if (
+              data.status === false &&
+              data.message === "Email already subscribed"
+            ) {
               // This is the expected "already subscribed" case
               setShowAlreadySubscribedModal(true);
               setEmail("");
@@ -334,7 +355,10 @@ export default function Footer({ $type }) {
               return;
             }
           } catch (jsonError) {
-            console.error("❌ Could not parse 409 response as JSON:", jsonError);
+            console.error(
+              "❌ Could not parse 409 response as JSON:",
+              jsonError
+            );
           }
         }
 
@@ -351,7 +375,10 @@ export default function Footer({ $type }) {
         setTimeout(() => {
           setShowSuccessModal(false);
         }, 3000);
-      } else if (data.status === false && data.message === "Email already subscribed") {
+      } else if (
+        data.status === false &&
+        data.message === "Email already subscribed"
+      ) {
         // Already subscribed - show specific modal
         setShowAlreadySubscribedModal(true);
         setEmail("");
@@ -364,7 +391,9 @@ export default function Footer({ $type }) {
       }
     } catch (error) {
       console.error("❌ Subscription Error:", error);
-      setEmailError("Network error. Please check your connection and try again.");
+      setEmailError(
+        "Network error. Please check your connection and try again."
+      );
     } finally {
       setIsSubscribing(false);
     }
@@ -378,189 +407,298 @@ export default function Footer({ $type }) {
 
   return (
     <>
-    <StyledFooter $type={$type}>
-      <StyledMainFooter>
-        <StyledOffersContact>
-          <StyledLogoContainer>
-            <StyledLogo>
-              <img src={Logo} alt="logo" />
-            </StyledLogo>
-          </StyledLogoContainer>
-          <StyledOffersContactWrapper>
-            <StyledExclusiveOffers>
-              <Text $type="h3" $spacing="0.3rem" $size="small" $typeFace="primary" $color="var(--cordis-accent)" $weight="bold">
-                Exclusive Offers
-              </Text>
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
-                <CustomInput2
-                  $style="accent"
-                  header="Email Address"
-                  $placeholder="example@test.com"
-                  type="email"
-                  value={email}
-                  onChange={handleEmailChange}
-                  style={{
-                    color: emailError ? "red" : "var(--cordis-black)",
-                  }}
-                />
-                {emailError && (
-                  <Text $type="p" $color="var(--cordis-error)" $weight="light" $size="small">
-                    {emailError}
-                  </Text>
-                )}
-                <Button
-                  $type="accent-ghost"
-                  onClick={handleSubscribe}
-                  disabled={isSubscribing}
-                  type="submit"
+      <StyledFooter $type={$type}>
+        <StyledMainFooter>
+          <StyledOffersContact>
+            <StyledLogoContainer>
+              <StyledLogo>
+                <img src={Logo} alt="logo" />
+              </StyledLogo>
+            </StyledLogoContainer>
+            <StyledOffersContactWrapper>
+              <StyledExclusiveOffers>
+                <Text
+                  $type="h3"
+                  $spacing="0.3rem"
+                  $size="small"
+                  $typeFace="primary"
+                  $color="var(--cordis-accent)"
+                  $weight="bold"
                 >
-                  <Text $weight="regular" $size="medium">
-                    {isSubscribing ? "Subscribing..." : "Subscribe"}
-                  </Text>
-                </Button>
-              </form>
-            </StyledExclusiveOffers>
-            <StyledIcons>
-              <RiFacebookLine color="var(--cordis-accent)" size="3rem" />
-              <RiTiktokLine color="var(--cordis-accent)" size="3rem" />
-              <RiInstagramLine color="var(--cordis-accent)" size="3rem" />
-              <RiTwitterXLine color="var(--cordis-accent)" size="3rem" />
-            </StyledIcons>
-            <StyledContactInfo>
-              <Text $type="h3" $spacing="0.3rem" $size="small" $typeFace="primary" $color="var(--cordis-accent)" $weight="bold">
-                Contact Information
+                  Exclusive Offers
+                </Text>
+                <form
+                  onSubmit={handleSubmit}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1.5rem",
+                    width: "100%",
+                  }}
+                >
+                  <CustomInput2
+                    $style="accent"
+                    header="Email Address"
+                    $placeholder="example@test.com"
+                    type="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    style={{
+                      color: emailError ? "red" : "var(--cordis-black)",
+                    }}
+                  />
+                  {emailError && (
+                    <Text
+                      $type="p"
+                      $color="var(--cordis-error)"
+                      $weight="light"
+                      $size="small"
+                    >
+                      {emailError}
+                    </Text>
+                  )}
+                  <Button
+                    $type="accent-ghost"
+                    onClick={handleSubscribe}
+                    disabled={isSubscribing}
+                    type="submit"
+                  >
+                    <Text $weight="regular" $size="medium">
+                      {isSubscribing ? "Subscribing..." : "Subscribe"}
+                    </Text>
+                  </Button>
+                </form>
+              </StyledExclusiveOffers>
+              <StyledIcons>
+                <RiFacebookLine color="var(--cordis-accent)" size="3rem" />
+                <RiTiktokLine color="var(--cordis-accent)" size="3rem" />
+                <RiInstagramLine color="var(--cordis-accent)" size="3rem" />
+                <RiTwitterXLine color="var(--cordis-accent)" size="3rem" />
+              </StyledIcons>
+              <StyledContactInfo>
+                <Text
+                  $type="h3"
+                  $spacing="0.3rem"
+                  $size="small"
+                  $typeFace="primary"
+                  $color="var(--cordis-accent)"
+                  $weight="bold"
+                >
+                  Contact Information
+                </Text>
+                <StyledContactWrapper>
+                  <StyledLinkWrapper>
+                    <RiPhoneLine color="var(--cordis-accent)" size="3rem" />
+                    <Link href="tel:+2349111846281">+234 911 184 6281</Link>
+                  </StyledLinkWrapper>
+                  <StyledLinkWrapper>
+                    <RiWhatsappLine color="var(--cordis-accent)" size="3rem" />
+                    <Link href="https://wa.me/2349111846280">
+                      +234 911 184 6280
+                    </Link>
+                  </StyledLinkWrapper>
+                  <StyledLinkWrapper>
+                    <RiMailLine color="var(--cordis-accent)" size="3rem" />
+                    <Link href="mailto:info@thecordishotelikeja.com">
+                      info@thecordishotelikeja.com
+                    </Link>
+                  </StyledLinkWrapper>
+                </StyledContactWrapper>
+              </StyledContactInfo>
+            </StyledOffersContactWrapper>
+          </StyledOffersContact>
+          <StyledLine1 />
+          <StyledNavigation>
+            <StyledNavigationHeaderWrapper>
+              <StyledLine />
+              <Text
+                $type="h3"
+                $size="medium"
+                $color="var(--cordis-accent)"
+                $weight="regular"
+              >
+                Navigation
               </Text>
-              <StyledContactWrapper>
-                <StyledLinkWrapper>
-                  <RiPhoneLine color="var(--cordis-accent)" size="3rem" />
-                  <Link>
-                    +234 911 563 8526
-                  </Link>
-                </StyledLinkWrapper>
-                <StyledLinkWrapper>
-                  <RiWhatsappLine color="var(--cordis-accent)" size="3rem" />
-                  <Link>
-                    +234 911 563 8526
-                  </Link>
-                </StyledLinkWrapper>
-                <StyledLinkWrapper>
-                  <RiMailLine color="var(--cordis-accent)" size="3rem" />
-                  <Link>
-                    info@fivecloverhotels.com
-                  </Link>
-                </StyledLinkWrapper>
-              </StyledContactWrapper>
-            </StyledContactInfo>
-          </StyledOffersContactWrapper>
-        </StyledOffersContact>
-        <StyledLine1 />
-        <StyledNavigation>
-          <StyledNavigationHeaderWrapper>
-            <StyledLine />
-            <Text $type="h3" $size="medium" $color="var(--cordis-accent)" $weight="regular">
-              Navigation
-            </Text>
-            <StyledLine />
-          </StyledNavigationHeaderWrapper>
-          <StyledNavigationLinkWrapper>
-            <NavLink to="/"><Link $type="secondary">Home</Link></NavLink>
-            <NavLink to="/about"><Link $type="secondary">About</Link></NavLink>
-            <NavLink to="/contact"><Link $type="secondary">Contact</Link></NavLink>
-            <NavLink to="/blog"><Link $type="secondary">Blog</Link></NavLink>
-          </StyledNavigationLinkWrapper>
-        </StyledNavigation>
-        <StyledLine1 />
-        <StyledHotels>
-          <StyledHotelsHeaderwrapper>
-            <StyledLine />
-              <Text $type="h3" $size="medium" $color="var(--cordis-accent)" $weight="regular">
+              <StyledLine />
+            </StyledNavigationHeaderWrapper>
+            <StyledNavigationLinkWrapper>
+              <NavLink to="/">
+                <Link $type="secondary">Home</Link>
+              </NavLink>
+              <NavLink to="/about">
+                <Link $type="secondary">About</Link>
+              </NavLink>
+              <NavLink to="/contact">
+                <Link $type="secondary">Contact</Link>
+              </NavLink>
+              <NavLink to="/blog">
+                <Link $type="secondary">Blog</Link>
+              </NavLink>
+            </StyledNavigationLinkWrapper>
+          </StyledNavigation>
+          <StyledLine1 />
+          <StyledHotels>
+            <StyledHotelsHeaderwrapper>
+              <StyledLine />
+              <Text
+                $type="h3"
+                $size="medium"
+                $color="var(--cordis-accent)"
+                $weight="regular"
+              >
                 Hotels
               </Text>
-            <StyledLine />
-          </StyledHotelsHeaderwrapper>
-          <StyledHotelsLinkWrapper>
-            <StyledHotelLinks>
-              <StyledHeader>
-                <Text $typeFace="secondary" $size="large" $color="var(--cordis-accent)" $weight="regular">
-                  Five Clover
-                </Text>
-              </StyledHeader>
-              <StyledHotelLinkWrapper>
-                <Link $type="secondary">Monastery Road</Link>
-                <Link $type="secondary">Abijo, GRA</Link>
-              </StyledHotelLinkWrapper>
-            </StyledHotelLinks>
-            <StyledHotelLinks>
-              <StyledHeader>
-                <Text $typeFace="secondary" $size="large" $color="var(--cordis-accent)" $weight="regular">
-                  Caritas Inn
-                </Text>
-              </StyledHeader>
-              <StyledHotelLinkWrapper>
-                <Link $type="secondary">Igbobi</Link>
-                <Link $type="secondary">Ilasan</Link>
-                <Link $type="secondary">Lekki Phase 1</Link>
-              </StyledHotelLinkWrapper>
-            </StyledHotelLinks>
-            <StyledHotelLinks>
-              <StyledHeader>
-                <Text $typeFace="secondary" $size="large" $color="var(--cordis-accent)" $weight="regular">
-                  RingRuby
-                </Text>
-              </StyledHeader>
-              <StyledHotelLinkWrapper>
-                <Link $type="secondary">Sangotedo</Link>
-                <Link $type="secondary">Eso close</Link>
-                <Link $type="secondary">Oduduwa way</Link>
-              </StyledHotelLinkWrapper>
-            </StyledHotelLinks>
-            <StyledHotelLinks>
-              <StyledHeader>
-                <Text $typeFace="secondary" $size="large" $color="var(--cordis-accent)" $weight="regular">
-                  Cordis
-                </Text>
-              </StyledHeader>
-              <StyledHotelLinkWrapper>
-                <Link $type="secondary">Ikeja</Link>
-              </StyledHotelLinkWrapper>
-            </StyledHotelLinks>
-          </StyledHotelsLinkWrapper>
-        </StyledHotels>
-      </StyledMainFooter>
-      <StyledLine />
-      <StyledFooterBottom>
-        <Text
-          $type="p"
-          $color="var(--cordis-accent)"
-          $weight="light"
-          $typeFace="primary"
-          $size="small"
-        >
-          Copyright © 2025 Cordis Hotel. All rights reserved.
-        </Text>
-        <Text
-          $type="p"
-          $color="var(--cordis-accent)"
-          $weight="light"
-          $typeFace="primary"
-          $size="small"
-        >
-          Terms of Service
-        </Text>
-      </StyledFooterBottom>
-    </StyledFooter>
-    {/* Success Modal */}
-    <SuccessModal
-      isOpen={showSuccessModal}
-      onClose={() => setShowSuccessModal(false)}
-      message="Subscription successful!"
-    />
-    {/* Already Subscribed Modal */}
-    <SuccessModal
-      isOpen={showAlreadySubscribedModal}
-      onClose={() => setShowAlreadySubscribedModal(false)}
-      message="You are already subscribed"
-    />
+              <StyledLine />
+            </StyledHotelsHeaderwrapper>
+            <StyledHotelsLinkWrapper>
+              <StyledHotelLinks>
+                <StyledHeader>
+                  <Text
+                    $typeFace="secondary"
+                    $size="large"
+                    $color="var(--cordis-accent)"
+                    $weight="regular"
+                  >
+                    Five Clover
+                  </Text>
+                </StyledHeader>
+                <StyledHotelLinkWrapper>
+                  <Link
+                    href="https://fivecloverhotelmonastery.com/"
+                    $type="secondary"
+                  >
+                    Monastery Road
+                  </Link>
+                  <Link
+                    href="https://fivecloverhotelabijo.com/"
+                    $type="secondary"
+                  >
+                    Abijo, GRA
+                  </Link>
+                </StyledHotelLinkWrapper>
+              </StyledHotelLinks>
+              <StyledHotelLinks>
+                <StyledHeader>
+                  <Text
+                    $typeFace="secondary"
+                    $size="large"
+                    $color="var(--cordis-accent)"
+                    $weight="regular"
+                  >
+                    Caritas Inn
+                  </Text>
+                </StyledHeader>
+                <StyledHotelLinkWrapper>
+                  <Link
+                    href="https://www.caritasinnigbobihotel.com/"
+                    $type="secondary"
+                  >
+                    Igbobi
+                  </Link>
+                  <Link
+                    href="https://caritasinnilasanhotel.com/"
+                    $type="secondary"
+                  >
+                    Ilasan
+                  </Link>
+                  <Link
+                    href="https://caritasinnlekkihotel.com/"
+                    $type="secondary"
+                  >
+                    Lekki Phase 1
+                  </Link>
+                  <Link
+                    href="https://caritasinnyabahotel.com/"
+                    $type="secondary"
+                  >
+                    Yaba
+                  </Link>
+                </StyledHotelLinkWrapper>
+              </StyledHotelLinks>
+              <StyledHotelLinks>
+                <StyledHeader>
+                  <Text
+                    $typeFace="secondary"
+                    $size="large"
+                    $color="var(--cordis-accent)"
+                    $weight="regular"
+                  >
+                    RingRuby
+                  </Text>
+                </StyledHeader>
+                <StyledHotelLinkWrapper>
+                  <Link
+                    href="https://ringrubyhotelsangotedo.com/"
+                    $type="secondary"
+                  >
+                    Sangotedo
+                  </Link>
+                  <Link
+                    href="https://ringrubyhotelesoikejagra.com/"
+                    $type="secondary"
+                  >
+                    Eso close
+                  </Link>
+                  <Link
+                    href="https://ringrubyhoteloduduwaikejagra.com/"
+                    $type="secondary"
+                  >
+                    Oduduwa way
+                  </Link>
+                </StyledHotelLinkWrapper>
+              </StyledHotelLinks>
+              <StyledHotelLinks>
+                <StyledHeader>
+                  <Text
+                    $typeFace="secondary"
+                    $size="large"
+                    $color="var(--cordis-accent)"
+                    $weight="regular"
+                  >
+                    Cordis
+                  </Text>
+                </StyledHeader>
+                <StyledHotelLinkWrapper>
+                  <Link $type="secondary">Ikeja</Link>
+                </StyledHotelLinkWrapper>
+              </StyledHotelLinks>
+            </StyledHotelsLinkWrapper>
+          </StyledHotels>
+        </StyledMainFooter>
+        <StyledLine />
+        <StyledFooterBottom>
+          <Text
+            $type="p"
+            $color="var(--cordis-accent)"
+            $weight="light"
+            $typeFace="primary"
+            $size="small"
+          >
+            Copyright © 2025 Cordis Hotel. All rights reserved.
+          </Text>
+          <Text
+            $type="p"
+            $color="var(--cordis-accent)"
+            $weight="light"
+            $typeFace="primary"
+            $size="small"
+          >
+            Terms of Service
+          </Text>
+        </StyledFooterBottom>
+      </StyledFooter>
+      {/* Success Modal */}
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        message="Subscription successful!"
+      />
+      {/* Already Subscribed Modal */}
+      <SuccessModal
+        isOpen={showAlreadySubscribedModal}
+        onClose={() => setShowAlreadySubscribedModal(false)}
+        message="You are already subscribed"
+      />
     </>
   );
 }

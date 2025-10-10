@@ -1,7 +1,7 @@
 import Text from "./Text";
 import styled from "styled-components";
 
-const StyledLink = styled.span`
+const StyledLink = styled.a`
   border-bottom: ${({ $type }) => $type === "default" ? '1px solid var(--cordis-black)' : $type === "white" ? '1px solid var(--cordis-white)' : '1px solid var(--cordis-accent)'};
   opacity: 0.7;
 
@@ -12,7 +12,7 @@ const StyledLink = styled.span`
   }
 `;
 
-const StyledLink2 = styled.span`
+const StyledLink2 = styled.a`
   border-bottom: 1px solid var(--cordis-black);
   opacity: 0.7;
 

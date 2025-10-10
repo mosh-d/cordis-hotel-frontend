@@ -247,15 +247,15 @@ export default function ContactSection() {
 
         <StyledLinkWrapper>
           <RiPhoneLine color="var(--cordis-text-color)" size="3rem" />
-          <Link $type="default">+234 911 563 8526</Link>
+          <Link href="tel:+2349111846281" $type="default">+234 911 184 6281</Link>
         </StyledLinkWrapper>
         <StyledLinkWrapper>
           <RiWhatsappLine color="var(--cordis-text-color)" size="3rem" />
-          <Link $type="default">+234 911 563 8526</Link>
+          <Link href="https://wa.me/2349111846280" $type="default">+234 911 184 6280</Link>
         </StyledLinkWrapper>
         <StyledLinkWrapper>
           <RiMailLine color="var(--cordis-text-color)" size="3rem" />
-          <Link $type="default">info@fivecloverhotels.com</Link>
+          <Link href="mailto:info@thecordishotelikeja.com" $type="default">info@thecordishotelikeja.com</Link>
         </StyledLinkWrapper>
         <StyledLinkWrapper>
           <RiFacebookLine color="var(--cordis-text-color)" size="3rem" />

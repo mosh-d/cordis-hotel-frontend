@@ -303,7 +303,7 @@ export default function CustomInput2({
         <StyledCustomInput2 ref={inputRef}>
           <Text
             $type="p"
-            $color="var(--cordis-white)"
+            $color="var(--cordis-accent)"
             $weight="light"
             $typeFace="primary"
           >
