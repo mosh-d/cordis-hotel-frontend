@@ -9,11 +9,17 @@ import { media } from "../../util/breakpoints";
 // Local Restaurant images
 import restaurant1 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-1.jpg";
 import restaurant2 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-2.jpg";
+import restaurant3 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-3.jpg";
+import restaurant4 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-4.jpg";
+import restaurant5 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-5.jpg";
+import restaurant6 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-6.jpg";
 
 // Local Bar images
 import bistro1 from "../../assets/cordis-bistro/CORDIS-BISTRO-1.jpg";
 import bistro2 from "../../assets/cordis-bistro/CORDIS-BISTRO-2.jpg";
 import bistro3 from "../../assets/cordis-bistro/CORDIS-BISTRO-3.jpg";
+import bistro4 from "../../assets/cordis-bistro/CORDIS-BISTRO-4.jpg";
+import bistro5 from "../../assets/cordis-bistro/CORDIS-BISTRO-5.jpg";
 
 // Local Fine Dining images
 import fineDining1 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-1.jpg";
@@ -23,8 +29,8 @@ import fineDining4 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-4.jp
 import fineDining5 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-5.jpg";
 
 //Local image arrays
-const restaurantImages = [restaurant1, restaurant2];
-const bistroImages = [bistro1, bistro2, bistro3];
+const restaurantImages = [restaurant1, restaurant2, restaurant3, restaurant4, restaurant5, restaurant6];
+const bistroImages = [bistro1, bistro2, bistro3, bistro4, bistro5];
 const fineDiningImages = [
   fineDining1,
   fineDining2,

@@ -10,6 +10,8 @@ import { getCloudinaryUrl } from "../../config/cloudinary";
 import pool1 from "../../assets/cordis-pool/CORDIS-POOL-1.jpg";
 import pool2 from "../../assets/cordis-pool/CORDIS-POOL-2.jpg";
 import pool3 from "../../assets/cordis-pool/CORDIS-POOL-3.jpg";
+import pool4 from "../../assets/cordis-pool/CORDIS-POOL-4.jpg";
+import pool5 from "../../assets/cordis-pool/CORDIS-POOL-5.jpg";
 
 // local bar images
 import bar1 from "../../assets/cordis-bar/CORDIS-BAR-1.jpg";
@@ -17,7 +19,7 @@ import bar2 from "../../assets/cordis-bar/CORDIS-BAR-2.jpg";
 import bar3 from "../../assets/cordis-bar/CORDIS-BAR-3.jpg";
 
 // Local image arrays
-const poolImages = [pool1, pool2, pool3];
+const poolImages = [pool1, pool2, pool3, pool4, pool5];
 const barImages = [bar1, bar2, bar3];
 
 // //pool images
