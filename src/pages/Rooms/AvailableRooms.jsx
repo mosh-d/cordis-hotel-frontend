@@ -89,16 +89,16 @@ export default function AvailableRoomsPage() {
     };
   }, [checkIn, checkOut, noOfAdults, noOfChildren]);
 
-  // Get API room data
-  console.log("🔍 AVAILABLE ROOMS: API search parameters:", searchParams);
+  // Get API room data - only call when search params actually change
   const { ROOMS, loading, error, isFromApi } = useDynamicRoomData(searchParams);
-  
-  console.log("🏨 AVAILABLE ROOMS: Received room data:", ROOMS.map(room => ({
+
+  // Debug logging to see what data is received
+  console.log("🏨 AVAILABLE ROOMS: Final room data for display:", ROOMS.map(room => ({
     name: room.name,
     propName: room.propName,
-    price: room.price,
     available: room.available,
-    availableType: typeof room.available
+    roomTypeId: room.roomTypeId,
+    rateId: room.rateId
   })));
 
   if (loading) {
@@ -162,23 +162,9 @@ export default function AvailableRoomsPage() {
             const isAvailable = typeof room.available === 'number' ? room.available > 0 : 
                                typeof room.available === 'boolean' ? room.available : true;
             
-            console.log(`🔍 AVAILABLE ROOMS: Checking ${room.name} (${room.propName})`, {
-              available: room.available,
-              availableType: typeof room.available,
-              isAvailable: isAvailable,
-              unavailable: !isAvailable,
-              logicCheck: {
-                isNumber: typeof room.available === 'number',
-                numberCheck: typeof room.available === 'number' ? room.available > 0 : 'N/A',
-                isBoolean: typeof room.available === 'boolean',
-                booleanValue: typeof room.available === 'boolean' ? room.available : 'N/A',
-                defaultsToTrue: typeof room.available !== 'number' && typeof room.available !== 'boolean'
-              }
-            });
-            
             return (
               <RoomAvailabilityCard 
-                key={index} 
+                key={`${room.roomTypeId}-${room.rateId}`} 
                 $type={room.propName} 
                 roomData={ROOMS}
                 unavailable={!isAvailable}

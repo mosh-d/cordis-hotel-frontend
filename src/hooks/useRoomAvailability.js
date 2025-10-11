@@ -62,10 +62,17 @@ export const useRoomAvailability = () => {
       const data = await response.json();
 
       if (data.errorCode === 0) {
+        console.log("🌐 API RAW RESPONSE:", data);
+        console.log("🌐 API TYPES RECEIVED:", data.types);
         setRooms(data.types || []);
         console.log("🌐 API SUCCESS: Room data fetched from server", {
           roomCount: data.types?.length || 0,
-          source: "Live API"
+          source: "Live API",
+          rooms: data.types?.map(room => ({
+            roomType: room.roomType,
+            roomTypeId: room.roomTypeId,
+            available: room.available
+          }))
         });
       } else {
         throw new Error(data.errorMessage || "Failed to fetch rooms");

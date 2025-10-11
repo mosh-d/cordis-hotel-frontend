@@ -3,7 +3,7 @@ import Text from "../shared/Text";
 import Button from "../shared/Button";
 import { Link as RouterLink } from "react-router-dom";
 import { media } from "../../util/breakpoints";
-import { ROOMS } from "../../util/room-data";
+// import { ROOMS } from "../../util/room-data"; // No longer needed - only using API data
 
 const StyledRoomDetailsBlock = styled.div`
   display: flex;
@@ -38,13 +38,15 @@ const StyledTextWrapper = styled.div`
 
 export default function RoomDetailsBlock({ $type, roomData = null }) {
   const getRoomData = () => {
-    // Use passed roomData if available, otherwise fallback to static ROOMS
-    const roomsToUse = roomData || ROOMS;
-    
+    // Only use passed roomData (API data), no static fallback
+    if (!roomData || roomData.length === 0) {
+      return null;
+    }
+
     // Find the room by propName from API data
-    const roomIndex = roomsToUse.findIndex(room => room.propName === $type);
-    const room = roomsToUse[roomIndex];
-    
+    const roomIndex = roomData.findIndex(room => room.propName === $type);
+    const room = roomData[roomIndex];
+
     if (room && roomIndex !== -1) {
       // Format availability display
       let availabilityText = "Available";
@@ -53,23 +55,24 @@ export default function RoomDetailsBlock({ $type, roomData = null }) {
       } else if (typeof room.available === 'boolean') {
         availabilityText = room.available ? "Available" : "Not Available";
       }
-      
-      return { 
-        data: room, 
-        index: roomIndex, 
+
+      return {
+        data: room,
+        index: roomIndex,
         available: availabilityText
       };
     }
-    
-    // Fallback if room not found
-    return { 
-      data: roomsToUse[0] || ROOMS[0] || {}, 
-      index: 0, 
-      available: "Available" 
-    };
+
+    // Return null if room not found - let parent component handle this
+    return null;
   };
 
   const roomInfo = getRoomData();
+
+  // If no room data available, don't render anything
+  if (!roomInfo) {
+    return null;
+  }
 
   return (
     <StyledRoomDetailsBlock>

@@ -2,7 +2,7 @@ import Room from "../shared/Room";
 import styled from "styled-components";
 import Text from "../shared/Text";
 import { media } from "../../util/breakpoints";
-import { ROOMS } from "../../util/room-data";
+// import { ROOMS } from "../../util/room-data"; // No longer needed - only using API data
 import { useDynamicRoomData } from "../../hooks/useDynamicRoomData";
 import { useOutletContext } from "react-router-dom";
 import { useMemo } from "react";
@@ -205,33 +205,12 @@ export default function RoomSection({ $type }) {
           <Text $type="p" $size="large">
             Loading room availability...
           </Text>
-        ) : error && !isFromApi ? (
-          <>
-            <Text
-              $type="p"
-              $size="small"
-              $color="var(--cordis-gray)"
-              style={{ marginBottom: "1rem" }}
-            >
-              PMS unavailable - using default data
-            </Text>
-            <StyledRooms>
-              {ROOMS.map((room, index) => (
-                <StyledRoomContainer key={index}>
-                  <Room
-                    imageType={room.propName}
-                    headerText={room.name}
-                    buttonText="Reserve"
-                    flippable={true}
-                    unavailable={!isRoomAvailable(room)}
-                    roomData={ROOMS} // Pass static data to Room component
-                  />
-                </StyledRoomContainer>
-              ))}
-            </StyledRooms>
-          </>
-        ) : (
-          // Display all individual API rooms with their actual names and prices
+        ) : error ? (
+          <Text $type="p" $size="large" $color="red">
+            Unable to load room data. Please try again later.
+          </Text>
+        ) : dynamicRooms.length > 0 ? (
+          // Display all API rooms
           <StyledRooms>
             {dynamicRooms.map((apiRoom, index) => {
               return (
@@ -248,6 +227,10 @@ export default function RoomSection({ $type }) {
               );
             })}
           </StyledRooms>
+        ) : (
+          <Text $type="p" $size="large">
+            No rooms available for the selected dates.
+          </Text>
         )}
 
         {/* {!standardRoomExists && (

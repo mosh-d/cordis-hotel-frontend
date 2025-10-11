@@ -4,10 +4,10 @@ import styled from "styled-components";
 import Carousel from "./Carousel";
 import FlippableCarousel from "./FlippableCarousel";
 import Button from "./Button";
-import { Link as RouteLink } from "react-router-dom";
+import { Link as RouteLink, useLocation } from "react-router-dom";
 import { media } from "../../util/breakpoints";
 import { getCloudinaryUrl } from "../../config/cloudinary";
-import { ROOMS } from "../../util/room-data";
+// import { ROOMS } from "../../util/room-data"; // No longer needed - only using API data
 
 // Local Standard Room Images
 import standardRoom1 from "../../assets/standard-room/STANDARD-ROOM-1.jpg";
@@ -239,6 +239,7 @@ export default function Room({
   roomData = null, // Accept room data as prop from parent
 }) {
   const { roomCategory, setRoomCategory } = useOutletContext();
+  const location = useLocation();
 
   console.log(`🏠 ROOM COMPONENT: ${imageType}`, {
     imageType,
@@ -251,23 +252,18 @@ export default function Room({
   });
 
   const getRoomData = () => {
-    // Use passed roomData if available, otherwise fallback to static ROOMS
-    const roomsToUse = roomData || ROOMS;
+    // Only use passed roomData (API data), no static fallback
+    if (!roomData || roomData.length === 0) {
+      console.error("No room data provided to Room component");
+      return null;
+    }
 
-    // Find room by propName instead of array index
-    let selectedRoom = roomsToUse.find((room) => room.propName === imageType);
+    // Find room by propName from API data
+    let selectedRoom = roomData.find((room) => room.propName === imageType);
 
-    // Fallback to array index method if propName search fails
     if (!selectedRoom) {
-      if (roomsToUse[0] && imageType === "standard")
-        selectedRoom = roomsToUse[0];
-      else if (roomsToUse[1] && imageType === "executive")
-        selectedRoom = roomsToUse[1];
-      else if (roomsToUse[2] && imageType === "executiveDeluxe")
-        selectedRoom = roomsToUse[2];
-      else if (roomsToUse[3] && imageType === "executiveSuite")
-        selectedRoom = roomsToUse[3];
-      else selectedRoom = roomsToUse[0] || ROOMS[0];
+      console.error(`Room with propName "${imageType}" not found in API data`);
+      return null;
     }
 
     console.log(`📊 ROOM DATA: ${imageType}`, {
@@ -278,8 +274,8 @@ export default function Room({
         available: selectedRoom?.available,
         availableType: typeof selectedRoom?.available,
       },
-      dataSource: roomData ? "API" : "Static",
-      totalRoomsAvailable: roomsToUse.length,
+      dataSource: "API",
+      totalRoomsAvailable: roomData.length,
     });
 
     return selectedRoom;
@@ -404,7 +400,7 @@ export default function Room({
       </StyledRoomCardWrapper>
 
       <StyledButtonContainer>
-        <RouteLink to="/room-booking">
+        <RouteLink to={`/room-booking?returnTo=${encodeURIComponent(location.pathname)}`}>
           {unavailable ? null : (
             <Button
               onClick={() => setRoomCategory(imageType)}

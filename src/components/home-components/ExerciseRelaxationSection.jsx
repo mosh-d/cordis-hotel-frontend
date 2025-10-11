@@ -288,11 +288,11 @@ export default function ExerciseRelaxationSection() {
             </Text>
           </SpaTextWrapper>
         </StyledSpaWrapper>
-        <RouterLink to="/amenity-booking">
+        <RouterLink to="/room-booking">
           <StyledButtonContainer2>
             <Button $type="emphasis2">
               <Text $weight="bold" $size="medium">
-                Book Gym/Spa
+                Reserve
               </Text>
             </Button>
           </StyledButtonContainer2>

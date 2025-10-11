@@ -825,9 +825,22 @@ export default function RoomBookingPage() {
   const getRoomPriceAndName = () => {
     // Try to get data from API first
     if (apiRooms && apiRooms.length > 0) {
-      const selectedRoom = apiRooms.find(
-        (room) => room.propName === roomCategory
-      );
+      // Handle both old format (propName) and new format (roomTypeId-rateId)
+      let selectedRoom = null;
+
+      if (roomCategory.includes('-')) {
+        // New format: roomTypeId-rateId
+        const [roomTypeId, rateId] = roomCategory.split('-');
+        selectedRoom = apiRooms.find(
+          (room) => room.roomTypeId === parseInt(roomTypeId) && room.rateId === parseInt(rateId)
+        );
+      } else {
+        // Fallback to old format for backward compatibility
+        selectedRoom = apiRooms.find(
+          (room) => room.propName === roomCategory
+        );
+      }
+
       if (selectedRoom) {
         // Use API rate directly without any calculations
         const apiPrice = selectedRoom.rawApiRate || 120000; // Use raw API rate or fallback
@@ -1055,7 +1068,7 @@ export default function RoomBookingPage() {
                 onChange={(e) => {
                   // Check if selected room is available before allowing selection
                   const selectedRoom = apiRooms?.find(
-                    (room) => room.propName === e.target.value
+                    (room) => `${room.roomTypeId}-${room.rateId}` === e.target.value
                   );
                   if (selectedRoom) {
                     const isAvailable =
@@ -1088,8 +1101,8 @@ export default function RoomBookingPage() {
 
                     return (
                       <option
-                        key={room.propName}
-                        value={room.propName}
+                        key={`${room.roomTypeId}-${room.rateId}`}
+                        value={`${room.roomTypeId}-${room.rateId}`}
                         disabled={!isAvailable}
                         style={{
                           color: isAvailable ? "inherit" : "#999",

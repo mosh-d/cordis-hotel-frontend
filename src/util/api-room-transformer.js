@@ -1,10 +1,16 @@
 export const transformApiRoomsToRoomData = (apiRooms) => {
-  console.log("🔄 INDIVIDUAL TRANSFORMER: Processing all API rooms individually", apiRooms);
+  console.log("🔄 INDIVIDUAL TRANSFORMER: Processing all API rooms individually", apiRooms.length, "rooms");
+  console.log("🔄 API ROOMS RECEIVED:", apiRooms.map(room => ({
+    roomType: room.roomType,
+    roomTypeId: room.roomTypeId,
+    rateId: room.rateId,
+    available: room.available
+  })));
   
   // Mapping from API room names to static propName values for correct images
   const roomNameMapping = {
     'Presidential': 'standard',
-    'Regular': 'standard', 
+    'Regular': 'standard',
     'Executive': 'executive',
     'Special 1': 'executive',
     'Delux': 'executiveDeluxe',
