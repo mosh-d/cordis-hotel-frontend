@@ -432,6 +432,7 @@ export default function Footer({ $type }) {
                   style={{
                     display: "flex",
                     flexDirection: "column",
+                    alignItems: "center",
                     gap: "1.5rem",
                     width: "100%",
                   }}
@@ -445,6 +446,7 @@ export default function Footer({ $type }) {
                     onChange={handleEmailChange}
                     style={{
                       color: emailError ? "red" : "var(--cordis-black)",
+                      textAlign: "left",
                     }}
                   />
                   {emailError && (
@@ -673,15 +675,18 @@ export default function Footer({ $type }) {
             $weight="light"
             $typeFace="primary"
             $size="small"
+            $align="center"
           >
             Copyright © 2025 Cordis Hotel. All rights reserved.
           </Text>
+          <StyledLine1 />
           <Text
             $type="p"
             $color="var(--cordis-accent)"
             $weight="light"
             $typeFace="primary"
             $size="small"
+            $align="center"
           >
             Terms of Service
           </Text>
