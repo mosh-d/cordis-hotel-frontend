@@ -21,6 +21,8 @@ const StyledBookingConfirmation = styled.div`
   background-position-x: center;
   padding: 15rem;
   display: flex;
+  align-items: center;
+  justify-content: center;
 
   ${media.tablet} {
     padding: 15rem 4rem;
@@ -28,25 +30,25 @@ const StyledBookingConfirmation = styled.div`
   }
 `;
 
-const StyledBackArrow = styled.div`
-  padding: 1.3rem 0;
-  width: 13rem;
-  height: 13rem;
-  transition: all 0.1s ease-in-out;
+// const StyledBackArrow = styled.div`
+//   padding: 1.3rem 0;
+//   width: 13rem;
+//   height: 13rem;
+//   transition: all 0.1s ease-in-out;
 
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      cursor: pointer;
-      transform: translateX(-0.4rem) scale(1.1);
-      opacity: 0.7;
-    }
-  }
+//   @media (hover: hover) and (pointer: fine) {
+//     &:hover {
+//       cursor: pointer;
+//       transform: translateX(-0.4rem) scale(1.1);
+//       opacity: 0.7;
+//     }
+//   }
 
-  &:active {
-    transform: translateX(-0.8rem) scale(1.1);
-    opacity: 1;
-  }
-`;
+//   &:active {
+//     transform: translateX(-0.8rem) scale(1.1);
+//     opacity: 1;
+//   }
+// `;
 
 const StyledTextWrapper = styled.div`
   display: flex;
@@ -66,22 +68,23 @@ const StyledTextWrapper = styled.div`
   }
 `;
 
-const StyledTextIconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 2.4rem;
+// const StyledTextIconWrapper = styled.div`
+//   display: flex;
+//   align-items: center;
+//   gap: 2.4rem;
 
-  ${media.tablet} {
-    justify-content: center;
-  }
-`;
+//   ${media.tablet} {
+//     justify-content: center;
+//   }
+// `;
 
 const StyledBookingCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: auto;
   padding: 2rem;
-  background-color: hsla(0, 0.00%, 100.00%, .6);
+  background-color: hsla(0, 0.00%, 100.00%, 1);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
@@ -142,7 +145,7 @@ export default function BookingConfirmationPage() {
           <StyledBookingCard>
             <Text
               $type="h3"
-              $color="var(--cordis-white)"
+              $color="var(--cordis-text-color)"
               style={{ marginBottom: "1rem", textAlign: "center" }}
             >
               {message || "Your reservation has been successfully made."}
@@ -185,7 +188,7 @@ export default function BookingConfirmationPage() {
             <Text
               style={{ textAlign: "center", marginBottom: "2rem" }}
               $type="p"
-              $color="var(--cordis-white)"
+              $color="var(--cordis-text-color)"
             >
               Check your email for a confirmation message. Can't wait to have
               you around!

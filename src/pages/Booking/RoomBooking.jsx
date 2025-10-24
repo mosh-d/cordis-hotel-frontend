@@ -1473,9 +1473,9 @@ export default function RoomBookingPage() {
                 <Text>{isBookingOnHold ? "Processing..." : "Book on Hold"}</Text>
               </Button>
               {/* </RouterLink> */}
-              <Text $color="var(--cordis-white)">or</Text>
+              {/* <Text $color="var(--cordis-white)">or</Text> */}
               {/* <RouterLink to="/booking-confirmation"> */}
-              <Button
+            {/*   <Button
                 $type="emphasis"
                 type="button"
                 onClick={payWithPaystack}
@@ -1488,7 +1488,7 @@ export default function RoomBookingPage() {
                 <Text>
                   {isPayingWithPaystack ? "Processing..." : "Pay with Paystack"}
                 </Text>
-              </Button>
+              </Button> */}
               {/* </RouterLink> */}
             </StyledButtonWrapper>
           </StyledConfirmationTotalWrapper>
