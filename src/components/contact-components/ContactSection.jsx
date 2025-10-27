@@ -137,7 +137,8 @@ export default function ContactSection() {
   const [formErrors, setFormErrors] = useState({});
 
   // Contact form hook
-  const { loading, error, success, submitEnquiry, resetForm } = useContactForm();
+  const { loading, error, success, submitEnquiry, resetForm } =
+    useContactForm();
 
   // Form validation function
   const validateForm = () => {
@@ -148,7 +149,11 @@ export default function ContactSection() {
       errors.name = "Name is required (minimum 2 characters)";
     }
 
-    if (!formData.email || !formData.email.includes("@") || !formData.email.includes(".")) {
+    if (
+      !formData.email ||
+      !formData.email.includes("@") ||
+      !formData.email.includes(".")
+    ) {
       errors.email = "Valid email address is required";
     }
 
@@ -166,14 +171,14 @@ export default function ContactSection() {
 
   // Handle input changes
   const handleInputChange = (field, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
 
     // Clear field error when user starts typing
     if (formErrors[field]) {
-      setFormErrors(prev => ({
+      setFormErrors((prev) => ({
         ...prev,
         [field]: null,
       }));
@@ -218,10 +223,19 @@ export default function ContactSection() {
   };
 
   // Validation state for styling
-  const nameIsInvalid = formErrors.name && (!formData.name || formData.name.trim().length < 2);
-  const emailIsInvalid = formErrors.email && (!formData.email || !formData.email.includes("@") || !formData.email.includes("."));
-  const subjectIsInvalid = formErrors.subject && (!formData.subject || formData.subject.trim().length < 3);
-  const messageIsInvalid = formErrors.message && (!formData.message || formData.message.trim().length < 10);
+  const nameIsInvalid =
+    formErrors.name && (!formData.name || formData.name.trim().length < 2);
+  const emailIsInvalid =
+    formErrors.email &&
+    (!formData.email ||
+      !formData.email.includes("@") ||
+      !formData.email.includes("."));
+  const subjectIsInvalid =
+    formErrors.subject &&
+    (!formData.subject || formData.subject.trim().length < 3);
+  const messageIsInvalid =
+    formErrors.message &&
+    (!formData.message || formData.message.trim().length < 10);
 
   return (
     <StyledContactSection>
@@ -247,32 +261,50 @@ export default function ContactSection() {
 
         <StyledLinkWrapper>
           <RiPhoneLine color="var(--cordis-text-color)" size="3rem" />
-          <Link href="tel:+2349111846281" $type="default">+234 911 184 6281</Link>
+          <Link href="tel:+2349111846281" $type="default">
+            +234 911 184 6281
+          </Link>
         </StyledLinkWrapper>
         <StyledLinkWrapper>
           <RiWhatsappLine color="var(--cordis-text-color)" size="3rem" />
-          <Link href="https://wa.me/2349111846280" $type="default">+234 911 184 6280</Link>
+          <Link href="https://wa.me/2349111846280" $type="default">
+            +234 911 184 6280
+          </Link>
         </StyledLinkWrapper>
         <StyledLinkWrapper>
           <RiMailLine color="var(--cordis-text-color)" size="3rem" />
-          <Link href="mailto:info@thecordishotelikeja.com" $type="default">info@thecordishotelikeja.com</Link>
+          <Link href="mailto:info@thecordishotelikeja.com" $type="default">
+            info@thecordishotelikeja.com
+          </Link>
         </StyledLinkWrapper>
         <StyledLinkWrapper>
           <RiFacebookLine color="var(--cordis-text-color)" size="3rem" />
-          <Link $type="default">thecordidhotelikeja</Link>
+          <Link
+            $type="default"
+            href="https://www.facebook.com/thecordishotels"
+          >
+            thecordidhotelikeja
+          </Link>
         </StyledLinkWrapper>
         <StyledLinkWrapper>
           <RiInstagramLine color="var(--cordis-text-color)" size="3rem" />
-          <Link $type="default">@thecordishotelikeja</Link>
+          <Link
+            $type="default"
+            href="https://www.instagram.com/thecordishotel/"
+          >
+            @thecordishotel
+          </Link>
         </StyledLinkWrapper>
         <StyledLinkWrapper>
           <RiTiktokLine color="var(--cordis-text-color)" size="3rem" />
-          <Link $type="default">@thecordishotelikeja</Link>
+          <Link $type="default" href="https://www.tiktok.com/@thecordishotel">
+            @thecordishotelikeja
+          </Link>
         </StyledLinkWrapper>
-        <StyledLinkWrapper>
+        {/* <StyledLinkWrapper>
           <RiTwitterXLine color="var(--cordis-text-color)" size="3rem" />
-          <Link $type="default">@thecordishotelikeja</Link>
-        </StyledLinkWrapper>
+          <Link $type="default" href="https://twitter.com/thecordishotelikeja">@thecordishotelikeja</Link>
+        </StyledLinkWrapper> */}
       </StyledContctInfo>
       <StyledUserInfo>
         {/* Form validation errors */}
@@ -345,7 +377,14 @@ export default function ContactSection() {
             />
           </StyledUserInfoRow2>
           <StyledUserInfoRow3>
-            <Text $type="p" $color="var(--cordis-black)" $weight="light" $typeFace="primary">Message</Text>
+            <Text
+              $type="p"
+              $color="var(--cordis-black)"
+              $weight="light"
+              $typeFace="primary"
+            >
+              Message
+            </Text>
             <StyledTextarea
               placeholder="Write a message here"
               value={formData.message}
@@ -366,7 +405,13 @@ export default function ContactSection() {
         </form>
         {/* Status messages positioned outside form to avoid layout issues */}
         {error && (
-          <Text $type="p" $color="var(--cordis-error)" $weight="light" $typeFace="primary" style={{ marginTop: '1rem' }}>
+          <Text
+            $type="p"
+            $color="var(--cordis-error)"
+            $weight="light"
+            $typeFace="primary"
+            style={{ marginTop: "1rem" }}
+          >
             {error}
           </Text>
         )}

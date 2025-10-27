@@ -472,10 +472,18 @@ export default function Footer({ $type }) {
                 </form>
               </StyledExclusiveOffers>
               <StyledIcons>
+                <a href="https://www.facebook.com/thecordishotels">
                 <RiFacebookLine color="var(--cordis-accent)" size="3rem" />
+                </a>
+                <a href="https://www.tiktok.com/@thecordishotelikeja">
                 <RiTiktokLine color="var(--cordis-accent)" size="3rem" />
+                </a>
+                <a href="https://www.instagram.com/thecordishotel/">
                 <RiInstagramLine color="var(--cordis-accent)" size="3rem" />
+                </a>
+                {/* <a href="https://twitter.com/thecordishotelikeja">
                 <RiTwitterXLine color="var(--cordis-accent)" size="3rem" />
+                </a> */}
               </StyledIcons>
               <StyledContactInfo>
                 <Text
