@@ -61,14 +61,15 @@ const StyledExerciseRelaxationSection = styled.section`
 
   ${media.tablet} {
     flex-direction: column;
-    height: 240rem;
+    /* height: 240rem; */ /* height when spa pictures are available */
+    height: 140rem;
   }
 
   ${media.mobile} {
     padding: 12rem 0;
     gap: 1rem;
     height: auto;
-    min-height: 200rem;
+    /* min-height: 200rem; */ /* min-height when spa pictures are available */
   }
 `;
 
@@ -100,7 +101,7 @@ const StyledSpaWrapper = styled.div`
 `;
 
 const StyledSpaWrapperContainer = styled.div`
-  height: 110%;
+  /* height: 110%; */ /* height when spa pictures are available */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -189,18 +190,21 @@ const BackDrop = styled.div`
   top: 10rem;
   right: 40rem;
   width: 60vw;
+  /*  height: 60rem; //height when spa pictures are available */
   height: 60rem;
   z-index: -1;
 
   ${media.tablet} {
     right: 0;
     width: 100%;
-    height: 220rem;
+    /* height: 220rem; */ /* height when spa pictures are available */
+    height: 120rem;
   }
 
   ${media.mobile} {
     height: auto;
-    min-height: 186rem;
+    /* min-height: 186rem; */ /* height when spa pictures are available */
+    min-height: 85rem;
   }
 `;
 
@@ -210,11 +214,11 @@ export default function ExerciseRelaxationSection() {
       <StyledGymWrapper>
         <GymTextWrapper>
           <Text $type="h1" $color="var(--cordis-black)" $weight="bold">
-            Exercise & Relaxation
+            Exercise {/* & Relaxation */}
           </Text>
           <Text $color="var(--cordis-text-color)">
-            Elevate your fitness journey with our state‑of‑the‑art gym,
-            complemented by a serene spa experience.
+            Elevate your fitness journey with our state‑of‑the‑art gym.{/* ,
+            complemented by a serene spa experience. */}
           </Text>
         </GymTextWrapper>
 
@@ -260,7 +264,7 @@ export default function ExerciseRelaxationSection() {
       </StyledGymWrapper>
 
       <StyledSpaWrapperContainer>
-        <StyledSpaWrapper>
+        {/* <StyledSpaWrapper>
           <StyledSpa>
             <Carousel ImageUrls={spaImages} />
           </StyledSpa>
@@ -287,7 +291,7 @@ export default function ExerciseRelaxationSection() {
               restored.
             </Text>
           </SpaTextWrapper>
-        </StyledSpaWrapper>
+        </StyledSpaWrapper> */}
         <RouterLink to="/room-booking">
           <StyledButtonContainer2>
             <Button $type="emphasis2">

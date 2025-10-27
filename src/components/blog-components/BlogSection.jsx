@@ -98,7 +98,7 @@ export default function BlogSection() {
     async function fetchHashnodeBlogs() {
       const query = `
         query {
-          publication(host: "test007.hashnode.dev") {
+          publication(host: "cordiis.hashnode.dev") {
             posts(first: 10) {
               edges {
                 node {

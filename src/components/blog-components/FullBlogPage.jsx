@@ -35,7 +35,7 @@ export default function FullBlogPage() {
             query,
             variables: {
               slug,
-              host: "test007.hashnode.dev", // 👈 make sure this matches your blog domain
+              host: "cordis.hashnode.dev", // 👈 make sure this matches your blog domain
             },
           }),
         });

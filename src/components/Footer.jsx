@@ -473,13 +473,13 @@ export default function Footer({ $type }) {
               </StyledExclusiveOffers>
               <StyledIcons>
                 <a href="https://www.facebook.com/thecordishotels">
-                <RiFacebookLine color="var(--cordis-accent)" size="3rem" />
+                  <RiFacebookLine color="var(--cordis-accent)" size="3rem" />
                 </a>
                 <a href="https://www.tiktok.com/@thecordishotelikeja">
-                <RiTiktokLine color="var(--cordis-accent)" size="3rem" />
+                  <RiTiktokLine color="var(--cordis-accent)" size="3rem" />
                 </a>
                 <a href="https://www.instagram.com/thecordishotel/">
-                <RiInstagramLine color="var(--cordis-accent)" size="3rem" />
+                  <RiInstagramLine color="var(--cordis-accent)" size="3rem" />
                 </a>
                 {/* <a href="https://twitter.com/thecordishotelikeja">
                 <RiTwitterXLine color="var(--cordis-accent)" size="3rem" />
@@ -533,16 +533,60 @@ export default function Footer({ $type }) {
             </StyledNavigationHeaderWrapper>
             <StyledNavigationLinkWrapper>
               <NavLink to="/">
-                <Link $type="secondary">Home</Link>
+                <Text
+                  $color="var(--cordis-accent)"
+                  $weight="light"
+                  $size="small"
+                  style={{
+                    lineHeight: ".7",
+                    borderBottom: "1px solid var(--cordis-accent)",
+                    opacity: 0.7,
+                  }}
+                >
+                  Home
+                </Text>
               </NavLink>
               <NavLink to="/about">
-                <Link $type="secondary">About</Link>
+                <Text
+                  $color="var(--cordis-accent)"
+                  $weight="light"
+                  $size="small"
+                  style={{
+                    lineHeight: ".7",
+                    borderBottom: "1px solid var(--cordis-accent)",
+                    opacity: 0.7,
+                  }}
+                >
+                  About
+                </Text>
               </NavLink>
               <NavLink to="/contact">
-                <Link $type="secondary">Contact</Link>
+                <Text
+                  $color="var(--cordis-accent)"
+                  $weight="light"
+                  $size="small"
+                  style={{
+                    lineHeight: ".7",
+                    borderBottom: "1px solid var(--cordis-accent)",
+                    opacity: 0.7,
+                  }}
+                >
+                  Contact
+                </Text>
               </NavLink>
               <NavLink to="/blog">
-                <Link $type="secondary">Blog</Link>
+                <Text
+                  $color="var(--cordis-accent)"
+                  $weight="light"
+                  $size="small"
+                  style={{
+                    lineHeight: ".7",
+                    borderBottom: "1px solid var(--cordis-accent)",
+                    opacity: 0.7,
+                  }}
+                >
+                  Blog
+                </Text>
               </NavLink>
             </StyledNavigationLinkWrapper>
           </StyledNavigation>
