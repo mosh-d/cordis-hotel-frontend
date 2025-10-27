@@ -17,10 +17,14 @@ import pool5 from "../../assets/cordis-pool/CORDIS-POOL-5.jpg";
 import bar1 from "../../assets/cordis-bar/CORDIS-BAR-1.jpg";
 import bar2 from "../../assets/cordis-bar/CORDIS-BAR-2.jpg";
 import bar3 from "../../assets/cordis-bar/CORDIS-BAR-3.jpg";
+import bar4 from "../../assets/cordis-bar/CORDIS-BAR-4.jpg";
+import bar5 from "../../assets/cordis-bar/CORDIS-BAR-5.jpg";
+import bar6 from "../../assets/cordis-bar/CORDIS-BAR-6.jpg";
+import bar7 from "../../assets/cordis-bar/CORDIS-BAR-7.jpg";
 
 // Local image arrays
 const poolImages = [pool1, pool2, pool3, pool4, pool5];
-const barImages = [bar1, bar2, bar3];
+const barImages = [bar1, bar2, bar3, bar4, bar5, bar6, bar7];
 
 // //pool images
 // const Pool1 = "cordis/pool-1";

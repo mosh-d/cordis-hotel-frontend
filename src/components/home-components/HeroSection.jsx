@@ -15,6 +15,7 @@ import {
   getCloudinaryVideoUrl,
 } from "../../config/cloudinary";
 import heroImage from "../../assets/HERO.jpg";
+import heroImageMobile from "../../assets/HERO_MOBILE.jpg";
 
 //Hero image
 const HeroImage = "cordis/hero/image";
@@ -38,11 +39,14 @@ const StyledHeroSection = styled.section`
     left: 0;
     width: 100%;
     height: 100%;
-    // background: ${cloudinaryBg(HeroImage)} center/cover no-repeat;
     background: url(${heroImage}) center/cover no-repeat;
     z-index: -2;
     opacity: ${(props) => (props.$videoLoaded ? 0 : 1)};
     transition: opacity 0.5s ease;
+
+    ${media.mobile} {
+      background: url(${heroImageMobile}) center/cover no-repeat;
+    }
   }
 
   &::after {
@@ -209,7 +213,7 @@ const QuickCheckIn = styled.div`
   display: flex;
   justify-content: center;
   align-items: end;
-  gap: 4.8rem;
+  gap: 1.8rem;
   width: 100%;
   padding: 2rem 8rem;
   background: hsla(180, 2%, 22%, 0.6);

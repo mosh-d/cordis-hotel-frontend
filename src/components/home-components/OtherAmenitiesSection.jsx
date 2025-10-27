@@ -9,7 +9,7 @@ import { getCloudinaryUrl } from "../../config/cloudinary";
 
 // Local images
 import coffeeShop from "../../assets/cordis-amenities/CORDIS-COFFEE-SHOP.png";
-import conferenceRoom from "../../assets/cordis-amenities/CORDIS-CONFERENCE-ROOM.png";
+import conferenceRoom from "../../assets/cordis-amenities/CORDIS-CONFERENCE-ROOM.jpg";
 import parkingSpace from "../../assets/cordis-amenities/CORDIS-PARKING-SPACE.jpg";
 import safeDepositBox from "../../assets/cordis-amenities/CORDIS-SAFE-DEPOSIT-BOXES.png";
 import sitOut from "../../assets/cordis-amenities/CORDIS-SIT-OUT.jpg";

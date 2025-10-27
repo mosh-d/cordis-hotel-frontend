@@ -14,13 +14,14 @@ import standardRoom1 from "../../assets/standard-room/STANDARD-ROOM-1.jpg";
 import standardRoom2 from "../../assets/standard-room/STANDARD-ROOM-2.jpg";
 import standardRoom3 from "../../assets/standard-room/STANDARD-ROOM-3.jpg";
 import standardRoom4 from "../../assets/standard-room/STANDARD-ROOM-4.jpg";
+import standardRoom5 from "../../assets/standard-room/STANDARD-ROOM-5.jpg";
 
 // Local Executive Room Images
-import executiveRoom1 from "../../assets/executive-room/EXECUTIVE-ROOM-1.jpg";
-import executiveRoom2 from "../../assets/executive-room/EXECUTIVE-ROOM-2.jpg";
-import executiveRoom3 from "../../assets/executive-room/EXECUTIVE-ROOM-3.jpg";
-import executiveRoom4 from "../../assets/executive-room/EXECUTIVE-ROOM-4.jpg";
-import executiveRoom5 from "../../assets/executive-room/EXECUTIVE-ROOM-5.jpg";
+// import executiveRoom1 from "../../assets/executive-room/EXECUTIVE-ROOM-1.jpg";
+// import executiveRoom2 from "../../assets/executive-room/EXECUTIVE-ROOM-2.jpg";
+// import executiveRoom3 from "../../assets/executive-room/EXECUTIVE-ROOM-3.jpg";
+// import executiveRoom4 from "../../assets/executive-room/EXECUTIVE-ROOM-4.jpg";
+// import executiveRoom5 from "../../assets/executive-room/EXECUTIVE-ROOM-5.jpg";
 
 // Local Executive Deluxe Room Images
 import executiveDeluxeRoom1 from "../../assets/executive-deluxe-room/EXECUTIVE-DELUXE-ROOM-1.jpg";
@@ -28,6 +29,7 @@ import executiveDeluxeRoom2 from "../../assets/executive-deluxe-room/EXECUTIVE-D
 import executiveDeluxeRoom3 from "../../assets/executive-deluxe-room/EXECUTIVE-DELUXE-ROOM-3.jpg";
 import executiveDeluxeRoom4 from "../../assets/executive-deluxe-room/EXECUTIVE-DELUXE-ROOM-4.jpg";
 import executiveDeluxeRoom5 from "../../assets/executive-deluxe-room/EXECUTIVE-DELUXE-ROOM-5.jpg";
+// import executiveDeluxeRoom6 from "../../assets/executive-deluxe-room/EXECUTIVE-DELUXE-ROOM-6.jpg";
 
 // Local Executive Suite Room Images
 import executiveSuiteRoom1 from "../../assets/executive-suite/EXECUTIVE-SUITE-1.jpg";
@@ -38,6 +40,7 @@ import executiveSuiteRoom5 from "../../assets/executive-suite/EXECUTIVE-SUITE-5.
 import executiveSuiteRoom6 from "../../assets/executive-suite/EXECUTIVE-SUITE-6.jpg";
 import executiveSuiteRoom7 from "../../assets/executive-suite/EXECUTIVE-SUITE-7.jpg";
 import executiveSuiteRoom8 from "../../assets/executive-suite/EXECUTIVE-SUITE-8.jpg";
+import executiveSuiteRoom9 from "../../assets/executive-suite/EXECUTIVE-SUITE-9.jpg";
 
 // //Standard room images
 // const StandardRoom1 = "cordis/standard-room-1";
@@ -86,15 +89,16 @@ const standardRoomImages = [
   standardRoom2,
   standardRoom3,
   standardRoom4,
+  standardRoom5,
 ];
 
-const executiveRoomImages = [
-  executiveRoom1,
-  executiveRoom2,
-  executiveRoom3,
-  executiveRoom4,
-  executiveRoom5,
-];
+// const executiveRoomImages = [
+//   executiveRoom1,
+//   executiveRoom2,
+//   executiveRoom3,
+//   executiveRoom4,
+//   executiveRoom5,
+// ];
 
 const executiveDeluxeRoomImages = [
   executiveDeluxeRoom1,
@@ -102,6 +106,7 @@ const executiveDeluxeRoomImages = [
   executiveDeluxeRoom3,
   executiveDeluxeRoom4,
   executiveDeluxeRoom5,
+  // executiveDeluxeRoom6,
 ];
 
 const executiveSuiteImages = [
@@ -113,6 +118,7 @@ const executiveSuiteImages = [
   executiveSuiteRoom6,
   executiveSuiteRoom7,
   executiveSuiteRoom8,
+  executiveSuiteRoom9,
 ];
 
 const StyledRoom = styled.div`
@@ -285,8 +291,8 @@ export default function Room({
     imageType === "standard"
       ? standardRoomImages
       : imageType === "executive"
-      ? executiveRoomImages
-      : imageType === "executiveDeluxe"
+      // ? executiveRoomImages
+      // : imageType === "executiveDeluxe"
       ? executiveDeluxeRoomImages
       : imageType === "executiveSuite"
       ? executiveSuiteImages
