@@ -259,19 +259,19 @@ export default function ContactSection() {
         </StyledLinkWrapper>
         <StyledLinkWrapper>
           <RiFacebookLine color="var(--cordis-text-color)" size="3rem" />
-          <Link $type="default">FiveCloverHotels</Link>
+          <Link $type="default">thecordidhotelikeja</Link>
         </StyledLinkWrapper>
         <StyledLinkWrapper>
           <RiInstagramLine color="var(--cordis-text-color)" size="3rem" />
-          <Link $type="default">@fivecloverhotels</Link>
+          <Link $type="default">@thecordishotelikeja</Link>
         </StyledLinkWrapper>
         <StyledLinkWrapper>
           <RiTiktokLine color="var(--cordis-text-color)" size="3rem" />
-          <Link $type="default">@fivecloverhotels</Link>
+          <Link $type="default">@thecordishotelikeja</Link>
         </StyledLinkWrapper>
         <StyledLinkWrapper>
           <RiTwitterXLine color="var(--cordis-text-color)" size="3rem" />
-          <Link $type="default">@fivecloverhotels</Link>
+          <Link $type="default">@thecordishotelikeja</Link>
         </StyledLinkWrapper>
       </StyledContctInfo>
       <StyledUserInfo>
