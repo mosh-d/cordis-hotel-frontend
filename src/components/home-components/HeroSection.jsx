@@ -39,6 +39,7 @@ const StyledHeroSection = styled.section`
     left: 0;
     width: 100%;
     height: 100%;
+    // background: ${cloudinaryBg(HeroImage)} center/cover no-repeat;
     background: url(${heroImage}) center/cover no-repeat;
     z-index: -2;
     opacity: ${(props) => (props.$videoLoaded ? 0 : 1)};
@@ -213,7 +214,7 @@ const QuickCheckIn = styled.div`
   display: flex;
   justify-content: center;
   align-items: end;
-  gap: 1.8rem;
+  gap: 1.2rem;
   width: 100%;
   padding: 2rem 8rem;
   background: hsla(180, 2%, 22%, 0.6);
