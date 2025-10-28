@@ -8,10 +8,10 @@ import { media } from "../../util/breakpoints";
 import { getCloudinaryUrl } from "../../config/cloudinary";
 
 // Local images
-import coffeeShop from "../../assets/cordis-amenities/CORDIS-COFFEE-SHOP.png";
+import coffeeShop from "../../assets/cordis-amenities/CORDIS-COFFEE-SHOP.jpg";
 import conferenceRoom from "../../assets/cordis-amenities/CORDIS-CONFERENCE-ROOM.jpg";
 import parkingSpace from "../../assets/cordis-amenities/CORDIS-PARKING-SPACE.jpg";
-import safeDepositBox from "../../assets/cordis-amenities/CORDIS-SAFE-DEPOSIT-BOXES.png";
+import safeDepositBox from "../../assets/cordis-amenities/CORDIS-SAFE-DEPOSIT-BOXES.jpg";
 import sitOut from "../../assets/cordis-amenities/CORDIS-SIT-OUT.jpg";
 
 // //images

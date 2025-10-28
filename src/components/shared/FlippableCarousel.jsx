@@ -243,9 +243,9 @@ export default function FlippableCarousel({
 
           <StyledBottomContainer>
             <Text
-              $size="extra-large"
+              $size="medium"
               $color="var(--cordis-white)"
-              style={{ marginLeft: "2rem", marginBottom: "3rem" }}
+              style={{ marginLeft: "2rem", marginBottom: "1rem" }}
             >
               Click the image for details
             </Text>
