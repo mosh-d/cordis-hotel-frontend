@@ -709,7 +709,7 @@ export default function Footer({ $type }) {
                     $color="var(--cordis-accent)"
                     $weight="regular"
                   >
-                    Five Clover Cordis Hotels Ltd
+                    Five Clover Cordis Hotel Ltd
                   </Text>
                 </StyledHeader>
                 <StyledHotelLinkWrapper>
