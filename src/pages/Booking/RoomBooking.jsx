@@ -303,10 +303,28 @@ export default function RoomBookingPage() {
 
   const navigate = useNavigate();
 
+  // Check if all required fields are filled
+  const areAllFieldsFilled = () => {
+    return (
+      firstName?.trim() &&
+      lastName?.trim() &&
+      email?.includes("@") &&
+      phoneNumber?.replace(/\s/g, "").length >= 9 &&
+      checkIn &&
+      checkOut &&
+      roomCategory && roomCategory !== "" &&
+      noOfAdults >= 1 &&
+      noOfRooms >= 1 && noOfRooms <= 4
+    );
+  };
+
   // Form validation function
-  const validateForm = () => {
+  const validateForm = (showAllErrors = false) => {
     const errors = {};
     const today = new Date().toISOString().split("T")[0];
+    
+    // Only validate all fields if showAllErrors is true or if we're actually submitting
+    const validateAll = showAllErrors || !areAllFieldsFilled();
 
     // Validate required fields
     if (!firstName || firstName.trim().length < 2) {
@@ -358,29 +376,29 @@ export default function RoomBookingPage() {
   const bookOnHold = async (e) => {
     e.preventDefault();
     
+    // Always validate form and show errors when button is clicked
+    const isValid = validateForm(true); // true = show all validation errors
+    
+    if (!isValid) {
+      console.log("❌ FORM VALIDATION FAILED");
+      // Scroll to top to show validation errors
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    
     // Get the correct room info including roomTypeId from API
     const roomInfo = getRoomPriceAndName();
     const apiRoomTypeId = roomInfo.roomTypeId;
     
-    // IMMEDIATE DEBUG: Check all critical values
-    console.log("🚨 IMMEDIATE DEBUG - bookOnHold called:", {
+    console.log("🚀 Starting booking process with:", {
       roomCategory,
       roomTypeId: apiRoomTypeId,
       roomTypeIdSource: roomInfo.isFromApi ? "API" : "FALLBACK",
       checkIn,
       checkOut,
       noOfAdults,
-      noOfChildren,
-      hasValidationErrors: !validateForm()
+      noOfChildren
     });
-
-    // Validate form before making API call
-    if (!validateForm()) {
-      console.log("❌ FORM VALIDATION FAILED");
-      // Scroll to top to show validation errors
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
 
     console.log("✅ FORM VALIDATION PASSED");
     setIsBookingOnHold(true);
@@ -823,6 +841,17 @@ export default function RoomBookingPage() {
 
   //Room price calculation - use API data if available
   const getRoomPriceAndName = () => {
+    // Return null if no room is selected yet
+    if (!roomCategory) {
+      return {
+        price: 0,
+        name: "Select a room type",
+        isFromApi: false,
+        roomTypeId: null,
+        rateId: null,
+      };
+    }
+
     // Try to get data from API first
     if (apiRooms && apiRooms.length > 0) {
       // Handle both old format (propName) and new format (roomTypeId-rateId)
@@ -843,7 +872,7 @@ export default function RoomBookingPage() {
 
       if (selectedRoom) {
         // Use API rate directly without any calculations
-        const apiPrice = selectedRoom.rawApiRate || 120000; // Use raw API rate or fallback
+        const apiPrice = selectedRoom.rawApiRate || 0; // Don't use fallback price
 
         return {
           price: apiPrice,
@@ -855,10 +884,10 @@ export default function RoomBookingPage() {
       }
     }
 
-    // Fallback to default data when no API data available
+    // Return 0 price when no room is selected or found
     return {
-      price: 120000,
-      name: "Selected Room",
+      price: 0,
+      name: "Room not found",
       isFromApi: false,
       roomTypeId: null,
       rateId: null,
@@ -867,8 +896,8 @@ export default function RoomBookingPage() {
 
   const roomInfo = getRoomPriceAndName();
   const rollAwayBedPrice = rollawayBed ? 20000 : 0;
-  const roomPrice = roomInfo.price + rollAwayBedPrice;
-  const roomName = roomInfo.name;
+  const roomPrice = roomInfo ? (roomInfo.price + rollAwayBedPrice) : 0;
+  const roomName = roomInfo?.name || "Select a room type";
 
   // Calculate nights
   const calculateNights = () => {
@@ -1077,17 +1106,13 @@ export default function RoomBookingPage() {
                         : typeof selectedRoom.available === "boolean"
                         ? selectedRoom.available
                         : true;
-                    if (isAvailable) {
-                      setRoomCategory(e.target.value);
-                    }
-                  } else {
-                    // If no API data, allow selection (fallback behavior)
                     setRoomCategory(e.target.value);
                   }
-                  console.log(roomCategory);
                 }}
+                required
+                className={!roomCategory ? "placeholder-visible" : ""}
               >
-                <option value="">Choose a room type</option>
+                <option value="" disabled hidden>Choose a room type</option>
                 {/* Generate options dynamically based on API data */}
                 {apiRooms && apiRooms.length > 0 ? (
                   // Use API data to determine availability
@@ -1466,7 +1491,7 @@ export default function RoomBookingPage() {
                 onClick={bookOnHold}
                 disabled={isBookingOnHold}
                 style={{
-                  opacity: isBookingOnHold ? 0.6 : 1,
+                  opacity: (isBookingOnHold || !areAllFieldsFilled()) ? 0.6 : 1,
                   cursor: isBookingOnHold ? "not-allowed" : "pointer",
                 }}
               >
