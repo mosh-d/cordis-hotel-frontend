@@ -9,11 +9,10 @@ const ROOMS = [
   {
     name: "Standard",
     propName: "standard",
-    price: "₦120,000 default",
-    size: "150 M2",
+    price: "₦125,000",
+    size: "21.27 sqm",
     bed: "1 King size bed",
     capacity: "2 Adults & 1 Child",
-    // view: "City or Lagoon View",
     amenities: [
       "Wardrobe",
       "Bathroom slippers",
@@ -24,13 +23,6 @@ const ROOMS = [
       "Free WiFi",
       "Mini Fridge",
       "Mini Bar",
-      
-      // "Kettle",
-      // "Towel",
-      // "Water heater",
-      // "Sofa",
-      // "Desk",
-      // "Wooden Closet",
     ],
     services: [
       "Free WiFi",
@@ -48,11 +40,10 @@ const ROOMS = [
   {
     name: "Executive Deluxe",
     propName: "executiveDeluxe",
-    price: "₦160,000 default",
-    size: "250 M2",
+    price: "₦195,000",
+    size: "28.6 sqm",
     bed: "2 King size bed",
-    capacity: "3 Adults & 2 Children",
-    // view: "Exotic City View",
+    capacity: "2 Adults & 1 Child",
     amenities: [
       "Wardrobe",
       "Bathroom slippers",
@@ -64,12 +55,6 @@ const ROOMS = [
       "Mini Fridge",
       "Mini Bar",
       
-      // "Kettle",
-      // "Towel",
-      // "Water heater",
-      // "Sofa",
-      // "Desk",
-      // "Wooden Closet",
     ],
     services: [
       "Free WiFi",
@@ -87,11 +72,10 @@ const ROOMS = [
   {
     name: "Executive Suite",
     propName: "executiveSuite",
-    price: "₦250,000 default",
-    size: "250 M2",
+    price: "₦250,000",
+    size: "54.3 sqm",
     bed: "2 King size bed",
-    capacity: "3 Adults & 2 Children",
-    // view: "Exotic City View",
+    capacity: "2 Adults & 4 Children",
     amenities: [
       "Wardrobe",
       "Bathroom slippers",
@@ -102,13 +86,6 @@ const ROOMS = [
       "Free WiFi",
       "Mini Fridge",
       "Mini Bar",
-      
-      // "Kettle",
-      // "Towel",
-      // "Water heater",
-      // "Sofa",
-      // "Desk",
-      // "Wooden Closet",
     ],
     services: [
       "Free WiFi",

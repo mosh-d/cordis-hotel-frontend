@@ -7,7 +7,7 @@ import Button from "./Button";
 import { Link as RouteLink, useLocation } from "react-router-dom";
 import { media } from "../../util/breakpoints";
 import { getCloudinaryUrl } from "../../config/cloudinary";
-// import { ROOMS } from "../../util/room-data"; // No longer needed - only using API data
+import { ROOMS as localRooms } from "../../util/room-data";
 
 // Local Standard Room Images
 import standardRoom1 from "../../assets/standard-room/STANDARD-ROOM-1.jpg";
@@ -44,47 +44,6 @@ import executiveSuiteRoom7 from "../../assets/executive-suite/EXECUTIVE-SUITE-7.
 import executiveSuiteRoom8 from "../../assets/executive-suite/EXECUTIVE-SUITE-8.jpg";
 import executiveSuiteRoom9 from "../../assets/executive-suite/EXECUTIVE-SUITE-9.jpg";
 
-// //Standard room images
-// const StandardRoom1 = "cordis/standard-room-1";
-// const StandardRoom2 = "cordis/standard-room-2";
-// const StandardRoom3 = "cordis/standard-room-3";
-// const StandardRoom4 = "cordis/standard-room-4";
-
-// //Executive room images
-// const ExecutiveRoom1 = "cordis/executive-room-1";
-// const ExecutiveRoom2 = "cordis/executive-room-2";
-// // const ExecutiveRoom3 = "cordis/executive-room-3";
-// // const ExecutiveRoom4 = "cordis/executive-room-4";
-
-// //Executive Deluxe room images
-// const ExecutiveDeluxeRoom1 = "cordis/executive-deluxe-room-1";
-// const ExecutiveDeluxeRoom2 = "cordis/executive-deluxe-room-2";
-
-// //Executive Suite images
-// const ExecutiveSuite1 = "cordis/executive-suite-1";
-// const ExecutiveSuite2 = "cordis/executive-suite-2";
-
-// const StandardRoomImages = [
-//   getCloudinaryUrl(StandardRoom1),
-//   getCloudinaryUrl(StandardRoom2),
-//   getCloudinaryUrl(StandardRoom3),
-//   getCloudinaryUrl(StandardRoom4),
-// ];
-// const ExecutiveRoomImages = [
-//   getCloudinaryUrl(ExecutiveRoom1),
-//   getCloudinaryUrl(ExecutiveRoom2),
-//   // getCloudinaryUrl(ExecutiveRoom3),
-//   // getCloudinaryUrl(ExecutiveRoom4),
-// ];
-// const ExecutiveDeluxeRoomImages = [
-//   getCloudinaryUrl(ExecutiveDeluxeRoom1),
-//   getCloudinaryUrl(ExecutiveDeluxeRoom2),
-// ];
-// const ExecutiveSuiteImages = [
-//   getCloudinaryUrl(ExecutiveSuite1),
-//   getCloudinaryUrl(ExecutiveSuite2),
-// ];
-
 // Local Room Arrays
 const standardRoomImages = [
   standardRoom1,
@@ -95,14 +54,6 @@ const standardRoomImages = [
   standardRoom6,
   standardRoom7,
 ];
-
-// const executiveRoomImages = [
-//   executiveRoom1,
-//   executiveRoom2,
-//   executiveRoom3,
-//   executiveRoom4,
-//   executiveRoom5,
-// ];
 
 const executiveDeluxeRoomImages = [
   executiveDeluxeRoom1,
@@ -262,41 +213,55 @@ export default function Room({
   });
 
   const getRoomData = () => {
-    // Only use passed roomData (API data), no static fallback
-    if (!roomData || roomData.length === 0) {
-      console.error("No room data provided to Room component");
-      return null;
+    // First try to get data from API
+    let selectedRoom = null;
+    
+    if (roomData && roomData.length > 0) {
+      // Find room by propName from API data
+      selectedRoom = roomData.find((room) => room.propName === imageType);
+      
+      if (selectedRoom) {
+        console.log(`📊 USING API ROOM DATA: ${imageType}`, {
+          name: selectedRoom.name,
+          price: selectedRoom.price,
+          size: selectedRoom.size,
+          capacity: selectedRoom.capacity,
+          dataSource: "API"
+        });
+        return selectedRoom;
+      }
+    }
+    
+    // If no API data, fall back to local room data
+    const localRoom = localRooms.find(room => room.propName === imageType);
+    
+    if (localRoom) {
+      console.log(`📊 USING LOCAL ROOM DATA: ${imageType}`, {
+        name: localRoom.name,
+        price: localRoom.price,
+        size: localRoom.size,
+        capacity: localRoom.capacity,
+        dataSource: "Local"
+      });
+      return localRoom;
     }
 
-    // Find room by propName from API data
-    let selectedRoom = roomData.find((room) => room.propName === imageType);
-
-    if (!selectedRoom) {
-      console.error(`Room with propName "${imageType}" not found in API data`);
-      return null;
-    }
-
-    console.log(`📊 ROOM DATA: ${imageType}`, {
-      selectedRoom: {
-        name: selectedRoom?.name,
-        propName: selectedRoom?.propName,
-        price: selectedRoom?.price,
-        available: selectedRoom?.available,
-        availableType: typeof selectedRoom?.available,
-      },
-      dataSource: "API",
-      totalRoomsAvailable: roomData.length,
-    });
-
-    return selectedRoom;
+    // Fallback if no data is found
+    console.error(`No room data found for type: ${imageType}`);
+    return {
+      name: headerText || 'Room',
+      price: 'N/A',
+      size: 'N/A',
+      capacity: 'N/A',
+      amenities: [],
+      services: []
+    };
   };
 
   const images =
     imageType === "standard"
       ? standardRoomImages
-      : imageType === "executive"
-      // ? executiveRoomImages
-      // : imageType === "executiveDeluxe"
+      : imageType === "executiveDeluxe"
       ? executiveDeluxeRoomImages
       : imageType === "executiveSuite"
       ? executiveSuiteImages

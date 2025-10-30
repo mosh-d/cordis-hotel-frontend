@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRoomAvailability } from './useRoomAvailability';
+import { ROOMS as localRooms } from '../util/room-data';
 
 export const useDynamicRoomData = (searchParams = null) => {
   const [roomData, setRoomData] = useState([]); // Start with empty array, no fallback
@@ -21,11 +22,18 @@ export const useDynamicRoomData = (searchParams = null) => {
 
   useEffect(() => {
     if (apiRooms.length > 0) {
-      // Use API data directly without transformation
+      // Mapping from API room names to propName values for correct images
+      const roomNameMapping = {
+        'Standard': 'standard',
+        'Executive Deluxe': 'executiveDeluxe',
+        'Executive Suite': 'executiveSuite'
+      };
+
+      // Use API data with consistent prop names
       const directApiRooms = apiRooms.map(apiRoom => ({
         // Use actual API room name and price
         name: apiRoom.roomType,
-        propName: apiRoom.roomType.toLowerCase().replace(/\s+/g, ''), // Simple mapping for images
+        propName: roomNameMapping[apiRoom.roomType] || apiRoom.roomType.toLowerCase().replace(/\s+/g, ''),
         price: `${apiRoom.currencySymbol || '₦'}${apiRoom.rate}`,
         rawApiRate: apiRoom.rate,
         available: apiRoom.available,
@@ -34,12 +42,14 @@ export const useDynamicRoomData = (searchParams = null) => {
         summary: apiRoom.summary || `Beautiful ${apiRoom.roomType} for your stay`,
         detail: apiRoom.detail || `Experience comfort in our ${apiRoom.roomType}`,
 
-        // Use basic fallback data for amenities, size, capacity, and services
-        size: "150 M2",
-        bed: "1 King size bed",
-        capacity: apiRoom.adult && apiRoom.children 
-          ? `${apiRoom.adult} Adults & ${apiRoom.children} Children` 
-          : "2 Adults & 1 Child",
+        // Get matching local room data for fallback values
+        ...(localRooms.find(room => room.propName === (roomNameMapping[apiRoom.roomType] || apiRoom.roomType.toLowerCase().replace(/\s+/g, ''))) || {
+          size: "N/A",
+          bed: "1 King size bed",
+          capacity: apiRoom.adult && apiRoom.children 
+            ? `${apiRoom.adult} Adults & ${apiRoom.children} Children` 
+            : "2 Adults & 1 Child",
+        }),
         amenities: [
           "Wardrobe",
           "Bathroom slippers", 
