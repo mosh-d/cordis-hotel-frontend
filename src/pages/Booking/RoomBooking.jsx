@@ -823,6 +823,17 @@ export default function RoomBookingPage() {
 
   //Room price calculation - use API data if available
   const getRoomPriceAndName = () => {
+    // Return null if no room is selected
+    if (!roomCategory) {
+      return {
+        price: 0,
+        name: '',
+        isFromApi: false,
+        roomTypeId: null,
+        rateId: null
+      };
+    }
+    
     // Try to get data from API first
     if (apiRooms && apiRooms.length > 0) {
       // Handle both old format (propName) and new format (roomTypeId-rateId)
@@ -1463,12 +1474,17 @@ export default function RoomBookingPage() {
               <Button
                 $type="white"
                 type="button"
-                onClick={bookOnHold}
-                disabled={isBookingOnHold}
-                style={{
-                  opacity: isBookingOnHold ? 0.6 : 1,
-                  cursor: isBookingOnHold ? "not-allowed" : "pointer",
+                onClick={(e) => {
+                  // Always allow the click to go through to show validation errors
+                  bookOnHold(e);
                 }}
+                style={{
+                  opacity: (isBookingOnHold || !roomCategory || firstNameIsInvalid || lastNameIsInvalid || emailIsInvalid || phoneNumberIsInvalid || checkInIsInvalid || checkOutIsInvalid || noOfRoomsIsInvalid) ? 0.6 : 1,
+                  cursor: isBookingOnHold ? 'not-allowed' : 'pointer',
+                  // Disable pointer events only during booking to show loading state
+                  pointerEvents: isBookingOnHold ? 'none' : 'auto'
+                }}
+                // Remove the disabled prop to allow clicks
               >
                 <Text>{isBookingOnHold ? "Processing..." : "Book on Hold"}</Text>
               </Button>

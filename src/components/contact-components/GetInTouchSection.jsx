@@ -36,8 +36,8 @@ export default function GetInTouchSection() {
         $weight="bold"
         $spacing="0.04em"
       >
-        Have any questions or need assistance? The team at Five Clover Inn,
-        Abijo is always ready to ensure your stay is flawless. Don’t hesitate to
+        Have any questions or need assistance? The team at Cordis,
+        Ikeja is always ready to ensure your stay is flawless. Don’t hesitate to
         reach out—we’re here to help with anything you need.
       </Text>
     </StyledGetInTouch>
