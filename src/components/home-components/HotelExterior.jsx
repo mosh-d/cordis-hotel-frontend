@@ -11,6 +11,7 @@ import Exterior1 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-1.jpg";
 import Exterior2 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-2.jpg";
 import Exterior3 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-3.jpg";
 import Exterior4 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-4.jpg";
+import Exterior5 from "../../assets/cordis-exterior/CORDIS-EXTERIOR-5.jpg";
 
 const StyledHotelExteriorSection = styled.div`
   display: flex;
@@ -171,6 +172,7 @@ export default function HotelExterior() {
           <StyledHotelExteriorImage src={Exterior2} alt="Hotel Exterior" />
           <StyledHotelExteriorImage src={Exterior3} alt="Hotel Exterior" />
           <StyledHotelExteriorImage src={Exterior4} alt="Hotel Exterior" />
+          <StyledHotelExteriorImage src={Exterior5} alt="Hotel Exterior" />
         </StyledHotelExteriorImageWrapper>
       </StyledTextImageWrapper>
       <div
