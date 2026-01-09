@@ -66,7 +66,7 @@ export default function MissionVision() {
             $typeFace="secondary"
             $size="large"
             $spacing=".05em"
-            $weight="light"
+            $weight="bold"
             $color="var(--cordis-light-gray)"
             $opacity="0.7"
           >
@@ -85,7 +85,7 @@ export default function MissionVision() {
             $typeFace="secondary"
             $size="large"
             $spacing=".05em"
-            $weight="light"
+            $weight="bold"
             $color="var(--cordis-light-gray)"
             $opacity="0.7"
           >

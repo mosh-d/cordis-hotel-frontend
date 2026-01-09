@@ -33,8 +33,8 @@ const barImages = [bar1, bar2, bar3, bar4, bar5, bar6, bar7];
 // const Pool4 = "cordis/pool-4";
 
 // //bar images - update these to match your actual Cloudinary public IDs
-// const Bar1 = "cordis/bar-1"; 
-// const Bar2 = "cordis/bar-2"; 
+// const Bar1 = "cordis/bar-1";
+// const Bar2 = "cordis/bar-2";
 // const Bar3 = "cordis/bar-3";
 
 // const PoolImages = [getCloudinaryUrl(Pool1), getCloudinaryUrl(Pool2), getCloudinaryUrl(Pool3), getCloudinaryUrl(Pool4)];
@@ -135,7 +135,7 @@ const StyledPoolTextWrapper = styled.div`
   align-items: flex-start;
   justify-content: center;
   width: 100%;
-  gap: 2rem;
+  gap: 1rem;
 
   /* ${media.tablet} {
     padding: 0 4rem;
@@ -170,11 +170,13 @@ const StyledBarTextWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  gap: 2rem;
+  gap: 1rem;
 `;
 
 const StyledBar = styled.div`
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
   width: 100%;
   height: 100%;
 `;
@@ -231,7 +233,7 @@ export default function PoolAndBarSection() {
             $typeFace="secondary"
             $size="large"
             $spacing=".05em"
-            $weight="regular"
+            $weight="bold"
           >
             Dive into serenity — our indoor pool offers year-round relaxation in
             a calm, elegant setting.
@@ -251,27 +253,27 @@ export default function PoolAndBarSection() {
         </PoolAndBarTextWrapper2>
         <StyledBar>
           <Carousel ImageUrls={barImages} />
+          <StyledBarTextWrapper>
+            <Text
+              $type="h3"
+              $size="extra-small"
+              $typeFace="primary"
+              $spacing=".2em"
+              $weight="bold"
+            >
+              Cordis Bar
+            </Text>
+            <Text
+              $typeFace="secondary"
+              $size="large"
+              $spacing=".05em"
+              $weight="bold"
+            >
+              Sip and savor — from classic cocktails to modern mixes, our bar is
+              the perfect place to unwind and connect.
+            </Text>
+          </StyledBarTextWrapper>
         </StyledBar>
-        <StyledBarTextWrapper>
-          <Text
-            $type="h3"
-            $size="extra-small"
-            $typeFace="primary"
-            $spacing=".2em"
-            $weight="bold"
-          >
-            Cordis Bar
-          </Text>
-          <Text
-            $typeFace="secondary"
-            $size="large"
-            $spacing=".05em"
-            $weight="regular"
-          >
-            Sip and savor — from classic cocktails to modern mixes, our bar is
-            the perfect place to unwind and connect.
-          </Text>
-        </StyledBarTextWrapper>
         <RouterLink to="/room-booking">
           <Button $type="emphasis2">
             <Text $weight="bold" $size="medium">

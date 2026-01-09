@@ -317,7 +317,7 @@ export default function FlavorsOfCordisSection() {
           $typeFace="secondary"
           $size="large"
           $spacing=".05em"
-          $weight="regular"
+          $weight="bold"
         >
           A vibrant dining hub serving a rich mix of local and international
           flavors.{" "}
@@ -355,7 +355,7 @@ export default function FlavorsOfCordisSection() {
               $color="var(--cordis-gray)"
               $size="large"
               $spacing=".05em"
-              $weight="regular"
+              $weight="bold"
             >
               The perfect spot for light bites, fresh brews, and relaxed
               conversations.{" "}
@@ -381,7 +381,7 @@ export default function FlavorsOfCordisSection() {
               $color="var(--cordis-gray)"
               $size="large"
               $spacing=".05em"
-              $weight="regular"
+              $weight="bold"
             >
               An elevated culinary experience where every plate is a
               masterpiece.{" "}

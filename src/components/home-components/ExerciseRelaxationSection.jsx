@@ -147,12 +147,24 @@ const GymTextWrapper = styled.div`
   }
 `;
 
+const GymTextWrapper2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  gap: 1rem;
+
+  ${media.mobile} {
+    padding: 0 2rem;
+  }
+`;
+
 const SpaTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-around;
-  gap: 2rem;
+  gap: 1rem;
 `;
 
 const StyledButtonContainer = styled.div`
@@ -226,7 +238,7 @@ export default function ExerciseRelaxationSection() {
           <StyledGym>
             <Carousel ImageUrls={gymImages} />
           </StyledGym>
-          <GymTextWrapper>
+          <GymTextWrapper2>
             <Text
               $type="h3"
               $size="extra-small"
@@ -242,14 +254,14 @@ export default function ExerciseRelaxationSection() {
               $color="var(--cordis-black)"
               $size="large"
               $spacing=".05em"
-              $weight="regular"
+              $weight="bold"
             >
               Experience a modern fitness center with advanced cardio, strength
               equipment, and spaces for stretching or personal training. Cordis
               Gym is your welcoming space to energize or unwind and reach your
               wellness goals.
             </Text>
-          </GymTextWrapper>
+          </GymTextWrapper2>
         </StyledGymContainer>
 
         <RouterLink to="/room-booking">
@@ -284,7 +296,7 @@ export default function ExerciseRelaxationSection() {
               $color="var(--cordis-accent)"
               $size="large"
               $spacing=".05em"
-              $weight="regular"
+              $weight="bold"
             >
               Cordis Spa is your serene retreat for relaxing treatments,
               soothing massages, and expert care to leave you refreshed and

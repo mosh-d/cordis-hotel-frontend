@@ -55,7 +55,7 @@ const StyledAmenityText = styled.div`
   justify-content: center;
   margin-top: 0.5rem;
   width: 100%;
-  gap: 2rem;
+  gap: 1rem;
   height: 12rem;
 `;
 
@@ -184,7 +184,7 @@ const CoffeeShopText = (
       $typeFace="secondary"
       $size="large"
       $spacing=".05em"
-      $weight="regular"
+      $weight="bold"
       $color="var(--cordis-black)"
     >
       Freshly brewed moments — enjoy artisanal coffee and light bites in a cozy,
@@ -208,7 +208,7 @@ const ConferenceRoomText = (
       $typeFace="secondary"
       $size="large"
       $spacing=".05em"
-      $weight="regular"
+      $weight="bold"
       $color="var(--cordis-black)"
     >
       Host with confidence — our fully equipped conference hall is designed for
@@ -233,7 +233,7 @@ const ParkingSpaceText = (
       $typeFace="secondary"
       $size="large"
       $spacing=".05em"
-      $weight="regular"
+      $weight="bold"
       $color="var(--cordis-black)"
     >
       Convenient and secure — ample parking space ensures peace of mind for all
@@ -258,7 +258,7 @@ const SafeDepositBoxText = (
       $typeFace="secondary"
       $size="large"
       $spacing=".05em"
-      $weight="regular"
+      $weight="bold"
       $color="var(--cordis-black)"
     >
       Your valuables, our priority — secure storage with modern safe deposit
@@ -283,7 +283,7 @@ const SitOutText = (
       $typeFace="secondary"
       $size="large"
       $spacing=".05em"
-      $weight="regular"
+      $weight="bold"
       $color="var(--cordis-black)"
     >
       Relax in style — our outdoor sit-out offers a refreshing retreat for

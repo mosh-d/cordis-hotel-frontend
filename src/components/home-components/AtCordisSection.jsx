@@ -51,7 +51,7 @@ export default function AtCordisSection() {
           $typeFace="secondary"
           $size="large"
           $spacing=".05em"
-          $weight="light"
+          $weight="bold"
           $color="var(--cordis-light-gray)"
           $opacity="0.7"
         >
