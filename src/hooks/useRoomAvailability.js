@@ -22,37 +22,43 @@ export const useRoomAvailability = () => {
 
     console.log("🌐 API REQUEST: Sending to hotel API", {
       url: "https://secure.thecordishotelikeja.com/api/hotel/availability",
-      body: requestBody
+      body: requestBody,
     });
 
     try {
-      console.log("🚀 Making availability API call to:", "https://secure.thecordishotelikeja.com/api/hotel/availability");
-      
+      console.log(
+        "🚀 Making availability API call to:",
+        "https://secure.thecordishotelikeja.com/api/hotel/availability",
+      );
+
       const response = await fetch(
         "https://secure.thecordishotelikeja.com/api/hotel/availability",
         {
           method: "POST",
-          mode: 'cors',
+          mode: "cors",
           headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            Accept: "application/json",
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
             "Cache-Control": "no-cache",
           },
           body: JSON.stringify(requestBody),
-          redirect: 'follow', // Handle redirects properly
-        }
+          redirect: "follow", // Handle redirects properly
+        },
       );
 
       console.log("📡 Availability Response status:", response.status);
       console.log("📡 Availability Response headers:", response.headers);
-      
+
       // Check if response is actually JSON
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
         const textResponse = await response.text();
         console.error("❌ Availability Response is not JSON:", textResponse);
-        throw new Error(`Expected JSON response but got ${contentType}. Response: ${textResponse.substring(0, 200)}...`);
+        throw new Error(
+          `Expected JSON response but got ${contentType}. Response: ${textResponse.substring(0, 200)}...`,
+        );
       }
 
       if (!response.ok) {
@@ -68,11 +74,11 @@ export const useRoomAvailability = () => {
         console.log("🌐 API SUCCESS: Room data fetched from server", {
           roomCount: data.types?.length || 0,
           source: "Live API",
-          rooms: data.types?.map(room => ({
+          rooms: data.types?.map((room) => ({
             roomType: room.roomType,
             roomTypeId: room.roomTypeId,
-            available: room.available
-          }))
+            available: room.available,
+          })),
         });
       } else {
         throw new Error(data.errorMessage || "Failed to fetch rooms");
@@ -80,9 +86,14 @@ export const useRoomAvailability = () => {
     } catch (err) {
       console.error("❌ API FAILED: Using fallback data", {
         error: err.message,
-        source: "Static fallback"
+        source: "Static fallback",
       });
-      setError(err.message);
+
+      // Import parseApiError to create structured error
+      const { parseApiError } = await import("../util/error-utils");
+      const parsedError = parseApiError(err.message);
+
+      setError(parsedError);
       setRooms([]);
     } finally {
       setLoading(false);

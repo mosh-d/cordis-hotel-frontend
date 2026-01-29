@@ -185,7 +185,7 @@ export default function RoomSection({ $type }) {
       {
         totalRooms: dynamicRooms.length,
         dataSource: isFromApi ? "Live API" : "Static file",
-      }
+      },
     );
   }
 
@@ -206,9 +206,19 @@ export default function RoomSection({ $type }) {
             Loading room availability...
           </Text>
         ) : error ? (
-          <Text $type="p" $size="large" $color="red">
-            Unable to load room data. Please try again later.
-          </Text>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+          >
+            <Text $type="p" $size="large" $color="red">
+              {error.message || error}
+            </Text>
+            {error.earliestDate && (
+              <Text $type="p" $size="medium" $color="var(--cordis-text-color)">
+                Please select <strong>{error.earliestDate}</strong> or a later
+                date.
+              </Text>
+            )}
+          </div>
         ) : dynamicRooms.length > 0 ? (
           // Display all API rooms
           <StyledRooms>

@@ -208,8 +208,25 @@ export default function RoomDetailsPage() {
   if (error || !ROOMS[params.roomIndex]) {
     return (
       <StyledRoomDetails>
-        <div style={{ textAlign: "center", padding: "4rem", color: "red" }}>
-          <Text $type="h2">Error loading room details</Text>
+        <div
+          style={{
+            textAlign: "center",
+            padding: "4rem",
+            display: "flex",
+            flexDirection: "column",
+            gap: "1.5rem",
+            alignItems: "center",
+          }}
+        >
+          <Text $type="h2" $color="red">
+            {error ? error.message || error : "Room not found"}
+          </Text>
+          {error?.earliestDate && (
+            <Text $type="p" $size="large" $color="var(--cordis-text-color)">
+              Please select <strong>{error.earliestDate}</strong> or a later
+              date.
+            </Text>
+          )}
           <RouterLink to="..">
             <Button $type="ghost">
               <Text>Go Back</Text>
@@ -276,8 +293,8 @@ export default function RoomDetailsPage() {
                 typeof room.available === "number"
                   ? room.available > 0
                   : typeof room.available === "boolean"
-                  ? room.available
-                  : true;
+                    ? room.available
+                    : true;
 
               return (
                 <div

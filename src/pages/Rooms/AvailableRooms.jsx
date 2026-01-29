@@ -1,4 +1,4 @@
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, Link as RouterLink } from "react-router-dom";
 import { useMemo } from "react";
 import RoomAvailabilityCard from "../../components/shared/RoomAvailabilityCard";
 import { styled } from "styled-components";
@@ -39,7 +39,7 @@ export default function AvailableRoomsPage() {
   // Handle case where context is undefined
   if (!context) {
     console.error(
-      "AvailableRoomsPage: No outlet context found. Make sure this route is nested under RootLayout."
+      "AvailableRoomsPage: No outlet context found. Make sure this route is nested under RootLayout.",
     );
     return (
       <div>
@@ -79,32 +79,82 @@ export default function AvailableRoomsPage() {
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    
+
     return {
-      checkInDate: checkIn || today.toISOString().split('T')[0],
-      checkOutDate: checkOut || tomorrow.toISOString().split('T')[0],
+      checkInDate: checkIn || today.toISOString().split("T")[0],
+      checkOutDate: checkOut || tomorrow.toISOString().split("T")[0],
       adultNo: noOfAdults || 2,
       childNo: noOfChildren || 1,
-      facilityTypeId: 1
+      facilityTypeId: 1,
     };
   }, [checkIn, checkOut, noOfAdults, noOfChildren]);
 
-  // Get API room data - only call when search params actually change
-  const { ROOMS, loading, error, isFromApi } = useDynamicRoomData(searchParams);
+  // Check if dates are empty/invalid before making API call
+  const hasValidDates = checkIn && checkOut;
+
+  // Get API room data - only call when search params actually change and dates are valid
+  const { ROOMS, loading, error, isFromApi } = useDynamicRoomData(
+    hasValidDates ? searchParams : null,
+  );
 
   // Debug logging to see what data is received
-  console.log("🏨 AVAILABLE ROOMS: Final room data for display:", ROOMS.map(room => ({
-    name: room.name,
-    propName: room.propName,
-    available: room.available,
-    roomTypeId: room.roomTypeId,
-    rateId: room.rateId
-  })));
+  console.log(
+    "🏨 AVAILABLE ROOMS: Final room data for display:",
+    ROOMS.map((room) => ({
+      name: room.name,
+      propName: room.propName,
+      available: room.available,
+      roomTypeId: room.roomTypeId,
+      rateId: room.rateId,
+    })),
+  );
+
+  // Handle empty dates case
+  if (!hasValidDates) {
+    return (
+      <StyledAvailableRoomsPage>
+        <div
+          style={{
+            textAlign: "center",
+            padding: "4rem",
+            display: "flex",
+            flexDirection: "column",
+            gap: "1.5rem",
+            alignItems: "center",
+          }}
+        >
+          <Text $type="h2" $color="var(--cordis-text-color)">
+            Please Select Your Dates
+          </Text>
+          <Text $type="p" $size="large" $color="var(--cordis-text-color)">
+            You haven't selected check-in and check-out dates yet.
+          </Text>
+          <Text $type="p" $size="medium" $color="var(--cordis-text-color)">
+            Please go back to the homepage and select your desired dates to see
+            available rooms.
+          </Text>
+          <RouterLink to="/">
+            <Text
+              $color="var(--cordis-emphasis)"
+              style={{
+                textDecoration: "underline",
+                cursor: "pointer",
+                fontSize: "1.6rem",
+                fontWeight: "bold",
+              }}
+            >
+              Go to Homepage
+            </Text>
+          </RouterLink>
+        </div>
+      </StyledAvailableRoomsPage>
+    );
+  }
 
   if (loading) {
     return (
       <StyledAvailableRoomsPage>
-        <div style={{ textAlign: 'center', padding: '4rem' }}>
+        <div style={{ textAlign: "center", padding: "4rem" }}>
           <Text $type="h2" $color="var(--cordis-black)">
             Loading available rooms...
           </Text>
@@ -116,9 +166,33 @@ export default function AvailableRoomsPage() {
   if (error) {
     return (
       <StyledAvailableRoomsPage>
-        <div style={{ textAlign: 'center', padding: '4rem', color: 'red' }}>
-          <Text $type="h2">Error loading rooms: {error}</Text>
-          <Text>Showing fallback room data</Text>
+        <div
+          style={{
+            textAlign: "center",
+            padding: "4rem",
+            display: "flex",
+            flexDirection: "column",
+            gap: "1.5rem",
+            alignItems: "center",
+          }}
+        >
+          <Text $type="h2" $color="red">
+            {error.message || error}
+          </Text>
+          {error.earliestDate && (
+            <Text $type="p" $size="large" $color="var(--cordis-text-color)">
+              Please select <strong>{error.earliestDate}</strong> or a later
+              date.
+            </Text>
+          )}
+          <RouterLink to="/">
+            <Text
+              $color="var(--cordis-emphasis)"
+              style={{ textDecoration: "underline", cursor: "pointer" }}
+            >
+              Go back to homepage
+            </Text>
+          </RouterLink>
         </div>
       </StyledAvailableRoomsPage>
     );
@@ -135,12 +209,12 @@ export default function AvailableRoomsPage() {
             $color="var(--cordis-black)"
           >
             {checkIn && checkOut
-              ? `${ROOMS.length} Rooms available from ${new Date(
-                  checkIn
+              ? `${ROOMS.length} Categories available from ${new Date(
+                  checkIn,
                 ).toLocaleDateString()} to ${new Date(
-                  checkOut
+                  checkOut,
                 ).toLocaleDateString()}`
-              : `${ROOMS.length} Rooms available`}
+              : `${ROOMS.length} Categories available`}
             {/* {isFromApi && (
               <span style={{ 
                 background: 'green', 
@@ -154,18 +228,27 @@ export default function AvailableRoomsPage() {
               </span>
             )} */}
           </Text>
-          <Text>Check available rooms {isFromApi ? '(Real-time availability)' : '(Please refresh the page for live-data)'}</Text>
+          <Text>
+            Check available rooms{" "}
+            {isFromApi
+              ? "(Real-time availability)"
+              : "(Please refresh the page for live-data)"}
+          </Text>
         </StyledTextWrapper>
         <StyledCardWrapper>
           {ROOMS.map((room, index) => {
             // Check if room is available
-            const isAvailable = typeof room.available === 'number' ? room.available > 0 : 
-                               typeof room.available === 'boolean' ? room.available : true;
-            
+            const isAvailable =
+              typeof room.available === "number"
+                ? room.available > 0
+                : typeof room.available === "boolean"
+                  ? room.available
+                  : true;
+
             return (
-              <RoomAvailabilityCard 
-                key={`${room.roomTypeId}-${room.rateId}`} 
-                $type={room.propName} 
+              <RoomAvailabilityCard
+                key={`${room.roomTypeId}-${room.rateId}`}
+                $type={room.propName}
                 roomData={ROOMS}
                 unavailable={!isAvailable}
               />

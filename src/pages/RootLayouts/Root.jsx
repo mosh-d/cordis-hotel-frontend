@@ -46,8 +46,22 @@ function RootLayout() {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [countryCode, setCountryCode] = useState("+234");
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
+
+  // Initialize check-in with tomorrow's date to avoid API errors
+  const getTomorrowDate = () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow.toISOString().split("T")[0];
+  };
+
+  const getDayAfterTomorrowDate = () => {
+    const dayAfter = new Date();
+    dayAfter.setDate(dayAfter.getDate() + 2);
+    return dayAfter.toISOString().split("T")[0];
+  };
+
+  const [checkIn, setCheckIn] = useState(getTomorrowDate());
+  const [checkOut, setCheckOut] = useState(getDayAfterTomorrowDate());
   const [roomCategory, setRoomCategory] = useState("");
   const [noOfRooms, setNoOfRooms] = useState(1);
   const [noOfAdults, setNoOfAdults] = useState(1);
@@ -61,7 +75,7 @@ function RootLayout() {
       {!isHome &&
         !isBookingConfirmation &&
         !isRoomBookingPage &&
-        !isAmenityBookingPage && 
+        !isAmenityBookingPage &&
         !isAdminPage && (
           <>
             <StyledNavBar1>
@@ -75,19 +89,32 @@ function RootLayout() {
       <Outlet
         context={{
           setShowFixedReserve,
-          firstName, setFirstName,
-          lastName, setLastName,
-          email, setEmail,
-          phoneNumber, setPhoneNumber,
-          countryCode, setCountryCode,
-          checkIn, setCheckIn,
-          checkOut, setCheckOut,
-          roomCategory, setRoomCategory,
-          noOfRooms, setNoOfRooms,
-          noOfAdults, setNoOfAdults,
-          noOfChildren, setNoOfChildren,
-          rollawayBed, setRollawayBed,
-          roomsAndGuests, setRoomsAndGuests
+          firstName,
+          setFirstName,
+          lastName,
+          setLastName,
+          email,
+          setEmail,
+          phoneNumber,
+          setPhoneNumber,
+          countryCode,
+          setCountryCode,
+          checkIn,
+          setCheckIn,
+          checkOut,
+          setCheckOut,
+          roomCategory,
+          setRoomCategory,
+          noOfRooms,
+          setNoOfRooms,
+          noOfAdults,
+          setNoOfAdults,
+          noOfChildren,
+          setNoOfChildren,
+          rollawayBed,
+          setRollawayBed,
+          roomsAndGuests,
+          setRoomsAndGuests,
         }}
       />
       {isAbout || isContact || isBlog ? <Footer /> : undefined}
