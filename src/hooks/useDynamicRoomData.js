@@ -1,104 +1,40 @@
 import { useState, useEffect } from 'react';
 import { useRoomAvailability } from './useRoomAvailability';
-import { ROOMS as localRooms } from '../util/room-data';
+import { transformApiRoomsToRoomData } from '../util/api-room-transformer';
 
 export const useDynamicRoomData = (searchParams = null) => {
-  const [roomData, setRoomData] = useState([]); // Start with empty array, no fallback
+  const [roomData, setRoomData] = useState([]); // Start with empty array
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { rooms: apiRooms, loading: apiLoading, error: apiError, fetchRooms } = useRoomAvailability();
 
   useEffect(() => {
     if (searchParams) {
-      // Add a small delay to debounce rapid calls
-      const timeoutId = setTimeout(() => {
-        setLoading(true);
-        fetchRooms(searchParams);
-      }, 100);
-
-      return () => clearTimeout(timeoutId);
+      setLoading(true);
+      fetchRooms(searchParams);
     }
   }, [searchParams?.checkInDate, searchParams?.checkOutDate, searchParams?.adultNo, searchParams?.childNo]);
 
   useEffect(() => {
     if (apiRooms.length > 0) {
-      // Mapping from API room names to propName values for correct images
-      const roomNameMapping = {
-        'Standard': 'standard',
-        'Executive Deluxe': 'executiveDeluxe',
-        'Executive Suite': 'executiveSuite'
-      };
-
-      // Use API data with consistent prop names
-      const directApiRooms = apiRooms.map(apiRoom => ({
-        // Use actual API room name and price
-        name: apiRoom.roomType,
-        propName: roomNameMapping[apiRoom.roomType] || apiRoom.roomType.toLowerCase().replace(/\s+/g, ''),
-        price: `${apiRoom.currencySymbol || '₦'}${apiRoom.rate}`,
-        rawApiRate: apiRoom.rate,
-        available: apiRoom.available,
-        rateId: apiRoom.rateId,
-        roomTypeId: apiRoom.roomTypeId,
-        summary: apiRoom.summary || `Beautiful ${apiRoom.roomType} for your stay`,
-        detail: apiRoom.detail || `Experience comfort in our ${apiRoom.roomType}`,
-
-        // Get matching local room data for fallback values
-        ...(localRooms.find(room => room.propName === (roomNameMapping[apiRoom.roomType] || apiRoom.roomType.toLowerCase().replace(/\s+/g, ''))) || {
-          size: "N/A",
-          bed: "1 King size bed",
-          capacity: apiRoom.adult && apiRoom.children 
-            ? `${apiRoom.adult} Adults & ${apiRoom.children} Children` 
-            : "2 Adults & 1 Child",
-        }),
-        amenities: [
-          "Wardrobe",
-          "Bathroom slippers", 
-          "Tea amenities",
-          "Bathrobe",
-          "Luggage rack",
-          "Smart TV",
-          "Free WiFi",
-          "Mini Fridge",
-          "Mini Bar"
-        ],
-        services: [
-          "Free WiFi",
-          "Kettle", 
-          "Smart TV",
-          "Towel",
-          "Water heater",
-          "Fridge",
-          "Sofa",
-          "Desk",
-          "Wooden Closet"
-        ]
-      }));
-
-      setRoomData(directApiRooms);
+      // Use the transformer to convert API data
+      const transformedRooms = transformApiRoomsToRoomData(apiRooms);
+      setRoomData(transformedRooms);
       setLoading(false);
       setError(null);
-      console.log("✅ DATA SOURCE: Using direct API data", {
-        roomCount: directApiRooms.length,
-        source: "Direct API"
-      });
+      console.log("✅ useDynamicRoomData: Using API data", transformedRooms);
     } else if (apiError) {
-      // Only set error if API call failed, don't fall back to static data
       setError(apiError);
       setLoading(false);
       setRoomData([]);
-      console.error("❌ API FAILED: No fallback data available", {
-        error: apiError,
-        source: "No data"
-      });
-    } else if (!apiLoading && !searchParams) {
-      // No search params provided
-      setRoomData([]);
+      console.error("❌ useDynamicRoomData: API error", apiError);
+    } else if (!apiLoading) {
       setLoading(false);
     }
-  }, [apiRooms, apiError, apiLoading, searchParams]);
+  }, [apiRooms, apiError, apiLoading]);
 
   return {
-    ROOMS: roomData, // Direct API data
+    ROOMS: roomData, // Only API data
     loading,
     error,
     isFromApi: apiRooms.length > 0

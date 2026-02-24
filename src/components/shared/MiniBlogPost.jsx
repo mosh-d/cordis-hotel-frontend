@@ -93,7 +93,7 @@ const StyledTitleText = styled.div`
     text-align: justify;
   } */
 `;
- 
+
 export default function MiniBlogPost({
   onSelect,
   href,
