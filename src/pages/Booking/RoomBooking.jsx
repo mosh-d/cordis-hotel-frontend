@@ -620,8 +620,8 @@ export default function RoomBookingPage() {
     // Calculate total amount including taxes
     const nights = calculateNights();
     const subtotal = roomRate * nights * (parseInt(noOfRooms) || 0);
-    const vat = subtotal * 0.075; // 7.5%
-    const stateTax = subtotal * 0.05; // 5%
+    const vat = 0; // subtotal * 0.075; // 7.5%
+    const stateTax = 0; // subtotal * 0.05; // 5%
     const totalAmount = subtotal + vat + stateTax;
     
     console.log("💰 PAYSTACK TOTAL CALCULATION:", {
@@ -872,7 +872,7 @@ export default function RoomBookingPage() {
 
       if (selectedRoom) {
         // Use API rate directly without any calculations
-        const apiPrice = selectedRoom.rawApiRate || 0; // Don't use fallback price
+        const apiPrice = selectedRoom.rawRate || 0; // Don't use fallback price
 
         return {
           price: apiPrice,
@@ -911,10 +911,12 @@ export default function RoomBookingPage() {
   const nights = calculateNights();
   const nightText = nights > 1 ? "nights" : "night";
   const subtotal = roomPrice * nights * (parseInt(noOfRooms) || 0);
-  const vat = subtotal * 0.075; // 7.5%
-  const stateTax = subtotal * 0.05; // 5%
+  // const vat = subtotal * 0.075; // 7.5%
+  // const stateTax = subtotal * 0.05; // 5%
+  const vat = 0;
+  const stateTax = 0;
   // const serviceCharge = subtotal * 0.1; // 10%
-  const total = subtotal + vat + stateTax; /* + serviceCharge */
+  const total = subtotal; // + vat + stateTax; /* + serviceCharge */
 
   // Phone number formatting function
   const formatPhoneNumber = (value) => {
@@ -1421,7 +1423,7 @@ export default function RoomBookingPage() {
                 {rollawayBed === true ? "Yes (+₦20,000)" : "No"}
               </Text>
             </StyledTextWrapper>
-            <StyledTextWrapper>
+            {/* <StyledTextWrapper>
               <Text
                 $typeFace="secondary"
                 $size="extra-large"
@@ -1456,7 +1458,7 @@ export default function RoomBookingPage() {
               >
                 ₦{stateTax.toLocaleString()}
               </Text>
-            </StyledTextWrapper>
+            </StyledTextWrapper> */}
             {/* <StyledTextWrapper>
               <Text
                 $typeFace="secondary"
