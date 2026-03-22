@@ -390,64 +390,13 @@ export default function RoomBookingPage() {
     const roomInfo = getRoomPriceAndName();
     const apiRoomTypeId = roomInfo.roomTypeId;
     
-    console.log("🚀 Starting booking process with:", {
-      roomCategory,
-      roomTypeId: apiRoomTypeId,
-      roomTypeIdSource: roomInfo.isFromApi ? "API" : "FALLBACK",
-      checkIn,
-      checkOut,
-      noOfAdults,
-      noOfChildren
-    });
 
-    console.log("✅ FORM VALIDATION PASSED");
     setIsBookingOnHold(true);
     
-    // Force future dates for testing (override form values)
-    const today = new Date();
-    const nextWeek = new Date(today);
-    nextWeek.setDate(nextWeek.getDate() + 7); // Next week
-    const nextWeekPlusOne = new Date(nextWeek);
-    nextWeekPlusOne.setDate(nextWeekPlusOne.getDate() + 1); // Next week + 1 day
-    
-    // OVERRIDE form dates for testing
-    const bookingCheckIn = nextWeek.toISOString().split('T')[0];
-    const bookingCheckOut = nextWeekPlusOne.toISOString().split('T')[0];
-    
-    console.log("📅 USING FUTURE DATES FOR TESTING:", {
-      originalCheckIn: checkIn,
-      originalCheckOut: checkOut,
-      newCheckIn: bookingCheckIn,
-      newCheckOut: bookingCheckOut
-    });
-    
-    // Debug: Log booking parameters
-    console.log("🔍 BOOKING DEBUG:", {
-      roomCategory,
-      apiRoomTypeId,
-      checkIn,
-      checkOut,
-      noOfAdults,
-      noOfChildren,
-      bookingDates: {
-        checkInDate: bookingCheckIn,
-        checkOutDate: bookingCheckOut,
-        adultNo: noOfAdults || 2,
-        childNo: noOfChildren || 1,
-        facilityTypeId: 1
-      }
-    });
     
     // Use the room info we already got at the beginning of the function
     const roomRate = roomInfo.price;
     
-    // Debug: Show that we're using raw API rate directly
-    console.log("💰 USING RAW API RATE:", {
-      roomCategory,
-      rawApiRate: roomRate,
-      isFromApi: roomInfo.isFromApi,
-      usingDirectApiRate: "YES (no calculations or parsing)"
-    });
     
     const requestBody = {
       guest: {
@@ -467,8 +416,8 @@ export default function RoomBookingPage() {
       reservations: [
         {
           roomTypeId: apiRoomTypeId,
-          checkInDate: bookingCheckIn,
-          checkOutDate: bookingCheckOut,
+          checkInDate: checkIn,
+          checkOutDate: checkOut,
           adultNo: String(noOfAdults || 2),
           childNo: String(noOfChildren || 1),
           arrivalTime: "2:00 PM",
@@ -480,38 +429,8 @@ export default function RoomBookingPage() {
       ],
     };
 
-    console.log("📦 BOOKING REQUEST BODY:", requestBody);
-    console.log("🔍 COMPARING WITH AVAILABILITY API:", {
-      availabilityParams: apiSearchParams,
-      bookingParams: {
-        checkInDate: bookingCheckIn,
-        checkOutDate: bookingCheckOut,
-        adultNo: noOfAdults || 2,
-        childNo: noOfChildren || 1,
-        facilityTypeId: 1
-      }
-    });
 
     try {
-      console.log("🚀 MAKING BOOKING API CALL:");
-      console.log("🔗 URL:", "https://secure.thecordishotelikeja.com/api/hotel/bookings/hold");
-      console.log("📦 FULL REQUEST BODY:", JSON.stringify(requestBody, null, 2));
-      console.log("🎯 TARGET ROOM:", {
-        roomTypeId: requestBody.reservations[0].roomTypeId,
-        roomTypeIdSource: roomInfo.isFromApi ? "API" : "FALLBACK",
-        checkInDate: requestBody.reservations[0].checkInDate,
-        checkOutDate: requestBody.reservations[0].checkOutDate,
-        rate: requestBody.reservations[0].rate
-      });
-      
-      // Debug: Log the API room details being used
-      console.log("🔍 API ROOM DETAILS:", {
-        roomCategory,
-        apiRoomTypeId,
-        roomName: roomInfo.name,
-        isFromApi: roomInfo.isFromApi,
-        usingDirectApiMapping: "YES (no more hardcoded mappings)"
-      });
 
       const response = await fetch(
         "https://secure.thecordishotelikeja.com/api/hotel/bookings/hold",
@@ -530,8 +449,6 @@ export default function RoomBookingPage() {
         }
       );
 
-      console.log("📡 Response status:", response.status);
-      console.log("📡 Response headers:", response.headers);
 
       // Check if response is actually JSON
       const contentType = response.headers.get("content-type");
@@ -546,8 +463,6 @@ export default function RoomBookingPage() {
         );
       }
 
-      console.log("📡 API RESPONSE STATUS:", response.status);
-      console.log("📡 API RESPONSE HEADERS:", Object.fromEntries(response.headers.entries()));
       
       if (!response.ok) {
         // For 422 errors, try to get the response content to see what's wrong
@@ -576,7 +491,6 @@ export default function RoomBookingPage() {
 
       const data = await response.json();
 
-      console.log("✅ API Response:", data);
 
       if (data.errorCode === 0) {
         // Navigate with booking data
@@ -624,15 +538,6 @@ export default function RoomBookingPage() {
     const stateTax = 0; // subtotal * 0.05; // 5%
     const totalAmount = subtotal + vat + stateTax;
     
-    console.log("💰 PAYSTACK TOTAL CALCULATION:", {
-      roomRate,
-      nights,
-      noOfRooms,
-      subtotal,
-      vat,
-      stateTax,
-      totalAmount
-    });
     
     setIsPayingWithPaystack(true);
     
@@ -670,8 +575,6 @@ export default function RoomBookingPage() {
     };
 
     try {
-      console.log("🚀 Initializing Paystack payment...");
-      console.log("📦 Booking data:", bookingData);
 
       // Step 1: Initialize payment with backend
       const initResponse = await fetch(
@@ -689,7 +592,6 @@ export default function RoomBookingPage() {
         }
       );
 
-      console.log("📡 Init response status:", initResponse.status);
 
       if (!initResponse.ok) {
         const errorText = await initResponse.text();
@@ -698,7 +600,6 @@ export default function RoomBookingPage() {
       }
 
       const initData = await initResponse.json();
-      console.log("✅ Paystack init response:", initData);
 
       const access_code = initData.access_code || initData.data?.access_code;
       const reference = initData.reference || initData.data?.reference;
@@ -713,15 +614,12 @@ export default function RoomBookingPage() {
       
       popup.resumeTransaction(access_code, {
         onLoad: (meta) => {
-          console.log("💳 Paystack popup loaded", meta);
         },
         onCancel: () => {
-          console.log("❌ Payment cancelled by user");
           setIsPayingWithPaystack(false);
           alert("Payment was cancelled. You can try again or choose a different payment method.");
         },
         onSuccess: async (transaction) => {
-          console.log("✅ Payment successful!", transaction);
           
           try {
             // Step 3: Verify payment with backend
@@ -739,7 +637,6 @@ export default function RoomBookingPage() {
               }
             );
 
-            console.log("📡 Verify response status:", verifyResponse.status);
 
             if (!verifyResponse.ok) {
               const errorText = await verifyResponse.text();
@@ -748,7 +645,6 @@ export default function RoomBookingPage() {
             }
 
             const verifyData = await verifyResponse.json();
-            console.log("✅ Payment verification response:", verifyData);
 
             if (verifyData && verifyData.status) {
               // Payment verified and booking confirmed
@@ -800,15 +696,6 @@ export default function RoomBookingPage() {
     isFromApi,
   } = useDynamicRoomData(apiSearchParams);
 
-  // Debug: Log API rooms data
-  if (apiRooms && apiRooms.length > 0) {
-    console.log(
-      isFromApi
-        ? "🌐 BOOKING PAGE: Using live API pricing"
-        : "📁 BOOKING PAGE: Using static fallback pricing"
-    );
-    console.log("🏨 API ROOMS DATA:", apiRooms);
-  }
 
   // Update roomsAndGuests display value when individual values change
   useEffect(() => {
@@ -963,7 +850,6 @@ export default function RoomBookingPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted");
     // The actual booking logic is handled by the button onClick handlers
   };
 
