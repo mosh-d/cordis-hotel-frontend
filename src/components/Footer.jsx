@@ -618,16 +618,22 @@ export default function Footer({ $type }) {
                 </StyledHeader>
                 <StyledHotelLinkWrapper>
                   <Link
-                    href="https://fivecloverhotelmonastery.com/"
+                    href="https://www.monastery.fivecloverhotels.com/"
                     $type="secondary"
                   >
                     Monastery Road
                   </Link>
                   <Link
-                    href="https://fivecloverhotelabijo.com/"
+                    href="https://www.abijo.fivecloverhotels.com/"
                     $type="secondary"
                   >
                     Abijo, GRA
+                  </Link>
+                  <Link
+                    href="https://www.ilupeju.fivecloverhotels.com/"
+                    $type="secondary"
+                  >
+                    Ilupeju
                   </Link>
                 </StyledHotelLinkWrapper>
               </StyledHotelLinks>
@@ -644,25 +650,25 @@ export default function Footer({ $type }) {
                 </StyledHeader>
                 <StyledHotelLinkWrapper>
                   <Link
-                    href="https://www.caritasinnigbobihotel.com/"
+                    href="https://www.igbobi.caritasinn.com/"
                     $type="secondary"
                   >
                     Igbobi
                   </Link>
                   <Link
-                    href="https://caritasinnilasanhotel.com/"
+                    href="https://www.ilasan.caritasinn.com/"
                     $type="secondary"
                   >
                     Ilasan
                   </Link>
                   <Link
-                    href="https://caritasinnlekkihotel.com/"
+                    href="https://www.lekki.caritasinn.com/"
                     $type="secondary"
                   >
                     Lekki Phase 1
                   </Link>
                   <Link
-                    href="https://caritasinnyabahotel.com/"
+                    href="https://www.yaba.caritasinn.com/"
                     $type="secondary"
                   >
                     Yaba
@@ -682,22 +688,34 @@ export default function Footer({ $type }) {
                 </StyledHeader>
                 <StyledHotelLinkWrapper>
                   <Link
-                    href="https://ringrubyhotelsangotedo.com/"
+                    href="https://www.bateye.ringrubyhotel.com/"
                     $type="secondary"
                   >
-                    Sangotedo
+                    Bateye Road
                   </Link>
                   <Link
-                    href="https://ringrubyhotelesoikejagra.com/"
+                    href="https://www.unitedestate.ringrubyhotel.com/"
                     $type="secondary"
                   >
-                    Eso close
+                    United Estate
                   </Link>
                   <Link
-                    href="https://ringrubyhoteloduduwaikejagra.com/"
+                    href="https://www.eso.ringrubyhotel.com/"
                     $type="secondary"
                   >
-                    Oduduwa way
+                    Eso close, ikeja GRA
+                  </Link>
+                  <Link
+                    href="https://www.oduduwa.ringrubyhotel.com/"
+                    $type="secondary"
+                  >
+                    Oduduwa way, ikeja GRA
+                  </Link>
+                  <Link
+                    href="https://www.valuecounty.ringrubyhotel.com/"
+                    $type="secondary"
+                  >
+                    Value County
                   </Link>
                 </StyledHotelLinkWrapper>
               </StyledHotelLinks>
