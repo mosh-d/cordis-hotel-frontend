@@ -9,7 +9,7 @@ const ROOMS = [
   {
     name: "Standard",
     propName: "standard",
-    price: "₦125,000",
+    // price: "₦125,000",
     size: "21.27 sqm",
     bed: "1 King size bed",
     capacity: "2 Adults & 1 Child",
@@ -40,7 +40,7 @@ const ROOMS = [
   {
     name: "Executive Deluxe",
     propName: "executiveDeluxe",
-    price: "₦195,000",
+    // price: "₦195,000",
     size: "28.6 sqm",
     bed: "2 King size bed",
     capacity: "2 Adults & 1 Child",
@@ -72,7 +72,7 @@ const ROOMS = [
   {
     name: "Executive Suite",
     propName: "executiveSuite",
-    price: "₦250,000",
+    // price: "₦250,000",
     size: "54.3 sqm",
     bed: "2 King size bed",
     capacity: "2 Adults & 4 Children",

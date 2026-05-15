@@ -1,3 +1,11 @@
+import { ROOMS } from './room-data';
+
+// Create a size lookup map from room-data.js
+const roomSizeMap = {};
+ROOMS.forEach(room => {
+  roomSizeMap[room.propName] = room.size;
+});
+
 export const transformApiRoomsToRoomData = (apiRooms) => {
   console.log("🔄 TRANSFORMER: Processing API rooms", apiRooms);
   
@@ -23,7 +31,7 @@ export const transformApiRoomsToRoomData = (apiRooms) => {
       propName: propName,
       price: `${apiRoom.currencySymbol}${apiRoom.rate.toLocaleString()}`, // Format with commas
       rawRate: apiRoom.rate, // Keep raw number for calculations
-      size: "150 M2",
+      size: roomSizeMap[propName] || "N/A",
       bed: "1 King size bed",
       capacity: `${apiRoom.adult} Adults & ${apiRoom.children} Children`,
       available: apiRoom.available,
