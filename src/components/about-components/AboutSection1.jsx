@@ -184,7 +184,7 @@ export default function AboutSection1() {
           $type="p"
           $typeFace="secondary"
           $size="extra-large"
-          $weight="bold"
+          $weight="light"
           $spacing="0.04em"
         >
           Cordis Hotel perfectly combines modern elegance with the warmth of

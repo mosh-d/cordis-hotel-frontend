@@ -1,35 +1,42 @@
-import styled from "styled-components";
-import Carousel from "../shared/Carousel";
-import Text from "../shared/Text";
-import { Link as RouterLink } from "react-router-dom";
-import { getCloudinaryUrl } from "../../config/cloudinary";
-import Button from "../shared/Button";
-import { media } from "../../util/breakpoints";
+import styled from 'styled-components';
+import Carousel from '../shared/Carousel';
+import Text from '../shared/Text';
+import { Link as RouterLink } from 'react-router-dom';
+import { getCloudinaryUrl } from '../../config/cloudinary';
+import Button from '../shared/Button';
+import { media } from '../../util/breakpoints';
 
 // Local Restaurant images
-import restaurant1 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-1.jpg";
-import restaurant2 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-2.jpg";
-import restaurant3 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-3.jpg";
-import restaurant4 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-4.jpg";
-import restaurant5 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-5.jpg";
-import restaurant6 from "../../assets/cordis-restaurant/CORDIS-RESTAURANT-6.jpg";
+import restaurant1 from '../../assets/cordis-restaurant/CORDIS-RESTAURANT-1.jpg';
+import restaurant2 from '../../assets/cordis-restaurant/CORDIS-RESTAURANT-2.jpg';
+import restaurant3 from '../../assets/cordis-restaurant/CORDIS-RESTAURANT-3.jpg';
+import restaurant4 from '../../assets/cordis-restaurant/CORDIS-RESTAURANT-4.jpg';
+import restaurant5 from '../../assets/cordis-restaurant/CORDIS-RESTAURANT-5.jpg';
+import restaurant6 from '../../assets/cordis-restaurant/CORDIS-RESTAURANT-6.jpg';
 
 // Local Bar images
-import bistro1 from "../../assets/cordis-bistro/CORDIS-BISTRO-1.jpg";
-import bistro2 from "../../assets/cordis-bistro/CORDIS-BISTRO-2.jpg";
-import bistro3 from "../../assets/cordis-bistro/CORDIS-BISTRO-3.jpg";
-import bistro4 from "../../assets/cordis-bistro/CORDIS-BISTRO-4.jpg";
+import bistro1 from '../../assets/cordis-bistro/CORDIS-BISTRO-1.jpg';
+import bistro2 from '../../assets/cordis-bistro/CORDIS-BISTRO-2.jpg';
+import bistro3 from '../../assets/cordis-bistro/CORDIS-BISTRO-3.jpg';
+import bistro4 from '../../assets/cordis-bistro/CORDIS-BISTRO-4.jpg';
 // import bistro5 from "../../assets/cordis-bistro/CORDIS-BISTRO-5.jpg";
 
 // Local Fine Dining images
-import fineDining1 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-1.jpg";
-import fineDining2 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-2.jpg";
-import fineDining3 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-3.jpg";
-import fineDining4 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-4.jpg";
-import fineDining5 from "../../assets/cordis-fine-dining/CORDIS-FINE-DINING-5.jpg";
+import fineDining1 from '../../assets/cordis-fine-dining/CORDIS-FINE-DINING-1.jpg';
+import fineDining2 from '../../assets/cordis-fine-dining/CORDIS-FINE-DINING-2.jpg';
+import fineDining3 from '../../assets/cordis-fine-dining/CORDIS-FINE-DINING-3.jpg';
+import fineDining4 from '../../assets/cordis-fine-dining/CORDIS-FINE-DINING-4.jpg';
+import fineDining5 from '../../assets/cordis-fine-dining/CORDIS-FINE-DINING-5.jpg';
 
 //Local image arrays
-const restaurantImages = [restaurant1, restaurant2, restaurant3, restaurant4, restaurant5, restaurant6];
+const restaurantImages = [
+  restaurant1,
+  restaurant2,
+  restaurant3,
+  restaurant4,
+  restaurant5,
+  restaurant6,
+];
 const bistroImages = [bistro1, bistro2, bistro3, bistro4];
 const fineDiningImages = [
   fineDining1,
@@ -228,12 +235,12 @@ const StyledBarSpecials = styled.div`
 
 const RestaurantTitle = styled(Text)`
   font-weight: 1000;
-  font-size: var(--text-xl);
+  font-size: var(--text-2xl);
 
   ${media.tablet} {
     color: var(--cordis-white) !important;
     font-weight: 1000;
-    font-size: var(--text-xl);
+    font-size: var(--text-2xl);
   }
 
   ${media.mobile} {
@@ -243,7 +250,8 @@ const RestaurantTitle = styled(Text)`
 const RestaurantTitle2 = styled(Text)`
   font-family: var(--font-family-secondary);
   font-size: var(--text-lg);
-  font-weight: 1000;
+  font-weight: 300;
+  word-spacing: 0.5em;
 
   ${media.tablet} {
     color: var(--cordis-gray) !important;
@@ -289,10 +297,14 @@ export default function FlavorsOfCordisSection() {
   return (
     <StyledDiningDrinksSection>
       <DiningDrinksText2>
-        <Text $type="h1" $color="var(--cordis-white)" $weight="bold">
+        <Text
+          $type='h1'
+          $color='var(--cordis-white)'
+          $weight='bold'
+        >
           Flavors of Cordis
         </Text>
-        <Text $color="var(--cordis-gray)">
+        <Text $color='var(--cordis-gray)'>
           Indulge in flame‑grilled specialties, authentic Nigerian tastes, and
           chef‑crafted tasting menus—where every dish blends local ingredients
           with global flair.
@@ -303,33 +315,47 @@ export default function FlavorsOfCordisSection() {
           <Carousel ImageUrls={restaurantImages} />
         </StyledRestaurant>
         <RestaurantTitle
-          $type="h3"
-          $size="extra-small"
-          $typeFace="primary"
-          $spacing=".2em"
-          $weight="bold"
-          $color="var(--cordis-text-color)"
+          $type='h3'
+          $size='medium'
+          $typeFace='primary'
+          $spacing='.2em'
+          $weight='bold'
+          $color='var(--cordis-text-color)'
         >
           Restaurant
         </RestaurantTitle>
-        <RestaurantTitle2
-          $color="var(--cordis-black)"
-          $typeFace="secondary"
-          $size="large"
-          $spacing=".05em"
-          $weight="bold"
+     {/*    <RestaurantTitle2
+          $color='var(--cordis-black)'
+          $typeFace='secondary'
+          $size='large'
+          $spacing='.05em'
+          $weight='bold'
         >
           A vibrant dining hub serving a rich mix of local and international
-          flavors.{" "}
-        </RestaurantTitle2>
+          flavors.{' '}
+        </RestaurantTitle2> */}
+        <Text
+          $typeFace='secondary'
+          $color='var(--cordis-gray)'
+          $size='large'
+          $spacing='.05em'
+          $weight='light'
+        >
+          A vibrant dining hub serving a rich mix of local and international
+          flavors.{' '}
+        </Text>
       </RestaurantWrapper>
 
       <StyledBarSpecials>
         <DiningDrinksText>
-          <Text $type="h1" $color="var(--cordis-white)" $weight="bold">
+          <Text
+            $type='h1'
+            $color='var(--cordis-white)'
+            $weight='bold'
+          >
             Flavors of Cordis
           </Text>
-          <Text $color="var(--cordis-gray)">
+          <Text $color='var(--cordis-gray)'>
             Indulge in flame‑grilled specialties, authentic Nigerian tastes, and
             chef‑crafted tasting menus—where every dish blends local ingredients
             with global flair.
@@ -341,24 +367,24 @@ export default function FlavorsOfCordisSection() {
               <Carousel ImageUrls={bistroImages} />
             </StyledBar>
             <Text
-              $type="h3"
-              $size="extra-small"
-              $typeFace="primary"
-              $spacing=".2em"
-              $weight="bold"
-              $color="var(--cordis-white)"
+              $type='h3'
+              $size='small'
+              $typeFace='primary'
+              $spacing='.2em'
+              $weight='bold'
+              $color='var(--cordis-white)'
             >
               Bistro
             </Text>
             <Text
-              $typeFace="secondary"
-              $color="var(--cordis-gray)"
-              $size="large"
-              $spacing=".05em"
-              $weight="bold"
+              $typeFace='secondary'
+              $color='var(--cordis-gray)'
+              $size='large'
+              $spacing='.05em'
+              $weight='light'
             >
               The perfect spot for light bites, fresh brews, and relaxed
-              conversations.{" "}
+              conversations.{' '}
             </Text>
           </BarWrapper>
 
@@ -367,30 +393,33 @@ export default function FlavorsOfCordisSection() {
               <Carousel ImageUrls={fineDiningImages} />
             </StyledSpecials>
             <Text
-              $type="h3"
-              $size="extra-small"
-              $typeFace="primary"
-              $spacing=".2em"
-              $weight="bold"
-              $color="var(--cordis-white)"
+              $type='h3'
+              $size='small'
+              $typeFace='primary'
+              $spacing='.2em'
+              $weight='bold'
+              $color='var(--cordis-white)'
             >
               Fine Dining
             </Text>
             <Text
-              $typeFace="secondary"
-              $color="var(--cordis-gray)"
-              $size="large"
-              $spacing=".05em"
-              $weight="bold"
+              $typeFace='secondary'
+              $color='var(--cordis-gray)'
+              $size='large'
+              $spacing='.05em'
+              $weight='light'
             >
               An elevated culinary experience where every plate is a
-              masterpiece.{" "}
+              masterpiece.{' '}
             </Text>
           </SpecialsWrapper>
         </BarSpecialsContainer>
-        <RouterLink to="/room-booking">
-          <Button $type="emphasis2">
-            <Text $weight="bold" $size="medium">
+        <RouterLink to='/room-booking'>
+          <Button $type='emphasis2'>
+            <Text
+              $weight='bold'
+              $size='medium'
+            >
               Reserve
             </Text>
           </Button>

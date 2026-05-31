@@ -32,11 +32,11 @@ export default {
       },
       fontFamily: {
         sans: ['Cambay', 'ui-sans-serif', 'system-ui'],
-        serif: ['Cormorant', 'serif'],
+        serif: ['Georgia', 'serif'],
         primary: 'var(--font-family-primary)',
         secondary: 'var(--font-family-secondary)',
         cambay: ['Cambay', 'sans-serif'],
-        cormorant: ['Cormorant', 'serif'],
+        georgia: ['Georgia', 'serif'],
       },
       fontSize: {
         'xs': 'var(--text-xs)',      /* 12px */

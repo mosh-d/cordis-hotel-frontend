@@ -138,6 +138,10 @@ const StyledContactWrapper = styled.div`
   align-items: flex-start;
   justify-content: center;
   gap: 1.2rem;
+
+  ${media.tablet} {
+    align-items: center;
+  }
 `;
 
 const StyledLinkWrapper = styled.div`

@@ -73,7 +73,7 @@ body {
   
   /* Typography */
   --font-family-primary: 'Cambay', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-family-secondary: 'Cormorant', serif;
+  --font-family-secondary: 'Georgia', serif;
   
   /* Font Sizes (1rem = 10px) */
   --text-xs: 1.2rem;     /* 12px */

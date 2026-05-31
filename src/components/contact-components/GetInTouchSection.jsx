@@ -33,7 +33,7 @@ export default function GetInTouchSection() {
         $type="p"
         $typeFace="secondary"
         $size="extra-large"
-        $weight="bold"
+        $weight="light"
         $spacing="0.04em"
       >
         Have any questions or need assistance? The team at Cordis,

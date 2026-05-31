@@ -61,7 +61,7 @@ export default function IntroSection() {
           $type="p"
           $typeFace="secondary"
           $size="extra-large"
-          $weight="bold"
+          $weight="light"
           $spacing="0.04em"
         >
           Step into a world of refined comfort and elevated hospitality at The

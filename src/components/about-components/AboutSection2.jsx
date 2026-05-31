@@ -122,7 +122,7 @@ export default function AboutSection2() {
           $type="p"
           $typeFace="secondary"
           $size="extra-large"
-          $weight="bold"
+          $weight="light"
           $spacing="0.04em"
         >
           Welcome to a new standard of hospitality in Lagos. Cordis Hotel is a
@@ -148,7 +148,7 @@ export default function AboutSection2() {
           $type="p"
           $typeFace="secondary"
           $size="extra-large"
-          $weight="bold"
+          $weight="light"
           $spacing="0.04em"
         >
           Welcome to a new standard of hospitality in Lagos. Cordis Hotel is a

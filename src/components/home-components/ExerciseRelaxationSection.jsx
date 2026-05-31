@@ -241,7 +241,7 @@ export default function ExerciseRelaxationSection() {
           <GymTextWrapper2>
             <Text
               $type="h3"
-              $size="extra-small"
+              $size="small"
               $typeFace="primary"
               $spacing=".2em"
               $weight="bold"
@@ -251,8 +251,7 @@ export default function ExerciseRelaxationSection() {
             </Text>
             <Text
               $typeFace="secondary"
-              $color="var(--cordis-black)"
-              $size="large"
+              $size="light"
               $spacing=".05em"
               $weight="bold"
             >
@@ -283,7 +282,7 @@ export default function ExerciseRelaxationSection() {
           <SpaTextWrapper>
             <Text
               $type="h3"
-              $size="extra-small"
+              $size="small"
               $typeFace="primary"
               $spacing=".2em"
               $weight="bold"
@@ -296,7 +295,7 @@ export default function ExerciseRelaxationSection() {
               $color="var(--cordis-accent)"
               $size="large"
               $spacing=".05em"
-              $weight="bold"
+              $weight="light"
             >
               Cordis Spa is your serene retreat for relaxing treatments,
               soothing massages, and expert care to leave you refreshed and

@@ -8,7 +8,7 @@ import { media } from "../../util/breakpoints";
 const StyledRoomDetailsBlock = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   padding: 0 8rem;
   gap: 1.8rem;
@@ -34,6 +34,7 @@ const StyledButtonContainer = styled.div`
 const StyledTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 export default function RoomDetailsBlock({ $type, roomData = null }) {
@@ -50,10 +51,18 @@ export default function RoomDetailsBlock({ $type, roomData = null }) {
     if (room && roomIndex !== -1) {
       // Format availability display
       let availabilityText = "Available";
-      if (typeof room.available === 'number') {
+
+      // Commented out to remove room count. Uncomment to add room count back.
+/*       if (typeof room.available === 'number') {
         availabilityText = room.available > 0 ? `${room.available} Available` : "Not Available";
       } else if (typeof room.available === 'boolean') {
         availabilityText = room.available ? "Available" : "Not Available";
+      } */
+
+      if (typeof room.available === 'number') {
+        availabilityText = room.available > 0 ? "Available" : "Fully Booked";
+      } else if (typeof room.available === 'boolean') {
+        availabilityText = room.available ? "Available" : "Fully Booked";
       }
 
       return {

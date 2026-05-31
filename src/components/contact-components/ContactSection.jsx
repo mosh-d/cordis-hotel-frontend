@@ -252,7 +252,7 @@ export default function ContactSection() {
           $type="p"
           $typeFace="secondary"
           $size="extra-large"
-          $weight="bold"
+          $weight="light"
           $spacing="0.04em"
         >
           Get in touch with us through our contact details below and follow our

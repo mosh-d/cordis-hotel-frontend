@@ -51,12 +51,13 @@ const StyledOtherAmenitiesSection = styled.section`
 const StyledAmenityText = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   margin-top: 0.5rem;
   width: 100%;
   gap: 1rem;
   height: 12rem;
+  text-align: center;
 `;
 
 const StyledAmenityWrapper = styled.div`
@@ -172,7 +173,7 @@ const CoffeeShopText = (
   <StyledAmenityText>
     <Text
       $type="h3"
-      $size="extra-small"
+      $size="small"
       $typeFace="primary"
       $spacing=".2em"
       $weight="bold"
@@ -181,11 +182,11 @@ const CoffeeShopText = (
       Coffee Shop
     </Text>
     <Text
+      style={{ textAlign: "center" }}
       $typeFace="secondary"
       $size="large"
       $spacing=".05em"
-      $weight="bold"
-      $color="var(--cordis-black)"
+      $weight="light"
     >
       Freshly brewed moments — enjoy artisanal coffee and light bites in a cozy,
       welcoming space.
@@ -196,7 +197,7 @@ const ConferenceRoomText = (
   <StyledAmenityText>
     <Text
       $type="h3"
-      $size="extra-small"
+      $size="small"
       $typeFace="primary"
       $spacing=".2em"
       $weight="bold"
@@ -205,10 +206,11 @@ const ConferenceRoomText = (
       Conference Room
     </Text>
     <Text
+      style={{ textAlign: "center" }}
       $typeFace="secondary"
       $size="large"
       $spacing=".05em"
-      $weight="bold"
+      $weight="light"
       $color="var(--cordis-black)"
     >
       Host with confidence — our fully equipped conference hall is designed for
@@ -221,7 +223,7 @@ const ParkingSpaceText = (
   <StyledAmenityText>
     <Text
       $type="h3"
-      $size="extra-small"
+      $size="small"
       $typeFace="primary"
       $spacing=".2em"
       $weight="bold"
@@ -230,10 +232,11 @@ const ParkingSpaceText = (
       Parking Space
     </Text>
     <Text
+      style={{ textAlign: "center" }}
       $typeFace="secondary"
       $size="large"
       $spacing=".05em"
-      $weight="bold"
+      $weight="light"
       $color="var(--cordis-black)"
     >
       Convenient and secure — ample parking space ensures peace of mind for all
@@ -246,7 +249,7 @@ const SafeDepositBoxText = (
   <StyledAmenityText>
     <Text
       $type="h3"
-      $size="extra-small"
+      $size="small"
       $typeFace="primary"
       $spacing=".2em"
       $weight="bold"
@@ -255,10 +258,11 @@ const SafeDepositBoxText = (
       Safe Deposit Box
     </Text>
     <Text
+      style={{ textAlign: "center" }}
       $typeFace="secondary"
       $size="large"
       $spacing=".05em"
-      $weight="bold"
+      $weight="light"
       $color="var(--cordis-black)"
     >
       Your valuables, our priority — secure storage with modern safe deposit
@@ -271,7 +275,7 @@ const SitOutText = (
   <StyledAmenityText>
     <Text
       $type="h3"
-      $size="extra-small"
+      $size="small"
       $typeFace="primary"
       $spacing=".2em"
       $weight="bold"
@@ -280,10 +284,11 @@ const SitOutText = (
       Sit Out
     </Text>
     <Text
+      style={{ textAlign: "center" }}
       $typeFace="secondary"
       $size="large"
       $spacing=".05em"
-      $weight="bold"
+      $weight="light"
       $color="var(--cordis-black)"
     >
       Relax in style — our outdoor sit-out offers a refreshing retreat for

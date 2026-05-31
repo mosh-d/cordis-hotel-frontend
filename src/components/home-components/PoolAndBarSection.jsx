@@ -222,7 +222,7 @@ export default function PoolAndBarSection() {
         <StyledPoolTextWrapper>
           <Text
             $type="h3"
-            $size="extra-small"
+            $size="small"
             $typeFace="primary"
             $spacing=".2em"
             $weight="bold"
@@ -233,7 +233,7 @@ export default function PoolAndBarSection() {
             $typeFace="secondary"
             $size="large"
             $spacing=".05em"
-            $weight="bold"
+            $weight="light"
           >
             Dive into serenity — our indoor pool offers year-round relaxation in
             a calm, elegant setting.
@@ -256,7 +256,7 @@ export default function PoolAndBarSection() {
           <StyledBarTextWrapper>
             <Text
               $type="h3"
-              $size="extra-small"
+              $size="small"
               $typeFace="primary"
               $spacing=".2em"
               $weight="bold"
@@ -267,7 +267,7 @@ export default function PoolAndBarSection() {
               $typeFace="secondary"
               $size="large"
               $spacing=".05em"
-              $weight="bold"
+              $weight="light"
             >
               Sip and savor — from classic cocktails to modern mixes, our bar is
               the perfect place to unwind and connect.
