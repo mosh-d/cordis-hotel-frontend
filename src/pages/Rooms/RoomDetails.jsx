@@ -287,7 +287,7 @@ export default function RoomDetailsPage() {
               {ROOMS[params.roomIndex].name} Room
             </Text>
             {/* Availability Status */}
-            {(() => {
+      {/*       {(() => {
               const room = ROOMS[params.roomIndex];
               const isAvailable =
                 typeof room.available === "number"
@@ -314,7 +314,7 @@ export default function RoomDetailsPage() {
                     : "Not Available"}
                 </div>
               );
-            })()}
+            })()} */}
           </div>
           <StyledDetails>
             <Text $type="h3" $weight="bold" $size="small">
